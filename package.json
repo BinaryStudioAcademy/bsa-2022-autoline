@@ -1,17 +1,41 @@
 {
-  "name": " ",
-  "version": "0.0.1",
-  "description": "",
-  "keywords": "",
-  "license": "",
-  "author": "",
+  "name": "@bsa/autoline",
+  "private": "true",
+  "engines": {
+    "node": ">=16 <=18",
+    "npm": ">=8 <9"
+  },
   "scripts": {
-    "build": "parcel build index.html",
-    "dev": "parcel index.html --open",
-    "start": "npm run build && npm run dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint:editorconfig": "editorconfig-checker",
+    "lint:fs": "ls-lint",
+    "lint:frontend:css": "cd frontend && yarn lint:css",
+    "lint:frontend:js": "cd frontend && yarn lint:js",
+    "lint:frontend": "cd frontend && yarn lint",
+    "lint:css": "yarn lint:frontend:css",
+    "lint:js": "yarn lint:shared:js && yarn lint:tests:js && yarn lint:backend:js && yarn lint:frontend:js",
+    "lint": "yarn lint:editorconfig && yarn lint:fs && yarn lint:css && yarn lint:js",
+    "install:frontend": "cd frontend && npm install --production=false",
+    "install:all": "yarn && yarn install:frontend",
+    "build:frontend": "cd frontend && yarn build",
+    "build": "yarn build:frontend"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.4"
+    "@ls-lint/ls-lint": "1.11.2",
+    "@typescript-eslint/eslint-plugin": "5.30.3",
+    "editorconfig-checker": "4.0.2",
+    "eslint": "8.19.0",
+    "eslint-import-resolver-alias": "1.1.2",
+    "lint-staged": "13.0.3",
+    "prettier": "2.7.1",
+    "simple-git-hooks": "2.8.0",
+    "stylelint": "14.9.1",
+    "stylelint-config-standard": "26.0.0",
+    "stylelint-order": "5.0.0"
+  },
+  "dependencies": {
+    "typescript": "4.7.4"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
   }
 }

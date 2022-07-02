@@ -22,9 +22,13 @@
   "devDependencies": {
     "@ls-lint/ls-lint": "1.11.2",
     "@typescript-eslint/eslint-plugin": "5.30.3",
+    "@typescript-eslint/parser": "^5.30.3",
     "editorconfig-checker": "4.0.2",
     "eslint": "8.19.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-alias": "1.1.2",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
     "simple-git-hooks": "2.8.0",

@@ -1,12 +1,20 @@
 {
   "name": "@autoline/frontend",
   "private": true,
+  "engines": {
+    "node": ">=16 <=18",
+    "yarn": ">=1 <2"
+  },
   "scripts": {
-    "dev": "vite",
+    "lint:js": "npx eslint \"src/**/*.{ts,tsx}\" --resolve-plugins-relative-to .",
+    "lint:css": "npx stylelint \"src/**/*.scss\"",
+    "lint": "yarn lint:css && yarn lint:js",
+    "start": "env-cmd -f ../.env/frontend.env vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "env-cmd": "^10.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@autoline/core",
-  "private": "true",
+  "private": true,
   "engines": {
     "node": ">=16 <=18",
     "yarn": ">=1 <2"

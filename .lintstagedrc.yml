@@ -1,0 +1,7 @@
+'*.{ts,tsx,html,json,md}': prettier --write
+'*': yarn lint:editorconfig && yarn lint:fs
+'shared/**/*.ts': yarn lint:shared:js
+'tests/**/*.ts': yarn lint:tests:js
+'backend/**/*.ts': yarn lint:backend:js
+'frontend/**/*.scss': yarn lint:frontend:css
+'frontend/**/*.{ts,tsx}': yarn lint:frontend:js

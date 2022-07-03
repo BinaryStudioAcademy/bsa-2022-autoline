@@ -1,6 +1,6 @@
 FROM node:16-alpine as shared-builder
 COPY package.json yarn.lock tsconfig.json .eslintrc.yml ./
-RUN npm ci
+RUN yarn install --immutable --immutable-cache --prefer-offline
 
 FROM node:16-alpine as frontend-builder
 ARG VITE_API_ORIGIN_URL

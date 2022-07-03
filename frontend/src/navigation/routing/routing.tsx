@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import { AppRoute } from '@common/enums/app/app';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 

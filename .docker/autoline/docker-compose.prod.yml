@@ -23,6 +23,8 @@ services:
     volumes:
       - autoline_frontend_auto_ssl_data:/etc/resty-auto-ssl
       - ./:/etc/nginx/conf.d
+    env_file:
+      - ../../.env/frontend.env
     environment:
       ALLOWED_DOMAINS: 'autoline-cloud.com'
       SITES: 'autoline-cloud.com=autoline_frontend:80'

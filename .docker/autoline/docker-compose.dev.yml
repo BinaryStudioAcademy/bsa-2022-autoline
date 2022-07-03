@@ -12,6 +12,7 @@ services:
     networks:
       - autoline_frontend_network
     volumes:
+      - ../../shared:/shared
       - ../../frontend:/frontend
     env_file:
       - ../../.env/frontend.env

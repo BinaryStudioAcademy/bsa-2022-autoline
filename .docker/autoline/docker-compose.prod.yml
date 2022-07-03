@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  autoline_frontend:
+    container_name: autoline_frontend
+    image: docker.pkg.github.com/oleksandr-danylchenko/bsa-summer-2022-autoline/autoline-frontend-prod:latest
+    restart: on-failure
+    ports:
+      - "3000:80"
+    networks:
+      - autoline_frontend_network
+
+  autoline_frontend_auto_ssl:
+    image: valian/docker-nginx-auto-ssl
+    depends_on:
+      - autoline_frontend
+    restart: on-failure
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - autoline_frontend_network
+    volumes:
+      - autoline_frontend_auto_ssl_data:/etc/resty-auto-ssl
+      - ./:/etc/nginx/conf.d
+    env_file:
+      - ../../.env/frontend.env
+    environment:
+      ALLOWED_DOMAINS: 'autoline-cloud.com'
+      SITES: 'autoline-cloud.com=autoline_frontend:80'
+
+volumes:
+  autoline_frontend_auto_ssl_data:
+    driver: local
+
+networks:
+  autoline_frontend_network:
+    driver: bridge

@@ -1,1 +1,1 @@
-export {};
+export * from '@common/types/types';

@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  autoline_frontend:
+    container_name: autoline_frontend
+    build:
+      context: ../../
+      dockerfile: frontend/Dockerfile.dev
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    networks:
+      - autoline_frontend_network
+    volumes:
+      - ../../frontend:/frontend
+
+networks:
+  autoline_frontend_network:
+    driver: bridge

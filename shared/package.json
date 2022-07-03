@@ -9,7 +9,7 @@
     "lint:js": "npx eslint \"src/**/*.ts\"",
     "lint": "yarn lint:js",
     "start:dev": "concurrently \"tsc -w\" \"tsc-alias -w\"",
-    "build:ts": "tsc && tsc-alias -p tsconfig.json",
+    "build:ts": "tsc && tsc-alias",
     "build": "yarn build:ts",
     "build-and-update": "yarn build && cd ../backend && yarn update bws-shared && cd ../frontend && yarn update bws-shared"
   },
@@ -17,6 +17,8 @@
     "joi": "^17.6.0"
   },
   "devDependencies": {
-    "tsc-alias": "^1.6.11"
+    "concurrently": "^7.2.2",
+    "tsc-alias": "^1.6.11",
+    "typescript": "4.7.4"
   }
 }

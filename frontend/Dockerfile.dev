@@ -9,4 +9,4 @@ COPY ./frontend/package.json ./frontend/yarn.lock ./frontend/tsconfig.json ./
 RUN yarn install --immutable --immutable-cache --prefer-offline
 COPY --from=shared-builder / ../
 COPY ./frontend .
-CMD ["yarn", "start"]
+CMD ["yarn", "start:dev"]

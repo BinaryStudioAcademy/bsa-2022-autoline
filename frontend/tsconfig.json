@@ -13,6 +13,17 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "noEmit": true,
-    "jsx": "react-jsx"
-  },
+    "jsx": "react-jsx",
+    "paths": {
+      "@assets/*": ["./src/assets/*"],
+      "@common/*": ["./src/common/*"],
+      "@components/*": ["./src/components/*"],
+      "@helpers/*": ["./src/helpers/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@services/*": ["./src/services/*"],
+      "@store/*": ["./src/store/*"],
+      "@validation-schemas/*": ["./src/validation-schemas/*"],
+      "@navigation/*": ["./src/navigation/*"]
+    }
+  }
 }

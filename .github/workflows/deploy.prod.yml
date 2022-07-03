@@ -24,7 +24,7 @@ jobs:
         registry: ghcr.io
         context: ./
         dockerfile: ./frontend/Dockerfile.prod
-        build_extra_args: "--build-arg=REACT_APP_API_ORIGIN_URL=/api/v1"
+        build_extra_args: "--build-arg=VITE_API_ORIGIN_URL=/api/v1"
 
   deploy:
     needs: [build-frontend]

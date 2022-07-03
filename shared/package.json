@@ -1,0 +1,20 @@
+{
+  "name": "@autoline/shared",
+  "private": true,
+  "engines": {
+    "node": ">=16 <=18",
+    "yarn": ">=1 <2"
+  },
+  "scripts": {
+    "lint:js": "npx eslint \"src/**/*.ts\"",
+    "lint": "yarn lint:js",
+    "build:ts": "tsc && tsc-alias -p tsconfig.json",
+    "build": "yarn build:ts",
+    "build-and-update": "yarn build && cd ../backend && yarn update bws-shared && cd ../frontend && yarn update bws-shared"
+  },
+  "dependencies": {
+    "joi": "^17.6.0",
+    "tsc-alias": "^1.6.11"
+  },
+  "devDependencies": {}
+}

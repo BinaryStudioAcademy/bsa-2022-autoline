@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "include": ["src"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@common/*": ["./src/common/*"],
+      "@helpers/*": ["./src/helpers/*"],
+      "@validation/*": ["./src/validation/*"]
+    },
+    "outDir": "build",
+    "declaration": true,
+    "module": "commonjs"
+  }
+}

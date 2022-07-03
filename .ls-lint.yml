@@ -17,3 +17,5 @@ ignore:
   - backend/build
   - backend/node_modules
   - test/node_modules
+  - .vscode
+  - .idea

@@ -1,0 +1,23 @@
+name: build
+
+on:
+  pull_request:
+    branches:
+      - main
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Build image
+      uses: whoan/docker-build-with-cache-action@v5
+      with:
+        image_name: autoline-frontend-prod-build
+        push_image_and_stages: false
+        context: ./
+        dockerfile: ./frontend/Dockerfile.prod
+        build_extra_args: "--build-arg=VITE_API_ORIGIN_URL=/api/v1"

@@ -18,12 +18,12 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Load root dependencies
-      uses: bahmutov/npm-install@v1
+      uses: bahmutov/npm-install@v1.6.0
       with:
         useRollingCache: true
 
     - name: Load frontend dependencies
-      uses: bahmutov/npm-install@v1
+      uses: bahmutov/npm-install@v1.6.0
       with:
         working-directory: frontend
         useRollingCache: true

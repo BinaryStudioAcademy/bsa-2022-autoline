@@ -1,13 +1,41 @@
 version: "3.8"
 
 services:
+  autoline_backend:
+    container_name: autoline_backend
+    image: ghcr.io/binarystudioacademy/bsa-summer-2022-autoline/autoline-backend-development:latest
+    depends_on:
+      - autoline_postgres
+    restart: on-failure
+    command:
+      - /bin/sh
+      - -c
+      - |
+        npm run start:prod
+    ports:
+      - 3001:3001
+    networks:
+      - autoline_backend_network
+      - autoline_frontend_network
+    env_file:
+      - ../../.env/backend.env
+    environment:
+      - DB_USER=postgres
+      - DB_DATABASE=autoline
+      - DB_HOST=autoline_postgres
+      - DB_PORT=5432
+      - FRONTEND_URL=http://autoline_frontend:80
+
   autoline_frontend:
     container_name: autoline_frontend
-    image: docker.pkg.github.com/oleksandr-danylchenko/bsa-summer-2022-autoline/autoline-frontend-prod:latest
+    image: ghcr.io/oleksandr-danylchenko/bsa-summer-2022-autoline/autoline-frontend-prod:latest
+    depends_on:
+      - autoline_backend
     restart: on-failure
     ports:
       - "3000:80"
     networks:
+      - autoline_backend_network
       - autoline_frontend_network
 
   autoline_frontend_auto_ssl:
@@ -19,6 +47,7 @@ services:
       - "80:80"
       - "443:443"
     networks:
+      - autoline_backend_network
       - autoline_frontend_network
     volumes:
       - autoline_frontend_auto_ssl_data:/etc/resty-auto-ssl
@@ -34,5 +63,7 @@ volumes:
     driver: local
 
 networks:
+  autoline_backend_network:
+    driver: bridge
   autoline_frontend_network:
     driver: bridge

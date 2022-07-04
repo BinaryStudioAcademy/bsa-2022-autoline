@@ -13,8 +13,8 @@
     "build": "tsc && tsc-alias -p tsconfig.json"
   },
   "dependencies": {
-    "env-cmd": "10.1.0",
-    "autoline-shared": "file:../shared/build"
+    "autoline-shared": "file:../shared/build",
+    "env-cmd": "10.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.18",

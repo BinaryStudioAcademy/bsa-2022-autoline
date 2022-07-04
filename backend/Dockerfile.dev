@@ -10,10 +10,9 @@ RUN yarn install --immutable --immutable-cache
 COPY ./shared .
 RUN yarn build
 
-FROM shared-builder as frontend-builder
-WORKDIR /frontend
-COPY ./frontend/package.json ./frontend/yarn.lock ./frontend/tsconfig.json ./
+FROM shared-builder as backend-builder
+WORKDIR /backend
+COPY ./backend/package.json ./backend/yarn.lock ./backend/tsconfig.json ./
 RUN yarn install --immutable --immutable-cache
-COPY ./frontend .
-RUN yarn upgrade autoline-shared
+COPY ./backend .
 CMD yarn start:dev & cd ../shared && yarn start:dev

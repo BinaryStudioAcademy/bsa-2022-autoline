@@ -11,7 +11,7 @@
     "start:dev": "concurrently \"tsc -w\" \"tsc-alias -w\"",
     "build:ts": "tsc && tsc-alias",
     "build": "yarn build:ts",
-    "build-and-update": "yarn build && cd ../backend && yarn update bws-shared && cd ../frontend && yarn update bws-shared"
+    "build-and-update": "yarn build && cd ../backend && yarn upgrade bws-shared && cd ../frontend && yarn upgrade bws-shared"
   },
   "dependencies": {
     "joi": "^17.6.0"

@@ -2,8 +2,6 @@ FROM node:16-alpine as shared-builder
 COPY package.json yarn.lock tsconfig.json .eslintrc.yml ./
 RUN yarn install --immutable --immutable-cache
 
-COPY .env ./.env
-
 WORKDIR /shared
 COPY ./shared/package.json ./shared/yarn.lock ./
 RUN yarn install --immutable --immutable-cache
@@ -18,6 +16,7 @@ COPY ./frontend/package.json ./frontend/yarn.lock ./frontend/tsconfig.json ./
 RUN yarn install --immutable --immutable-cache
 COPY --from=shared-builder / ../
 COPY ./frontend .
+RUN yarn upgrade autoline-shared
 RUN yarn build
 
 FROM nginx:1.21.1-alpine

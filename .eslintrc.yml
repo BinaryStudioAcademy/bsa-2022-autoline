@@ -59,3 +59,26 @@ rules:
     - off
   import/no-default-export:
     - error
+  import/order:
+    - error
+    - newlines-between: always
+      groups:
+        - builtin
+        - external
+        - internal
+        - - parent
+          - sibling
+          - index
+        - - object
+          - type
+          - unknown
+      pathGroups:
+        - pattern: react*
+          group: builtin
+        - pattern: react*/*
+          group: builtin
+      pathGroupsExcludedImportTypes:
+        - internal
+      alphabetize:
+        order: asc
+        caseInsensitive: true

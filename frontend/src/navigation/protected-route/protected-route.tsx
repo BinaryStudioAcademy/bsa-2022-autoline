@@ -1,5 +1,6 @@
 import { ReactElement, ReactNode } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
+
 import { AppRoute } from '@common/enums/app/app';
 
 /**

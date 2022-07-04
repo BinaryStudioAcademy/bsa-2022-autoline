@@ -1,12 +1,18 @@
 FROM node:16-alpine as shared-builder
 COPY package.json yarn.lock tsconfig.json .eslintrc.yml ./
-RUN yarn install --immutable --immutable-cache --prefer-offline
+RUN yarn install --immutable --immutable-cache
+
 COPY .env ./.env
 
-FROM node:16-alpine as frontend-builder
+WORKDIR /shared
+COPY ./shared/package.json ./shared/yarn.lock ./
+RUN yarn install --immutable --immutable-cache
+COPY ./shared .
+RUN yarn build
+
+FROM shared-builder as frontend-builder
 WORKDIR /frontend
 COPY ./frontend/package.json ./frontend/yarn.lock ./frontend/tsconfig.json ./
-RUN yarn install --immutable --immutable-cache --prefer-offline
-COPY --from=shared-builder / ../
+RUN yarn install --immutable --immutable-cache
 COPY ./frontend .
-CMD ["yarn", "start"]
+CMD yarn start:dev & cd ../shared && yarn start:dev

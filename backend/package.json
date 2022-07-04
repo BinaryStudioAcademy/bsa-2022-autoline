@@ -8,15 +8,15 @@
   "scripts": {
     "lint:js": "npx eslint \"src/**/*.ts\" --resolve-plugins-relative-to .",
     "lint": "yarn lint:js",
-    "start:dev": "env-cmd -f ../.env/backend.env nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
+    "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
     "start:prod": "node ./build/src/server.js",
     "build": "tsc && tsc-alias -p tsconfig.json"
   },
   "dependencies": {
-    "autoline-shared": "file:../shared/build",
-    "env-cmd": "10.1.0"
+    "autoline-shared": "file:../shared/build"
   },
   "devDependencies": {
+    "@types/node": "^18.0.1",
     "nodemon": "^2.0.18",
     "ts-node": "^10.8.2",
     "tsc-alias": "^1.6.11",

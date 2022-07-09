@@ -1,6 +1,34 @@
 version: "3.8"
 
 services:
+  autoline_backend:
+    container_name: autoline_backend
+    build:
+      context: ../../
+      dockerfile: backend/Dockerfile.dev
+    restart: on-failure
+    command:
+      - /bin/sh
+      - -c
+      - |
+        npm run start:dev
+    ports:
+      - 3001:3001
+    volumes:
+      - ../../shared:/shared
+      - ../../backend:/backend
+    env_file:
+      - ../../.env/backend.env
+    environment:
+      - DB_USER=postgres
+      - DB_DATABASE=autoline
+      - DB_HOST=autoline_postgres
+      - DB_PORT=5432
+      - FRONTEND_URL=http://autoline_frontend:80
+    networks:
+      - autoline_backend_network
+      - autoline_frontend_network
+
   autoline_frontend:
     container_name: autoline_frontend
     build:
@@ -10,6 +38,7 @@ services:
     ports:
       - "3000:3000"
     networks:
+      - autoline_backend_network
       - autoline_frontend_network
     volumes:
       - ../../shared:/shared
@@ -20,5 +49,7 @@ services:
       - VITE_API_ORIGIN_URL=/api/v1
 
 networks:
+  autoline_backend_network:
+    driver: bridge
   autoline_frontend_network:
     driver: bridge

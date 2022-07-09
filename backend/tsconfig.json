@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig.json",
+  "include": ["src"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "outDir": "build",
+    "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "@configs/*": ["./src/configs/*"],
+      "@common/*": ["./src/common/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@controllers/*": ["./src/controllers/*"],
+      "@services/*": ["./src/controllers/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@dtos/*": ["./src/dtos/*"],
+      "@helpers/*": ["./src/helpers/*"],
+      "@exceptions/*": ["./src/exceptions/*"],
+      "@validation-schemas/*": ["./src/validation-schemas/*"],
+      "@prisma/*": ["./src/prisma/*"]
+    }
+  }
+}

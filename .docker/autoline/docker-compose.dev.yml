@@ -1,6 +1,22 @@
 version: "3.8"
 
 services:
+  autoline_mariadb:
+    container_name: autoline_mariadb
+    image: mariadb:10.7
+    restart: on-failure
+    ports:
+      - "3307:3306"
+    networks:
+      - autoline_backend_network
+    env_file:
+      - ../../.env/mariadb.env
+    environment:
+    - MYSQL_USER=autoline_user
+    - MYSQL_DATABASE=autoline
+    volumes:
+      - autoline_mariadb_data:/var/lib/mysql
+
   autoline_backend:
     container_name: autoline_backend
     build:
@@ -11,9 +27,10 @@ services:
       - /bin/sh
       - -c
       - |
-        npm run start:dev
+        yarn db:migrate:dev
+        yarn start:dev
     ports:
-      - 3001:3001
+      - "3001:3001"
     volumes:
       - ../../shared:/shared
       - ../../backend:/backend
@@ -47,6 +64,10 @@ services:
       - ../../.env/frontend.env
     environment:
       - VITE_API_ORIGIN_URL=/api/v1
+
+volumes:
+  autoline_mariadb_data:
+    driver: local
 
 networks:
   autoline_backend_network:

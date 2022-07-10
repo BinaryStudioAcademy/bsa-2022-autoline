@@ -10,6 +10,10 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
+"@autoline/shared@link:../shared/build":
+  version "0.0.0"
+  uid ""
+
 "@babel/code-frame@^7.18.6":
   version "7.18.6"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.18.6.tgz#3b25d38c89600baa2dcc219edfa88a74eb2c427a"
@@ -343,9 +347,6 @@ anymatch@~3.1.2:
   dependencies:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
-
-"autoline-shared@file:../shared/build":
-  version "0.0.0"
 
 binary-extensions@^2.0.0:
   version "2.2.0"

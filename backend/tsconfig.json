@@ -11,7 +11,7 @@
       "@common/*": ["./src/common/*"],
       "@routes/*": ["./src/routes/*"],
       "@controllers/*": ["./src/controllers/*"],
-      "@services/*": ["./src/controllers/*"],
+      "@services/*": ["./src/services/*"],
       "@middlewares/*": ["./src/middlewares/*"],
       "@dtos/*": ["./src/dtos/*"],
       "@helpers/*": ["./src/helpers/*"],

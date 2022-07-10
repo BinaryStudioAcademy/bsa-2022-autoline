@@ -1,4 +1,4 @@
-import { getHealth } from '@services/health/health.controller';
+import { getHealth } from '@controllers/health/health.controller';
 import { Router } from 'express';
 
 const PATH = '/health';

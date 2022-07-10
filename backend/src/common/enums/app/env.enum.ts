@@ -1,17 +1,7 @@
 import { AppEnvironment } from '@common/enums/app/app-environment.enum';
 
-const {
-  NODE_ENV,
-  PORT,
-  HOST,
-  FRONTEND_URL,
-  SECRET_KEY,
-  DB_USER,
-  DB_PASSWORD,
-  DB_DATABASE,
-  DB_HOST,
-  DB_PORT,
-} = process.env;
+const { NODE_ENV, PORT, HOST, FRONTEND_URL, DATABASE_URL, SECRET_KEY } =
+  process.env;
 
 const ENV = {
   APP: {
@@ -23,13 +13,10 @@ const ENV = {
   JWT: {
     SECRET: SECRET_KEY,
     EXPIRES_IN: '24h',
+    REFRESH_EXPIRES_IN: '60d',
   },
   DB: {
-    USER: DB_USER,
-    PASSWORD: DB_PASSWORD,
-    DATABASE: DB_DATABASE,
-    HOST: DB_HOST,
-    PORT: Number(DB_PORT),
+    URL: DATABASE_URL,
   },
   API: {
     V1_PREFIX: '/api/v1',

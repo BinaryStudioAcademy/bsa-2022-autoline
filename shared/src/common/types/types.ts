@@ -8,3 +8,5 @@ export {
   type BindingFunction2,
   type BindingFunction3,
 } from './functions/functions';
+
+export { type AuthResponseDto, type TokenPayload } from './auth/auth';

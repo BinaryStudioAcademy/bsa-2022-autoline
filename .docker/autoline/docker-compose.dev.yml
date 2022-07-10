@@ -10,10 +10,7 @@ services:
     networks:
       - autoline_backend_network
     env_file:
-      - ../../.env/mariadb.env
-    environment:
-    - MYSQL_USER=autoline_user
-    - MYSQL_DATABASE=autoline
+      - ../../.env/backend.env
     volumes:
       - autoline_mariadb_data:/var/lib/mysql
 

@@ -17,7 +17,7 @@
       "@helpers/*": ["./src/helpers/*"],
       "@exceptions/*": ["./src/exceptions/*"],
       "@validation-schemas/*": ["./src/validation-schemas/*"],
-      "@prisma/*": ["./src/prisma/*"]
+      "@data/*": ["./src/data/*"]
     }
   }
 }

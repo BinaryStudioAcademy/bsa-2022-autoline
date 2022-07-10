@@ -1,3 +1,4 @@
+import { ExceptionMessage } from '@common/enums/exception/exception';
 import { prisma } from '@data/prisma-client';
 import { verify as argonVerify } from 'argon2';
 import { Request } from 'express';
@@ -20,7 +21,7 @@ const localStrategy = new LocalStrategy(
 
       if (!user || !passwordMatches) {
         return done(null, false, {
-          message: 'Incorrect email or password.',
+          message: ExceptionMessage.INCORRECT_CREDENTIALS,
         });
       }
 

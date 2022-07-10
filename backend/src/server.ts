@@ -17,7 +17,7 @@ app
   .use(express.urlencoded({ extended: true }));
 
 const routes = [healthRouter];
-routes.forEach((route) => app.use('/', route));
+routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 
 // Handle arbitrary errors that are thrown from any controller above
 app.use(errorsHandler);

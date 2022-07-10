@@ -1,1 +1,2 @@
-export { errorsHandler } from './errors-handler.middleware';
+export { localAuth } from './auth/auth.middleware';
+export { errorsHandler } from './exceptions/exceptions.middleware';

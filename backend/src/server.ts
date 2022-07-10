@@ -1,4 +1,5 @@
-import { ENV } from '@common/enums/app/env.enum';
+import { ENV } from '@common/enums/app/app';
+import { errorsHandler } from '@middlewares/middlewares';
 import { healthRouter } from '@routes/health/health.router';
 import cors from 'cors';
 import express from 'express';
@@ -17,6 +18,9 @@ app
 
 const routes = [healthRouter];
 routes.forEach((route) => app.use('/', route));
+
+// Handle arbitrary errors that are thrown from any controller above
+app.use(errorsHandler);
 
 app.listen(ENV.APP.SERVER_PORT, ENV.APP.SERVER_HOST, () => {
   // eslint-disable-next-line no-console

@@ -19,7 +19,7 @@ rules:
   no-var:
     - error
   no-console:
-    - error
+    - warn
   arrow-parens:
     - error
     - always

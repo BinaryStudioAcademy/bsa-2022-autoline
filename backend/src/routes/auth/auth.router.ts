@@ -1,9 +1,10 @@
+import * as authController from '@controllers/auth/auth.controller';
 import { Router } from 'express';
 
-// const PATH = '/auth';
+const PATH = '/auth';
 
 const authRouter = Router();
 
-// authRouter.get(`${PATH}/local/signup`);
+authRouter.post(`${PATH}/local/signup`, authController.signupLocal);
 
 export { authRouter };

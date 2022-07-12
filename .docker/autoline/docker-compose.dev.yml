@@ -3,17 +3,16 @@ version: "3.8"
 services:
   autoline_mariadb:
     container_name: autoline_mariadb
-    image: mariadb:10.7
+    build:
+      context: ../../
+      dockerfile: database/Dockerfile.dev
     restart: on-failure
     ports:
       - "3307:3306"
     networks:
       - autoline_backend_network
     env_file:
-      - ../../.env/mariadb.env
-    environment:
-    - MYSQL_USER=autoline_user
-    - MYSQL_DATABASE=autoline
+      - ../../.env/backend.env
     volumes:
       - autoline_mariadb_data:/var/lib/mysql
 

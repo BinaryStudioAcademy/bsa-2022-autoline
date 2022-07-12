@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/backend/prisma/migrations/20220709125304_user_table/migration.sql" dialect="MariaDB" />
+    <file url="file://$PROJECT_DIR$/database/user_privileges.sql" dialect="MariaDB" />
   </component>
 </project>

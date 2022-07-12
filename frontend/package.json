@@ -14,7 +14,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "autoline-shared": "file:../shared/build",
+    "@autoline/shared": "link:../shared/build",
     "clsx": "1.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",

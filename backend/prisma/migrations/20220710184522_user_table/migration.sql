@@ -4,8 +4,8 @@ CREATE TABLE `User` (
     `email` VARCHAR(80) NOT NULL,
     `password` VARCHAR(80) NOT NULL,
     `name` VARCHAR(200) NOT NULL,
-    `phone` VARCHAR(20) NOT NULL,
-    `location` VARCHAR(191) NOT NULL,
+    `phone` VARCHAR(20) NULL,
+    `location` VARCHAR(191) NULL,
 
     UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)

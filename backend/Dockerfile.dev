@@ -15,4 +15,5 @@ WORKDIR /backend
 COPY ./backend/package.json ./backend/yarn.lock ./backend/tsconfig.json ./
 RUN yarn install --immutable --immutable-cache
 COPY ./backend .
+RUN yarn upgrade autoline-shared
 CMD yarn start:dev & cd ../shared && yarn start:dev

@@ -42,7 +42,6 @@ services:
     env_file:
       - ../../.env/backend.env
     environment:
-      - MYSQL_HOST=autoline_mariadb
       - FRONTEND_URL=http://autoline_frontend:80
     networks:
       - autoline_backend_network

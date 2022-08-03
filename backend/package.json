@@ -38,7 +38,7 @@
     "@types/passport-local": "^1.0.34",
     "dotenv-cli": "^6.0.0",
     "nodemon": "^2.0.18",
-    "prisma": "^4.0.0",
+    "prisma": "^4.1.1",
     "ts-node": "^10.8.2",
     "tsc-alias": "^1.6.11",
     "typescript": "4.7.4"

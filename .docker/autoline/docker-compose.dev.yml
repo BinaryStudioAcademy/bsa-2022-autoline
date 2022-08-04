@@ -35,7 +35,7 @@ services:
     env_file:
       - ../../.env/backend.env
     environment:
-      - FRONTEND_URL=http://autoline_frontend:80
+      - FRONTEND_URL=http://autoline_frontend:3000
     networks:
       - autoline_backend_network
       - autoline_frontend_network

@@ -11,12 +11,12 @@
     "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
     "start:prod": "node ./build/src/server.js",
     "build": "tsc && tsc-alias -p tsconfig.json",
-    "db:generate": "npx prisma generate",
-    "db:push": "dotenv -e ../.env/backend.env -- npx prisma db push",
-    "db:create-migration": "dotenv -e ../.env/backend.env -- npx prisma migrate dev --name user_table",
-    "db:reset": "dotenv -e ../.env/backend.env -- npx prisma migrate reset",
-    "db:migrate:dev": "npx prisma migrate dev",
-    "db:migrate:prod": "npx prisma migrate deploy"
+    "db:generate": "yarn prisma generate",
+    "db:push": "dotenv -e ../.env/backend.env -- yarn prisma db push",
+    "db:create-migration": "dotenv -e ../.env/backend.env -- yarn prisma migrate dev --name user_table",
+    "db:reset": "dotenv -e ../.env/backend.env -- yarn prisma migrate reset",
+    "db:migrate:dev": "yarn prisma migrate dev",
+    "db:migrate:prod": "yarn prisma migrate deploy"
   },
   "dependencies": {
     "@autoline/shared": "link:../shared/build",

@@ -32,13 +32,6 @@ services:
       - exclude_shared:/shared/node_modules/
       - ../../backend:/backend/
       - exclude_backend:/backend/node_modules/
-    command:
-      - /bin/sh
-      - -c
-      - |
-        yarn db:migrate:dev
-        yarn db:generate
-        yarn start:dev
     env_file:
       - ../../.env/backend.env
     environment:
@@ -46,6 +39,8 @@ services:
     networks:
       - autoline_backend_network
       - autoline_frontend_network
+    depends_on:
+      - "autoline_mariadb"
 
 volumes:
   exclude_shared:

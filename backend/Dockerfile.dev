@@ -15,4 +15,7 @@ COPY --from=shared-builder / ./
 WORKDIR /backend
 COPY ./backend/package.json ./backend/yarn.lock ./backend/tsconfig.json ./
 RUN yarn install
+RUN yarn upgrade @autoline/shared
 COPY ./backend .
+
+CMD yarn db:migrate:dev && yarn start:dev & cd ../shared && yarn start:dev

@@ -18,4 +18,5 @@ RUN yarn install
 RUN yarn upgrade @autoline/shared
 COPY ./backend .
 
+EXPOSE 3001
 CMD yarn db:migrate:dev && yarn start:dev & cd ../shared && yarn start:dev

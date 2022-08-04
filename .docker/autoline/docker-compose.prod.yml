@@ -29,15 +29,10 @@ services:
     restart: unless-stopped
     ports:
       - "3001:3001"
-    volumes:
-      - ../../shared:/shared/
-      - exclude_shared:/shared/node_modules/
-      - ../../backend:/backend/
-      - exclude_backend:/backend/node_modules/
     env_file:
       - ../../.env/backend.env
     environment:
-      - FRONTEND_URL=http://autoline_frontend:3000
+      - FRONTEND_URL=http://autoline_frontend:80
     networks:
       - autoline_backend_network
       - autoline_frontend_network
@@ -51,12 +46,7 @@ services:
       dockerfile: frontend/Dockerfile.dev
     restart: unless-stopped
     ports:
-      - "3000:3000"
-    volumes:
-      - ../../shared:/shared/
-      - exclude_shared:/shared/node_modules/
-      - ../../frontend:/frontend/
-      - exclude_frontend:/frontend/node_modules/
+      - "3000:80"
     env_file:
       - ../../.env/frontend.env
     environment:
@@ -65,11 +55,30 @@ services:
       - autoline_backend_network
       - autoline_frontend_network
 
+  autoline_frontend_auto_ssl:
+    image: valian/docker-nginx-auto-ssl
+    depends_on:
+      - autoline_frontend
+    restart: on-failure
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - autoline_backend_network
+      - autoline_frontend_network
+    volumes:
+      - autoline_frontend_auto_ssl_data:/etc/resty-auto-ssl
+      - ./:/etc/nginx/conf.d
+    env_file:
+      - ../../.env/frontend.env
+    environment:
+      ALLOWED_DOMAINS: 'autoline-not-autoria.xyz'
+      SITES: 'autoline-not-autoria.xyz=autoline_frontend:80'
+
 volumes:
-  exclude_shared:
-  exclude_backend:
-  exclude_frontend:
   autoline_mariadb_data:
+    driver: local
+  autoline_frontend_auto_ssl_data:
     driver: local
 
 networks:

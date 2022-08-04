@@ -42,9 +42,33 @@ services:
     depends_on:
       - "autoline_mariadb"
 
+  autoline_frontend:
+    container_name: autoline_frontend
+    build:
+      context: ../../
+      dockerfile: frontend/Dockerfile.dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../../shared:/shared/
+      - exclude_shared:/shared/node_modules/
+      - ../../frontend:/frontend/
+      - exclude_frontend:/frontend/node_modules/
+    env_file:
+      - ../../.env/frontend.env
+    environment:
+      - VITE_API_ORIGIN_URL=http://autoline_backend:3001/api/v1
+    networks:
+      - autoline_backend_network
+      - autoline_frontend_network
+    depends_on:
+      - "autoline_backend"
+
 volumes:
   exclude_shared:
   exclude_backend:
+  exclude_frontend:
   autoline_mariadb_data:
     driver: local
 

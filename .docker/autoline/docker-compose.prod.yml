@@ -25,7 +25,7 @@ services:
       - autoline_mariadb
     build:
       context: ../../
-      dockerfile: backend/Dockerfile.dev
+      dockerfile: backend/Dockerfile.prod
     restart: unless-stopped
     ports:
       - "3001:3001"
@@ -43,7 +43,7 @@ services:
       - autoline_backend
     build:
       context: ../../
-      dockerfile: frontend/Dockerfile.dev
+      dockerfile: frontend/Dockerfile.prod
     restart: unless-stopped
     ports:
       - "3000:80"

@@ -35,6 +35,7 @@ rules:
   '@typescript-eslint/quotes':
     - error
     - single
+    - avoid-escape
   '@typescript-eslint/object-curly-spacing':
     - error
     - always

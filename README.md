@@ -152,10 +152,10 @@ You should use `.env.example` directory as a reference and consult coaches or co
 
 3. Run the database. You can either run it in docker using command `cd ./docker/autoline && docker-compose -f docker-compose.services.yml up --build` or by installing `Mariadb` on your computer. Docker variant is preferred.
 
-4. Apply migrations: `cd backend && yarn db:migrate:dev`
+4. Apply migrations: `cd backend && yarn db:migrate:dev:local`
 
 5. Run shared: `cd shared && yarn start:dev`
 
-6. Run backend: `cd backend && yarn start:dev`
+6. Run backend: `cd backend && yarn start:dev:local`
 
-7. Run frontend: `cd frontend && yarn start:dev`
+7. Run frontend: `cd frontend && yarn start:dev:local`

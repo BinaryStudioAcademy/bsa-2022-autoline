@@ -12,12 +12,12 @@ services:
     restart: on-failure
     ports:
       - "3307:3306"
-    networks:
-      - autoline_backend_network
-    env_file:
-      - ../../.env/backend.env
     volumes:
       - autoline_mariadb_data:/var/lib/mysql
+    env_file:
+      - ../../.env/backend.env
+    networks:
+      - autoline_backend_network
 
   autoline_backend:
     container_name: autoline_backend

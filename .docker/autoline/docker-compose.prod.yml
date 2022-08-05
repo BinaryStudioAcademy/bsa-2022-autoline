@@ -49,8 +49,6 @@ services:
       - "3000:80"
     env_file:
       - ../../.env/frontend.env
-    environment:
-      - VITE_API_ORIGIN_URL=http://autoline_backend:3001/api/v1
     networks:
       - autoline_backend_network
       - autoline_frontend_network
@@ -63,9 +61,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    networks:
-      - autoline_backend_network
-      - autoline_frontend_network
     volumes:
       - autoline_frontend_auto_ssl_data:/etc/resty-auto-ssl
       - ./:/etc/nginx/conf.d
@@ -74,6 +69,9 @@ services:
     environment:
       ALLOWED_DOMAINS: 'autoline-not-autoria.xyz'
       SITES: 'autoline-not-autoria.xyz=autoline_frontend:80'
+    networks:
+      - autoline_backend_network
+      - autoline_frontend_network
 
 volumes:
   autoline_mariadb_data:

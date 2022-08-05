@@ -1,6 +1,6 @@
 import { ExceptionMessage } from '@common/enums/exception/exception';
 import { prisma } from '@data/prisma-client';
-import { verify as argonVerify } from 'argon2';
+import { compare as bcryptCompare } from 'bcrypt';
 import { Request } from 'express';
 import { Strategy as LocalStrategy } from 'passport-local';
 
@@ -17,7 +17,10 @@ const localStrategy = new LocalStrategy(
       const user = await prisma.user.findUnique({
         where: { email: normalizedEmail },
       });
-      const passwordMatches = await argonVerify(user?.password || '', password);
+      const passwordMatches = await bcryptCompare(
+        user?.password || '',
+        password,
+      );
 
       if (!user || !passwordMatches) {
         return done(null, false, {

@@ -1,0 +1,22 @@
+FROM node:16-alpine as shared-builder
+COPY package.json yarn.lock tsconfig.json .eslintrc.yml ./
+RUN yarn install
+
+COPY .env ./.env
+
+WORKDIR /shared
+COPY ./shared/package.json ./shared/yarn.lock ./
+RUN yarn install
+COPY ./shared ./
+RUN yarn build
+
+FROM shared-builder as backend-builder
+COPY --from=shared-builder / ./
+WORKDIR /backend
+COPY ./backend/package.json ./backend/yarn.lock ./backend/tsconfig.json ./
+RUN yarn install
+RUN yarn upgrade @autoline/shared
+COPY ./backend .
+
+EXPOSE 3001
+CMD yarn db:migrate:dev && yarn start:dev & cd ../shared && yarn start:dev

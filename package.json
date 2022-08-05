@@ -16,13 +16,13 @@
     "lint:js": "yarn lint:shared:js && yarn lint:backend:js && yarn lint:frontend:js",
     "lint": "yarn lint:editorconfig && yarn lint:fs && yarn lint:css && yarn lint:js",
     "install:shared": "cd shared && yarn",
-    "install:backend": "cd backend && yarn",
     "install:frontend": "cd frontend && yarn",
-    "install:all": "yarn && yarn install:shared && yarn build:shared && yarn install:frontend",
+    "install:backend": "cd backend && yarn",
+    "install:all": "yarn && yarn install:shared && yarn build:shared && yarn install:frontend && yarn install:backend",
     "build:shared": "cd shared && yarn build",
-    "build:backend": "cd backend && yarn build",
     "build:frontend": "cd frontend && yarn build",
-    "build": "yarn build:shared && yarn build:backend && yarn build:frontend"
+    "build:backend": "cd backend && yarn build",
+    "build": "yarn build:shared && yarn build:frontend && yarn build:backend"
   },
   "dependencies": {},
   "devDependencies": {

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { mockBrands } from '@components/cars-categories/mockBrands';
 
@@ -8,6 +8,7 @@ import styles from './styles.module.scss';
 
 const CarsCategories: FC = () => {
   const [brands, setBrands] = useState<Brand[]>([]);
+  const [activeId, setActiveId] = useState<number>();
 
   useEffect(() => {
     if (mockBrands.length) {
@@ -18,9 +19,22 @@ const CarsCategories: FC = () => {
   return (
     <div className={styles.container}>
       {brands.map((brand) => (
-        <NavLink key={brand.marka_id} to="#">
-          <img className={styles.logo} src={brand.logo} alt={brand.name} />
-        </NavLink>
+        <div
+          key={brand.marka_id}
+          className={
+            brand.marka_id === activeId
+              ? styles.linkWrapper + ' ' + styles.active
+              : styles.linkWrapper
+          }
+        >
+          <Link
+            to="#"
+            onClick={(): void => setActiveId(brand.marka_id)}
+            className={styles.navLink}
+          >
+            <img className={styles.logo} src={brand.logo} alt={brand.name} />
+          </Link>
+        </div>
       ))}
     </div>
   );

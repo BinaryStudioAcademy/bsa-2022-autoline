@@ -7,7 +7,7 @@ import { Brand } from '../../types/brand.type';
 import styles from './styles.module.scss';
 
 const CarsCategories: FC = () => {
-  const [brands] = useState<Brand[]>([...mockBrands]);
+  const [brands] = useState<Brand[]>(mockBrands);
 
   return (
     <div className={styles.container}>

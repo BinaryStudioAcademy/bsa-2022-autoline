@@ -1,7 +1,5 @@
 .container {
-  position: absolute;
   display: flex;
-  flex-direction: row;
   justify-content: space-around;
   align-items: center;
   width: 100%;
@@ -9,10 +7,15 @@
   background: #ffffff;
 }
 
-.linkWrapper {
+.navLink {
   display: flex;
   align-items: center;
   height: 100%;
+}
+
+.navLink:active {
+  margin-bottom: -3px;
+  border-bottom: 3px #3765ff solid;
 }
 
 .logo {
@@ -23,9 +26,4 @@
 
 .logo:hover {
   transform: scale(1.3);
-}
-
-.active {
-  margin-bottom: -3px;
-  border-bottom: 3px #3765ff solid;
 }

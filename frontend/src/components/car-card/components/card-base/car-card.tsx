@@ -6,7 +6,7 @@ import compare_part_2 from '@assets/images/compare_part_2.svg';
 import heart from '@assets/images/heart.svg';
 import new_car_1 from '@assets/images/mock_car_picture.png';
 
-import styles from './styles.module.scss';
+import styles from '../../styles.module.scss';
 
 const CarCard: FC = () => {
   return (

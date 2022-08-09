@@ -2,9 +2,9 @@ import { TokenPayload } from '@autoline/shared';
 import { ENV } from '@common/enums/app/env.enum';
 import jwt from 'jsonwebtoken';
 
-const createToken = (data: TokenPayload): string => {
+const createToken = (data: TokenPayload, isAcceessToken = true): string => {
   return jwt.sign(data, ENV.JWT.SECRET as string, {
-    expiresIn: ENV.JWT.EXPIRES_IN,
+    expiresIn: isAcceessToken ? ENV.JWT.EXPIRES_IN : ENV.JWT.REFRESH_EXPIRES_IN,
   });
 };
 

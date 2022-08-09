@@ -1,8 +1,9 @@
 import { prisma } from '@data/prisma-client';
 import { bcryptHash } from '@helpers/crypto/crypto';
+import { createToken } from '@helpers/helpers';
 import { Prisma } from '@prisma/client';
 
-import type { AuthResponseDto } from '@autoline/shared';
+import type { AuthResponseDto, SignInData } from '@autoline/shared';
 
 const signupLocal = async (
   user: Prisma.UserCreateInput,
@@ -29,4 +30,15 @@ const signupLocal = async (
   };
 };
 
-export { signupLocal };
+const signinLocal = (user: SignInData): { accessToken: string } => {
+  const { email } = user;
+  const data = {
+    email,
+    sub: 'login',
+  };
+
+  const accessToken = createToken(data);
+  return { accessToken };
+};
+
+export { signupLocal, signinLocal };

@@ -4,24 +4,24 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      =  "mysql://autoline_user:An0thrS3crt@localhost:3307/autoline"
 }
 
 model User {
-  id            String          @id @default(uuid())
-  email         String          @unique @db.VarChar(80)
-  password      String          @db.VarChar(300) // Length of the hashed password
+  id            String         @id @default(uuid())
+  email         String         @unique @db.VarChar(80)
+  password      String         @db.VarChar(300) // Length of the hashed password
   /// Full name of a user
-  name          String          @db.VarChar(200)
-  phone         String?         @db.VarChar(20)
+  name          String         @db.VarChar(200)
+  phone         String?        @db.VarChar(20)
   location      String?
-  User_Security User_Security[]
+  User_Security User_Security?
 }
 
 model User_Security {
   id                     String  @id @default(uuid())
-  user                   User    @relation(fields: user_id, references: id)
-  user_id                String  @db.VarChar(300)
+  user                   User    @relation(fields: [user_id], references: [id])
+  user_id                String  @unique
   password               String  @db.VarChar(300)
   password_change_token  String  @db.VarChar(300)
   email_activation_token String  @db.VarChar(300)

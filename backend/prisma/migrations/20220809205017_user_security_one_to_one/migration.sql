@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE `User_Security` (
     `id` VARCHAR(191) NOT NULL,
-    `user_id` VARCHAR(300) NOT NULL,
+    `user_id` VARCHAR(191) NOT NULL,
     `password` VARCHAR(300) NOT NULL,
     `password_change_token` VARCHAR(300) NOT NULL,
     `email_activation_token` VARCHAR(300) NOT NULL,
@@ -11,6 +11,7 @@ CREATE TABLE `User_Security` (
     `google_acc_id` VARCHAR(300) NULL,
     `facebook_acc_id` VARCHAR(300) NULL,
 
+    UNIQUE INDEX `User_Security_user_id_key`(`user_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

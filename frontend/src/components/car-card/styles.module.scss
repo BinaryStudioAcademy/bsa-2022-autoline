@@ -1,0 +1,134 @@
+:root { // Then move vars to root scss file
+  --blue100: #3765ff;
+  --blue200: rgba(#032081, 0.51);
+  --blue300: #032081;
+  --gray100: #f1f4f6;
+  --gray200: #e4e8f2;
+  --gray300: #c9cfdd;
+  --gray400: #6a6c6d;
+  --black: #070a0c;
+  --white: #ffffff;
+  --red: #e81414;
+}
+
+.wrapper {
+  position: absolute;
+  display: grid;
+  grid-template-rows: 18.66% 1fr 27.23%;
+  grid-template-columns: 1fr 80px;
+  box-sizing: border-box;
+  width: 396px;
+  height: 432px;
+  padding: 0 30px;
+  background-color: var(--white);
+  border-radius: 5px;
+}
+
+.carImage {
+  position: absolute;
+  top: 18.66%;
+  right: 7.84%;
+  bottom: 27.23%;
+  left: 7.84%;
+  grid-column: span 2;
+  border-radius: 5px;
+}
+
+.buttonsWrapper {
+  display: flex;
+  grid-column-start: 2;
+  justify-content: space-between;
+  justify-self: end;
+  align-items: center;
+  gap: 10px;
+}
+
+.carTitle {
+  display: flex;
+  gap: 10px;
+}
+
+.carLogo {
+  align-self: center;
+  width: 35px;
+  height: 35px;
+}
+
+.carName {
+  align-self: center;
+  height: 19px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.likeButton {
+  width: 20px;
+  height: 20px;
+}
+
+.likeButton:hover {
+  cursor: pointer;
+}
+
+.compareButtonsWrapper {
+  margin-top: 4px;
+  margin-left: 10px;
+}
+
+.compareButton {
+  width: 20px;
+  height: 20px;
+}
+
+.compareButton:first-child {
+  position: absolute;
+}
+
+.compareButton:hover {
+  cursor: pointer;
+}
+
+.cardFooter {
+  display: flex;
+  grid-column: span 2;
+  grid-row-start: 3;
+  justify-content: center;
+}
+
+.carDescription {
+  width: 203px;
+  margin-top: 17px;
+  color: var(--gray400);
+  font-weight: 400;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 17px;
+  opacity: 0.6;
+}
+
+.priceBox {
+  justify-self: flex-end;
+  width: 101px;
+  margin-top: 26px;
+}
+
+.price {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: var(--blue100);
+  font-weight: 800;
+  font-size: 18px;
+  font-style: normal;
+  line-height: 25px;
+  text-transform: uppercase;
+}
+
+.verticalLine {
+  width: 1px;
+  height: 70px;
+  margin: 15px;
+  background-color: var(--gray200);
+  border: none;
+}

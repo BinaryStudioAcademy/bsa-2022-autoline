@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@autoline/shared": "link:../shared/build",
+    "@sentry/react": "^7.9.0",
+    "@sentry/tracing": "^7.9.0",
     "clsx": "1.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",

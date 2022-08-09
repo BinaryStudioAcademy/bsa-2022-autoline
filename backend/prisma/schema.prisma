@@ -8,11 +8,26 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  email    String  @unique @db.VarChar(80)
-  password String  @db.VarChar(300) // Length of the hashed password
+  id            String          @id @default(uuid())
+  email         String          @unique @db.VarChar(80)
+  password      String          @db.VarChar(300) // Length of the hashed password
   /// Full name of a user
-  name     String  @db.VarChar(200)
-  phone    String? @db.VarChar(20)
-  location String?
+  name          String          @db.VarChar(200)
+  phone         String?         @db.VarChar(20)
+  location      String?
+  User_Security User_Security[]
+}
+
+model User_Security {
+  id                     String  @id @default(uuid())
+  user                   User    @relation(fields: [user_id], references: [id])
+  user_id                String  @db.VarChar(300)
+  password               String  @db.VarChar(300)
+  password_change_token  String  @db.VarChar(300)
+  email_activation_token String  @db.VarChar(300)
+  email_change_token     String  @db.VarChar(300)
+  email_provisional      String  @db.VarChar(300)
+  refresh_token          String  @db.VarChar(300)
+  google_acc_id          String? @db.VarChar(300)
+  facebook_acc_id        String? @db.VarChar(300)
 }

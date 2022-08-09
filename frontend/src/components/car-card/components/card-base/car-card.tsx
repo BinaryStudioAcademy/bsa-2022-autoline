@@ -13,7 +13,7 @@ const CarCard: FC = () => {
     <div className={styles.wrapper}>
       <div className={styles.carTitle}>
         <img className={styles.carLogo} src={bmw} alt="car logo" />
-        <h2 className={styles.carName}>BMW X5</h2>
+        <span className={styles.carName}>BMW X5</span>
       </div>
       <div className={styles.buttonsWrapper}>
         <img className={styles.likeButton} src={heart} alt="like button" />

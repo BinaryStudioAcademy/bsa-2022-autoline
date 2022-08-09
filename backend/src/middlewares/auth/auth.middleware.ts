@@ -3,6 +3,8 @@ import passport from 'passport';
 
 initializeStrategies();
 
-const localAuth = passport.authenticate('local');
+const localAuth = passport.authenticate('local', {
+  session: false,
+});
 
 export { localAuth };

@@ -18,8 +18,8 @@ const localStrategy = new LocalStrategy(
         where: { email: normalizedEmail },
       });
       const passwordMatches = await bcryptCompare(
-        user?.password || '',
         password,
+        user?.password || '',
       );
 
       if (!user || !passwordMatches) {

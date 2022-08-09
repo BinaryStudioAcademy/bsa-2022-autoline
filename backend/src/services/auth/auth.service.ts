@@ -1,9 +1,9 @@
 import { prisma } from '@data/prisma-client';
 import { bcryptHash } from '@helpers/crypto/crypto';
 import { createToken } from '@helpers/helpers';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 
-import type { AuthResponseDto, SignInData } from '@autoline/shared';
+import type { AuthResponseDto, SignInResponseData } from '@autoline/shared';
 
 const signupLocal = async (
   user: Prisma.UserCreateInput,
@@ -30,15 +30,26 @@ const signupLocal = async (
   };
 };
 
-const signinLocal = (user: SignInData): { accessToken: string } => {
+const signinLocal = async (user: User): Promise<SignInResponseData> => {
   const { email } = user;
-  const data = {
+
+  const accessTokenPayload = {
     email,
-    sub: 'login',
+    sub: 'accessToken',
   };
 
-  const accessToken = createToken(data);
-  return { accessToken };
+  const refreshTokenPayload = {
+    email,
+    sub: 'refreshToken',
+  };
+
+  const accessToken = createToken(accessTokenPayload);
+  const refreshToken = createToken(refreshTokenPayload, false);
+  // await prisma.user_security.update({
+  //   where: { user_id: id },
+  //   data: { refresh_token: refreshToken },
+  // });
+  return { accessToken, refreshToken };
 };
 
 export { signupLocal, signinLocal };

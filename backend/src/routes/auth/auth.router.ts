@@ -1,5 +1,5 @@
 import * as authController from '@controllers/auth/auth.controller';
-import { errorsHandler, localAuth } from '@middlewares/middlewares';
+import * as passportMiddleware from '@middlewares/middlewares';
 import { Router } from 'express';
 
 const PATH = '/auth';
@@ -10,9 +10,8 @@ authRouter.post(`${PATH}/local/signup`, authController.signupLocal);
 
 authRouter.post(
   `${PATH}/local/signin`,
-  localAuth,
+  passportMiddleware.localAuth,
   authController.signinLocal,
-  errorsHandler,
 );
 
 export { authRouter };

@@ -28,9 +28,11 @@ const CarCard: FC = () => {
       </div>
       <img src={new_car_1} alt="car image" className={styles.carImage}></img>
       <div className={styles.cardFooter}>
-        <div className={styles.carDescription}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dui mi
-          aliquet enim ultrices ornare maecenas non enim amet...
+        <div className={styles.carContent}>
+          <p className={styles.carDescription}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dui mi
+            aliquet enim ultrices ornare maecenas non enim amet...
+          </p>
         </div>
         <hr className={styles.verticalLine} />
         <div className={styles.priceBox}>

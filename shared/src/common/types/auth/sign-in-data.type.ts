@@ -1,6 +1,15 @@
-type SignInData = {
+type SignInRequestData = {
   email: string;
   password: string;
 };
 
-export { type SignInData };
+type SignInResponseData = {
+  accessToken: string;
+  refreshToken: string;
+};
+
+type ErrorMessage = {
+  message: string;
+};
+
+export { type SignInRequestData, type SignInResponseData, type ErrorMessage };

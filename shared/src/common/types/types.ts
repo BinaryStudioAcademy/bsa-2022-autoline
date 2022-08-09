@@ -12,5 +12,7 @@ export {
 export {
   type AuthResponseDto,
   type TokenPayload,
-  type SignInData,
+  type SignInRequestData,
+  type SignInResponseData,
+  type ErrorMessage,
 } from './auth/auth';

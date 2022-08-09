@@ -1,7 +1,14 @@
 import { AppEnvironment } from '@common/enums/app/app-environment.enum';
 
-const { NODE_ENV, PORT, HOST, FRONTEND_URL, DATABASE_URL, SECRET_KEY } =
-  process.env;
+const {
+  NODE_ENV,
+  PORT,
+  HOST,
+  FRONTEND_URL,
+  DATABASE_URL,
+  SECRET_KEY,
+  SENTRY_DSN,
+} = process.env;
 
 const ENV = {
   APP: {
@@ -20,6 +27,9 @@ const ENV = {
   },
   API: {
     V1_PREFIX: '/api/v1',
+  },
+  SENTRY: {
+    DSN: SENTRY_DSN,
   },
 } as const;
 

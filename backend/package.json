@@ -5,6 +5,9 @@
     "node": ">=16 <=18",
     "yarn": ">=1 <2"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
     "lint:js": "npx eslint \"src/**/*.ts\" --resolve-plugins-relative-to .",
     "lint": "yarn lint:js",

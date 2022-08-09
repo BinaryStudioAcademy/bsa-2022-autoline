@@ -11,7 +11,7 @@ model User {
   id            String         @id @default(uuid())
   /// Full name of a user
   name          String         @db.VarChar(200)
-  sex           Sex
+  sex           Sex?
   phone         String?        @db.VarChar(20)
   email         String         @unique @db.VarChar(80)
   location      String?

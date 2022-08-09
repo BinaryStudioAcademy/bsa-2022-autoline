@@ -21,6 +21,14 @@ const ENV = {
   API: {
     V1_PREFIX: '/api/v1',
   },
+  EMAIL: {
+    SMTP_HOST: 'smtp.gmail.com',
+    SMTP_PORT: 587,
+    SMTP_USER: 'autoline.binary@gmail.com',
+    SMTP_PASSWORD: 'pyvwijwvexspvzfi',
+    API_URL: 'autoline.com',
+    ACTIVATE_URL: 'http://localhost:3001/api/v1/activate/',
+  },
 } as const;
 
 export { ENV };

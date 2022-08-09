@@ -6,5 +6,4 @@ const PATH = '/auth';
 const authRouter = Router();
 
 authRouter.post(`${PATH}/local/signup`, authController.signupLocal);
-
 export { authRouter };

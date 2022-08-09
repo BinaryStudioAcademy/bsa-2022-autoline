@@ -1,12 +1,12 @@
 import { FC } from 'react';
 
 import bmw from '@assets/images/bmw_logo.svg';
-import compare_part_1 from '@assets/images/compare_part_1.svg';
-import compare_part_2 from '@assets/images/compare_part_2.svg';
+import compare from '@assets/images/compare.svg';
 import heart from '@assets/images/heart.svg';
 import new_car_1 from '@assets/images/mock_car_picture.png';
+import { CarDescription } from '@components/car-card/components/card-description/car-description';
 
-import styles from '../../styles.module.scss';
+import styles from './styles.module.scss';
 
 const CarCard: FC = () => {
   return (
@@ -20,23 +20,19 @@ const CarCard: FC = () => {
         <div className={styles.compareButtonsWrapper}>
           <img
             className={styles.compareButton}
-            src={compare_part_1}
+            src={compare}
             alt="compare button"
           />
-          <img className={styles.compareButton} src={compare_part_2} alt="" />
         </div>
       </div>
       <img src={new_car_1} alt="car image" className={styles.carImage}></img>
       <div className={styles.cardFooter}>
         <div className={styles.carContent}>
-          <p className={styles.carDescription}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dui mi
-            aliquet enim ultrices ornare maecenas non enim amet...
-          </p>
+          <CarDescription />
         </div>
         <hr className={styles.verticalLine} />
         <div className={styles.priceBox}>
-          <h4 className={styles.price}>$ 34 000 - $ 52 450</h4>
+          <span className={styles.price}>$ 34 000 - $ 52 450</span>
         </div>
       </div>
     </div>

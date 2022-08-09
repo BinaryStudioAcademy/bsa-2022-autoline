@@ -1,36 +1,18 @@
-:root { // Then move vars to root scss file
-  --blue100: #3765ff;
-  --blue200: rgba(#032081, 0.51);
-  --blue300: #032081;
-  --gray100: #f1f4f6;
-  --gray200: #e4e8f2;
-  --gray300: #c9cfdd;
-  --gray400: #6a6c6d;
-  --black: #070a0c;
-  --white: #ffffff;
-  --red: #e81414;
-}
-
 .wrapper {
-  position: absolute;
   display: grid;
-  grid-template-rows: 18.66% 1fr 27.23%;
+  grid-template-rows: 18% minmax(1fr, 55%) 27%;
   grid-template-columns: 1fr 80px;
   box-sizing: border-box;
-  width: 396px;
-  height: 432px;
+  max-width: 400px;
+  min-height: 430px;
   padding: 0 30px;
   background-color: var(--white);
   border-radius: 5px;
 }
 
 .carImage {
-  position: absolute;
-  top: 18.66%;
-  right: 7.84%;
-  bottom: 27.23%;
-  left: 7.84%;
   grid-column: span 2;
+  width: 100%;
   border-radius: 5px;
 }
 
@@ -59,7 +41,6 @@
   height: 19px;
   font-weight: 700;
   font-size: 16px;
-  line-height: 19px;
 }
 
 .likeButton {
@@ -81,10 +62,6 @@
   height: 20px;
 }
 
-.compareButton:first-child {
-  position: absolute;
-}
-
 .compareButton:hover {
   cursor: pointer;
 }
@@ -97,33 +74,27 @@
 }
 
 .carContent {
-  width: 203px;
+  max-width: 200px;
   margin-top: 17px;
 }
 
-.carDescription {
-  margin: 0;
-  color: var(--gray400);
-  font-weight: 400;
-  font-size: 14px;
-  font-style: normal;
-  line-height: 17px;
-  opacity: 0.6;
-}
-
 .priceBox {
-  justify-self: flex-end;
-  width: 101px;
+  display: flex;
+  justify-content: end;
+  width: 100px;
+  min-width: 36%;
   margin-top: 26px;
+  text-align: end;
+  text-align-last: center;
 }
 
 .price {
-  width: 100%;
+  display: inline-block;
   margin: 0;
   padding: 0;
   color: var(--blue100);
-  font-weight: 800;
-  font-size: 18px;
+  font-weight: 900;
+  font-size: 22px;
   font-style: normal;
   line-height: 25px;
   text-transform: uppercase;
@@ -131,8 +102,8 @@
 
 .verticalLine {
   width: 1px;
-  height: 70px;
-  margin: 15px;
+  height: 70%;
+  margin: 10px;
   background-color: var(--gray200);
   border: none;
 }

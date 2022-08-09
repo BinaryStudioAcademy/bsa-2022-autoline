@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = "mysql://autoline_user:An0thrS3crt@localhost:3307/autoline"
 }
 
 model User {

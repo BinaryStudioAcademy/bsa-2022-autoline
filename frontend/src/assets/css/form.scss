@@ -13,3 +13,22 @@
 .MuiInputBase-root.Mui-error input {
   color: var(--red);
 }
+
+.MuiInputBase-root {
+  .MuiSelect-select {
+    box-sizing: border-box;
+    height: 46px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    padding-left: 0;
+    font-size: 14px;
+    font-family: Lato, sans-serif;
+  }
+
+  &.MuiInputBase-formControl {
+    .MuiSvgIcon-root {
+      right: 18px;
+      width: 12px;
+    }
+  }
+}

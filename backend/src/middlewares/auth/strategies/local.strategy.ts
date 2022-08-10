@@ -16,9 +16,12 @@ const localStrategy = new LocalStrategy(
 
       const user = await prisma.user.findUnique({
         where: { email: normalizedEmail },
+        include: {
+          User_Security: true,
+        },
       });
       const passwordMatches = await bcryptCompare(
-        user?.password || '',
+        user?.User_Security?.password || '',
         password,
       );
 

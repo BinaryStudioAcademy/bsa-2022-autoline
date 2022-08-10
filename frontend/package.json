@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@autoline/shared": "link:../shared/build",
+    "@sentry/react": "^7.9.0",
+    "@sentry/tracing": "^7.9.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/material": "^5.9.3",

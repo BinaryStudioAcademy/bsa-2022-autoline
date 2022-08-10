@@ -78,6 +78,13 @@ model Drivetrain {
   autoria_code Int
 }
 
+model Fuel_type {
+  id   String @id @default(uuid())
+  name String @db.VarChar(300)
+  autoria_code Int
+}
+
+
 enum Role {
   user
   admin

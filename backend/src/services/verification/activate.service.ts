@@ -6,9 +6,19 @@ interface UserResponse {
   email_token: string;
 }
 
-const activateUserMail = async (
-  user: Prisma.User_Security,
-): Promise<UserResponse> => {
+interface User_Security {
+  user_id: string;
+  password: string;
+  password_change_token: string;
+  email_activation_token: string;
+  email_change_token: string;
+  email_provisional: string;
+  refresh_token: string;
+  google_acc_id: string | null;
+  facebook_acc_id: string | null;
+}
+
+const addUserSecurity = async (user: User_Security): Promise<UserResponse> => {
   const { ...userData } = user;
   const { id: newUserId, email_activation_token: email_token } =
     await prisma.user_Security.create({
@@ -20,11 +30,23 @@ const activateUserMail = async (
         email_activation_token: true,
       },
     });
-  console.log('ddf', user);
+
   return {
     userId: newUserId,
     email_token: email_token,
   };
 };
 
-export { activateUserMail };
+const getUserSecurity = async (
+  token: string,
+): Promise<Prisma.User_Security | null> => {
+  const userSequrity = await prisma.user_Security.findFirst({
+    where: {
+      email_activation_token: token,
+    },
+  });
+  console.log(userSequrity, 'userSequrity');
+  return userSequrity;
+};
+
+export { addUserSecurity, getUserSecurity };

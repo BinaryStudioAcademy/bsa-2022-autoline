@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      =  "mysql://autoline_user:An0thrS3crt@localhost:3307/autoline"
+  url      = "mysql://autoline_user:An0thrS3crt@localhost:3307/autoline"
 }
 
 model User {
@@ -23,11 +23,11 @@ model User_Security {
   user                   User    @relation(fields: [user_id], references: [id])
   user_id                String  @unique
   password               String  @db.VarChar(300)
-  password_change_token  String  @db.VarChar(300)
-  email_activation_token String  @db.VarChar(300)
-  email_change_token     String  @db.VarChar(300)
-  email_provisional      String  @db.VarChar(300)
-  refresh_token          String  @db.VarChar(300)
+  password_change_token  String? @db.VarChar(300)
+  email_activation_token String? @db.VarChar(300)
+  email_change_token     String? @db.VarChar(300)
+  email_provisional      String? @db.VarChar(300)
+  refresh_token          String? @db.VarChar(300)
   google_acc_id          String? @db.VarChar(300)
   facebook_acc_id        String? @db.VarChar(300)
 }

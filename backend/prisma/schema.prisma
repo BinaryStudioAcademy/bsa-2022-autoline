@@ -15,7 +15,7 @@ model User {
   phone         String?        @db.VarChar(20)
   email         String         @unique @db.VarChar(80)
   location      String?
-  photo_url     String         @db.VarChar(300)
+  photo_url     String?        @db.VarChar(300)
   role          Role           @default(user)
   User_Security User_Security?
 }

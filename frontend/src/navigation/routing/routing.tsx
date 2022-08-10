@@ -11,15 +11,26 @@ const Routing: FC = () => {
     <BrowserRouter>
       <Routes>
         <Route
-          element={
-            <ProtectedRoute
-              isAllowed={!authData}
-              redirectPath={AppRoute.ROOT}
-            />
-          }
+        // element={
+        //   <ProtectedRoute
+        //     isAllowed={!authData}
+        //     redirectPath={AppRoute.ROOT}
+        //   />
+        // }
         >
           <Route path={AppRoute.SIGN_IN} element={<h2>Auth SIGN_IN</h2>} />
           <Route path={AppRoute.SIGN_UP} element={<h2>Auth SIGN_UP</h2>} />
+          <Route
+            path={AppRoute.MAIL_SACCESSFUL_VALIDATION}
+            element={
+              <div>
+                <h2>Validation was successful</h2>
+                <a rel="stylesheet" href="http://localhost:3000/">
+                  Main page
+                </a>
+              </div>
+            }
+          />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.ROOT} element={<h2>Home page</h2>} />

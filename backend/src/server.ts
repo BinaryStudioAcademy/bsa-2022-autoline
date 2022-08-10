@@ -1,6 +1,11 @@
 import { ENV } from '@common/enums/app/app';
 import { errorsHandler } from '@middlewares/middlewares';
-import { healthRouter, authRouter, activateRouter } from '@routes/routes';
+import {
+  healthRouter,
+  authRouter,
+  activateRouter,
+  sendMailRouter,
+} from '@routes/routes';
 import cors from 'cors';
 import express from 'express';
 
@@ -16,7 +21,7 @@ app
   .use(express.json())
   .use(express.urlencoded({ extended: true }));
 
-const routes = [healthRouter, authRouter, activateRouter];
+const routes = [healthRouter, authRouter, activateRouter, sendMailRouter];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 // Handle arbitrary errors that are thrown from any controller above
 app.use(errorsHandler);

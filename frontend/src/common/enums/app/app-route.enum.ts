@@ -4,6 +4,7 @@ enum AppRoute {
   SIGN_UP = '/sign-up',
   NOT_FOUND = '*',
   $ID = ':id',
+  MAIL_SACCESSFUL_VALIDATION = '/mail-success',
 }
 
 export { AppRoute };

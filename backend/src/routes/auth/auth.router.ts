@@ -14,4 +14,14 @@ authRouter.post(
   authController.signinLocal,
 );
 
+authRouter.get(
+  `${PATH}/local/reset-password/:email`,
+  authController.resetPasswordRequest,
+);
+authRouter.get(
+  `${PATH}/local/reset-password`,
+  authController.resetPasswordCheckToken,
+);
+authRouter.post(`${PATH}/local/reset-password`, authController.resetPassword);
+
 export { authRouter };

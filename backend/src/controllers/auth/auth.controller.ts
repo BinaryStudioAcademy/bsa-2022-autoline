@@ -9,7 +9,7 @@ import type {
 } from '@autoline/shared';
 import type { TypedRequestBody } from '@common/types/controller/controller';
 import type { UserCreateInput } from '@common/types/types';
-import type { NextFunction, Response } from 'express';
+import type { NextFunction, Response, Request } from 'express';
 
 const signupLocal = async (
   req: TypedRequestBody<UserCreateInput>,
@@ -41,4 +41,71 @@ const signinLocal = async (
   }
 };
 
-export { signupLocal, signinLocal };
+const resetPasswordRequest = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const requestPasswordResetService = await authService.requestPasswordReset(
+      req.params.email,
+    );
+    res.json(requestPasswordResetService);
+  } catch (error) {
+    console.error(error);
+    if (error instanceof Error) {
+      res.statusCode = 400;
+      res.json(error.message);
+    }
+    next(error);
+  }
+};
+
+const resetPasswordCheckToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    if (!req.query.token) return;
+    const token = req.query.token.toString();
+    const userId = await authService.resetPasswordCheckToken(token);
+    // just an example link till front end page is created
+    res.redirect(`https://www.google.com?id=${userId}`);
+  } catch (error) {
+    console.error(error);
+    if (error instanceof Error) {
+      res.statusCode = 403;
+      res.json(error.message);
+    }
+    // redirect to the page with 'oops, link is expired' error
+    res.redirect('https://www.google.com');
+    next(error);
+  }
+};
+
+const resetPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    await authService.resetPassword(req.body.id, req.body.password);
+    res.json('Password changed successfully');
+  } catch (error) {
+    console.error(error);
+    if (error instanceof Error) {
+      res.statusCode = 403;
+      res.json(error.message);
+    }
+    next(error);
+  }
+};
+
+export {
+  signupLocal,
+  signinLocal,
+  resetPasswordRequest,
+  resetPasswordCheckToken,
+  resetPassword,
+};

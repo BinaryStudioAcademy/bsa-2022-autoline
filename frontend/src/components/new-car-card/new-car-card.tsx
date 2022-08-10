@@ -7,7 +7,7 @@ import new_car_1 from '@assets/images/mock_car_picture.png';
 
 import styles from './styles.module.scss';
 
-const CarCard: FC = () => {
+const NewCarCard: FC = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.carTitle}>
@@ -42,4 +42,4 @@ const CarCard: FC = () => {
   );
 };
 
-export { CarCard };
+export { NewCarCard };

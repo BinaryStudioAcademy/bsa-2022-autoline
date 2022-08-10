@@ -4,7 +4,6 @@ import bmw from '@assets/images/bmw_logo.svg';
 import compare from '@assets/images/compare.svg';
 import heart from '@assets/images/heart.svg';
 import new_car_1 from '@assets/images/mock_car_picture.png';
-import { CarDescription } from '@components/car-card/components/card-description/car-description';
 
 import styles from './styles.module.scss';
 
@@ -28,7 +27,11 @@ const CarCard: FC = () => {
       <img src={new_car_1} alt="car image" className={styles.carImage}></img>
       <div className={styles.cardFooter}>
         <div className={styles.carContent}>
-          <CarDescription />
+          <p className={styles.carDescription}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dui mi
+            aliquet aliquet aliquet enim ultrices ornare maecenas non enim
+            amet...
+          </p>
         </div>
         <hr className={styles.verticalLine} />
         <div className={styles.priceBox}>

@@ -77,6 +77,18 @@
   margin-top: 17px;
 }
 
+.carDescription {
+  max-height: 85px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--gray400);
+  font-weight: 400;
+  font-size: 90%;
+  font-style: normal;
+  line-height: 17px;
+  opacity: 0.6;
+}
+
 .priceBox {
   display: flex;
   justify-content: end;

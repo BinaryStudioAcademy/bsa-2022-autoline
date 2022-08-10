@@ -34,6 +34,12 @@ model User_Security {
   facebook_acc_id        String? @db.VarChar(300)
 }
 
+model Body_Type {
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
+  autoria_code Int
+}
+
 enum Role {
   user
   admin

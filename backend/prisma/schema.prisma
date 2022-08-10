@@ -38,12 +38,14 @@ model Body_Type {
   id           String @id @default(uuid())
   name         String @db.VarChar(300)
   autoria_code Int
+  models       Model[]
 }
 
 model Manufacturer_Countrie {
   id           String @id @default(uuid())
   name         String @db.VarChar(300)
   autoria_code Int
+  models       Model[]
 }
 
 model Brand {
@@ -51,6 +53,23 @@ model Brand {
   name         String @db.VarChar(70)
   logo_url     String @db.VarChar(250)
   autoria_code Int
+  models       Model[]
+}
+
+model Model {
+  id                     String @id @default(uuid())
+  manufacturer_id        String
+  manufacture_country    Manufacturer_Countrie @relation(fields: [manufacturer_id], references: [id])
+  body_type_id           String
+  body_type              Body_Type @relation(fields: [body_type_id], references: [id])
+  manufacture_country_id String
+  brand                  Brand @relation(fields: [manufacture_country_id], references: [id])
+  name                   String @db.VarChar(70)
+  code_name              String @db.VarChar(70)
+  year_start             Int
+  year_end               Int
+  photo_urls             Json
+  autoria_code           Int
 }
 
 enum Role {

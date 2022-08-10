@@ -35,7 +35,8 @@
     "http-status-codes": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.6.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

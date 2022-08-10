@@ -72,6 +72,12 @@ model Model {
   autoria_code           Int
 }
 
+model Drivetrain {
+  id   String @id @default(uuid())
+  name String @db.VarChar(300)
+  autoria_code Int
+}
+
 enum Role {
   user
   admin

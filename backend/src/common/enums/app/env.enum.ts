@@ -8,6 +8,10 @@ const {
   DATABASE_URL,
   SECRET_KEY,
   SENTRY_DSN,
+  EMAIL_HOST,
+  EMAIL_USERNAME,
+  EMAIL_PASSWORD,
+  FROM_EMAIL,
 } = process.env;
 
 const ENV = {
@@ -27,6 +31,12 @@ const ENV = {
   },
   API: {
     V1_PREFIX: '/api/v1',
+  },
+  MAILTRAP: {
+    EMAIL_HOST: EMAIL_HOST,
+    EMAIL_USERNAME: EMAIL_USERNAME,
+    EMAIL_PASSWORD: EMAIL_PASSWORD,
+    FROM_EMAIL: FROM_EMAIL,
   },
   SENTRY: {
     DSN: SENTRY_DSN,

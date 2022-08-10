@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["src"],
+  "include": ["src", "src/helpers/mailtrap/mailtrap.ts"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "outDir": "build",

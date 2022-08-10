@@ -15,14 +15,8 @@ const NewCarCard: FC = () => {
         <span className={styles.carName}>BMW X5</span>
       </div>
       <div className={styles.buttonsWrapper}>
-        <img className={styles.likeButton} src={heart} alt="like button" />
-        <div className={styles.compareButtonsWrapper}>
-          <img
-            className={styles.compareButton}
-            src={compare}
-            alt="compare button"
-          />
-        </div>
+        <img className={styles.button} src={heart} alt="like button" />
+        <img className={styles.button} src={compare} alt="compare button" />
       </div>
       <img src={new_car_1} alt="car image" className={styles.carImage}></img>
       <div className={styles.cardFooter}>

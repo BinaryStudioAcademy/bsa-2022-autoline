@@ -42,27 +42,17 @@
   font-size: 16px;
 }
 
-.likeButton {
+.button {
   width: 20px;
   height: 20px;
-}
 
-.likeButton:hover {
-  cursor: pointer;
-}
+  &:hover {
+    cursor: pointer;
+  }
 
-.compareButtonsWrapper {
-  margin-top: 4px;
-  margin-left: 10px;
-}
-
-.compareButton {
-  width: 20px;
-  height: 20px;
-}
-
-.compareButton:hover {
-  cursor: pointer;
+  &:last-child {
+    margin-left: 10px;
+  }
 }
 
 .cardFooter {

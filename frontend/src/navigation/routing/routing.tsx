@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '@common/enums/app/app';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 
+import { Sign } from '../../components/sign/sign';
+
 const Routing: FC = () => {
   const authData = { name: 'Oleksandr' };
 
@@ -13,12 +15,12 @@ const Routing: FC = () => {
         <Route
           element={
             <ProtectedRoute
-              isAllowed={!authData}
+              isAllowed={!!authData}
               redirectPath={AppRoute.ROOT}
             />
           }
         >
-          <Route path={AppRoute.SIGN_IN} element={<h2>Auth SIGN_IN</h2>} />
+          <Route path={AppRoute.SIGN_IN} element={<Sign />} />
           <Route path={AppRoute.SIGN_UP} element={<h2>Auth SIGN_UP</h2>} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>

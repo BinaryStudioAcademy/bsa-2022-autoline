@@ -1,0 +1,15 @@
+.btnFill {
+  padding: 13px 35px;
+  color: var(--white);
+  font-weight: 700;
+  background-color: var(--blue100);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 300ms;
+}
+
+.btnFill:hover {
+  background-color: var(--blue300);
+  transition: all 300ms;
+}

@@ -84,6 +84,11 @@ model Fuel_type {
   autoria_code Int
 }
 
+model Color {
+  id   String @id @default(uuid())
+  name String @db.VarChar(300)
+  autoria_code Int
+}
 
 enum Role {
   user

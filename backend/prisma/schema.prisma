@@ -70,37 +70,70 @@ model Model {
   year_end               Int
   photo_urls             Json
   autoria_code           Int
+  complectations         Complectation[]
 }
 
 model Drivetrain {
-  id           String @id @default(uuid())
-  name         String @db.VarChar(300)
-  autoria_code Int
+  id             String @id @default(uuid())
+  name           String @db.VarChar(300)
+  autoria_code   Int
+  Complectations Complectation[]
 }
 
 model Fuel_Type {
-  id           String @id @default(uuid())
-  name         String @db.VarChar(300)
-  autoria_code Int
+  id             String @id @default(uuid())
+  name           String @db.VarChar(300)
+  autoria_code   Int
+  Complectations Complectation[]
 }
 
 model Color {
-  id           String @id @default(uuid())
-  name         String @db.VarChar(300)
-  autoria_code Int
+  id             String @id @default(uuid())
+  name           String @db.VarChar(300)
+  autoria_code   Int
+  Complectations Complectation[]
 }
 
 model Transmission_Type {
-  id           String @id @default(uuid())
-  name         String @db.VarChar(300)
-  autoria_code Int
+  id             String @id @default(uuid())
+  name           String @db.VarChar(300)
+  autoria_code   Int
+  Complectations Complectation[]
 }
 
 model Option {
-  id           String @id @default(uuid())
-  name         String @db.VarChar(300)
-  autoria_code Int
-  type         Type
+  id             String @id @default(uuid())
+  name           String @db.VarChar(300)
+  autoria_code   Int
+  type           Type
+  Complectations ComplectationsOnOptions[]
+}
+
+model Complectation {
+  id                   String                    @id @default(uuid())
+  model_id             String
+  model                Model                     @relation(fields: [model_id], references: [id])
+  engine               String                    @db.VarChar(300)
+  engine_displacement  Decimal
+  engine_power         Int
+  color_id             String
+  color                Color                     @relation(fields: [color_id], references: [id])
+  drivetrain_id        String
+  drivetrain           Drivetrain                @relation(fields: [drivetrain_id], references: [id])
+  fuel_type_id         String
+  fuel_type            Fuel_Type                 @relation(fields: [fuel_type_id], references: [id])
+  transmission_type_id String
+  transmission_type    Transmission_Type         @relation(fields: [transmission_type_id], references: [id])
+  options              ComplectationsOnOptions[]
+}
+
+model ComplectationsOnOptions {
+  complectation    Complectation @relation(fields: [complectation_id], references: [id])
+  complectation_id String
+  option           Option        @relation(fields: [option_id], references: [id])
+  option_id        String
+
+  @@id([complectation_id, option_id])
 }
 
 enum Role {

@@ -41,7 +41,7 @@ model Body_Type {
   models       Model[]
 }
 
-model Manufacturer_Countrie {
+model Manufacturer_Country {
   id           String @id @default(uuid())
   name         String @db.VarChar(300)
   autoria_code Int
@@ -59,7 +59,7 @@ model Brand {
 model Model {
   id                     String @id @default(uuid())
   manufacturer_id        String
-  manufacture_country    Manufacturer_Countrie @relation(fields: [manufacturer_id], references: [id])
+  manufacture_country    Manufacturer_Country @relation(fields: [manufacturer_id], references: [id])
   body_type_id           String
   body_type              Body_Type @relation(fields: [body_type_id], references: [id])
   manufacture_country_id String

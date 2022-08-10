@@ -18,7 +18,7 @@
     "db:generate": "yarn prisma generate",
     "db:generate:local": "dotenv -e ../.env/backend.env -- yarn db:generate",
     "db:push": "dotenv -e ../.env/backend.env -- yarn prisma db push",
-    "db:create-migration": "dotenv -e ../.env/backend.env -- yarn prisma migrate dev --name model_table",
+    "db:create-migration": "dotenv -e ../.env/backend.env -- yarn prisma migrate dev --name fix_table_name",
     "db:reset": "dotenv -e ../.env/backend.env -- yarn prisma migrate reset",
     "db:migrate:dev": "yarn prisma migrate dev",
     "db:migrate:dev:local": "dotenv -e ../.env/backend.env -- yarn db:migrate:dev",

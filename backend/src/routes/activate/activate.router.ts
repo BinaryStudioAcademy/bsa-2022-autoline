@@ -1,4 +1,4 @@
-import { activate } from '@controllers/email_validate';
+import { activate } from '@controllers/mail_varification/varification';
 import { Router } from 'express';
 
 const activateRouter = Router();

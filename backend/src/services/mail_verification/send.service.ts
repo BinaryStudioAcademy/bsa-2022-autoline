@@ -1,23 +1,23 @@
 import { ENV } from '@common/enums/app/app';
 import nodemailer from 'nodemailer';
 
-import { generateTokens } from '../verification/token_email_service';
+import { generateTokens } from './token.service';
 
 const transporter = nodemailer.createTransport({
-  host: ENV.EMAIL.SMTP_HOST,
-  port: ENV.EMAIL.SMTP_PORT,
+  host: ENV.MAIL.SMTP_HOST,
+  port: ENV.MAIL.SMTP_PORT,
   secure: false,
   auth: {
-    user: ENV.EMAIL.SMTP_USER,
-    pass: ENV.EMAIL.SMTP_PASSWORD,
+    user: ENV.MAIL.SMTP_USER,
+    pass: ENV.MAIL.SMTP_PASSWORD,
   },
 });
 
 async function sendActivationMail(to: string, link: string): Promise<void> {
   await transporter.sendMail({
-    from: ENV.EMAIL.SMTP_USER,
+    from: ENV.MAIL.SMTP_USER,
     to,
-    subject: 'Account activation on the website ' + ENV.EMAIL.API_URL,
+    subject: 'Account activation on the website ' + ENV.MAIL.API_URL,
     text: '',
     html: `
                     <div>
@@ -34,7 +34,7 @@ const mailSend = (email: string): string => {
     isActivated: false,
   });
 
-  sendActivationMail(email, `${ENV.EMAIL.ACTIVATE_URL}${token}`);
+  sendActivationMail(email, `${ENV.MAIL.ACTIVATE_URL}${token}`);
 
   return token;
 };

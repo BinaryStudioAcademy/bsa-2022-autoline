@@ -40,6 +40,12 @@ model Body_Type {
   autoria_code Int
 }
 
+model Manufacturer_Countrie {
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
+  autoria_code Int
+}
+
 enum Role {
   user
   admin

@@ -46,6 +46,13 @@ model Manufacturer_Countrie {
   autoria_code Int
 }
 
+model Brand {
+  id           String @id @default(uuid())
+  name         String @db.VarChar(70)
+  logo_url     String @db.VarChar(250)
+  autoria_code Int
+}
+
 enum Role {
   user
   admin

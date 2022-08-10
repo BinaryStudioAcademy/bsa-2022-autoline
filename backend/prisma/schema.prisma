@@ -57,15 +57,15 @@ model Brand {
 }
 
 model Model {
-  id                     String @id @default(uuid())
+  id                     String               @id @default(uuid())
   manufacturer_id        String
   manufacture_country    Manufacturer_Country @relation(fields: [manufacturer_id], references: [id])
   body_type_id           String
-  body_type              Body_Type @relation(fields: [body_type_id], references: [id])
+  body_type              Body_Type            @relation(fields: [body_type_id], references: [id])
   manufacture_country_id String
-  brand                  Brand @relation(fields: [manufacture_country_id], references: [id])
-  name                   String @db.VarChar(70)
-  code_name              String @db.VarChar(70)
+  brand                  Brand                @relation(fields: [manufacture_country_id], references: [id])
+  name                   String               @db.VarChar(70)
+  code_name              String               @db.VarChar(70)
   year_start             Int
   year_end               Int
   photo_urls             Json
@@ -73,27 +73,34 @@ model Model {
 }
 
 model Drivetrain {
-  id   String @id @default(uuid())
-  name String @db.VarChar(300)
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
   autoria_code Int
 }
 
-model Fuel_type {
-  id   String @id @default(uuid())
-  name String @db.VarChar(300)
+model Fuel_Type {
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
   autoria_code Int
 }
 
 model Color {
-  id   String @id @default(uuid())
-  name String @db.VarChar(300)
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
   autoria_code Int
 }
 
 model Transmission_Type {
-  id   String @id @default(uuid())
-  name String @db.VarChar(300)
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
   autoria_code Int
+}
+
+model Option {
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
+  autoria_code Int
+  type         Type
 }
 
 enum Role {
@@ -106,4 +113,15 @@ enum Sex {
   female
   not_known
   not_appliable
+}
+
+enum Type {
+  security
+  optics
+  multimedia
+  upholstery
+  sound
+  design
+  comfort
+  auxiliary
 }

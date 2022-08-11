@@ -21,8 +21,7 @@ const availableFor =
 
       if (roles.includes(payload.role as Role)) {
         req.body.tokenPayload = payload;
-        next();
-        return;
+        return next();
       }
     }
     res.status(httpStatus.FORBIDDEN).json({

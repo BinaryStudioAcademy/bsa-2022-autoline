@@ -21,8 +21,8 @@ const localStrategy = new LocalStrategy(
         },
       });
       const passwordMatches = await bcryptCompare(
-        user?.User_Security?.password || '',
         password,
+        user?.User_Security?.password || '',
       );
 
       if (!user || !passwordMatches) {

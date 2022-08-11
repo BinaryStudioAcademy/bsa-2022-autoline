@@ -1,0 +1,15 @@
+.MuiInputLabel-root.MuiInputLabel-shrink.Mui-focused,
+.MuiInputLabel-root.MuiInputLabel-shrink.MuiFormLabel-filled {
+  color: var(--gray300);
+  font-size: 12px;
+  transform: translate(0, 5px) scale(0.75);
+}
+
+.MuiInputBase-root.MuiOutlinedInput-root.Mui-focused fieldset {
+  border-width: 1px;
+  border-color: var(--blue100);
+}
+
+.MuiInputBase-root.Mui-error input {
+  color: var(--red);
+}

@@ -1,20 +1,23 @@
 import { prisma } from '@data/prisma-client';
 import { bcryptHash } from '@helpers/crypto/crypto';
 import { createToken } from '@helpers/helpers';
-import { Prisma, User } from '@prisma/client';
+import { User } from '@prisma/client';
 
 import type { AuthResponseDto, SignInResponseData } from '@autoline/shared';
+import type { UserCreateInput } from '@common/types/types';
 
-const signupLocal = async (
-  user: Prisma.UserCreateInput,
-): Promise<AuthResponseDto> => {
+const signupLocal = async (user: UserCreateInput): Promise<AuthResponseDto> => {
   const { password, ...userData } = user;
   const hashedPassword = await bcryptHash(password);
 
   const { id: newUserId, email: newUserEmail } = await prisma.user.create({
     data: {
       ...userData,
-      password: hashedPassword,
+      User_Security: {
+        create: {
+          password: hashedPassword,
+        },
+      },
     },
     select: {
       id: true,
@@ -31,24 +34,31 @@ const signupLocal = async (
 };
 
 const signinLocal = async (user: User): Promise<SignInResponseData> => {
-  const { email } = user;
+  const { email, id } = user;
 
   const accessTokenPayload = {
     email,
-    sub: 'accessToken',
+    sub: id,
   };
 
   const refreshTokenPayload = {
     email,
-    sub: 'refreshToken',
+    sub: id,
   };
 
   const accessToken = createToken(accessTokenPayload);
   const refreshToken = createToken(refreshTokenPayload, false);
-  // await prisma.user_security.update({
-  //   where: { user_id: id },
-  //   data: { refresh_token: refreshToken },
-  // });
+
+  await prisma.user.update({
+    where: { id },
+    data: {
+      User_Security: {
+        update: {
+          refresh_token: refreshToken,
+        },
+      },
+    },
+  });
   return { accessToken, refreshToken };
 };
 

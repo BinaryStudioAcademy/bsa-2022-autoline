@@ -1,4 +1,4 @@
-import { Prisma, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import * as authService from '@services/auth/auth.service';
 import httpStatus from 'http-status-codes';
 
@@ -8,10 +8,11 @@ import type {
   SignInResponseData,
 } from '@autoline/shared';
 import type { TypedRequestBody } from '@common/types/controller/controller';
+import type { UserCreateInput } from '@common/types/types';
 import type { NextFunction, Response } from 'express';
 
 const signupLocal = async (
-  req: TypedRequestBody<Prisma.UserCreateInput>,
+  req: TypedRequestBody<UserCreateInput>,
   res: Response<AuthResponseDto>,
   next: NextFunction,
 ): Promise<void> => {

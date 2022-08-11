@@ -15,7 +15,10 @@ const localAuth = (
 ): void => {
   passport.authenticate(
     'local',
-    { session: false },
+    {
+      session: false,
+      failureRedirect: '/',
+    },
     (err, user, info: ErrorMessage) => {
       if (err) {
         next(err);

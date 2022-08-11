@@ -25,12 +25,7 @@
     "build": "yarn build:shared && yarn build:frontend && yarn build:backend"
   },
   "dependencies": {
-    "@sentry/node": "^7.9.0",
-    "@types/nodemailer": "^6.4.5",
-    "cors": "^2.8.5",
-    "nodemailer": "^6.7.7",
-    "passport": "^0.6.0",
-    "yup": "^0.32.11"
+    "@sentry/node": "^7.9.0"
   },
   "devDependencies": {
     "@ls-lint/ls-lint": "1.11.2",

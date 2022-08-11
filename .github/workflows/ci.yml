@@ -1,0 +1,33 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - development
+      - main
+
+jobs:
+  lint:
+    name: autoline build test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install Dependencies
+        run: |
+          yarn install
+
+      - name: Code Linting
+        run: |
+          yarn run lint
+
+      - name: Code Building
+        run: |
+          yarn run build

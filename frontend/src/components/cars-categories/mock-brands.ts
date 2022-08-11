@@ -7,7 +7,7 @@ const mockBrands = [
       'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/2048px-BMW.svg.png',
   },
   {
-    'id': 98,
+    'id': 91,
     'name': 'Audi',
     'autoria_code': 2,
     'logo_url': 'https://pngimg.com/uploads/car_logo/car_logo_PNG1640.png',
@@ -46,7 +46,34 @@ const mockBrands = [
       'https://images.vectorhq.com/images/previews/99e/subaru-logo-psd-462096.png',
   },
   {
-    'id': 94,
+    'id': 95,
+    'name': 'Ferrari',
+    'autoria_code': 8,
+    'logo_url': 'https://pngimg.com/uploads/car_logo/car_logo_PNG1642.png',
+  },
+  {
+    'id': 96,
+    'name': 'Porsche',
+    'autoria_code': 8,
+    'logo_url':
+      'https://auto-shop.dp.ua/uploads/brand/7cfd7e04ff4cc69fe0e7c9513f5b4e48.png',
+  },
+  {
+    'id': 97,
+    'name': 'Porsche',
+    'autoria_code': 8,
+    'logo_url':
+      'https://auto-shop.dp.ua/uploads/brand/7cfd7e04ff4cc69fe0e7c9513f5b4e48.png',
+  },
+  {
+    'id': 98,
+    'name': 'Porsche',
+    'autoria_code': 8,
+    'logo_url':
+      'https://auto-shop.dp.ua/uploads/brand/7cfd7e04ff4cc69fe0e7c9513f5b4e48.png',
+  },
+  {
+    'id': 99,
     'name': 'Porsche',
     'autoria_code': 8,
     'logo_url':

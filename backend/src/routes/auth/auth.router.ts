@@ -12,4 +12,10 @@ authRouter.post(
   authController.signupLocal,
 );
 
+authRouter.post(
+  `${PATH}/local/signin`,
+  passportMiddleware.localAuth,
+  authController.signinLocal,
+);
+
 export { authRouter };

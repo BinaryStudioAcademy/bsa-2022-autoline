@@ -34,6 +34,16 @@ model User_Security {
   facebook_acc_id        String? @db.VarChar(300)
 }
 
+model User_Wishlist {
+  id               String        @id @default(uuid())
+  user_id          String        @unique @db.VarChar(300)
+  model_id         String
+  model            Model         @relation(fields: [model_id], references: [id])
+  complectation_id String
+  complectation    Complectation @relation(fields: [complectation_id], references: [id])
+  created_at       DateTime      @default(now())
+}
+
 model Body_Type {
   id           String @id @default(uuid())
   name         String @db.VarChar(300)
@@ -72,6 +82,7 @@ model Model {
   autoria_code           Int
   complectations         Complectation[]
   prices_ranges          Prices_Range[]
+  users_wishlist         User_Wishlist[]
 }
 
 model Drivetrain {
@@ -127,6 +138,7 @@ model Complectation {
   transmission_type    Transmission_Type         @relation(fields: [transmission_type_id], references: [id])
   options              ComplectationsOnOptions[]
   prices_ranges        Prices_Range[]
+  users_wishlist       User_Wishlist[]
 }
 
 model ComplectationsOnOptions {

@@ -1,8 +1,8 @@
 import { ENV } from '@common/enums/app/app';
 import { prisma } from '@data/prisma-client';
 import { createToken } from '@helpers/helpers';
-import { User } from '@prisma/client';
 import { bcryptHash, sendEmail } from '@helpers/helpers';
+import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
@@ -73,7 +73,7 @@ const requestPasswordReset = async (email: string): Promise<string> => {
 
   const resetToken = jwt.sign(
     {
-      id: user.id,
+      sub: user.id,
     },
     ENV.JWT.SECRET!,
     { expiresIn: '1h' },
@@ -100,8 +100,12 @@ const requestPasswordReset = async (email: string): Promise<string> => {
 
 const resetPasswordCheckToken = async (token: string): Promise<string> => {
   const payload = jwt.verify(token, ENV.JWT.SECRET!) as jwt.JwtPayload;
+  if (!payload.sub) {
+    throw new Error('Payload token is invalid');
+  }
+
   const userSecurity = await prisma.user_Security.findUnique({
-    where: { user_id: payload.id },
+    where: { user_id: payload.sub },
   });
 
   if (!userSecurity) {
@@ -112,14 +116,14 @@ const resetPasswordCheckToken = async (token: string): Promise<string> => {
   }
 
   await prisma.user_Security.update({
-    where: { user_id: payload.id },
+    where: { user_id: payload.sub },
     data: { password_change_token: null },
   });
 
   if (token !== userSecurity.password_change_token) {
     throw new Error('Invalid password reset token');
   }
-  return payload.id;
+  return payload.sub;
 };
 
 const resetPassword = async (id: string, password: string): Promise<void> => {

@@ -6,6 +6,13 @@
     "yarn": ">=1 <2"
   },
   "scripts": {
+    "start:frontend": "npm run start -w frontend",
+    "start:backend": "npm run build -w shared && npm run start:dev -w backend",
+    "migrate": "npm run migrate -w backend",
+    "install:frontend": "yarn -w frontend",
+    "install:backend": "yarn -w backend",
+    "install:shared": "yarn -w shared",
+    "install:all": "yarn && yarn install:shared && yarn install:frontend && yarn install:backend",
     "lint:editorconfig": "editorconfig-checker",
     "lint:fs": "ls-lint",
     "lint:shared:js": "cd shared && yarn lint:js",
@@ -15,13 +22,9 @@
     "lint:css": "yarn lint:frontend:css",
     "lint:js": "yarn lint:shared:js && yarn lint:backend:js && yarn lint:frontend:js",
     "lint": "yarn lint:editorconfig && yarn lint:fs && yarn lint:css && yarn lint:js",
-    "install:shared": "cd shared && yarn",
-    "install:frontend": "cd frontend && yarn",
-    "install:backend": "cd backend && yarn",
-    "install:all": "yarn && yarn install:shared && yarn build:shared && yarn install:frontend && yarn install:backend",
-    "build:shared": "cd shared && yarn build",
-    "build:frontend": "cd frontend && yarn build",
-    "build:backend": "cd backend && yarn build",
+    "build:shared": "yarn build -w shared",
+    "build:frontend": "yarn build -w frontend",
+    "build:backend": "yarn build -w backend",
     "build": "yarn build:shared && yarn build:frontend && yarn build:backend"
   },
   "dependencies": {},
@@ -44,6 +47,11 @@
     "stylelint-order": "5.0.0",
     "typescript": "4.7.4"
   },
+  "workspaces": [
+    "backend",
+    "frontend",
+    "shared"
+  ],
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
   }

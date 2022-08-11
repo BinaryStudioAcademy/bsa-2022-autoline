@@ -34,16 +34,18 @@ const signupLocal = async (user: UserCreateInput): Promise<AuthResponseDto> => {
 };
 
 const signinLocal = async (user: User): Promise<SignInResponseData> => {
-  const { email, id } = user;
+  const { email, id, role } = user;
 
   const accessTokenPayload = {
     email,
     sub: id,
+    role,
   };
 
   const refreshTokenPayload = {
     email,
     sub: id,
+    role,
   };
 
   const accessToken = createToken(accessTokenPayload);

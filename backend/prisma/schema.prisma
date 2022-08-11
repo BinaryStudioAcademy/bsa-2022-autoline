@@ -34,6 +34,121 @@ model User_Security {
   facebook_acc_id        String? @db.VarChar(300)
 }
 
+model Body_Type {
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
+  autoria_code Int
+  models       Model[]
+}
+
+model Manufacturer_Country {
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
+  autoria_code Int
+  models       Model[]
+}
+
+model Brand {
+  id           String @id @default(uuid())
+  name         String @db.VarChar(70)
+  logo_url     String @db.VarChar(250)
+  autoria_code Int
+  models       Model[]
+}
+
+model Model {
+  id                     String               @id @default(uuid())
+  manufacturer_id        String
+  manufacture_country    Manufacturer_Country @relation(fields: [manufacture_country_id], references: [id])
+  body_type_id           String
+  body_type              Body_Type            @relation(fields: [body_type_id], references: [id])
+  manufacture_country_id String
+  brand                  Brand                @relation(fields: [manufacturer_id], references: [id])
+  name                   String               @db.VarChar(70)
+  code_name              String               @db.VarChar(70)
+  year_start             Int
+  year_end               Int
+  photo_urls             Json
+  autoria_code           Int
+  complectations         Complectation[]
+  prices_ranges          Prices_Range[]
+}
+
+model Drivetrain {
+  id             String @id @default(uuid())
+  name           String @db.VarChar(300)
+  autoria_code   Int
+  complectations Complectation[]
+}
+
+model Fuel_Type {
+  id             String @id @default(uuid())
+  name           String @db.VarChar(300)
+  autoria_code   Int
+  complectations Complectation[]
+}
+
+model Color {
+  id             String @id @default(uuid())
+  name           String @db.VarChar(300)
+  autoria_code   Int
+  complectations Complectation[]
+}
+
+model Transmission_Type {
+  id             String @id @default(uuid())
+  name           String @db.VarChar(300)
+  autoria_code   Int
+  complectations Complectation[]
+}
+
+model Option {
+  id             String @id @default(uuid())
+  name           String @db.VarChar(300)
+  autoria_code   Int
+  type           Type
+  complectations ComplectationsOnOptions[]
+}
+
+model Complectation {
+  id                   String                    @id @default(uuid())
+  model_id             String
+  model                Model                     @relation(fields: [model_id], references: [id])
+  engine               String                    @db.VarChar(300)
+  engine_displacement  Decimal
+  engine_power         Int
+  color_id             String
+  color                Color                     @relation(fields: [color_id], references: [id])
+  drivetrain_id        String
+  drivetrain           Drivetrain                @relation(fields: [drivetrain_id], references: [id])
+  fuel_type_id         String
+  fuel_type            Fuel_Type                 @relation(fields: [fuel_type_id], references: [id])
+  transmission_type_id String
+  transmission_type    Transmission_Type         @relation(fields: [transmission_type_id], references: [id])
+  options              ComplectationsOnOptions[]
+  prices_ranges        Prices_Range[]
+}
+
+model ComplectationsOnOptions {
+  complectation    Complectation @relation(fields: [complectation_id], references: [id])
+  complectation_id String
+  option           Option        @relation(fields: [option_id], references: [id])
+  option_id        String
+
+  @@id([complectation_id, option_id])
+}
+
+model Prices_Range {
+  id                  String        @id @default(uuid())
+  model_id            String
+  model               Model         @relation(fields: [model_id], references: [id])
+  complectation_id    String
+  complectation       Complectation @relation(fields: [complectation_id], references: [id])
+  price_start         Int
+  price_end           Int
+  created_at          DateTime      @default(now())
+}
+
 enum Role {
   user
   admin
@@ -44,4 +159,15 @@ enum Sex {
   female
   not_known
   not_appliable
+}
+
+enum Type {
+  security
+  optics
+  multimedia
+  upholstery
+  sound
+  design
+  comfort
+  auxiliary
 }

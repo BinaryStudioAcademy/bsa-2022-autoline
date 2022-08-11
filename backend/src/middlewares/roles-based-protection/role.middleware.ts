@@ -6,7 +6,7 @@ import { Role } from '@prisma/client';
 import { Response, NextFunction } from 'express';
 import httpStatus from 'http-status-codes';
 
-const hasRole =
+const availableFor =
   (roles: Role[]) =>
   (
     req: TypedRequestBody<{ tokenPayload: TokenPayload }>,
@@ -30,7 +30,7 @@ const hasRole =
     });
   };
 
-const userAuthMiddleware = hasRole([Role.user, Role.admin]);
-const adminAuthMiddleware = hasRole([Role.admin]);
+const userAuthMiddleware = availableFor([Role.user, Role.admin]);
+const adminAuthMiddleware = availableFor([Role.admin]);
 
 export { userAuthMiddleware, adminAuthMiddleware };

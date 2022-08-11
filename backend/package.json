@@ -9,6 +9,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "scripts": {
+    "fetch": "ts-node prisma/seeds/fetch-cars-cata.ts",
     "lint:js": "npx eslint \"src/**/*.ts\" --resolve-plugins-relative-to .",
     "lint": "yarn lint:js",
     "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
@@ -29,6 +30,7 @@
     "@prisma/client": "4.1.1",
     "@sentry/node": "^7.9.0",
     "@sentry/tracing": "^7.9.0",
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.18.1",

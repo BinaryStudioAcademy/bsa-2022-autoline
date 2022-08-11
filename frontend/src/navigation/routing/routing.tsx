@@ -1,12 +1,11 @@
 import { FC } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { AppRoute } from '@common/enums/app/app';
+import { AppRoute, AppLinks } from '@common/enums/app/app';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 
 const Routing: FC = () => {
   const authData = { name: 'Oleksandr' };
-
   return (
     <BrowserRouter>
       <Routes>
@@ -26,7 +25,7 @@ const Routing: FC = () => {
           element={
             <div>
               <h2>Validation was successful</h2>
-              <a rel="stylesheet" href="http://localhost:3000/">
+              <a rel="stylesheet" href={AppLinks.ROOT}>
                 Main page
               </a>
             </div>
@@ -37,8 +36,19 @@ const Routing: FC = () => {
           element={
             <div>
               <h2>Validation failed</h2>
-              <a rel="stylesheet" href="http://localhost:3000/sign-up">
+              <a rel="stylesheet" href={AppLinks.SIGN_UP}>
                 Sign-up page
+              </a>
+            </div>
+          }
+        />
+        <Route
+          path={AppRoute.NOT_ALLOWED_SEND_MAIL}
+          element={
+            <div>
+              <h2>Please login to receive the activation link</h2>
+              <a rel="stylesheet" href={AppLinks.SIGN_IN}>
+                Sign-in page
               </a>
             </div>
           }

@@ -1,14 +1,12 @@
-import fs from 'fs';
-import path from 'path';
-
 import { ENV } from '@common/enums/app/app';
-import handlebars from 'handlebars';
 import nodemailer from 'nodemailer';
+
+import { INodemailerPayload } from './interfaces/INodemailerPayload';
 
 const sendEmail = async (
   email: string,
   subject: string,
-  payload: unknown,
+  payload: INodemailerPayload,
   template: string,
 ): Promise<void> => {
   const transporter = nodemailer.createTransport({
@@ -20,13 +18,12 @@ const sendEmail = async (
     },
   });
 
-  const source = fs.readFileSync(path.join(__dirname, template), 'utf8');
-  const compiledTemplate = handlebars.compile(source);
+  const templateService = await import(template);
   const options = {
     from: ENV.MAILTRAP.FROM_EMAIL,
     to: email,
     subject: subject,
-    html: compiledTemplate(payload),
+    html: templateService.getMessage(payload),
   };
 
   transporter.sendMail(options).catch((err) => {

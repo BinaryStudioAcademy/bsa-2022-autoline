@@ -84,7 +84,7 @@ const requestPasswordReset = async (email: string): Promise<string> => {
     data: { password_change_token: resetToken },
   });
 
-  const link = `localhost:${ENV.APP.SERVER_PORT}${ENV.API.V1_PREFIX}/auth/local/reset-password?token=${resetToken}`;
+  const link = `${ENV.APP.SERVER_HOST}:${ENV.APP.SERVER_PORT}${ENV.API.V1_PREFIX}/auth/local/reset-password-check-token?token=${resetToken}`;
 
   sendEmail(
     user.email,
@@ -93,7 +93,7 @@ const requestPasswordReset = async (email: string): Promise<string> => {
       name: user.name,
       link: link,
     },
-    './template/requestResetPassword.handlebars',
+    './templates/resetPasswordRequest.ts',
   );
   return link;
 };
@@ -110,19 +110,15 @@ const resetPasswordCheckToken = async (token: string): Promise<string> => {
   if (!userSecurity.password_change_token) {
     throw new Error('Password reset token does not exist');
   }
-  if (token !== userSecurity.password_change_token) {
-    await prisma.user_Security.update({
-      where: { user_id: payload.id },
-      data: { password_change_token: null },
-    });
-    throw new Error('Invalid password reset token');
-  }
 
   await prisma.user_Security.update({
     where: { user_id: payload.id },
     data: { password_change_token: null },
   });
 
+  if (token !== userSecurity.password_change_token) {
+    throw new Error('Invalid password reset token');
+  }
   return payload.id;
 };
 
@@ -131,12 +127,14 @@ const resetPassword = async (id: string, password: string): Promise<void> => {
   if (!user) {
     throw new Error('User does not exist');
   }
+
   const userSecurity = await prisma.user_Security.findUnique({
     where: { user_id: id },
   });
   if (!userSecurity) {
     throw new Error('User does not exist');
   }
+
   const isSamePassword = await bcrypt.compare(password, userSecurity.password);
   if (isSamePassword) {
     throw new Error('Same passwords error');
@@ -154,7 +152,7 @@ const resetPassword = async (id: string, password: string): Promise<void> => {
     {
       name: user.name,
     },
-    './template/resetPassword.handlebars',
+    './templates/resetPasswordConfirmation.ts',
   );
 };
 

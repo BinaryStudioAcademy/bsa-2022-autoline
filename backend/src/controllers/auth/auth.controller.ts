@@ -7,9 +7,13 @@ import type {
   SignInRequestData,
   SignInResponseData,
 } from '@autoline/shared';
-import type { TypedRequestBody } from '@common/types/controller/controller';
-import type { UserCreateInput } from '@common/types/types';
-import type { NextFunction, Response, Request } from 'express';
+import type {
+  TypedRequestBody,
+  TypedRequestParams,
+  TypedRequestQuery,
+} from '@common/types/controller/controller';
+import type { UserCreateInput, UserResetPassword } from '@common/types/types';
+import type { NextFunction, Response } from 'express';
 
 const signupLocal = async (
   req: TypedRequestBody<UserCreateInput>,
@@ -42,15 +46,13 @@ const signinLocal = async (
 };
 
 const resetPasswordRequest = async (
-  req: Request,
+  req: TypedRequestParams<{ email: string }>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const requestPasswordResetService = await authService.requestPasswordReset(
-      req.params.email,
-    );
-    res.json(requestPasswordResetService);
+    const emailLink = await authService.requestPasswordReset(req.params.email);
+    res.json(emailLink);
   } catch (error) {
     console.error(error);
     if (error instanceof Error) {
@@ -62,7 +64,7 @@ const resetPasswordRequest = async (
 };
 
 const resetPasswordCheckToken = async (
-  req: Request,
+  req: TypedRequestQuery<{ token: string }>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
@@ -85,7 +87,7 @@ const resetPasswordCheckToken = async (
 };
 
 const resetPassword = async (
-  req: Request,
+  req: TypedRequestBody<UserResetPassword>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {

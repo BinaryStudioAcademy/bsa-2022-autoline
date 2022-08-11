@@ -12,11 +12,9 @@ export const errorsHandler = (
   if (res.headersSent) {
     return next(error);
   }
-  res
-    .json({
-      error,
-      message: error.message,
-    })
-    .status(httpStatus.BAD_REQUEST);
+  res.status(httpStatus.BAD_REQUEST).json({
+    error,
+    message: error.message,
+  });
   return;
 };

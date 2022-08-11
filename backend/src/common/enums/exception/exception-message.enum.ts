@@ -4,7 +4,7 @@ const ExceptionMessage = {
   INCORRECT_CREDENTIALS:
     'Your authentication information is incorrect. Please try again.',
   NOT_ENOUGH_PERMISSIONS:
-    'You do not have enough permission to perform this action.',
+    'You do not have enough permissions to perform this action.',
 } as const;
 
 export { ExceptionMessage };

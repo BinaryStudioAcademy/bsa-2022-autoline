@@ -6,7 +6,7 @@
     "yarn": ">=1 <2"
   },
   "scripts": {
-    "start:frontend": "npm run start -w frontend",
+    "start:frontend": "npm run start:dev -w frontend",
     "start:backend": "npm run build -w shared && npm run start:dev -w backend",
     "migrate": "npm run migrate -w backend",
     "install:frontend": "yarn -w frontend",

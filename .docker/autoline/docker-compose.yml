@@ -11,11 +11,8 @@ services:
       - "3307:3306"
     volumes:
       - autoline_mariadb_data:/var/lib/mysql
-    environment:
-      - "MYSQL_DATABASE=autoline"
-      - "MYSQL_USER=autoline"
-      - "MYSQL_PASSWORD=secret"
-      - "MYSQL_ROOT_PASSWORD=secret"
+    env_file:
+      - ../../.env/backend.env
 
 volumes:
   autoline_mariadb_data:

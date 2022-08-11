@@ -1,0 +1,47 @@
+$swiper-navigation-size: 30px;
+
+.button {
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc($swiper-navigation-size / 30 * 30);
+  height: $swiper-navigation-size;
+  margin-top: calc(0px - $swiper-navigation-size / 2);
+  background-color: #f1f4f6;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #e6eaec;
+  }
+
+  &::after {
+    display: inline-block;
+    padding: 3px;
+    content: "";
+    border: solid #3765ff;
+    border-width: 0 3px 3px 0;
+  }
+}
+
+.prevButton {
+  right: auto;
+  left: 0;
+
+  &::after {
+    transform: rotate(135deg) translate(-2px, -1px);
+  }
+}
+
+.nextButton {
+  right: 0;
+  left: auto;
+
+  &::after {
+    transform: rotate(-45deg) translate(-1px, -2px);
+  }
+}

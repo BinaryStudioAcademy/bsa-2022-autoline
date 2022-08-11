@@ -71,34 +71,35 @@ model Model {
   photo_urls             Json
   autoria_code           Int
   complectations         Complectation[]
+  prices_ranges          Prices_Range[]
 }
 
 model Drivetrain {
   id             String @id @default(uuid())
   name           String @db.VarChar(300)
   autoria_code   Int
-  Complectations Complectation[]
+  complectations Complectation[]
 }
 
 model Fuel_Type {
   id             String @id @default(uuid())
   name           String @db.VarChar(300)
   autoria_code   Int
-  Complectations Complectation[]
+  complectations Complectation[]
 }
 
 model Color {
   id             String @id @default(uuid())
   name           String @db.VarChar(300)
   autoria_code   Int
-  Complectations Complectation[]
+  complectations Complectation[]
 }
 
 model Transmission_Type {
   id             String @id @default(uuid())
   name           String @db.VarChar(300)
   autoria_code   Int
-  Complectations Complectation[]
+  complectations Complectation[]
 }
 
 model Option {
@@ -106,7 +107,7 @@ model Option {
   name           String @db.VarChar(300)
   autoria_code   Int
   type           Type
-  Complectations ComplectationsOnOptions[]
+  complectations ComplectationsOnOptions[]
 }
 
 model Complectation {
@@ -125,6 +126,7 @@ model Complectation {
   transmission_type_id String
   transmission_type    Transmission_Type         @relation(fields: [transmission_type_id], references: [id])
   options              ComplectationsOnOptions[]
+  prices_ranges        Prices_Range[]
 }
 
 model ComplectationsOnOptions {
@@ -134,6 +136,17 @@ model ComplectationsOnOptions {
   option_id        String
 
   @@id([complectation_id, option_id])
+}
+
+model Prices_Range {
+  id                  String        @id @default(uuid())
+  model_id            String
+  model               Model         @relation(fields: [model_id], references: [id])
+  complectation_id    String
+  complectation       Complectation @relation(fields: [complectation_id], references: [id])
+  price_start         Int
+  price_end           Int
+  created_at          DateTime      @default(now())
 }
 
 enum Role {

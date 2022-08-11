@@ -21,7 +21,7 @@ const Routing: FC = () => {
           }
         >
           <Route path={AppRoute.SIGN_IN} element={<Sign />} />
-          <Route path={AppRoute.SIGN_UP} element={<h2>Auth SIGN_UP</h2>} />
+          <Route path={AppRoute.SIGN_UP} element={<Sign />} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.ROOT} element={<h2>Home page</h2>} />

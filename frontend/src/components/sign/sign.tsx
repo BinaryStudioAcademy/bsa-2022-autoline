@@ -6,6 +6,7 @@ import Logo from '../../assets/images/logo.svg';
 import BgImage from '../../assets/images/sign-bg.jpg';
 import { AppRoute } from '../../common/enums/app/app';
 import { SignInForm } from './components/components';
+import { SignUpForm } from './components/sign-up-form/sign-up-form';
 import styles from './styles.module.scss';
 
 export const Sign = (): React.ReactElement => {
@@ -15,6 +16,9 @@ export const Sign = (): React.ReactElement => {
     switch (path) {
       case AppRoute.SIGN_IN: {
         return <SignInForm />;
+      }
+      case AppRoute.SIGN_UP: {
+        return <SignUpForm />;
       }
       default: {
         return null;

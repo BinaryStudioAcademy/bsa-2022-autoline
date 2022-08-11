@@ -1,74 +1,54 @@
 version: "3.8"
 
-# Using `node_modules` mounting pattern described here:
-# https://burnedikt.com/dockerized-node-development-and-mounting-node-volumes/#prevent-hosts-node_modules-from-being-mounted
-
 services:
   autoline_mariadb:
+    image: mariadb
     container_name: autoline_mariadb
     build:
-      context: ../../
+      context: ./
       dockerfile: database/Dockerfile
     restart: on-failure
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
       - autoline_mariadb_data:/var/lib/mysql
     env_file:
-      - ../../.env/backend.env
+      - ../../.env/db.env
     networks:
       - autoline_backend_network
-
   autoline_backend:
+    image: ghcr.io/binarystudioacademy/autoline-backend-dev:latest
     container_name: autoline_backend
     depends_on:
       - autoline_mariadb
-    build:
-      context: ../../
-      dockerfile: backend/Dockerfile.dev
-    restart: unless-stopped
     ports:
       - "3001:3001"
-    volumes:
-      - ../../shared:/shared/
-      - exclude_shared:/shared/node_modules/
-      - ../../backend:/backend/
-      - exclude_backend:/backend/node_modules/
     env_file:
       - ../../.env/backend.env
-    environment:
-      - FRONTEND_URL=http://autoline_frontend:3000
     networks:
       - autoline_backend_network
       - autoline_frontend_network
 
   autoline_frontend:
+    image: ghcr.io/binarystudioacademy/autoline-frontend-dev:latest
     container_name: autoline_frontend
     depends_on:
       - autoline_backend
-    build:
-      context: ../../
-      dockerfile: frontend/Dockerfile.dev
-    restart: unless-stopped
     ports:
-      - "3000:3000"
-    volumes:
-      - ../../shared:/shared/
-      - exclude_shared:/shared/node_modules/
-      - ../../frontend:/frontend/
-      - exclude_frontend:/frontend/node_modules/
+      - '80:80'
+      - '443:443'
     env_file:
       - ../../.env/frontend.env
-    environment:
-      - VITE_API_ORIGIN_URL=http://autoline_backend:3001/api/v1
+    volumes:
+      - /etc/letsencrypt/live/dev.streamlet.tk/fullchain.pem:/etc/letsencrypt/live/autoline-not-autoria.xyz/fullchain.pem
+      - /etc/letsencrypt/live/dev.streamlet.tk/privkey.pem:/etc/letsencrypt/live/autoline-not-autoria.xyz/privkey.pem
+      - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
+      - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
     networks:
       - autoline_backend_network
       - autoline_frontend_network
 
 volumes:
-  exclude_shared:
-  exclude_backend:
-  exclude_frontend:
   autoline_mariadb_data:
     driver: local
 

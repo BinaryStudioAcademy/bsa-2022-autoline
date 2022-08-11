@@ -1,0 +1,57 @@
+.selectField {
+  width: 100%;
+
+  &.fieldWrapper {
+    margin-bottom: 15px;
+  }
+
+  .label {
+    left: 18px;
+    color: var(--gray300);
+    font-size: 14px;
+    transform: translate(0, 14px) scale(1);
+  }
+
+  fieldset {
+    top: 0;
+    border-color: var(--gray200);
+    border-radius: 50px;
+
+    legend {
+      display: none;
+    }
+  }
+
+  .error {
+    margin-top: 0;
+    color: var(--red);
+    font-size: 12px;
+    font-family: Lato, sans-serif;
+
+    span {
+      vertical-align: middle;
+    }
+  }
+}
+
+.select {
+  &.selectOutlined {
+    box-sizing: border-box;
+    height: 46px;
+    padding: 10px 18px;
+    color: var(--black);
+    font-size: 14px;
+  }
+}
+
+.selectFieldError {
+  label {
+    display: none;
+  }
+}
+
+.errorIcon {
+  display: inline-block;
+  padding-right: 5px;
+  vertical-align: middle;
+}

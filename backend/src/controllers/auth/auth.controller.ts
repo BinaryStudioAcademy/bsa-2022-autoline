@@ -14,7 +14,7 @@ const signupLocal = async (
   try {
     const user = req.body;
     const authResponseDto = await authService.signupLocal(user);
-    res.json(authResponseDto).status(httpStatus.CREATED);
+    res.status(httpStatus.CREATED).json(authResponseDto);
   } catch (error) {
     console.error(error);
     next(error);

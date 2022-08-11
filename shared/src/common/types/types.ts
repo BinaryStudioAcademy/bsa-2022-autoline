@@ -9,4 +9,10 @@ export {
   type BindingFunction3,
 } from './functions/functions';
 
-export { type AuthResponseDto, type TokenPayload } from './auth/auth';
+export {
+  type AuthResponseDto,
+  type TokenPayload,
+  type SignInRequestData,
+  type SignInResponseData,
+  type ErrorMessage,
+} from './auth/auth';

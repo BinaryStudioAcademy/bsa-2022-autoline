@@ -3,7 +3,7 @@ import * as authService from '@services/auth/auth.service';
 import httpStatus from 'http-status-codes';
 
 import type {
-  AuthResponseDto,
+  SignUpResponseDto,
   SignInRequestData,
   SignInResponseData,
 } from '@autoline/shared';
@@ -13,7 +13,7 @@ import type { NextFunction, Response } from 'express';
 
 const signupLocal = async (
   req: TypedRequestBody<UserCreateInput>,
-  res: Response<AuthResponseDto>,
+  res: Response<SignUpResponseDto>,
   next: NextFunction,
 ): Promise<void> => {
   try {

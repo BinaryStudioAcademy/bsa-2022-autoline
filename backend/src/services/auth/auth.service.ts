@@ -5,10 +5,12 @@ import { User } from '@prisma/client';
 import { mailSend } from '@services/mail_verification/send.service';
 import { updateMailToken } from '@services/mail_verification/user_security.service';
 
-import type { AuthResponseDto, SignInResponseData } from '@autoline/shared';
+import type { SignInResponseData, SignUpResponseDto } from '@autoline/shared';
 import type { UserCreateInput } from '@common/types/types';
 
-const signupLocal = async (user: UserCreateInput): Promise<AuthResponseDto> => {
+const signupLocal = async (
+  user: UserCreateInput,
+): Promise<SignUpResponseDto> => {
   const { password, ...userData } = user;
   const hashedPassword = await bcryptHash(password);
 

@@ -31,16 +31,6 @@ const ENV = {
   SENTRY: {
     DSN: SENTRY_DSN,
   },
-  MAIL: {
-    API_URL: 'http://localhost:3000/',
-    ACTIVATE_URL: 'http://localhost:3001/api/v1/activate/',
-    SUCCESS_URL: 'http://localhost:3000/mail-success',
-    FAILED_URL: 'http://localhost:3000/mail-failed',
-    SMTP_HOST: 'smtp.gmail.com',
-    SMTP_PORT: 587,
-    SMTP_USER: 'autoline.binary@gmail.com',
-    SMTP_PASSWORD: 'pyvwijwvexspvzfi',
-  },
 } as const;
 
 export { ENV };

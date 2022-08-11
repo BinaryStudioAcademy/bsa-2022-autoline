@@ -47,13 +47,14 @@ const signUpMiddleware = async (
         email: req.body.email,
       },
     });
-    if (existedUser) throw new Error();
+    if (existedUser) throw new Error('User with this email already exists!');
 
     next();
   } catch (err) {
+    const { message } = err as ErrorMessage;
     console.error(err);
-    res.status(403);
-    next(new Error('Some error'));
+    res.status(httpStatus.FORBIDDEN).json({ error: message });
+    next(err);
   }
 };
 

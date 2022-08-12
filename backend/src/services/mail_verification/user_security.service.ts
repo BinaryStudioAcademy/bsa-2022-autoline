@@ -12,6 +12,26 @@ const getByToken = async (
   return userSequrity;
 };
 
+const getByUserId = async (
+  userId: string,
+): Promise<Prisma.User_Security | null> => {
+  const userSequrity = await prisma.user_Security.findFirst({
+    where: {
+      user_id: userId,
+    },
+  });
+  return userSequrity;
+};
+
+const getUserByEmail = async (email: string): Promise<Prisma.User | null> => {
+  const user = await prisma.user.findFirst({
+    where: {
+      email: email,
+    },
+  });
+  return user;
+};
+
 const removeMailToken = async (id: string): Promise<Prisma.User_Security> => {
   const user = await prisma.user_Security.update({
     where: {
@@ -24,40 +44,25 @@ const removeMailToken = async (id: string): Promise<Prisma.User_Security> => {
   return user;
 };
 
-interface UserResponse {
-  userId: string;
-  email_token: string | null;
-}
-
-interface User_Security {
-  user_id: string;
-  password: string;
-  password_change_token: string | null;
-  email_activation_token: string | null;
-  email_change_token: string | null;
-  email_provisional: string | null;
-  refresh_token: string | null;
-  google_acc_id: string | null;
-  facebook_acc_id: string | null;
-}
-
-const addUserSecurity = async (user: User_Security): Promise<UserResponse> => {
-  const { ...userData } = user;
-  const { id: newUserId, email_activation_token: email_token } =
-    await prisma.user_Security.create({
-      data: {
-        ...userData,
-      },
-      select: {
-        id: true,
-        email_activation_token: true,
-      },
-    });
-
-  return {
-    userId: newUserId,
-    email_token: email_token,
-  };
+const changeMailToken = async (
+  id: string,
+  emailToken: string,
+): Promise<Prisma.User_Security> => {
+  const user_security = await prisma.user_Security.update({
+    where: {
+      user_id: id,
+    },
+    data: {
+      email_activation_token: emailToken,
+    },
+  });
+  return user_security;
 };
 
-export { getByToken, removeMailToken, addUserSecurity };
+export {
+  getByToken,
+  removeMailToken,
+  changeMailToken,
+  getUserByEmail,
+  getByUserId,
+};

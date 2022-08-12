@@ -25,8 +25,8 @@ const activateMail = async (
     if (!email) {
       return res.redirect(`${process.env.FRONTEND_URL}${ENV.MAIL.FAILED_URL}`);
     }
-    const { id } = user;
-    await userSecurityService.removeMailToken(id);
+    await userSecurityService.removeMailToken(user.id);
+
     return res.redirect(`${process.env.FRONTEND_URL}${ENV.MAIL.SUCCESS_URL}`);
   } catch (error) {
     console.error(error);

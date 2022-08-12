@@ -6,11 +6,19 @@ import {
   activateMailRouter,
   sendAgainRouter,
 } from '@routes/routes';
-// import { mailSend } from '@services/mail_verification/send.service';
+// import { sendAgainEmail } from '@services/mail_verification/send_mail/sendAgainEmail';
 import cors from 'cors';
 import express from 'express';
 
-// mailSend('setarasiuk@gmail.com');
+// const payload = {
+//   link: 'http://localhost:3000/',
+// };
+
+// sendAgainEmail(
+//   'setarasiuk@gmail.com',
+//   'Welcome To AutoLine Community',
+//   payload,
+// );
 
 // Express server configuration
 const app = express();

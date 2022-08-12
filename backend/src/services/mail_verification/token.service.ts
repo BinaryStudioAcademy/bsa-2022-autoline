@@ -12,8 +12,8 @@ declare module 'jsonwebtoken' {
   }
 }
 
-function generateMailTokens(payload: EmailTokenPayload): string {
-  const emailToken = jwt.sign(payload, ENV.JWT.SECRET || 'secret', {
+function generateMailToken(payload: EmailTokenPayload): string {
+  const emailToken = jwt.sign(payload, ENV.JWT.SECRET as string, {
     expiresIn: '7d',
   });
   return emailToken;
@@ -22,7 +22,7 @@ function generateMailTokens(payload: EmailTokenPayload): string {
 function validateMailToken(token: string): string | boolean {
   try {
     const { email } = <jwt.JwtPayload>(
-      jwt.verify(token, ENV.JWT.SECRET || 'secret')
+      jwt.verify(token, ENV.JWT.SECRET as string)
     );
     return email;
   } catch (error) {
@@ -31,4 +31,4 @@ function validateMailToken(token: string): string | boolean {
   }
 }
 
-export { generateMailTokens, validateMailToken };
+export { generateMailToken, validateMailToken };

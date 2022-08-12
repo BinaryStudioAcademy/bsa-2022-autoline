@@ -1,7 +1,7 @@
 import { ENV } from '@common/enums/app/app';
 import nodemailer from 'nodemailer';
 
-import { generateMailTokens } from './token.service';
+import { generateMailToken } from './token.service';
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -29,7 +29,7 @@ async function sendActivationMail(to: string, link: string): Promise<void> {
 }
 
 const mailSend = (email: string): string => {
-  const token = generateMailTokens({
+  const token = generateMailToken({
     email,
     isActivated: false,
   });

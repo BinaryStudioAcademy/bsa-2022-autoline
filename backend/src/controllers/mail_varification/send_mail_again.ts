@@ -1,24 +1,36 @@
-import { ENV } from '@common/enums/app/app';
+import { mailSend } from '@services/mail_verification/send.service';
+import * as userSecurityService from '@services/mail_verification/user_security.service';
 
-import type { TypedRequestQuery } from '@common/types/controller/controller';
+import { generateMailToken } from '../../services/mail_verification/token.service';
+
+import type { TypedRequestBody } from '@common/types/controller/controller';
 import type { Response, NextFunction } from 'express';
 
-type EmailActivationRequestQuery = {
-  link: string;
+type SendMailAgainBody = {
+  email: string;
 };
 
 const sendMailAgain = async (
-  req: TypedRequestQuery<EmailActivationRequestQuery>,
+  req: TypedRequestBody<SendMailAgainBody>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const authorizationHeader = req.headers.authorization;
-    const accesstoken = authorizationHeader?.split(' ')[1];
-    console.log(accesstoken, 'authorizationHeader');
-    if (!authorizationHeader) {
-      return res.redirect(ENV.MAIL.SUCCESS_URL);
+    const { email } = req.body;
+    const user = await userSecurityService.getUserByEmail(email);
+    if (!user) {
+      return;
     }
+    const userSecurity = await userSecurityService.getByUserId(user.id);
+    if (!userSecurity?.email_activation_token) {
+      return;
+    }
+    const token = generateMailToken({
+      email,
+      isActivated: false,
+    });
+    await userSecurityService.changeMailToken(user.id, token);
+    mailSend(email);
   } catch (error) {
     console.error(error);
     next(error);

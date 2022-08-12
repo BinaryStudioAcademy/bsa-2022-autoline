@@ -4,4 +4,10 @@ interface UserCreateInput extends Prisma.UserCreateInput {
   password: string;
 }
 
-export type { UserCreateInput };
+interface WishlistInput {
+  user_id: string;
+  model_id?: string;
+  complectation_id?: string;
+}
+
+export type { UserCreateInput, WishlistInput };

@@ -4,4 +4,4 @@ export {
   type TypedRequest,
 } from './controller/controller';
 
-export { type UserCreateInput } from './prisma/prisma';
+export { type UserCreateInput, type WishlistInput } from './prisma/prisma';

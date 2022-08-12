@@ -38,8 +38,6 @@
     "nodemailer": "^6.7.7",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "@types/nodemailer": "^6.4.5",
-    "nodemailer": "^6.7.7"
     "yup": "^0.32.11"
   },
   "devDependencies": {

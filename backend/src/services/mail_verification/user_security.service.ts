@@ -66,4 +66,3 @@ export {
   getUserByEmail,
   getByUserId,
 };
-

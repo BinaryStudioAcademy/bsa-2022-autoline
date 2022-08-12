@@ -37,10 +37,10 @@ model User_Security {
 model User_Wishlist {
   id               String        @id @default(uuid())
   user_id          String        @unique @db.VarChar(300)
-  model_id         String
-  model            Model         @relation(fields: [model_id], references: [id])
-  complectation_id String
-  complectation    Complectation @relation(fields: [complectation_id], references: [id])
+  model_id         String?
+  model            Model?         @relation(fields: [model_id], references: [id])
+  complectation_id String?
+  complectation    Complectation? @relation(fields: [complectation_id], references: [id])
   created_at       DateTime      @default(now())
 }
 

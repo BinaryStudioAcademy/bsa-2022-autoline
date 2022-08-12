@@ -8,13 +8,17 @@ const {
   DATABASE_URL,
   SECRET_KEY,
   SENTRY_DSN,
+  EMAIL_HOST,
+  EMAIL_USERNAME,
+  EMAIL_PASSWORD,
+  FROM_EMAIL,
 } = process.env;
 
 const ENV = {
   APP: {
     NODE_ENV: <AppEnvironment>NODE_ENV,
     SERVER_PORT: Number(PORT),
-    SERVER_HOST: HOST ?? 'http://localhost',
+    SERVER_HOST: HOST ?? 'localhost',
     FRONTEND_URL: FRONTEND_URL,
   },
   JWT: {
@@ -27,6 +31,12 @@ const ENV = {
   },
   API: {
     V1_PREFIX: '/api/v1',
+  },
+  MAILTRAP: {
+    EMAIL_HOST: EMAIL_HOST,
+    EMAIL_USERNAME: EMAIL_USERNAME,
+    EMAIL_PASSWORD: EMAIL_PASSWORD,
+    FROM_EMAIL: FROM_EMAIL,
   },
   SENTRY: {
     DSN: SENTRY_DSN,

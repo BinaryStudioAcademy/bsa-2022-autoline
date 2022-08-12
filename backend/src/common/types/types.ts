@@ -1,7 +1,8 @@
 export {
   type TypedRequestBody,
   type TypedRequestQuery,
+  type TypedRequestParams,
   type TypedRequest,
 } from './controller/controller';
 
-export { type UserCreateInput } from './prisma/prisma';
+export { type UserCreateInput, type UserResetPassword } from './prisma/prisma';

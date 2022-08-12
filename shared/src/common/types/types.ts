@@ -16,3 +16,5 @@ export {
   type SignInResponseData,
   type ErrorMessage,
 } from './auth/auth';
+
+export { type WishlistResponseDto } from './preferences/preferences';

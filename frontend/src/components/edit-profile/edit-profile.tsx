@@ -11,12 +11,12 @@ import { AppRoute } from '@common/enums/enums';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
-import { SelectField } from '@components/common/select-field/select-field';
 import { DialogDeleteAccount } from '@components/edit-profile/dialog-delete-account/dialog-delete-account';
-import { SelectYearsRange } from '@components/edit-profile/select-years-range/select-years-range';
+import { SelectFieldForm } from '@components/edit-profile/select-field-form/select-field-form';
+import { SelectYearRange } from '@components/edit-profile/select-years-range/select-year-range';
 import { SignIn } from '@components/edit-profile/sign-in/sign-in';
 import { useAppForm } from '@hooks/app-form/app-form.hook';
-import { Alert, MenuItem, Stack } from '@mui/material';
+import { Alert, MenuItem, Modal, Stack } from '@mui/material';
 import {
   ProfileFieldsRequestData,
   useDeleteUserProfileMutation,
@@ -103,13 +103,19 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
   };
 
   return (
-    <div className={styles.popupWrapper}>
-      <DialogDeleteAccount
-        handleCloseDialog={handleCloseDialog}
-        handleDeleteProfile={handleDeleteProfile}
-        isOpen={openDialog}
-      />
+    // <div className={styles.popupWrapper}>
+    <Modal
+      open={true}
+      onClose={onClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
       <div className={styles.popup}>
+        <DialogDeleteAccount
+          handleCloseDialog={handleCloseDialog}
+          handleDeleteProfile={handleDeleteProfile}
+          isOpen={openDialog}
+        />
         <span className={styles.cross}>
           <img src={CrossIcon} alt="cross" onClick={(): void => onClose()} />
         </span>
@@ -146,7 +152,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   inputLabel="Full name"
                 />
                 <div className={styles.selectsWrapper}>
-                  <SelectField
+                  <SelectFieldForm
                     id="sex"
                     name="sex"
                     required={false}
@@ -158,8 +164,8 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                     <MenuItem value="female">Female</MenuItem>
                     <MenuItem value="not_known">Other</MenuItem>
                     <MenuItem value="not_appliable">Rather not say</MenuItem>
-                  </SelectField>
-                  <SelectYearsRange
+                  </SelectFieldForm>
+                  <SelectYearRange
                     start={1960}
                     end={new Date().getFullYear()}
                     name="birthYear"
@@ -185,7 +191,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   control={control}
                   inputLabel="Email"
                 />
-                <SelectField
+                <SelectFieldForm
                   id="location"
                   name="location"
                   required={false}
@@ -197,7 +203,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   <MenuItem value="kyiv">Kyiv</MenuItem>
                   <MenuItem value="kharkiv">Kharkiv</MenuItem>
                   <MenuItem value="odesa">Odesa</MenuItem>
-                </SelectField>
+                </SelectFieldForm>
                 <h2 className={styles.title}>Change Password</h2>
                 <InputField
                   name="password"
@@ -252,6 +258,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Modal>
+    // </div>
   );
 };

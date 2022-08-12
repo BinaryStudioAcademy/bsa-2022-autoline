@@ -24,7 +24,7 @@ export const updateUserApi = api.injectEndpoints({
       ProfileFieldsResponseData,
       ProfileFieldsRequestData
     >({
-      query: ({ ...put }) => ({
+      query: (put) => ({
         url: `${API.USER}`,
         method: 'PUT',
         body: put,

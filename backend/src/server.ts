@@ -3,22 +3,11 @@ import { errorsHandler } from '@middlewares/middlewares';
 import {
   healthRouter,
   authRouter,
-  activateMailRouter,
+  mailActivateRouter,
   sendAgainRouter,
 } from '@routes/routes';
-// import { sendAgainEmail } from '@services/mail_verification/send_mail/sendAgainEmail';
 import cors from 'cors';
 import express from 'express';
-
-// const payload = {
-//   link: 'http://localhost:3000/',
-// };
-
-// sendAgainEmail(
-//   'setarasiuk@gmail.com',
-//   'Welcome To AutoLine Community',
-//   payload,
-// );
 
 // Express server configuration
 const app = express();
@@ -32,7 +21,7 @@ app
   .use(express.json())
   .use(express.urlencoded({ extended: true }));
 
-const routes = [healthRouter, authRouter, activateMailRouter, sendAgainRouter];
+const routes = [healthRouter, authRouter, mailActivateRouter, sendAgainRouter];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 // Handle arbitrary errors that are thrown from any controller above
 app.use(errorsHandler);

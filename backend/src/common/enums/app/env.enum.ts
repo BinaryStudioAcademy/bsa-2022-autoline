@@ -43,10 +43,6 @@ const ENV = {
     DSN: SENTRY_DSN,
   },
   MAIL: {
-    ACTIVATE_URL: 'http://localhost:3001/api/v1/activate/',
-    SUCCESS_URL: '/mail-activate-success',
-    FAILED_URL: '/mail-activate-failed',
-    NOT_ALLOWED_SEND_MAIL: '/mail-not-allowed',
     FROM_EMAIL_VALIDATE: FROM_EMAIL_VALIDATE,
   },
 } as const;

@@ -1,6 +1,6 @@
-import { ENV } from '@common/enums/app/app';
 import * as userSecurityService from '@services/mail_verification/user_security.service';
 
+import { MailActivate } from '../../services/mail_verification/send_mail/constants';
 import { validateMailToken } from '../../services/mail_verification/token.service';
 
 import type { TypedRequestQuery } from '@common/types/controller/controller';
@@ -19,15 +19,21 @@ const activateMail = async (
     const userToken = req.params.link;
     const user = await userSecurityService.getByToken(userToken);
     if (!user) {
-      return res.redirect(`${process.env.FRONTEND_URL}${ENV.MAIL.FAILED_URL}`);
+      return res.redirect(
+        `${process.env.FRONTEND_URL}${MailActivate.FAILED_URL}`,
+      );
     }
     const email = validateMailToken(userToken);
     if (!email) {
-      return res.redirect(`${process.env.FRONTEND_URL}${ENV.MAIL.FAILED_URL}`);
+      return res.redirect(
+        `${process.env.FRONTEND_URL}${MailActivate.FAILED_URL}`,
+      );
     }
     await userSecurityService.removeMailToken(user.id);
 
-    return res.redirect(`${process.env.FRONTEND_URL}${ENV.MAIL.SUCCESS_URL}`);
+    return res.redirect(
+      `${process.env.FRONTEND_URL}${MailActivate.SUCCESS_URL}`,
+    );
   } catch (error) {
     console.error(error);
     next(error);

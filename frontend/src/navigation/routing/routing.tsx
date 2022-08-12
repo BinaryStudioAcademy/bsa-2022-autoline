@@ -42,17 +42,6 @@ const Routing: FC = () => {
             </div>
           }
         />
-        <Route
-          path={AppRoute.NOT_ALLOWED_SEND_MAIL}
-          element={
-            <div>
-              <h2>Please login to receive the activation link</h2>
-              <a rel="stylesheet" href={AppLinks.SIGN_IN}>
-                Sign-in page
-              </a>
-            </div>
-          }
-        />
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.ROOT} element={<h2>Home page</h2>} />
         </Route>

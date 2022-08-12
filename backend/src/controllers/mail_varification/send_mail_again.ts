@@ -1,7 +1,6 @@
-import { mailSend } from '@services/mail_verification/send.service';
 import * as userSecurityService from '@services/mail_verification/user_security.service';
 
-import { generateMailToken } from '../../services/mail_verification/token.service';
+import { sendMail } from '../../services/mail_verification/send_mail/sendLink';
 
 import type { TypedRequestBody } from '@common/types/controller/controller';
 import type { Response, NextFunction } from 'express';
@@ -25,12 +24,8 @@ const sendMailAgain = async (
     if (!userSecurity?.email_activation_token) {
       return;
     }
-    const token = generateMailToken({
-      email,
-      isActivated: false,
-    });
+    const token = await sendMail(email);
     await userSecurityService.changeMailToken(user.id, token);
-    mailSend(email);
   } catch (error) {
     console.error(error);
     next(error);

@@ -2,8 +2,8 @@ import { RoutPath } from '@common/enums/app/route-path.enum';
 import { activateMail } from '@controllers/mail_varification/verification';
 import { Router } from 'express';
 
-const activateMailRouter = Router();
+const mailActivateRouter = Router();
 
-activateMailRouter.get(RoutPath.MAIL_ACTIVATE, activateMail);
+mailActivateRouter.get(RoutPath.MAIL_ACTIVATE, activateMail);
 
-export { activateMailRouter };
+export { mailActivateRouter };

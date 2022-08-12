@@ -1,6 +1,4 @@
-import { INodemailerPayload } from '../../../../helpers/mailtrap/interfaces/INodemailerPayload';
-
-export const getMessage = (payload: INodemailerPayload): string => {
+export const getMessage = (link: string): string => {
   return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -13,10 +11,10 @@ export const getMessage = (payload: INodemailerPayload): string => {
         <table align="center" border="0" cellpadding="0" cellspacing="0" style="height:100%; width:600px;">
             <tr>
               <td align="center" bgcolor="#ffffff" style="padding:30px">
-                <p style="text-align:left">Hello.<br><br>Follow the link below to activate your email.
+                <p style="text-align:left">Hello.<br><br>Follow the link below to verificate your email.
                 </p>
                 <p>
-                  <a target="_blank" style="text-decoration:none; background-color: green; border: rgb(28, 182, 92) 1px solid; color: #fff; padding:10px 10px; display:block;" href="http://${payload.link}">
+                  <a target="_blank" style="text-decoration:none; background-color: green; border: rgb(28, 182, 92) 1px solid; color: #fff; padding:10px 10px; display:block;" href="http://${link}">
                     <strong>Verificate Email</strong></a>
                 </p>
                 <p style="text-align:left">

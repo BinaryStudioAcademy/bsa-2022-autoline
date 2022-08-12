@@ -1,0 +1,28 @@
+.navigate {
+  display: flex;
+  align-items: center;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 105px;
+    margin-right: 56px;
+
+    &.itemActive {
+      position: relative;
+      border-bottom: 2px solid #3765ff;
+    }
+
+    a {
+      color: #353535;
+      font-size: 18px;
+      text-decoration: none;
+
+      &:hover {
+        color: #3765ff;
+      }
+    }
+  }
+}

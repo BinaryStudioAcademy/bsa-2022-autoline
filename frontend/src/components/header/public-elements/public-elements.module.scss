@@ -1,0 +1,25 @@
+.btnList {
+  display: flex;
+  align-items: center;
+}
+
+.btnSecondary,
+.btnPrimary {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.btnSecondary {
+  margin-left: 20px;
+  color: #3765ff;
+  background: none;
+}
+
+.btnPrimary {
+  padding: 13px 25px;
+  color: #ffffff;
+  background: #3765ff;
+  border-radius: 50px;
+}

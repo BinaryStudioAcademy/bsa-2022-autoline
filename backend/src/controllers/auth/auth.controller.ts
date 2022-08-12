@@ -3,7 +3,7 @@ import * as authService from '@services/auth/auth.service';
 import httpStatus from 'http-status-codes';
 
 import type {
-  AuthResponseDto,
+  SignUpResponseDto,
   SignInRequestData,
   SignInResponseData,
 } from '@autoline/shared';
@@ -17,13 +17,13 @@ import type { NextFunction, Response } from 'express';
 
 const signupLocal = async (
   req: TypedRequestBody<UserCreateInput>,
-  res: Response<AuthResponseDto>,
+  res: Response<SignUpResponseDto>,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const user = req.body;
     const authResponseDto = await authService.signupLocal(user);
-    res.json(authResponseDto).status(httpStatus.CREATED);
+    res.status(httpStatus.CREATED).json(authResponseDto);
   } catch (error) {
     console.error(error);
     next(error);

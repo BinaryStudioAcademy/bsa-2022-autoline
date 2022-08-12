@@ -6,8 +6,7 @@ import { ENV } from '@common/enums/app/env.enum';
 import { Routing } from '@navigation/routing/routing';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
-
-import { store } from './store/store';
+import { store } from '@store/store';
 import '@assets/css/styles.scss';
 
 const container = document.getElementById('root') as HTMLDivElement;

@@ -16,10 +16,18 @@
   },
   "dependencies": {
     "@autoline/shared": "link:../shared/build",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@mui/material": "^5.9.3",
+    "@reduxjs/toolkit": "^1.8.4",
+    "@sentry/react": "^7.9.0",
+    "@sentry/tracing": "^7.9.0",
     "clsx": "1.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-router-dom": "6.3.0"
+    "react-redux": "^8.0.2",
+    "react-router-dom": "6.3.0",
+    "swiper": "^8.3.2"
   },
   "devDependencies": {
     "@types/react": "18.0.14",

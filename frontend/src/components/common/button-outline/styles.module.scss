@@ -1,0 +1,16 @@
+.btnOutline {
+  padding: 13px 35px;
+  color: var(--blue100);
+  font-weight: 700;
+  background-color: transparent;
+  border: 1px solid var(--blue100);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 300ms;
+}
+
+.btnOutline:hover {
+  color: var(--blue300);
+  border-color: var(--blue300);
+  transition: all 300ms;
+}

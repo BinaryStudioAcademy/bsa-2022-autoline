@@ -1,6 +1,10 @@
 // noinspection CssInvalidAtRule
 @import-normalize;
 
+@import "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,700&display=swap";
+@import "./variables";
+@import "./form";
+
 *,
 *::before,
 *::after {
@@ -11,4 +15,5 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: var(--primary-font);
 }

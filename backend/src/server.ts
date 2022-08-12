@@ -6,11 +6,29 @@ import {
   mailActivateRouter,
   sendAgainRouter,
 } from '@routes/routes';
+import { healthRouter, authRouter, protectedRouter } from '@routes/routes';
+import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
 import cors from 'cors';
 import express from 'express';
 
 // Express server configuration
 const app = express();
+
+Sentry.init({
+  environment: ENV.APP.NODE_ENV,
+  dsn: ENV.SENTRY.DSN,
+  integrations: [
+    new Sentry.Integrations.Http({ tracing: true }),
+    new Tracing.Integrations.Express({ app }),
+  ],
+
+  tracesSampleRate: 1.0,
+});
+
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
+
 app
   .use(
     cors({
@@ -21,8 +39,15 @@ app
   .use(express.json())
   .use(express.urlencoded({ extended: true }));
 
+
 const routes = [healthRouter, authRouter, mailActivateRouter, sendAgainRouter];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
+
+const routes = [healthRouter, authRouter, protectedRouter];
+routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
+
+app.use(Sentry.Handlers.errorHandler());
+
 // Handle arbitrary errors that are thrown from any controller above
 app.use(errorsHandler);
 

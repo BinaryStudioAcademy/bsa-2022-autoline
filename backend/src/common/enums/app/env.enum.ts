@@ -12,14 +12,14 @@ const {
   EMAIL_USERNAME,
   EMAIL_PASSWORD,
   FROM_EMAIL,
-  FROM_EMAIL_VALIDATE,
+  FROM_MAIL_VALIDATE,
 } = process.env;
 
 const ENV = {
   APP: {
     NODE_ENV: <AppEnvironment>NODE_ENV,
     SERVER_PORT: Number(PORT),
-    SERVER_HOST: HOST ?? 'http://localhost',
+    SERVER_HOST: HOST ?? 'localhost',
     FRONTEND_URL: FRONTEND_URL,
   },
   JWT: {

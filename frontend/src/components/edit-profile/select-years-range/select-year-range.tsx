@@ -1,7 +1,7 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
 
-import { SelectField } from '@components/common/select-field/select-field';
+import { SelectFieldForm } from '@components/common/select-field-form/select-field-form';
 import { MenuItem } from '@mui/material';
 
 import styles from './styles.module.scss';
@@ -17,7 +17,7 @@ interface RangeYearsProps {
   defaultValue: string;
 }
 
-export const SelectYearsRange: React.FC<RangeYearsProps> = ({
+export const SelectYearRange: React.FC<RangeYearsProps> = ({
   start,
   end,
   required,
@@ -32,7 +32,7 @@ export const SelectYearsRange: React.FC<RangeYearsProps> = ({
     .map((_, idx) => start + idx);
 
   return (
-    <SelectField
+    <SelectFieldForm
       id={id}
       name={name}
       required={required}
@@ -47,6 +47,6 @@ export const SelectYearsRange: React.FC<RangeYearsProps> = ({
           {year}
         </MenuItem>
       ))}
-    </SelectField>
+    </SelectFieldForm>
   );
 };

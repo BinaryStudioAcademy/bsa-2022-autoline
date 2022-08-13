@@ -13,6 +13,7 @@ const {
   EMAIL_USERNAME,
   EMAIL_PASSWORD,
   FROM_EMAIL,
+  AUTORIA_API_KEY,
 } = process.env;
 
 const ENV = {

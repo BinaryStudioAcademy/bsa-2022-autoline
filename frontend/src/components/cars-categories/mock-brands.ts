@@ -19,13 +19,6 @@ const mockBrands = [
     'logo_url': 'https://www.pngall.com/wp-content/uploads/2/Mazda-PNG-Pic.png',
   },
   {
-    'id': 3,
-    'name': 'Chery',
-    'autoria_code': 4,
-    'logo_url':
-      'https://logos-world.net/wp-content/uploads/2021/08/Chery-Logo.png',
-  },
-  {
     'id': 9,
     'name': 'Volkswagen',
     'autoria_code': 5,
@@ -53,27 +46,6 @@ const mockBrands = [
   },
   {
     'id': 96,
-    'name': 'Porsche',
-    'autoria_code': 8,
-    'logo_url':
-      'https://auto-shop.dp.ua/uploads/brand/7cfd7e04ff4cc69fe0e7c9513f5b4e48.png',
-  },
-  {
-    'id': 97,
-    'name': 'Porsche',
-    'autoria_code': 8,
-    'logo_url':
-      'https://auto-shop.dp.ua/uploads/brand/7cfd7e04ff4cc69fe0e7c9513f5b4e48.png',
-  },
-  {
-    'id': 98,
-    'name': 'Porsche',
-    'autoria_code': 8,
-    'logo_url':
-      'https://auto-shop.dp.ua/uploads/brand/7cfd7e04ff4cc69fe0e7c9513f5b4e48.png',
-  },
-  {
-    'id': 99,
     'name': 'Porsche',
     'autoria_code': 8,
     'logo_url':

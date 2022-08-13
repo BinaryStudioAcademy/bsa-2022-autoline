@@ -3,7 +3,6 @@ import colors from './colors.json';
 import drivetrains from './drivetrains.json';
 import fuelTypes from './fuel-types.json';
 import manufacturers from './manufacturers.json';
-import options from './options.json';
 import transmissionTypes from './transmission-types.json';
 
 export {
@@ -11,7 +10,6 @@ export {
   drivetrains,
   fuelTypes,
   manufacturers,
-  options,
   transmissionTypes,
   bodyTypes,
 };

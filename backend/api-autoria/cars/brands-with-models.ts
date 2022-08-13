@@ -22,7 +22,7 @@ export const brands = [
         'value': 393,
         'autoria_body_type_id': 3,
         'year_start': 2002,
-        'year_end': 0,
+        'year_end': null,
         'photo_urls': [
           'https://www.autocentre.ua/wp-content/uploads/2017/11/2019-Mazda6-23.jpg',
           'https://img.automoto.ua/overview/mazda-6-2020-463-huge-1632.jpg',

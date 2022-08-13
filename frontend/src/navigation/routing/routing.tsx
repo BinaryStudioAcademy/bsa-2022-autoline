@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { AppRoute, AppLinks } from '@common/enums/app/app';
+import { AppRoute } from '@common/enums/app/app';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 
 import { Sign } from '../../components/sign/sign';
@@ -27,7 +27,7 @@ const Routing: FC = () => {
           element={
             <div>
               <h2>Validation was successful</h2>
-              <a rel="stylesheet" href={AppLinks.ROOT}>
+              <a rel="stylesheet" href={AppRoute.ROOT}>
                 Main page
               </a>
             </div>
@@ -38,8 +38,8 @@ const Routing: FC = () => {
           element={
             <div>
               <h2>Validation failed</h2>
-              <a rel="stylesheet" href={AppLinks.SIGN_UP}>
-                Sign-up page
+              <a rel="stylesheet" href={AppRoute.ROOT}>
+                Main page
               </a>
             </div>
           }

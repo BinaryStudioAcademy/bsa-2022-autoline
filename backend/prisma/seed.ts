@@ -9,6 +9,8 @@ import {
   fuelTypes,
   transmissionTypes,
 } from '../api-autoria/cars/fetched-data/fetched-data';
+import { OptionType } from '../api-autoria/cars/option-type.enum';
+import { optionsTypes } from '../api-autoria/cars/options-types';
 import { AutoriaPlainDataDto } from '../src/dtos/cars/autoria-plain-data.dto';
 import { users } from './seeds/users';
 import { users_security } from './seeds/users-security';
@@ -64,6 +66,16 @@ async function main(): Promise<void> {
     });
   }
 
+  for (const option of optionsTypes) {
+    await prisma.option.create({
+      data: {
+        'name': option.name,
+        'autoria_code': option.value,
+        'type': option.type as OptionType,
+      },
+    });
+  }
+
   for (const brand of brands) {
     const newBrand = await prisma.brand.create({
       data: {
@@ -82,7 +94,6 @@ async function main(): Promise<void> {
         where: { autoria_code: model.autoria_body_type_id },
       });
 
-      // const modelToSeed = new ModelDTO(model);
       const newModel = await prisma.model.create({
         data: {
           'manufacturer_id': newBrand.id,

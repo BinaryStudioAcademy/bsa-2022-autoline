@@ -7,12 +7,12 @@ export const optionsTypes = [
   {
     'name': 'Anti-lock braking system (ABS)',
     'value': 217,
-    'type': ' auxiliary',
+    'type': 'auxiliary',
   },
   {
     'name': 'Traction Control (ASR)',
     'value': 606,
-    'type': ' auxiliary',
+    'type': 'auxiliary',
   },
   {
     'name': 'Rear door locks',

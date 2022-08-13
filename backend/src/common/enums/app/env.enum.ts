@@ -8,6 +8,7 @@ const {
   DATABASE_URL,
   SECRET_KEY,
   SENTRY_DSN,
+  AUTORIA_API_KEY,
 } = process.env;
 
 const ENV = {
@@ -16,6 +17,7 @@ const ENV = {
     SERVER_PORT: Number(PORT),
     SERVER_HOST: HOST ?? 'http://localhost',
     FRONTEND_URL: FRONTEND_URL,
+    AUTORIA_API_KEY: AUTORIA_API_KEY,
   },
   JWT: {
     SECRET: SECRET_KEY,
@@ -27,6 +29,7 @@ const ENV = {
   },
   API: {
     V1_PREFIX: '/api/v1',
+    AUTORIA_API_KEY: AUTORIA_API_KEY,
   },
   SENTRY: {
     DSN: SENTRY_DSN,

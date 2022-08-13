@@ -1,44 +1,14 @@
 import * as fs from 'fs';
 
-import axios, { AxiosResponse } from 'axios';
+import { ENV } from '@common/enums/app/env.enum';
+import axios from 'axios';
 
-const API_KEY = 'your api key';
+const API_KEY = ENV.API.AUTORIA_API_KEY;
 const category = 1; //passenger cars
-const brandsLimit = 5;
-const modelsLimit = 5;
 
-const brandsIDs: number[] = [];
-
-const getBrands = async (): Promise<void> => {
-  const response = await axios.get(
-    `https://developers.ria.com/auto/new/marks?category_id=${category}&limit=${brandsLimit}&api_key=${API_KEY}`,
-  );
-  const ids = response.data.map(
-    (brand: { marka_id: number }) => brand.marka_id,
-  );
-  brandsIDs.push(...ids);
-  await fs.writeFileSync(
-    `${__dirname}/fetched-data/brands.json`,
-    JSON.stringify(response.data),
-  );
-};
-
-const getBrandsModels = async (brandsIDs: number[]): Promise<void> => {
-  const data: AxiosResponse[] = [];
-
-  const requests = brandsIDs.map((id) =>
-    axios.get(
-      `https://developers.ria.com/auto/new/models?marka_id=${id}&category_id=${category}&limit=${modelsLimit}&api_key=${API_KEY}`,
-    ),
-  );
-  await Promise.all(requests).then((responses) =>
-    responses.forEach((response: AxiosResponse) => data.push(...response.data)),
-  );
-  fs.writeFileSync(
-    `${__dirname}/fetched-data/models.json`,
-    JSON.stringify(data),
-  );
-};
+// const fetchAndWrite = (url, filename) => {
+//
+// }
 
 const getManufacturers = async (): Promise<void> => {
   const response = await axios.get(
@@ -94,7 +64,10 @@ const getOptions = async (): Promise<void> => {
   const response = await axios.get(
     `https://developers.ria.com/auto/categories/${category}/options?api_key=${API_KEY}`,
   );
-  fs.writeFileSync(`${__dirname}/options.json`, JSON.stringify(response.data));
+  fs.writeFileSync(
+    `${__dirname}/fetched-data/options.json`,
+    JSON.stringify(response.data),
+  );
 };
 
 const getBodyTypes = async (): Promise<void> => {
@@ -109,8 +82,6 @@ const getBodyTypes = async (): Promise<void> => {
 
 const main = async (): Promise<void> => {
   await Promise.all([
-    await getBrands(),
-    await getBrandsModels(brandsIDs as number[]),
     await getManufacturers(),
     await getBodyTypes(),
     await getColors(),

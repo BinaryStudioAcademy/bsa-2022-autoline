@@ -1,9 +1,10 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["src"],
+  "include": ["src", "api-autoria"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "outDir": "build",
     "module": "commonjs",
     "baseUrl": ".",

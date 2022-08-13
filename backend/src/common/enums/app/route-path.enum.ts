@@ -1,6 +1,6 @@
 enum RoutPath {
-  MAIL_ACTIVATE = '/activate/:link',
-  MAIL_ACTIVATE_AGAIN = '/again/activate',
+  MAIL_ACTIVATE = '/user/verification/:link',
+  SEND_ACTIVATE_LINK = '/user/verification',
 }
 
 export { RoutPath };

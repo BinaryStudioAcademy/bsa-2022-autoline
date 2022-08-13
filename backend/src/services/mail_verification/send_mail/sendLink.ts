@@ -1,22 +1,16 @@
 import { ENV } from '@common/enums/app/app';
 import nodemailer from 'nodemailer';
 
-import { generateMailToken } from '../token.service';
 import { MailActivate } from './constants';
 import { getMessage } from './templates/send_verification_link';
-const sendMail = async (email: string): Promise<string> => {
+const sendMail = async (email: string, token: string): Promise<string> => {
   const transporter = nodemailer.createTransport({
     host: ENV.MAILTRAP.EMAIL_HOST,
-    port: 587,
+    port: Number(ENV.MAIL.PORT_MAIL_SEND_SERVICE),
     auth: {
       user: ENV.MAILTRAP.EMAIL_USERNAME,
       pass: ENV.MAILTRAP.EMAIL_PASSWORD,
     },
-  });
-
-  const token = generateMailToken({
-    email,
-    isActivated: false,
   });
 
   const options = {
@@ -27,10 +21,6 @@ const sendMail = async (email: string): Promise<string> => {
   };
 
   transporter.sendMail(options).catch((err) => {
-    err = {
-      isMailtrap: true,
-      message: 'Incorrect email',
-    };
     throw err;
   });
 

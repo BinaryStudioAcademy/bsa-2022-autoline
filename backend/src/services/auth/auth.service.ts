@@ -4,7 +4,7 @@ import { createToken } from '@helpers/helpers';
 import { bcryptHash, sendEmail } from '@helpers/helpers';
 import { User } from '@prisma/client';
 import { mailSend } from '@services/mail_verification/send.service';
-import { updateMailToken } from '@services/mail_verification/user_security.service';
+import { updateMailToken } from '@services/mail_verification/user_data.service/user_security';
 import bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 

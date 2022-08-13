@@ -3,8 +3,8 @@ import { errorsHandler } from '@middlewares/middlewares';
 import {
   healthRouter,
   authRouter,
-  mailActivateRouter,
-  sendAgainRouter,
+  activateRouter,
+  activateLinkRouter,
   protectedRouter,
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
@@ -43,8 +43,8 @@ const routes = [
   healthRouter,
   authRouter,
   protectedRouter,
-  mailActivateRouter,
-  sendAgainRouter,
+  activateRouter,
+  activateLinkRouter,
 ];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 

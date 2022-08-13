@@ -12,6 +12,7 @@ const {
   EMAIL_USERNAME,
   EMAIL_PASSWORD,
   FROM_EMAIL,
+  FROM_MAIL_VALIDATE,
 } = process.env;
 
 const ENV = {
@@ -40,6 +41,9 @@ const ENV = {
   },
   SENTRY: {
     DSN: SENTRY_DSN,
+  },
+  MAIL: {
+    FROM_EMAIL_VALIDATE: FROM_MAIL_VALIDATE,
   },
 } as const;
 

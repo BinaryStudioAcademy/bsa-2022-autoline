@@ -1,6 +1,12 @@
 import { ENV } from '@common/enums/app/app';
 import { errorsHandler } from '@middlewares/middlewares';
-import { healthRouter, authRouter, protectedRouter } from '@routes/routes';
+import {
+  healthRouter,
+  authRouter,
+  mailActivateRouter,
+  sendAgainRouter,
+  protectedRouter,
+} from '@routes/routes';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
 import cors from 'cors';
@@ -33,7 +39,13 @@ app
   .use(express.json())
   .use(express.urlencoded({ extended: true }));
 
-const routes = [healthRouter, authRouter, protectedRouter];
+const routes = [
+  healthRouter,
+  authRouter,
+  protectedRouter,
+  mailActivateRouter,
+  sendAgainRouter,
+];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 
 app.use(Sentry.Handlers.errorHandler());

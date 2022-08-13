@@ -12,6 +12,26 @@ const getByToken = async (
   return userSequrity;
 };
 
+const getByUserId = async (
+  userId: string,
+): Promise<Prisma.User_Security | null> => {
+  const userSequrity = await prisma.user_Security.findFirst({
+    where: {
+      user_id: userId,
+    },
+  });
+  return userSequrity;
+};
+
+const getUserByEmail = async (email: string): Promise<Prisma.User | null> => {
+  const user = await prisma.user.findFirst({
+    where: {
+      email: email,
+    },
+  });
+  return user;
+};
+
 const removeMailToken = async (id: string): Promise<Prisma.User_Security> => {
   const user = await prisma.user_Security.update({
     where: {
@@ -24,19 +44,25 @@ const removeMailToken = async (id: string): Promise<Prisma.User_Security> => {
   return user;
 };
 
-const updateMailToken = async (
-  user_id: string,
-  token: string,
+const changeMailToken = async (
+  id: string,
+  emailToken: string,
 ): Promise<Prisma.User_Security> => {
-  const user = await prisma.user_Security.update({
+  const user_security = await prisma.user_Security.update({
     where: {
-      user_id: user_id,
+      user_id: id,
     },
     data: {
-      email_activation_token: token,
+      email_activation_token: emailToken,
     },
   });
-  return user;
+  return user_security;
 };
 
-export { getByToken, removeMailToken, updateMailToken };
+export {
+  getByToken,
+  removeMailToken,
+  changeMailToken,
+  getUserByEmail,
+  getByUserId,
+};

@@ -9,8 +9,8 @@ import {
   fuelTypes,
   transmissionTypes,
 } from '../api-autoria/cars/fetched-data/fetched-data';
-import { OptionType } from '../api-autoria/cars/option-type.enum';
 import { optionsTypes } from '../api-autoria/cars/options-types';
+import { OptionType } from '../api-autoria/option-type.enum';
 import { AutoriaPlainDataDto } from '../src/dtos/cars/autoria-plain-data.dto';
 import { users } from './seeds/users';
 import { users_security } from './seeds/users-security';

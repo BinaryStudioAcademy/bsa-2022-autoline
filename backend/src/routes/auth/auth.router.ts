@@ -6,7 +6,6 @@ const PATH = '/auth';
 
 const authRouter = Router();
 
-authRouter.post(`${PATH}/local/signup`, authController.signupLocal);
 authRouter.post(
   `${PATH}/local/signup`,
   passportMiddleware.signUpMiddleware,

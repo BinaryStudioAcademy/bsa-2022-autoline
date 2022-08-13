@@ -44,7 +44,7 @@
   margin-top: 0;
   color: var(--red);
   font-size: 12px;
-  font-family: Lato, sans-serif;
+  font-family: var(--primary-font);
 }
 
 .inputField .error span {

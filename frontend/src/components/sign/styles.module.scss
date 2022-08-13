@@ -1,6 +1,9 @@
 .bgImage {
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
   background-position: center center;
   background-size: cover;
 }
@@ -18,7 +21,8 @@
 }
 
 .wrapper {
-  height: 100vh;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .wrapperInner {
@@ -41,6 +45,6 @@
 
 @media (max-width: 641px) {
   .content {
-    padding: 30px 40px;
+    padding: 30px 25px;
   }
 }

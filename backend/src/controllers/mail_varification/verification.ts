@@ -1,4 +1,4 @@
-import { MailActivate } from '@services/mail_verification/send_mail/constants';
+import { MailActivate } from '@services/mail_verification/send_activation_link/constants';
 import { validateMailToken } from '@services/mail_verification/token.service';
 import {
   getByToken,

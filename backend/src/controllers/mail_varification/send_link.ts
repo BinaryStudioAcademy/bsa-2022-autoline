@@ -1,4 +1,4 @@
-import { sendMail } from '@services/mail_verification/send_mail/sendLink';
+import { sendLink } from '@services/mail_verification/send_activation_link/sendLink';
 import { generateMailToken } from '@services/mail_verification/token.service';
 import { getByEmail } from '@services/mail_verification/user_data.service/user';
 import {
@@ -32,7 +32,7 @@ const sendVerificationLink = async (
       email,
       isActivated: false,
     });
-    sendMail(email, token);
+    sendLink(email, token);
     await updateMailToken(user.id, token);
   } catch (error) {
     console.error(error);

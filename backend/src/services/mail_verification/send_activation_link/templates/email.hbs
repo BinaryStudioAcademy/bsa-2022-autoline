@@ -1,5 +1,4 @@
-export const getMessage = (link: string): string => {
-  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
       <title>HTML email template</title>
@@ -14,7 +13,7 @@ export const getMessage = (link: string): string => {
                 <p style="text-align:left">Hello.<br><br>Follow the link below to verificate your email.
                 </p>
                 <p>
-                  <a target="_blank" style="text-decoration:none; background-color: green; border: rgb(28, 182, 92) 1px solid; color: #fff; padding:10px 10px; display:block;" href="http://${link}">
+                  <a target="_blank" style="text-decoration:none; background-color: green; border: rgb(28, 182, 92) 1px solid; color: #fff; padding:10px 10px; display:block;" href=http://{{link}}>
                     <strong>Verificate Email</strong></a>
                 </p>
                 <p style="text-align:left">
@@ -26,6 +25,4 @@ export const getMessage = (link: string): string => {
         </table>
       </center>
     </body>
-  </html>
-  `;
-};
+</html>

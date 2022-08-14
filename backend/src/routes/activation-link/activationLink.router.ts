@@ -4,6 +4,6 @@ import { Router } from 'express';
 
 const activateLinkRouter = Router();
 
-activateLinkRouter.get(RoutPath.SEND_ACTIVATE_LINK, sendVerificationLink);
+activateLinkRouter.post(RoutPath.SEND_ACTIVATE_LINK, sendVerificationLink);
 
 export { activateLinkRouter };

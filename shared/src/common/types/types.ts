@@ -19,3 +19,5 @@ export {
 } from './auth/auth';
 
 export { type WishlistResponseDto } from './preferences/preferences';
+
+export { type ValidationSchema } from './validation/validation';

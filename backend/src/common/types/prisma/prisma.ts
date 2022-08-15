@@ -9,11 +9,10 @@ interface UserResetPassword {
   password: string;
 }
 
-interface WishlistInput {
-  [key: string]: string | undefined;
+type WishlistInput = {
   userId: string;
   modelId?: string;
   complectationId?: string;
-}
+};
 
 export type { UserCreateInput, UserResetPassword, WishlistInput };

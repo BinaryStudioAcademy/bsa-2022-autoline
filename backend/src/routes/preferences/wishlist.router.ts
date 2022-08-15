@@ -5,11 +5,6 @@ const PATH = '/wishlist';
 
 const wishlistRouter = Router();
 
-wishlistRouter.post(`${PATH}/model/:id`, wishlistController.setModelWishlist);
-
-wishlistRouter.post(
-  `${PATH}/complectation/:id`,
-  wishlistController.setComplectationWishlist,
-);
+wishlistRouter.post(`${PATH}/:userId`, wishlistController.setWishlist);
 
 export { wishlistRouter };

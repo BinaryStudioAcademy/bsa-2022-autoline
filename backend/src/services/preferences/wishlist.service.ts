@@ -6,13 +6,13 @@ import type { WishlistInput } from '@common/types/types';
 const setWishlist = async (
   input: WishlistInput,
 ): Promise<WishlistResponseDto> => {
-  const { user_id, model_id, complectation_id } = input;
+  const { userId, modelId, complectationId } = input;
 
   const wishlist = await prisma.user_Wishlist.findFirst({
     where: {
-      user_id,
-      model_id,
-      complectation_id,
+      user_id: userId,
+      model_id: modelId,
+      complectation_id: complectationId,
     },
   });
 
@@ -24,9 +24,9 @@ const setWishlist = async (
       })
     : await prisma.user_Wishlist.create({
         data: {
-          user_id,
-          model_id,
-          complectation_id,
+          user_id: userId,
+          model_id: modelId,
+          complectation_id: complectationId,
         },
         select: {
           id: true,
@@ -35,8 +35,8 @@ const setWishlist = async (
 
   return {
     wishlistId: newWishlistId,
-    modelId: model_id,
-    complectationId: complectation_id,
+    modelId: modelId,
+    complectationId: complectationId,
   };
 };
 

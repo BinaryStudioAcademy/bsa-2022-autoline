@@ -7,4 +7,6 @@ const wishlistRouter = Router();
 
 wishlistRouter.post(`${PATH}/:userId`, wishlistController.setWishlist);
 
+wishlistRouter.delete(`${PATH}/:userId`, wishlistController.deleteWishlist);
+
 export { wishlistRouter };

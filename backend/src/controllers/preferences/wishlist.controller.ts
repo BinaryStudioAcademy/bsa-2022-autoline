@@ -25,8 +25,37 @@ const setWishlist = async (
     res.json(wishlistResponseDto).status(httpStatus.CREATED);
   } catch (error) {
     console.error(error);
+    if (error instanceof Error) {
+      res.statusCode = 400;
+    }
     next(error);
   }
 };
 
-export { setWishlist };
+const deleteWishlist = async (
+  req: TypedRequestQuery<WishlistInput>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const { userId } = req.params;
+    const { modelId, complectationId } = req.query;
+
+    const wishlist: WishlistInput = {
+      userId,
+      modelId,
+      complectationId,
+    };
+
+    await wishlistService.deleteWishlist(wishlist);
+    res.json('Wishlist deleted successfully').status(httpStatus.CREATED);
+  } catch (error) {
+    console.error(error);
+    if (error instanceof Error) {
+      res.statusCode = 400;
+    }
+    next(error);
+  }
+};
+
+export { setWishlist, deleteWishlist };

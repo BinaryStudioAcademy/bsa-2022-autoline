@@ -16,22 +16,20 @@ const setWishlist = async (
     },
   });
 
-  const { id: newWishlistId } = wishlist
-    ? await prisma.user_Wishlist.delete({
-        where: {
-          id: wishlist.id,
-        },
-      })
-    : await prisma.user_Wishlist.create({
-        data: {
-          user_id: userId,
-          model_id: modelId,
-          complectation_id: complectationId,
-        },
-        select: {
-          id: true,
-        },
-      });
+  if (wishlist) {
+    throw new Error('Bad request');
+  }
+
+  const { id: newWishlistId } = await prisma.user_Wishlist.create({
+    data: {
+      user_id: userId,
+      model_id: modelId,
+      complectation_id: complectationId,
+    },
+    select: {
+      id: true,
+    },
+  });
 
   return {
     wishlistId: newWishlistId,
@@ -40,4 +38,28 @@ const setWishlist = async (
   };
 };
 
-export { setWishlist };
+const deleteWishlist = async (input: WishlistInput): Promise<void> => {
+  const { userId, modelId, complectationId } = input;
+
+  const wishlist = await prisma.user_Wishlist.findFirst({
+    where: {
+      user_id: userId,
+      model_id: modelId,
+      complectation_id: complectationId,
+    },
+  });
+
+  if (!wishlist) {
+    throw new Error('Bad request');
+  }
+
+  await prisma.user_Wishlist.delete({
+    where: {
+      id: wishlist.id,
+    },
+  });
+
+  return;
+};
+
+export { setWishlist, deleteWishlist };

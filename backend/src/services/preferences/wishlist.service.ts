@@ -17,7 +17,7 @@ const setWishlist = async (
   });
 
   if (wishlist) {
-    throw new Error('Bad request');
+    throw new Error('Wishlist already exists');
   }
 
   const { id: newWishlistId } = await prisma.user_Wishlist.create({
@@ -50,7 +50,7 @@ const deleteWishlist = async (input: WishlistInput): Promise<void> => {
   });
 
   if (!wishlist) {
-    throw new Error('Bad request');
+    throw new Error('Wishlist does not exist');
   }
 
   await prisma.user_Wishlist.delete({

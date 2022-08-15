@@ -26,7 +26,7 @@ const setWishlist = async (
   } catch (error) {
     console.error(error);
     if (error instanceof Error) {
-      res.statusCode = 400;
+      res.sendStatus(400);
     }
     next(error);
   }
@@ -52,7 +52,7 @@ const deleteWishlist = async (
   } catch (error) {
     console.error(error);
     if (error instanceof Error) {
-      res.statusCode = 400;
+      res.sendStatus(404);
     }
     next(error);
   }

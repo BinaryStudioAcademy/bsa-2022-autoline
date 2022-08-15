@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app';
 import { Failed } from '@components/mail-verification/verification-failed/failed';
+import { Success } from '@components/mail-verification/verification-success/success';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 
 import { Sign } from '../../components/sign/sign';
@@ -24,15 +25,8 @@ const Routing: FC = () => {
           <Route path={AppRoute.SIGN_IN} element={<Sign />} />
           <Route path={AppRoute.SIGN_UP} element={<Sign />} />
           <Route
-            path={AppRoute.MAIL_SACCESSFUL_VALIDATION}
-            element={
-              <div>
-                <h2>Validation was successful</h2>
-                <a rel="stylesheet" href={AppRoute.ROOT}>
-                  Main page
-                </a>
-              </div>
-            }
+            path={AppRoute.MAIL_SUCCESS_VALIDATION}
+            element={<Success />}
           />
           <Route path={AppRoute.MAIL_FAILED_VALIDATION} element={<Failed />} />
         </Route>

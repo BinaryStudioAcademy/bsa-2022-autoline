@@ -4,9 +4,9 @@ interface IEmail {
   email: string;
 }
 
-export const emailApi = createApi({
+const emailApi = createApi({
   reducerPath: 'emailApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001/api/v1' }),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_API_ORIGIN_URL }),
   endpoints: (build) => ({
     requestLink: build.mutation<void, IEmail>({
       query: (email) => ({
@@ -17,3 +17,5 @@ export const emailApi = createApi({
     }),
   }),
 });
+
+export { emailApi };

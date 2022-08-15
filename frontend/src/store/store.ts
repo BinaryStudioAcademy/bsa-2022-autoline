@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { emailApi } from '@services/email-service';
+import { emailApi } from '@services/request-verification-link/email-link-service';
 import { combineReducers } from 'redux';
 
 import { auth } from './root-reducer';

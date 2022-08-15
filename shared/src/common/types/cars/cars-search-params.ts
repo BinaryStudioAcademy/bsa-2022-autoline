@@ -1,20 +1,22 @@
 type CarsSearchParams = {
-  // body_type: string;
-  brand: string;
-  model: string;
-  //
-  // year_start: string;
-  // year_end: string;
-  //
-  // price_start: string;
-  // price_end: string;
-  //
-  // race_start: string;
-  // race_end: string;
-  //
-  // transmission_type: string;
-  // fuel_type: string;
-  // wheel_drive: string;
+  bodyTypeId: string;
+  brandId: string;
+  modelId: string;
+  yearStart: string;
+  yearEnd: string;
+  priceStart: string;
+  priceEnd: string;
+  locationId: string;
+  colorId: string;
+  raceStart: string;
+  raceEnd: string;
+  transmissionTypeId: string;
+  fuelTypeId: string;
+  drivetrainId: string;
+  enginePowerStart: string;
+  enginePowerEnd: string;
+  engineDisplacementStart: string;
+  engineDisplacementEnd: string;
 };
 
 export { type CarsSearchParams };

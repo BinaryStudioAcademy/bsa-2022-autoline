@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import ArrowDown from '@assets/images/header/arrow-drop-down.svg';
 import DefaultAvatar from '@assets/images/header/default-avatar.png';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
 
-import { IRemindersProps, Reminders } from '../reminders/reminders';
+import { RemindersProps, Reminders } from '../reminders/reminders';
 import styles from './private-elements.module.scss';
 
-interface IPrivateComponentProps extends IRemindersProps {
+interface PrivateComponentProps extends RemindersProps {
   avatar: string | undefined | null;
 }
 
-export const PrivateElements: React.FC<IPrivateComponentProps> = ({
+export const PrivateElements: React.FC<PrivateComponentProps> = ({
   favorites,
   notifications,
   comparisons,
   avatar,
 }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = (): void => {
+    setAnchorEl(null);
+  };
 
   return (
     <div className={styles.information}>
@@ -25,29 +34,38 @@ export const PrivateElements: React.FC<IPrivateComponentProps> = ({
         comparisons={comparisons}
         notifications={notifications}
       />
-      <div
+      <IconButton
+        id="basic-button"
         className={styles.avatarCover}
-        onClick={(): void => setIsMenuOpen(!isMenuOpen)}
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
       >
-        <img
+        <Avatar
           className={styles.avatar}
-          src={avatar ? avatar : DefaultAvatar}
+          src={avatar || DefaultAvatar}
           alt="avatar"
+          sx={{ width: 35, height: 35, ml: 2 }}
         />
-        <img
-          className={`${styles.arrow} ${isMenuOpen ? styles.active : ''}`}
-          src={ArrowDown}
-          alt="arrow drop down"
-        />
-        <ul
-          className={`${styles.menuDropdown} ${
-            isMenuOpen ? styles.active : ''
-          }`}
-        >
-          <li>Settings</li>
-          <li>Sign Out</li>
-        </ul>
-      </div>
+        {open ? (
+          <ArrowDropUpIcon color="primary" />
+        ) : (
+          <ArrowDropDownIcon color="primary" />
+        )}
+      </IconButton>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleClose}>Settings</MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
+      </Menu>
     </div>
   );
 };

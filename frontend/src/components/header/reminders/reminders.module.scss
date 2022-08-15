@@ -1,36 +1,5 @@
 .reminder {
-  display: flex;
-  align-items: center;
-  list-style: none;
-
-  li {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-right: 21px;
-    cursor: pointer;
-
-    img {
-      width: 24px;
-      height: 24px;
-    }
-  }
-
-  &Counter {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 15px;
-    height: 15px;
-    background-color: var(--blue100);
-    border-radius: 50%;
-
-    span {
-      color: #ffffff;
-      font-size: 10px;
-    }
-  }
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
 }

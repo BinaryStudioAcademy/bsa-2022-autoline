@@ -14,7 +14,8 @@
     "build-and-update": "yarn build && cd ../backend && yarn upgrade bws-shared && cd ../frontend && yarn upgrade bws-shared"
   },
   "dependencies": {
-    "joi": "^17.6.0"
+    "joi": "^17.6.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "concurrently": "^7.3.0",

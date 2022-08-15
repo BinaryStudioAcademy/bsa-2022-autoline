@@ -5,9 +5,10 @@ interface UserCreateInput extends Prisma.UserCreateInput {
 }
 
 interface WishlistInput {
-  user_id: string;
-  model_id?: string;
-  complectation_id?: string;
+  [key: string]: string | undefined;
+  userId: string;
+  modelId?: string;
+  complectationId?: string;
 }
 
 export type { UserCreateInput, WishlistInput };

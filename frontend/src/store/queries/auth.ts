@@ -1,13 +1,25 @@
 import { ENV } from '@common/enums/app/env.enum';
+import { ApiPath, AuthApiPath } from '@common/enums/enums';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+type SignInRequestData = {
+  user: {
+    email: string;
+    password: string;
+  };
+};
+
+type SignInResponseData = {
+  accessToken: string;
+};
 
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ baseUrl: ENV.API_PATH }),
   endpoints: (builder) => ({
-    SignIn: builder.mutation({
+    signIn: builder.mutation<SignInResponseData, SignInRequestData>({
       query: (credentials) => ({
-        url: '/auth/local/signin',
+        url: `${ApiPath.AUTH}${AuthApiPath.SIGN_IN}`,
         method: 'POST',
         body: credentials,
       }),

@@ -84,7 +84,7 @@ model Model {
   autoria_code           Int
   complectations         Complectation[]
   prices_ranges          Prices_Range[]
-  users_wishlist         User_Wishlist[]
+  users_wishlists        User_Wishlist[]
 }
 
 model Drivetrain {
@@ -140,7 +140,7 @@ model Complectation {
   transmission_type    Transmission_Type         @relation(fields: [transmission_type_id], references: [id])
   options              ComplectationsOnOptions[]
   prices_ranges        Prices_Range[]
-  users_wishlist       User_Wishlist[]
+  users_wishlists      User_Wishlist[]
 }
 
 model ComplectationsOnOptions {

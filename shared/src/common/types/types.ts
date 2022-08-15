@@ -15,4 +15,5 @@ export {
   type SignInRequestData,
   type SignInResponseData,
   type ErrorMessage,
+  type SignUpResponseDto,
 } from './auth/auth';

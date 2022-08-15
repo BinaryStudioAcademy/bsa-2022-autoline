@@ -3,13 +3,17 @@ import { prisma } from '@data/prisma-client';
 import { createToken } from '@helpers/helpers';
 import { bcryptHash, sendEmail } from '@helpers/helpers';
 import { User } from '@prisma/client';
+import { mailSend } from '@services/mail_verification/send.service';
+import { updateMailToken } from '@services/mail_verification/user_security.service';
 import bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
-import type { AuthResponseDto, SignInResponseData } from '@autoline/shared';
+import type { SignInResponseData, SignUpResponseDto } from '@autoline/shared';
 import type { UserCreateInput } from '@common/types/types';
 
-const signupLocal = async (user: UserCreateInput): Promise<AuthResponseDto> => {
+const signupLocal = async (
+  user: UserCreateInput,
+): Promise<SignUpResponseDto> => {
   const { password, ...userData } = user;
   const hashedPassword = await bcryptHash(password);
 
@@ -28,11 +32,11 @@ const signupLocal = async (user: UserCreateInput): Promise<AuthResponseDto> => {
     },
   });
 
+  const token = mailSend(newUserEmail);
+  updateMailToken(newUserId, token);
+
   return {
-    userId: newUserId,
-    userEmail: newUserEmail,
-    accessToken: '',
-    refreshToken: '',
+    message: 'User created',
   };
 };
 

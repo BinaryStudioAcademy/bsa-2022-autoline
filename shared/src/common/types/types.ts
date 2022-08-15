@@ -17,3 +17,5 @@ export {
   type ErrorMessage,
   type SignUpResponseDto,
 } from './auth/auth';
+
+export { type ValidationSchema } from './validation/validation';

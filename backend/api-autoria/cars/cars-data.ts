@@ -23,6 +23,8 @@ export const carsData = [
         'autoria_body_type_id': 3,
         'year_start': 2002,
         'year_end': null,
+        'price_start': 30221,
+        'price_end': 42939,
         'photo_urls': [
           'https://www.autocentre.ua/wp-content/uploads/2017/11/2019-Mazda6-23.jpg',
           'https://img.automoto.ua/overview/mazda-6-2020-463-huge-1632.jpg',
@@ -54,7 +56,7 @@ export const carsData = [
             'autoria_color_id': 1,
             'autoria_transmission_type_id': 2,
             'price_start': 39476,
-            // 'price_end': null,
+            'price_end': null,
             'options': [
               527, 531, 528, 441, 579, 555, 524, 610, 443, 574, 539, 540, 255,
               605, 602, 598, 192, 217, 608, 620, 609, 572, 580, 563, 188, 355,
@@ -90,6 +92,8 @@ export const carsData = [
         'autoria_body_type_id': 5,
         'year_start': 2001,
         'year_end': null,
+        'price_start': 23435,
+        'price_end': 26695,
         'photo_urls': [
           'https://www-europe.nissan-cdn.net/content/dam/Nissan/nissan_europe/vehicles/x-trail/2020Update/A-IVI/LHD/2020-nissan-xtrail-Snow-Road-20tdieulhdpace101.jpg.ximg.l_full_m.smart.jpg',
           'https://www-europe.nissan-cdn.net/content/dam/Nissan/nissan_europe/vehicles/x-trail/2_minor_change/eulhd/DESIGN/17tdieulhd-xtrailhelios090.jpg.ximg.l_full_m.smart.jpg',

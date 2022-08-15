@@ -69,9 +69,9 @@ async function main(): Promise<void> {
   for (const option of optionsTypes) {
     await prisma.option.create({
       data: {
-        'name': option.name,
-        'autoria_code': option.value,
-        'type': option.type as OptionType,
+        name: option.name,
+        autoria_code: option.value,
+        type: option.type as OptionType,
       },
     });
   }
@@ -79,9 +79,9 @@ async function main(): Promise<void> {
   for (const brand of carsData) {
     const newBrand = await prisma.brand.create({
       data: {
-        'name': brand.name,
-        'logo_url': brand.logo_url,
-        'autoria_code': brand.marka_id,
+        name: brand.name,
+        logo_url: brand.logo_url,
+        autoria_code: brand.marka_id,
       },
     });
 
@@ -96,15 +96,21 @@ async function main(): Promise<void> {
 
       const newModel = await prisma.model.create({
         data: {
-          'manufacturer_id': newBrand.id,
-          'body_type_id': bodyType.id,
-          'manufacture_country_id': brandCountry.id,
-          'name': model.name,
-          'code_name': model.eng,
-          'year_start': model.year_start,
-          'year_end': model.year_end,
-          'photo_urls': model.photo_urls,
-          'autoria_code': model.value,
+          manufacturer_id: newBrand.id,
+          body_type_id: bodyType.id,
+          manufacture_country_id: brandCountry.id,
+          name: model.name,
+          code_name: model.eng,
+          year_start: model.year_start,
+          year_end: model.year_end,
+          photo_urls: model.photo_urls,
+          autoria_code: model.value,
+          prices_ranges: {
+            create: {
+              price_start: model.price_start,
+              price_end: model.price_end || model.price_start,
+            },
+          },
         },
       });
 
@@ -151,7 +157,6 @@ async function main(): Promise<void> {
               create: {
                 price_start: complectation.price_start,
                 price_end: complectation.price_end || complectation.price_start,
-                model_id: newModel.id,
               },
             },
           },

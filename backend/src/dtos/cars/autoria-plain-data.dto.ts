@@ -1,4 +1,4 @@
-export class AutoriaPlainDataDto {
+class AutoriaPlainDataDto {
   name: string;
   autoria_code: number;
   constructor(data: { name: string; value: number }) {
@@ -6,3 +6,4 @@ export class AutoriaPlainDataDto {
     this.autoria_code = data.value;
   }
 }
+export { AutoriaPlainDataDto };

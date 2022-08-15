@@ -139,14 +139,14 @@ model ComplectationsOnOptions {
 }
 
 model Prices_Range {
-  id                  String        @id @default(uuid())
-  model_id            String
-  model               Model         @relation(fields: [model_id], references: [id])
-  complectation_id    String
-  complectation       Complectation @relation(fields: [complectation_id], references: [id])
+  id                  String         @id @default(uuid())
+  model_id            String?
+  model               Model?         @relation(fields: [model_id], references: [id])
+  complectation_id    String?
+  complectation       Complectation? @relation(fields: [complectation_id], references: [id])
   price_start         Int
   price_end           Int
-  created_at          DateTime      @default(now())
+  created_at          DateTime       @default(now())
 }
 
 enum Role {

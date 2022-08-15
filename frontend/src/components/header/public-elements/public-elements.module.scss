@@ -13,13 +13,13 @@
 
 .btnSecondary {
   margin-left: 20px;
-  color: #3765ff;
+  color: var(--blue100);
   background: none;
 }
 
 .btnPrimary {
   padding: 13px 25px;
-  color: #ffffff;
-  background: #3765ff;
+  color: var(--white);
+  background: var(--blue100);
   border-radius: 50px;
 }

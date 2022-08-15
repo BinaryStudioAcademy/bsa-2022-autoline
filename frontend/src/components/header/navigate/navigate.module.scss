@@ -12,7 +12,7 @@
 
     &.itemActive {
       position: relative;
-      border-bottom: 2px solid #3765ff;
+      border-bottom: 2px solid var(--blue100);
     }
 
     a {
@@ -21,7 +21,7 @@
       text-decoration: none;
 
       &:hover {
-        color: #3765ff;
+        color: var(--blue100);
       }
     }
   }

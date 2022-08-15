@@ -1,0 +1,21 @@
+.cars {
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: #e5e5e5;
+
+  &Title {
+    margin-top: 0;
+    font-weight: 800;
+    font-size: 22;
+    text-transform: uppercase;
+  }
+
+  &Grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-right: 30px;
+    margin-bottom: 30px;
+  }
+}

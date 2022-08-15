@@ -6,4 +6,5 @@ class AutoriaPlainDataDto {
     this.autoria_code = data.value;
   }
 }
+
 export { AutoriaPlainDataDto };

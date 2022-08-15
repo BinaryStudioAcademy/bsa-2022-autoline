@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-import { brands } from '../api-autoria/cars/brands-with-models';
+import { carsData } from '../api-autoria/cars/cars-data';
 import {
   manufacturers,
   colors,
@@ -76,7 +76,7 @@ async function main(): Promise<void> {
     });
   }
 
-  for (const brand of brands) {
+  for (const brand of carsData) {
     const newBrand = await prisma.brand.create({
       data: {
         'name': brand.name,
@@ -107,6 +107,7 @@ async function main(): Promise<void> {
           'autoria_code': model.value,
         },
       });
+
       for (const complectation of model.complectations) {
         const color = await prisma.color.findFirstOrThrow({
           where: { autoria_code: complectation.autoria_color_id },
@@ -122,6 +123,15 @@ async function main(): Promise<void> {
             where: { autoria_code: complectation.autoria_transmission_type_id },
           });
 
+        const optionQueries = complectation.options.map(
+          async (option) =>
+            await prisma.option.findFirstOrThrow({
+              where: { autoria_code: option },
+            }),
+        );
+
+        const optionsFromDB = await Promise.all(optionQueries);
+
         await prisma.complectation.create({
           data: {
             model_id: newModel.id,
@@ -132,6 +142,18 @@ async function main(): Promise<void> {
             drivetrain_id: drivetrain.id,
             fuel_type_id: fuelType.id,
             transmission_type_id: transmissionType.id,
+            options: {
+              create: optionsFromDB.map((option) => ({
+                option: { connect: { id: option.id } },
+              })),
+            },
+            prices_ranges: {
+              create: {
+                price_start: complectation.price_start,
+                price_end: complectation.price_end || complectation.price_start,
+                model_id: newModel.id,
+              },
+            },
           },
         });
       }

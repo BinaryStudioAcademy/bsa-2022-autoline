@@ -12,6 +12,7 @@ const { reducer } = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
+  extraReducers: {},
 });
 
 export { reducer };

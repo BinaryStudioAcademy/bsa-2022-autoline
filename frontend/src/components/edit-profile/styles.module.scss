@@ -1,12 +1,21 @@
+.popupWrapper {
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: #7e8dbf;
+  backdrop-filter: blur(4px);
+}
+
 .popup {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: relative;
   width: 820px;
   padding: 28px 32px 52px;
   background: var(--white);
   border-top: 5px solid var(--blue100);
-  transform: translate(-50%, -50%);
 
   .cross {
     position: absolute;
@@ -63,7 +72,7 @@
 .btnWrapper {
   display: flex;
   justify-content: flex-end;
-  margin: 20px 0;
+  margin-top: 20px;
 }
 
 .cancel {

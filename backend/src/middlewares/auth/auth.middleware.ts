@@ -1,4 +1,7 @@
+import { prisma } from '@data/prisma-client';
 import { initializeStrategies } from '@middlewares/auth/strategies/strageties';
+import { Prisma } from '@prisma/client';
+import { signUpSchema } from '@validation-schemas/validation-schemas';
 import httpStatus from 'http-status-codes';
 import passport from 'passport';
 
@@ -32,4 +35,27 @@ const localAuth = (
   )(req, res, next);
 };
 
-export { localAuth };
+const signUpMiddleware = async (
+  req: TypedRequestBody<Prisma.UserCreateInput>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    await signUpSchema.validate(req.body);
+    const existedUser = await prisma.user.findFirst({
+      where: {
+        email: req.body.email,
+      },
+    });
+    if (existedUser) throw new Error('User with this email already exists!');
+
+    next();
+  } catch (err) {
+    const { message } = err as ErrorMessage;
+    console.error(err);
+    res.status(httpStatus.FORBIDDEN).json({ error: message });
+    next(err);
+  }
+};
+
+export { localAuth, signUpMiddleware };

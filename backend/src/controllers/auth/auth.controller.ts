@@ -3,23 +3,27 @@ import * as authService from '@services/auth/auth.service';
 import httpStatus from 'http-status-codes';
 
 import type {
-  AuthResponseDto,
+  SignUpResponseDto,
   SignInRequestData,
   SignInResponseData,
 } from '@autoline/shared';
-import type { TypedRequestBody } from '@common/types/controller/controller';
-import type { UserCreateInput } from '@common/types/types';
+import type {
+  TypedRequestBody,
+  TypedRequestParams,
+  TypedRequestQuery,
+} from '@common/types/controller/controller';
+import type { UserCreateInput, UserResetPassword } from '@common/types/types';
 import type { NextFunction, Response } from 'express';
 
 const signupLocal = async (
   req: TypedRequestBody<UserCreateInput>,
-  res: Response<AuthResponseDto>,
+  res: Response<SignUpResponseDto>,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const user = req.body;
     const authResponseDto = await authService.signupLocal(user);
-    res.json(authResponseDto).status(httpStatus.CREATED);
+    res.status(httpStatus.CREATED).json(authResponseDto);
   } catch (error) {
     console.error(error);
     next(error);
@@ -41,4 +45,69 @@ const signinLocal = async (
   }
 };
 
-export { signupLocal, signinLocal };
+const resetPasswordRequest = async (
+  req: TypedRequestParams<{ email: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const emailLink = await authService.requestPasswordReset(req.params.email);
+    res.json(emailLink);
+  } catch (error) {
+    console.error(error);
+    if (error instanceof Error) {
+      res.statusCode = 400;
+      res.json(error.message);
+    }
+    next(error);
+  }
+};
+
+const resetPasswordCheckToken = async (
+  req: TypedRequestQuery<{ token: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    if (!req.query.token) return;
+    const token = req.query.token.toString();
+    const userId = await authService.resetPasswordCheckToken(token);
+    // just an example link till front end page is created
+    res.redirect(`https://www.google.com?id=${userId}`);
+  } catch (error) {
+    console.error(error);
+    if (error instanceof Error) {
+      res.statusCode = 403;
+      res.json(error.message);
+    }
+    // redirect to the page with 'oops, link is expired' error
+    res.redirect('https://www.google.com');
+    next(error);
+  }
+};
+
+const resetPassword = async (
+  req: TypedRequestBody<UserResetPassword>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    await authService.resetPassword(req.body.id, req.body.password);
+    res.json('Password changed successfully');
+  } catch (error) {
+    console.error(error);
+    if (error instanceof Error) {
+      res.statusCode = 403;
+      res.json(error.message);
+    }
+    next(error);
+  }
+};
+
+export {
+  signupLocal,
+  signinLocal,
+  resetPasswordRequest,
+  resetPasswordCheckToken,
+  resetPassword,
+};

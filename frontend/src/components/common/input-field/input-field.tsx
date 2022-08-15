@@ -28,6 +28,7 @@ export const InputField = (props: InputFieldPropsType): React.ReactElement => {
         type={props.type}
         className={styles.input}
         error={props.errors ? true : false}
+        onChange={props.onChange}
       />
       {props.errors && (
         <FormHelperText className={styles.error}>

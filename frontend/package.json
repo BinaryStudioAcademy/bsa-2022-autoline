@@ -18,6 +18,7 @@
     "@autoline/shared": "link:../shared/build",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@hookform/error-message": "^2.0.0",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.3",
     "@reduxjs/toolkit": "^1.8.4",

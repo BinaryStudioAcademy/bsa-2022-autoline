@@ -1,4 +1,4 @@
-import React from 'react';
+import { FormControl, FormControlErrors } from '@common/types/types';
 
 export type InputFieldPropsType = {
   name: string;
@@ -6,11 +6,11 @@ export type InputFieldPropsType = {
   rows?: number;
   min?: number;
   max?: number;
-  errors?: string;
+  errors?: FormControlErrors;
   placeholder?: string;
   className?: string;
   defaultValue?: string;
   autoComplete?: string;
   required: boolean;
-  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  control: FormControl;
 };

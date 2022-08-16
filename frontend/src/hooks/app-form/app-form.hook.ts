@@ -10,7 +10,7 @@ import { getFormValidationResolver } from '@helpers/helpers';
 
 type UseAppFormArgs = {
   defaultValues: Record<string, unknown>;
-  validationSchema?: ValidationSchema<string>;
+  validationSchema?: ValidationSchema<object>;
 };
 type UseAppFormResult<T extends FormControlValues = FormControlValues> = {
   control: FormControl;

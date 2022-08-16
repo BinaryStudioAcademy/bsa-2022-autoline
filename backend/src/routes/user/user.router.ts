@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-const PATH = '/user';
+const PATH = '/users';
 
 const userRouter = Router();
 

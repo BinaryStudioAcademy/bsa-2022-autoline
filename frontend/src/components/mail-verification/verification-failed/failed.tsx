@@ -6,7 +6,7 @@ import { AppRoute } from '@common/enums/app/app';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { InputField } from '@components/common/input-field/input-field';
 import Container from '@mui/material/Container';
-import { emailApi } from '@store/query/verification-link';
+import { emailApi } from '@store/queries/verification-link';
 
 import styles from './styles.module.scss';
 import { emailSchema } from './validation-schema';

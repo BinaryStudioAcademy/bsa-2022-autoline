@@ -1,0 +1,94 @@
+.button {
+  width: 20px;
+  height: 20px;
+}
+
+.carDescription {
+  max-height: 85px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--gray400);
+  font-weight: 400;
+  font-size: 90%;
+  font-style: normal;
+  line-height: 17px;
+  opacity: 0.6;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  background-color: var(--overlay-color);
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  padding: 0;
+  color: var(--gray400);
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  opacity: 0.4;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}
+
+.body {
+  position: relative;
+  display: flex;
+  max-width: 400px;
+  padding: 25px 30px 30px;
+  background-color: var(--white);
+  border-top: 5px solid var(--blue100);
+  border-radius: 5px;
+}
+
+.carName {
+  display: inline-block;
+  color: var(--blue100);
+  text-transform: uppercase;
+}
+
+.message {
+  align-self: center;
+  padding-right: 20px;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.icon {
+  margin-top: 15px;
+  margin-right: 8px;
+  padding: 0;
+}
+
+.container {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 10;
+}
+
+@media (max-width: 641px) {
+  .container {
+    right: 0;
+    line-height: 0.5;
+  }
+
+  .carDescription {
+    margin-top: 20px;
+  }
+}

@@ -5,6 +5,7 @@ import {
   updateMailToken,
   getByUserId,
 } from '@services/mail_verification/user_data.service/user_security';
+import httpStatus from 'http-status-codes';
 
 import type { TypedRequestBody } from '@common/types/controller/controller';
 import type { Response, NextFunction } from 'express';
@@ -22,10 +23,12 @@ const sendVerificationLink = async (
     const { email } = req.body;
     const user = await getByEmail(email);
     if (!user) {
+      res.status(httpStatus.ACCEPTED).send();
       return;
     }
     const userSecurity = await getByUserId(user.id);
     if (!userSecurity?.email_activation_token) {
+      res.status(httpStatus.ACCEPTED).send();
       return;
     }
     const token = generateMailToken({
@@ -34,6 +37,7 @@ const sendVerificationLink = async (
     });
     sendLink(email, token);
     await updateMailToken(user.id, token);
+    res.status(httpStatus.ACCEPTED).send();
   } catch (error) {
     console.error(error);
     next(error);

@@ -8,8 +8,6 @@ type CarsSearchParams = {
   priceEnd: string;
   locationId: string;
   colorId: string;
-  raceStart: string;
-  raceEnd: string;
   transmissionTypeId: string;
   fuelTypeId: string;
   drivetrainId: string;

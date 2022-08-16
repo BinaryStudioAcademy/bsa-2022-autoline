@@ -12,9 +12,14 @@ const carsSearch = async (
   try {
     const carsData = await carsService.carsSearch(req.query);
     const AutoRiaCarsData = await getCarsAutoRia(carsData);
+
     res.json(AutoRiaCarsData);
   } catch (error) {
-    next(error);
+    if ((error as Error)?.message === 'NotFoundError') {
+      res.json([]);
+    } else {
+      next(error);
+    }
   }
 };
 

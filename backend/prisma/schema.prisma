@@ -149,6 +149,21 @@ model Prices_Range {
   created_at          DateTime       @default(now())
 }
 
+model City {
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
+  autoria_code Int
+  region_id    String
+  region       Region @relation(fields: [region_id], references: [id])
+}
+
+model Region {
+  id           String @id @default(uuid())
+  name         String
+  autoria_code Int
+  cities       City[]
+}
+
 enum Role {
   user
   admin

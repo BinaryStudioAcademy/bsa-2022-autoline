@@ -1,12 +1,12 @@
 import { ENV } from '@common/enums/app/app';
 import nodemailer from 'nodemailer';
 
-import { INodemailerPayload } from './interfaces/INodemailerPayload';
+import { NodemailerPayload } from './interfaces/nodemailer-payload';
 
 const sendEmail = async (
   email: string,
   subject: string,
-  payload: INodemailerPayload,
+  payload: NodemailerPayload,
   template: string,
 ): Promise<void> => {
   const transporter = nodemailer.createTransport({

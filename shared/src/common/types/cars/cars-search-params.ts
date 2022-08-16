@@ -6,7 +6,8 @@ type CarsSearchParams = {
   yearEnd: string;
   priceStart: string;
   priceEnd: string;
-  locationId: string;
+  regionId: string;
+  cityId: string;
   colorId: string;
   transmissionTypeId: string;
   fuelTypeId: string;

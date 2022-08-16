@@ -6,3 +6,7 @@ export {
   type SignInResponseData,
   type ErrorMessage,
 } from './sign-in-data.type';
+export {
+  type SignUpRequestData,
+  type SignUpResponseData,
+} from './sign-up-data.type';

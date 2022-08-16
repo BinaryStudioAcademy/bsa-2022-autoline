@@ -11,6 +11,10 @@
   top: 14px;
   right: 18px;
   z-index: 1;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .inputField .label {

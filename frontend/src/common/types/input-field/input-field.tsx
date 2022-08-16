@@ -10,4 +10,6 @@ export type InputFieldPropsType = {
   defaultValue?: string;
   autoComplete?: string;
   required: boolean;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };

@@ -1,37 +1,9 @@
-import { ENV } from '@common/enums/app/env.enum';
 import { ApiPath, AuthApiPath } from '@common/enums/enums';
-import {
-  createApi,
-  fetchBaseQuery,
-  BaseQueryFn,
-  FetchArgs,
-} from '@reduxjs/toolkit/query/react';
+import { SignInResponseData, SignInRequestData } from '@common/types/types';
 
-type SignInRequestData = {
-  user: {
-    email: string;
-    password: string;
-  };
-};
+import { Api } from './index';
 
-type SignInResponseData = {
-  accessToken: string;
-};
-
-type ErrorType = {
-  data: {
-    message: string;
-  };
-  status: number;
-};
-
-export const authApi = createApi({
-  reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: ENV.API_PATH }) as BaseQueryFn<
-    string | FetchArgs,
-    unknown,
-    ErrorType
-  >,
+export const authApi = Api.injectEndpoints({
   endpoints: (builder) => ({
     signIn: builder.mutation<SignInResponseData, SignInRequestData>({
       query: (credentials) => ({

@@ -9,4 +9,10 @@ interface UserResetPassword {
   password: string;
 }
 
-export type { UserCreateInput, UserResetPassword };
+type WishlistInput = {
+  userId: string;
+  modelId?: string;
+  complectationId?: string;
+};
+
+export type { UserCreateInput, UserResetPassword, WishlistInput };

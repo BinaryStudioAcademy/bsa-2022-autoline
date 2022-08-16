@@ -3,9 +3,10 @@ import { errorsHandler } from '@middlewares/middlewares';
 import {
   healthRouter,
   authRouter,
-  activateRouter,
-  activateLinkRouter,
   protectedRouter,
+  activateRouter,
+  wishlistRouter,
+  activateLinkRouter,
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -43,6 +44,7 @@ const routes = [
   healthRouter,
   authRouter,
   protectedRouter,
+  wishlistRouter,
   activateRouter,
   activateLinkRouter,
 ];

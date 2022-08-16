@@ -1,24 +1,30 @@
-import car from '@assets/images/mock_car_picture.png';
-import { ShortCarCard } from '@components/short-car-card/short-car-card';
+import { FC } from 'react';
+
+import photo_url from '@assets/images/mock_car_picture.png';
+import { ReviewedCarsGrid } from '@components/reviewed-cars-grid/reviewed-cars-grid';
 
 import styles from './styles.module.scss';
 
-const ReviewedCars = (): JSX.Element => {
+const ReviewedCars: FC = () => {
   // mock data
   const carData = {
-    src: car,
+    photo_url,
     title: 'BMW X5 M Packet 40d 2015',
     price: '$ 34 000 - 52 450',
   };
 
+  const dataArray = [...Array(8)].map((_) => carData);
+
+  const listIsEmpty = dataArray.length === 0;
+
+  const Message: FC = () => (
+    <p className={styles.messageWrapper}>the list is empty</p>
+  );
+
   return (
     <article className={styles.cars}>
       <h2 className={styles.carsTitle}>revised</h2>
-      <div className={styles.carsGrid}>
-        {[...Array(16)].map((_, index) => (
-          <ShortCarCard carData={carData} key={index} />
-        ))}
-      </div>
+      {listIsEmpty ? <Message /> : <ReviewedCarsGrid carDataList={dataArray} />}
     </article>
   );
 };

@@ -10,12 +10,12 @@
     font-size: 22;
     text-transform: uppercase;
   }
+}
 
-  &Grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    margin-right: 30px;
-    margin-bottom: 30px;
-  }
+.messageWrapper {
+  width: 100%;
+  font-weight: 600;
+  font-size: 18px;
+  text-align: center;
+  text-transform: uppercase;
 }

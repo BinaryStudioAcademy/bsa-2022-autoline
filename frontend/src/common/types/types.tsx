@@ -1,3 +1,7 @@
 export type { ButtonPropsType } from './button/button';
 export type { InputFieldPropsType } from './input-field/input-field';
-export type { ComponentType } from './component/component';
+export type {
+  CarDataType,
+  CarDataPropsType,
+  CarDataListPropsType,
+} from './card/card';

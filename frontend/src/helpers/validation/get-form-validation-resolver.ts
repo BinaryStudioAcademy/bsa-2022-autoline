@@ -1,12 +1,12 @@
 import { Resolver } from 'react-hook-form';
 
 import { ValidationSchema } from '@common/types/types';
-import { joiResolver } from '@hookform/resolvers/joi';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const getFormValidationResolver = (
-  validationSchema: ValidationSchema<string>,
+  validationSchema: ValidationSchema<object>,
 ): Resolver => {
-  return joiResolver(validationSchema);
+  return yupResolver(validationSchema);
 };
 
 export { getFormValidationResolver };

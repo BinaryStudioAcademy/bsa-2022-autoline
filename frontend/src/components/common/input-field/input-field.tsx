@@ -39,7 +39,7 @@ export const InputField = ({
         {...field}
         type={type}
         className={styles.input}
-        error={errors?.name ? true : false}
+        error={errors?.[name] ? true : false}
       />
       {errors?.[name] && (
         <FormHelperText className={styles.error}>

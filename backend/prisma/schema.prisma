@@ -173,7 +173,7 @@ model City {
 
 model Region {
   id           String @id @default(uuid())
-  name         String
+  name         String @db.VarChar(300)
   autoria_code Int
   cities       City[]
 }

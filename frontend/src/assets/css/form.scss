@@ -1,0 +1,34 @@
+.MuiInputLabel-root.MuiInputLabel-shrink.Mui-focused,
+.MuiInputLabel-root.MuiInputLabel-shrink.MuiFormLabel-filled {
+  color: var(--gray300);
+  font-size: 12px;
+  transform: translate(0, 5px) scale(0.75);
+}
+
+.MuiInputBase-root.MuiOutlinedInput-root.Mui-focused fieldset {
+  border-width: 1px;
+  border-color: var(--blue100);
+}
+
+.MuiInputBase-root.Mui-error input {
+  color: var(--red);
+}
+
+.MuiInputBase-root {
+  .MuiSelect-select {
+    box-sizing: border-box;
+    height: 46px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    padding-left: 0;
+    font-size: 14px;
+    font-family: var(--primary-font);
+  }
+
+  &.MuiInputBase-formControl {
+    .MuiSvgIcon-root {
+      right: 18px;
+      width: 12px;
+    }
+  }
+}

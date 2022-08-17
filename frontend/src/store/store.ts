@@ -1,16 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { emailApi } from '@services/request-verification-link/email-link-service';
 import { combineReducers } from 'redux';
 
+import { api } from './queries/index';
 import { auth } from './root-reducer';
 
 const rootReducer = combineReducers({
   auth,
-  [emailApi.reducerPath]: emailApi.reducer,
+  [api.reducerPath]: api.reducer,
 });
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(emailApi.middleware),
+    getDefaultMiddleware().concat(api.middleware),
 });

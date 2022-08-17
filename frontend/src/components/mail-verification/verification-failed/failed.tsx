@@ -6,28 +6,26 @@ import { AppRoute } from '@common/enums/app/app';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { InputField } from '@components/common/input-field/input-field';
 import Container from '@mui/material/Container';
-import { emailApi } from '@services/request-verification-link/email-link-service';
+import { useRequestLinkMutation } from '@store/queries/verification-link';
 
 import styles from './styles.module.scss';
 import { emailSchema } from './validation-schema';
 
 const Failed: FC = (): React.ReactElement => {
-  const [email, setEmail] = useState({ email: '' });
+  const [email, setEmail] = useState<string>('');
   const [validationError, setValidationError] = useState('');
-  const [requestLink] = emailApi.useRequestLinkMutation();
+  const [getLink] = useRequestLinkMutation();
   const navigate = useNavigate();
 
-  const onchangeHandler = async (
+  const onChangeHandler = async (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ): Promise<void> => {
-    setEmail({
-      email: event.target.value,
-    });
+    setEmail(event.target.value);
   };
   const sendLinkHandler = async (): Promise<void> => {
     try {
-      await emailSchema.validate(email);
-      await requestLink(email);
+      await emailSchema.validate({ email });
+      await getLink(email);
       navigate(AppRoute.SIGN_IN);
     } catch (error) {
       if (error instanceof Error) {
@@ -53,7 +51,7 @@ const Failed: FC = (): React.ReactElement => {
               type="email"
               required={true}
               errors={validationError}
-              onChange={onchangeHandler}
+              onChange={onChangeHandler}
             />
             <div className={styles.center}>
               <ButtonFill

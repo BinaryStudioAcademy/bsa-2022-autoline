@@ -1,5 +1,5 @@
 const AuthApiPath = {
-  LOGIN: '/login',
+  SIGN_IN: '/sign-in',
   REGISTER: '/register',
   USER: '/user',
   RESET_PASSWORD_REQUEST: '/reset-password-request',

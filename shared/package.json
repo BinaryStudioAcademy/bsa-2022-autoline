@@ -8,13 +8,14 @@
   "scripts": {
     "lint:js": "npx eslint \"src/**/*.ts\"",
     "lint": "yarn lint:js",
-    "start:dev": "concurrently \"tsc -w\" \"tsc-alias -w\"",
-    "build:ts": "tsc && tsc-alias",
+    "start:dev": "rimraf build && concurrently \"tsc -w\" \"tsc-alias -w\"",
+    "build:ts": "rimraf build && tsc && tsc-alias",
     "build": "yarn build:ts",
     "build-and-update": "yarn build && cd ../backend && yarn upgrade @autoline/shared && cd ../frontend && yarn upgrade @autoline/shared"
   },
   "dependencies": {
-    "joi": "^17.6.0"
+    "joi": "^17.6.0",
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "concurrently": "^7.3.0",

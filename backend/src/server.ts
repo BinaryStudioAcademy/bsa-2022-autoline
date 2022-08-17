@@ -4,8 +4,10 @@ import {
   healthRouter,
   authRouter,
   protectedRouter,
+  activateRouter,
   wishlistRouter,
   carsRouter,
+  activateLinkRouter,
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -45,6 +47,8 @@ const routes = [
   protectedRouter,
   wishlistRouter,
   carsRouter,
+  activateRouter,
+  activateLinkRouter,
 ];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 

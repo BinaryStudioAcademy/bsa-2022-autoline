@@ -1,10 +1,10 @@
-import { sendLink } from '@services/mail_verification/send_activation_link/sendLink';
-import { generateMailToken } from '@services/mail_verification/token.service';
-import { getByEmail } from '@services/mail_verification/user_data.service/user';
+import { sendLink } from '@services/mail-verification/send-activation-link/send-link';
+import { generateMailToken } from '@services/mail-verification/token.service';
+import { getByEmail } from '@services/mail-verification/user-data.service/user';
 import {
   updateMailToken,
   getByUserId,
-} from '@services/mail_verification/user_data.service/user_security';
+} from '@services/mail-verification/user_data.service/user-security';
 import httpStatus from 'http-status-codes';
 
 import type { TypedRequestBody } from '@common/types/controller/controller';

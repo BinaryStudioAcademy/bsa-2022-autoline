@@ -47,6 +47,35 @@ const carsSearch = async (
   await getData(data.fuelTypeId, 'type_id', prisma.fuel_Type, result);
   await getData(data.drivetrainId, 'drive_id', prisma.drivetrain, result);
 
+  if (data.regionId || data.cityId) {
+    const cityData = await prisma.city.findMany({
+      select: {
+        autoria_code: true,
+        region: {
+          select: {
+            autoria_code: true,
+          },
+        },
+      },
+      where: {
+        id: {
+          in: data.cityId,
+        },
+        region: {
+          id: {
+            in: data.regionId,
+          },
+        },
+      },
+    });
+    cityData.forEach((city, index) =>
+      Object.assign(result, {
+        [`city[${index}]`]: data.cityId ? city.autoria_code : undefined,
+        [`region[${index}]`]: city.region.autoria_code,
+      }),
+    );
+  }
+
   result.yearStart = data.yearStart;
   result.yearEnd = data.yearEnd;
   result.price_ot = data.priceStart;

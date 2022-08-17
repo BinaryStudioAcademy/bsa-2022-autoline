@@ -7,8 +7,8 @@ interface AutoriaRequestParams {
   drive_id?: number;
   yearStart?: string;
   yearEnd?: string;
-  state?: string;
-  city?: string;
+  state?: number;
+  city?: number;
   price_ot?: string;
   price_do?: string;
   powerFrom?: string;

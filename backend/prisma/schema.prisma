@@ -138,6 +138,7 @@ model Option {
 
 model Complectation {
   id                   String                    @id @default(uuid())
+  name                 String                    @db.VarChar(70)
   model_id             String
   model                Model                     @relation(fields: [model_id], references: [id])
   engine               String                    @db.VarChar(300)

@@ -18,4 +18,6 @@ export {
   type SignUpResponseDto,
 } from './auth/auth';
 
+export { type WishlistResponseDto } from './preferences/preferences';
+
 export { type CarsSearchParams } from './cars/cars-search-params';

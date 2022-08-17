@@ -5,7 +5,7 @@
   "compilerOptions": {
     "outDir": "build",
     "declaration": true,
-    "module": "commonjs",
+    "module": "ESNext",
     "baseUrl": ".",
     "paths": {
       "@common/*": ["./src/common/*"],

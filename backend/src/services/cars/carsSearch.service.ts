@@ -8,7 +8,7 @@ const carsSearch = async (
   const result: AutoriaRequestParams = { category_id: 1 };
 
   if (data.brandId || data.modelId || data.bodyTypeId) {
-    result.model = await prisma.model.findMany({
+    const model_from_db = await prisma.model.findMany({
       select: {
         autoria_code: true,
         body_type: {
@@ -34,8 +34,19 @@ const carsSearch = async (
         },
       },
     });
+
+    if (model_from_db?.length === 0) throw new Error('NotFoundError');
+
+    model_from_db.forEach((model, index) => {
+      Object.assign(result, {
+        [`body_type[${index}]`]: model.body_type?.autoria_code,
+        [`marka_id[${index}]`]: model.brand?.autoria_code,
+        [`model_id[${index}]`]: data.modelId ? model.autoria_code : undefined,
+        [`s_yers[${index}]`]: data.yearStart,
+        [`po_yers[${index}]`]: data.yearEnd,
+      });
+    });
   }
-  if (result.model?.length === 0) throw new Error('NotFoundError');
 
   await getData(data.colorId, 'color_id', prisma.color, result);
   await getData(
@@ -71,18 +82,17 @@ const carsSearch = async (
     cityData.forEach((city, index) =>
       Object.assign(result, {
         [`city[${index}]`]: data.cityId ? city.autoria_code : undefined,
-        [`region[${index}]`]: city.region.autoria_code,
+        [`state[${index}]`]: city.region.autoria_code,
       }),
     );
   }
 
-  result.yearStart = data.yearStart;
-  result.yearEnd = data.yearEnd;
   result.price_ot = data.priceStart;
   result.price_do = data.priceEnd;
+
+  if (data.enginePowerStart || data.enginePowerEnd) result.power_name = 1;
   result.powerFrom = data.enginePowerStart;
   result.powerTo = data.enginePowerEnd;
-  if (data.enginePowerStart || data.enginePowerEnd) result.power_name = 1;
 
   result.engineVolumeFrom = data.engineDisplacementStart;
   result.engineVolumeTo = data.engineDisplacementEnd;

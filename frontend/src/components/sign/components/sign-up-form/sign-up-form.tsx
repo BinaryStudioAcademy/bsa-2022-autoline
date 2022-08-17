@@ -178,8 +178,9 @@ export const SignUpForm = (): React.ReactElement => {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Registration completed successfully, you can sign in. To verify
-                your email in order to use the full functionality of the site.
+                Registration is successfully completed , you can sign in. Please
+                verify your e-mail in order to use full functionality of the
+                website.
               </DialogContentText>
             </DialogContent>
             <DialogActions>

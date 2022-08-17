@@ -43,7 +43,7 @@
   margin-bottom: 35px;
 }
 
-@media (max-width: 641px) {
+@media (max-width: var(--small)) {
   .content {
     padding: 30px 25px;
   }

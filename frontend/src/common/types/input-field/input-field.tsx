@@ -1,4 +1,4 @@
-import { FormControl, FormControlErrors } from '@common/types/types';
+import { Control, FieldErrors } from 'react-hook-form';
 
 export type InputFieldPropsType = {
   name: string;
@@ -6,11 +6,11 @@ export type InputFieldPropsType = {
   rows?: number;
   min?: number;
   max?: number;
-  errors?: FormControlErrors;
+  errors?: FieldErrors;
   placeholder?: string;
   className?: string;
   defaultValue?: string;
   autoComplete?: string;
   required: boolean;
-  control: FormControl;
+  control: Control;
 };

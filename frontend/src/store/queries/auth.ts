@@ -1,9 +1,9 @@
 import { ApiPath, AuthApiPath } from '@common/enums/enums';
 import { SignInResponseData, SignInRequestData } from '@common/types/types';
 
-import { Api } from './index';
+import { api } from './index';
 
-export const authApi = Api.injectEndpoints({
+export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
     signIn: builder.mutation<SignInResponseData, SignInRequestData>({
       query: (credentials) => ({

@@ -1,24 +1,25 @@
-import { useForm, UseFormHandleSubmit } from 'react-hook-form';
-
 import {
-  FormControl,
-  FormControlErrors,
-  FormControlValues,
-  ValidationSchema,
-} from '@common/types/types';
+  useForm,
+  UseFormHandleSubmit,
+  Control,
+  FieldErrors,
+  FieldValues,
+} from 'react-hook-form';
+
 import { getFormValidationResolver } from '@helpers/helpers';
+import { type SchemaOf as ValidationSchema } from 'yup';
 
 type UseAppFormArgs = {
   defaultValues: Record<string, unknown>;
   validationSchema?: ValidationSchema<object>;
 };
-type UseAppFormResult<T extends FormControlValues = FormControlValues> = {
-  control: FormControl;
-  errors: FormControlErrors;
+type UseAppFormResult<T extends FieldValues = FieldValues> = {
+  control: Control;
+  errors: FieldErrors;
   handleSubmit: UseFormHandleSubmit<T>;
 };
 
-const useAppForm = <T extends FormControlValues = FormControlValues>({
+const useAppForm = <T extends FieldValues = FieldValues>({
   validationSchema,
   defaultValues,
 }: UseAppFormArgs): UseAppFormResult<T> => {
@@ -26,7 +27,7 @@ const useAppForm = <T extends FormControlValues = FormControlValues>({
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormControlValues>({
+  } = useForm<FieldValues>({
     defaultValues,
     resolver: validationSchema
       ? getFormValidationResolver(validationSchema)

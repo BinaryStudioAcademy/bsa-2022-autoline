@@ -13,7 +13,7 @@ type ErrorType = {
   status: number;
 };
 
-export const Api = createApi({
+export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: ENV.API_PATH }) as BaseQueryFn<
     string | FetchArgs,
     unknown,

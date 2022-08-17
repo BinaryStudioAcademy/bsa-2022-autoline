@@ -9,6 +9,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "scripts": {
+    "fetch": "dotenv -e ../.env/backend.env -- ts-node --files -r tsconfig-paths/register api-autoria/fetch-cars-data.ts",
     "lint:js": "npx eslint \"src/**/*.ts\" --resolve-plugins-relative-to .",
     "lint": "yarn lint:js",
     "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
@@ -30,6 +31,7 @@
     "@sentry/node": "^7.9.0",
     "@sentry/tracing": "^7.9.0",
     "@types/nodemailer": "^6.4.5",
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.18.1",

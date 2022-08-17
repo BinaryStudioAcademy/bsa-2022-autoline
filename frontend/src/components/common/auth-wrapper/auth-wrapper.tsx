@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 
+import Logo from '@assets/images/logo.svg';
+import BgImage from '@assets/images/sign-bg.jpg';
 import { AppRoute } from '@common/enums/app/app-route.enum';
 import Container from '@mui/material/Container';
 
-import Logo from '../../../assets/images/logo.svg';
-import BgImage from '../../../assets/images/sign-bg.jpg';
 import styles from './styles.module.scss';
 
 export const AuthWrapper = (props: {

@@ -9,6 +9,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "scripts": {
+    "fetch": "dotenv -e ../.env/backend.env -- ts-node --files -r tsconfig-paths/register api-autoria/fetch-cars-data.ts",
     "lint:js": "npx eslint \"src/**/*.ts\" --resolve-plugins-relative-to .",
     "lint": "yarn lint:js",
     "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",

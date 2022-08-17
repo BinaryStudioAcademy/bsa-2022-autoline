@@ -8,6 +8,7 @@ import { Sign } from '../../components/sign/sign';
 
 const Routing: FC = () => {
   const authData = { name: 'Oleksandr' };
+  
   return (
     <BrowserRouter>
       <Routes>

@@ -1,6 +1,11 @@
 import { ENV } from '@common/enums/app/env.enum';
-import { ApiPath, AuthApiPath, ContentType } from '@common/enums/enums';
+import { ContentType } from '@common/enums/enums';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+import {
+  ApiPath,
+  AuthApiPath,
+} from '../../../../shared/src/common/enums/enums';
 
 type ResetPasswordRequestData = {
   id: string;

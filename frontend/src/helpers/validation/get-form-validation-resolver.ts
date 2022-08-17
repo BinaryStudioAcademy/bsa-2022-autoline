@@ -5,8 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 const getFormValidationResolver = (
   validationSchema: ValidationSchema<object>,
-): Resolver => {
-  return yupResolver(validationSchema);
-};
+): Resolver => yupResolver(validationSchema);
 
 export { getFormValidationResolver };

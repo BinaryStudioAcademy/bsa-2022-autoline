@@ -6,7 +6,7 @@ import type {
   SignUpResponseDto,
   SignInRequestData,
   SignInResponseData,
-} from '@autoline/shared/common/types/types';
+} from '@autoline/shared';
 import type {
   TypedRequestBody,
   TypedRequestParams,

@@ -8,10 +8,7 @@ import { updateMailToken } from '@services/mail-verification/user-data.service/u
 import bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
-import type {
-  SignInResponseData,
-  SignUpResponseDto,
-} from '@autoline/shared/common/types/types';
+import type { SignInResponseData, SignUpResponseDto } from '@autoline/shared';
 import type { UserCreateInput } from '@common/types/types';
 
 const signupLocal = async (

@@ -27,7 +27,7 @@ model User_Security {
   user_id                String  @unique @db.VarChar(300)
   password               String  @db.VarChar(300)
   password_change_token  String? @db.VarChar(300)
-  email_activation_token String? @db.VarChar(300)
+  email_activation_token String? @unique @db.VarChar(300)
   email_change_token     String? @db.VarChar(300)
   email_provisional      String? @db.VarChar(300)
   refresh_token          String? @db.VarChar(300)

@@ -1,18 +1,17 @@
-import { ApiPath, VerificationLinkPath } from '@common/enums/enums';
-import { Email } from '@common/types/types';
+import { VerificationLinkPath } from '@common/enums/enums';
 
-import { Api } from './index';
+import { api } from './index';
 
-const emailApi = Api.injectEndpoints({
+const emailApi = api.injectEndpoints({
   endpoints: (build) => ({
-    requestLink: build.mutation<void, Email>({
-      query: (email) => ({
-        url: `${ApiPath.AUTH}${VerificationLinkPath.VERIFICATION_LINK}`,
+    requestLink: build.mutation<void, string>({
+      query: (email: string) => ({
+        url: `${VerificationLinkPath.VERIFICATION_LINK}`,
         method: 'POST',
-        body: email,
+        body: { email },
       }),
     }),
   }),
 });
 
-export { emailApi };
+export const { useRequestLinkMutation } = emailApi;

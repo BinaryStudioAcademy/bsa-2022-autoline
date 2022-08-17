@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm, Controller, FieldValues } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { signUpSchema as baseSchema } from '@autoline/shared/validation-schemas/index';
+import { signUpSchema as baseSchema } from '@autoline/shared/validation-schemas';
 import { AppRoute } from '@common/enums/app/app-route.enum';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';

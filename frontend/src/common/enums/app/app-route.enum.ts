@@ -4,6 +4,7 @@ enum AppRoute {
   SIGN_UP = '/sign-up',
   NOT_FOUND = '*',
   $ID = ':id',
+  PERSONAL = '/personal-page',
 }
 
 export { AppRoute };

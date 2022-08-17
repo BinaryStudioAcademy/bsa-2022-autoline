@@ -1,6 +1,6 @@
 import { prisma } from '@data/prisma-client';
 
-import type { WishlistResponseDto } from '@autoline/shared';
+import type { WishlistResponseDto } from '@autoline/shared/common/types/types';
 import type { WishlistInput } from '@common/types/types';
 
 const setWishlist = async (

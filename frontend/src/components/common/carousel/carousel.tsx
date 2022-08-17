@@ -2,6 +2,7 @@ import 'swiper/css/bundle';
 import './styles.css';
 import React, { useState } from 'react';
 
+import IconPark from '@assets/images/icon-park-solid_picture.svg';
 import { FreeMode, Navigation, Thumbs } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -9,26 +10,15 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-import IconPark from './icon-park-solid_picture.svg';
+import { images } from './mock-data';
 
 import type { Swiper as SwiperType } from 'swiper';
 
-export const Carousel = (): React.ReactElement => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const Carousel = (props: { images: string[] }): React.ReactElement => {
+  // const { images } = props;
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const [currentImage, setCurrentImage] = useState(1);
-
-  const images = [
-    'https://swiperjs.com/demos/images/nature-1.jpg',
-    'https://swiperjs.com/demos/images/nature-2.jpg',
-    'https://swiperjs.com/demos/images/nature-3.jpg',
-    'https://swiperjs.com/demos/images/nature-4.jpg',
-    'https://swiperjs.com/demos/images/nature-5.jpg',
-    'https://swiperjs.com/demos/images/nature-6.jpg',
-    'https://swiperjs.com/demos/images/nature-7.jpg',
-    'https://swiperjs.com/demos/images/nature-8.jpg',
-    'https://swiperjs.com/demos/images/nature-9.jpg',
-    'https://swiperjs.com/demos/images/nature-10.jpg',
-  ];
 
   return (
     <>
@@ -61,7 +51,7 @@ export const Carousel = (): React.ReactElement => {
       <Swiper
         onSwiper={setThumbsSwiper}
         spaceBetween={10}
-        slidesPerView={4}
+        slidesPerView={5}
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}

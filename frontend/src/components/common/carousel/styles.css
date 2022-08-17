@@ -1,3 +1,11 @@
+:root {
+  --swiper-width: 540px;
+  --font-lato: Lato, Arial, sans-serif;
+  --z-index-current-image: 1;
+  --preview-image-height: 70px;
+  --main-image-height: 380px;
+}
+
 html,
 body {
   position: relative;
@@ -12,19 +20,19 @@ body {
 }
 
 .mySwiper2 {
-  width: 538px;
-  height: 376px;
+  width: var(--swiper-width);
+  height: var(--main-image-height);
 }
 .mySwiper {
-  height: 100px;
-  width: 538px;
+  height: var(--preview-image-height);
+  width: var(--swiper-width);
   box-sizing: border-box;
   padding: 10px 0;
   margin-top: 10px;
 }
 
 .mySwiper .swiper-slide {
-  width: 25%;
+  width: 20%;
   height: 100%;
   opacity: 0.5;
 }
@@ -74,7 +82,7 @@ body {
   align-items: center;
   justify-content: center;
   position: absolute;
-  z-index: 999;
+  z-index: var(--z-index-current-image);
   bottom: 0;
   background: rgba(255, 255, 255, .5);
   width: 90px;
@@ -86,5 +94,5 @@ body {
 .navigation-bar .current-image {
   font-size: 16px;
   font-weight: 400;
-  font: Lato, Arial, sans-serif;
+  font: var(--font-lato);
 }

@@ -22,8 +22,8 @@ const ReviewedCars: FC = () => {
   );
 
   return (
-    <article className={styles.cars}>
-      <h2 className={styles.carsTitle}>revised</h2>
+    <article className={styles.reviewedСars}>
+      <h2 className={styles.reviewedСarsTitle}>revised</h2>
       {listIsEmpty ? <Message /> : <ReviewedCarsGrid carDataList={dataArray} />}
     </article>
   );

@@ -7,7 +7,7 @@ import styles from './style.module.scss';
 
 const ReviewedCarsGrid: FC<CarDataListPropsType> = ({ carDataList }) => {
   return (
-    <div className={styles.carsGrid}>
+    <div className={styles.carGrid}>
       {carDataList.map((item, index) => (
         <ShortCarCard carData={item} key={index} />
       ))}

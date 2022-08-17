@@ -38,9 +38,9 @@ export const Carousel = (): React.ReactElement => {
         thumbs={{
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}
-        onSlideChange={({ activeIndex }): void =>
-          setCurrentImage(activeIndex + 1)
-        }
+        onSlideChange={({ activeIndex }): void => {
+          setCurrentImage(activeIndex + 1);
+        }}
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper2"
       >
@@ -66,9 +66,9 @@ export const Carousel = (): React.ReactElement => {
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper"
-        onSlideChange={({ activeIndex }): void =>
-          setCurrentImage(activeIndex + 1)
-        }
+        onSlideChange={({ clickedIndex }): void => {
+          if (clickedIndex) setCurrentImage(clickedIndex + 1);
+        }}
       >
         {images.map((image) => {
           return (

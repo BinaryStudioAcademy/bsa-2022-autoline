@@ -174,11 +174,11 @@ export const SignUpForm = (): React.ReactElement => {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {'Registration successful'}
+              {'Successful registration'}
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Registration is successfully completed , you can sign in. Please
+                Registration is successfully completed, you can sign in. Please
                 verify your e-mail in order to use full functionality of the
                 website.
               </DialogContentText>

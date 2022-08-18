@@ -1,6 +1,6 @@
 import { ExceptionMessage } from '@common/enums/exception/exception';
 import { prisma } from '@data/prisma-client';
-import { compare as bcryptCompare } from 'bcrypt';
+import { validatePassword } from '@services/password-validation/password-validation.service';
 import { Request } from 'express';
 import { Strategy as LocalStrategy } from 'passport-local';
 
@@ -20,9 +20,10 @@ const localStrategy = new LocalStrategy(
           User_Security: true,
         },
       });
-      const passwordMatches = await bcryptCompare(
+
+      const passwordMatches = await validatePassword(
         password,
-        user?.User_Security?.password || '',
+        user?.User_Security,
       );
 
       if (!user || !passwordMatches) {

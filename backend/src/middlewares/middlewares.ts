@@ -4,3 +4,4 @@ export {
   userAuthMiddleware,
   adminAuthMiddleware,
 } from './roles-based-protection/role.middleware';
+export { updateUserMiddleware } from './update-user/update-user.middleware';

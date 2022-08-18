@@ -4,3 +4,4 @@ export { activateRouter } from './activate-mail/activate.router';
 export { activateLinkRouter } from './activation-link/activation-link.router';
 export { protectedRouter } from './test-protected-route/protected.router';
 export { wishlistRouter } from './preferences/wishlist.router';
+export { updateUserRouter } from './update-user/update-user.router';

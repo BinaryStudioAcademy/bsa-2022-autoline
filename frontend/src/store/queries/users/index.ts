@@ -8,8 +8,15 @@ export const userApi = autolineApi.injectEndpoints({
     getUsers: builder.query<User[], void>({
       query: () => API.USERS,
     }),
+    updateUser: builder.mutation<void, Pick<User, 'id'> & Partial<User>>({
+      query: ({ id, ...patch }) => ({
+        url: `${API.USERS}/${id}`,
+        method: 'PATCH',
+        body: patch,
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetUsersQuery } = userApi;
+export const { useGetUsersQuery, useUpdateUserMutation } = userApi;

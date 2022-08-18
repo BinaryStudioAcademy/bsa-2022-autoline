@@ -43,6 +43,7 @@ const Routing: FC = () => {
         </Route>
         <Route element={<ProtectedRoute isAllowed={isAdmin} />}>
           <Route path={AppRoute.ADMINISTRATION} element={<Administration />} />
+        </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.PERSONAL} element={<PersonalPage />} />
         </Route>

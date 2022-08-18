@@ -1,9 +1,9 @@
 import { User } from '@autoline/shared/common/types/types';
 
-import { autolineApi } from '..';
+import { api } from '..';
 import { API } from '../api_routes';
 
-export const userApi = autolineApi.injectEndpoints({
+export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query<User[], void>({
       query: () => API.USERS,

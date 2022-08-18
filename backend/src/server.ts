@@ -5,6 +5,9 @@ import {
   authRouter,
   protectedRouter,
   userRouter,
+  activateRouter,
+  wishlistRouter,
+  activateLinkRouter,
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -38,7 +41,15 @@ app
   .use(express.json())
   .use(express.urlencoded({ extended: true }));
 
-const routes = [healthRouter, authRouter, protectedRouter, userRouter];
+const routes = [
+  healthRouter,
+  authRouter,
+  protectedRouter,
+  userRouter,
+  wishlistRouter,
+  activateRouter,
+  activateLinkRouter,
+];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 
 app.use(Sentry.Handlers.errorHandler());

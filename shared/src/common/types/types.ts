@@ -19,3 +19,4 @@ export {
 } from './auth/auth';
 
 export { type User, type Role, type Sex } from './user/user';
+export { type WishlistResponseDto } from './preferences/preferences';

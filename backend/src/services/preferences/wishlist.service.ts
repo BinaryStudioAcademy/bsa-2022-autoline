@@ -110,6 +110,7 @@ const getWishlistByUserId = async (
               price_end: true,
             },
           },
+          description: true,
         },
       },
     },
@@ -136,6 +137,7 @@ const getWishlistByUserId = async (
       bodyType: wishlist.model?.body_type.name,
       manufactureCountry: wishlist.model?.manufacture_country.name,
       pricesRanges: wishlist.model?.prices_ranges,
+      description: wishlist.model?.description,
     } as ModelResponseDto;
 
     return data;
@@ -155,6 +157,7 @@ const getWishlistByUserId = async (
       created_at: true,
       complectation: {
         select: {
+          name: true,
           engine: true,
           engine_displacement: true,
           engine_power: true,
@@ -206,6 +209,7 @@ const getWishlistByUserId = async (
                   name: true,
                 },
               },
+              description: true,
             },
           },
         },
@@ -220,6 +224,7 @@ const getWishlistByUserId = async (
       const data = {
         id: wishlist.id,
         createdAt: wishlist.created_at,
+        complectationName: wishlist.complectation?.name,
         engine: wishlist.complectation?.engine,
         engineDisplacement:
           wishlist.complectation?.engine_displacement.toNumber(),
@@ -241,6 +246,7 @@ const getWishlistByUserId = async (
         },
         bodyType: modelData?.body_type.name,
         manufactureCountry: modelData?.manufacture_country.name,
+        description: modelData?.description,
       } as ComplectationResponseDto;
 
       return data;

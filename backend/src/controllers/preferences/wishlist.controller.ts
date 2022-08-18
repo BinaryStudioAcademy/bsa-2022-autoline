@@ -64,7 +64,7 @@ const getWishlistByUserId = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const { userId } = req.body.tokenPayload.sub;
+    const userId = req.body.tokenPayload.sub;
 
     const wishlistResponseDto = await wishlistService.getWishlistByUserId(
       userId,

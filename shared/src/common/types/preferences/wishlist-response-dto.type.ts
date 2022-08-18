@@ -21,11 +21,13 @@ type ModelResponseDto = {
     price_start: number;
     price_end: number;
   }[];
+  description: string;
 };
 
 type ComplectationResponseDto = {
   id: string;
   createdAt: Date;
+  complectationName: string;
   engine: string;
   engineDisplacement: number;
   enginePower: number;
@@ -49,6 +51,7 @@ type ComplectationResponseDto = {
   };
   bodyType: string;
   manufactureCountry: string;
+  description: string;
 };
 
 interface WishlistsResponseDto {

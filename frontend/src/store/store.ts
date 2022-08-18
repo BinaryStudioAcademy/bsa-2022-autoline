@@ -1,16 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 
-import { autolineApi } from './queries';
+import { api } from './queries/index';
 import { auth } from './root-reducer';
 
 const rootReducer = combineReducers({
   auth,
-  [autolineApi.reducerPath]: autolineApi.reducer,
+  [api.reducerPath]: api.reducer,
 });
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(autolineApi.middleware),
+    getDefaultMiddleware().concat(api.middleware),
 });

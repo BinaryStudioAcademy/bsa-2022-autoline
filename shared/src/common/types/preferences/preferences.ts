@@ -1,1 +1,6 @@
-export { type WishlistResponseDto } from './wishlist-response-dto.type';
+export {
+  type WishlistResponseDto,
+  type WishlistsResponseDto,
+  type ModelResponseDto,
+  type ComplectationResponseDto,
+} from './wishlist-response-dto.type';

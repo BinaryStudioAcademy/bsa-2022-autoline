@@ -1,6 +1,16 @@
 import { ENV } from '@common/enums/app/env.enum';
 import { RootState } from '@common/types/types';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  createApi,
+  fetchBaseQuery,
+  BaseQueryFn,
+  FetchArgs,
+} from '@reduxjs/toolkit/query/react';
+
+type ErrorType = {
+  data: string;
+  status: number;
+};
 
 const baseQuery = fetchBaseQuery({
   baseUrl: ENV.API_PATH,
@@ -11,10 +21,9 @@ const baseQuery = fetchBaseQuery({
     }
     return headers;
   },
-});
+}) as BaseQueryFn<string | FetchArgs, unknown, ErrorType>;
 
-export const autolineApi = createApi({
-  reducerPath: 'autolineApi',
+export const api = createApi({
   baseQuery: baseQuery,
   endpoints: () => ({}),
 });

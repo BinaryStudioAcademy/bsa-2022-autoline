@@ -1,18 +1,15 @@
+import { ApiPath, AuthApiPath } from '@autoline/shared/common/enums/enums';
 import { ContentType } from '@common/enums/enums';
 import { SignInResponseData, SignInRequestData } from '@common/types/types';
 
-import {
-  ApiPath,
-  AuthApiPath,
-} from '../../../../shared/src/common/enums/enums';
-import { Api } from './index';
+import { api } from './index';
 
 type ResetPasswordRequestData = {
   id: string;
   password: string;
 };
 
-export const authApi = Api.injectEndpoints({
+export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
     signIn: builder.mutation<SignInResponseData, SignInRequestData>({
       query: (credentials) => ({

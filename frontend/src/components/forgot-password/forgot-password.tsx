@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 import { ForgotPasswordRequestData } from '@autoline/shared/common/types/types';
+import { forgotPassword as forgotPasswordValidationSchema } from '@autoline/shared/validation-schemas/validation-schemas';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { InputField } from '@components/common/input-field/input-field';
 import { useAppForm } from '@hooks/hooks';
 import { Alert } from '@mui/material';
 import { useForgotPasswordMutation } from '@store/queries/auth';
 
-import { forgotPassword as forgotPasswordValidationSchema } from '../../../../shared/src/validation-schemas/validation-schemas';
 import { AuthWrapper } from '../common/auth-wrapper/auth-wrapper';
 import { DEFAULT_FORGOT_PASSWORD_PAYLOAD } from './common';
 import styles from './styles.module.scss';

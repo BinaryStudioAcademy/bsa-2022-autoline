@@ -1,13 +1,14 @@
 import React from 'react';
-import { useForm, Controller, FieldValues } from 'react-hook-form';
+import { FieldValues } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { SignInRequestData } from '@autoline/shared/common/types/types';
 import { signUpSchema as baseSchema } from '@autoline/shared/validation-schemas';
 import { AppRoute } from '@common/enums/app/app-route.enum';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useAppForm } from '@hooks/hooks';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -29,18 +30,15 @@ const signUpSchema = baseSchema.shape({
 });
 
 export const SignUpForm = (): React.ReactElement => {
+  const { control, errors, handleSubmit } = useAppForm<SignInRequestData>({
+    defaultValues: {},
+    validationSchema: signUpSchema,
+  });
+
   const navigate = useNavigate();
   const [fetchSignUp, { isLoading, isSuccess, isError, error: fetchError }] =
     useSignUpMutation();
   const fetchErrorData = fetchError as ErrorType;
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(signUpSchema),
-  });
 
   const onSubmit = (formData: FieldValues): void => {
     const { name, email, password, phone, location } = formData;
@@ -66,98 +64,58 @@ export const SignUpForm = (): React.ReactElement => {
         className={styles.form}
       >
         <fieldset disabled={isLoading} className={styles.fieldset}>
-          <Controller
-            name={'name'}
+          <InputField
+            name="name"
+            type="text"
+            required={true}
+            errors={errors}
             control={control}
-            render={({ field: { onChange, value } }): React.ReactElement => (
-              <InputField
-                name="Full name"
-                type="text"
-                required={true}
-                errors={errors.name ? `${errors.name.message}` : ''}
-                value={value}
-                onChange={onChange}
-              />
-            )}
+            label="Full name"
           />
 
-          <Controller
-            name={'email'}
+          <InputField
+            name="email"
+            type="email"
+            required={true}
+            errors={errors}
             control={control}
-            render={({ field: { onChange, value } }): React.ReactElement => (
-              <InputField
-                name="Email"
-                type="email"
-                required={true}
-                errors={errors.email ? `${errors.email.message}` : ''}
-                value={value}
-                onChange={onChange}
-              />
-            )}
+            label="Email"
           />
 
-          <Controller
-            name={'password'}
+          <InputField
+            name="password"
+            type="password"
+            required={true}
+            errors={errors}
             control={control}
-            render={({ field: { onChange, value } }): React.ReactElement => (
-              <InputField
-                name="Password"
-                type="password"
-                required={true}
-                errors={errors.password ? `${errors.password.message}` : ''}
-                value={value}
-                onChange={onChange}
-              />
-            )}
+            label="Password"
           />
 
-          <Controller
-            name={'repeatPassword'}
+          <InputField
+            name="repeatPassword"
+            type="password"
+            required={true}
+            errors={errors}
             control={control}
-            render={({ field: { onChange, value } }): React.ReactElement => (
-              <InputField
-                name="Repeat Password"
-                type="password"
-                required={true}
-                errors={
-                  errors.repeatPassword
-                    ? `${errors.repeatPassword.message}`
-                    : ''
-                }
-                value={value}
-                onChange={onChange}
-              />
-            )}
+            label="Repeat Password"
           />
 
-          <Controller
-            name={'phone'}
+          <InputField
+            name="phone"
+            type="tel"
+            required={false}
+            errors={errors}
             control={control}
-            render={({ field: { onChange, value } }): React.ReactElement => (
-              <InputField
-                name="Phone"
-                type="tel"
-                required={false}
-                errors={''}
-                value={value}
-                onChange={onChange}
-              />
-            )}
+            label="Phone"
           />
 
-          <Controller
-            name={'location'}
+          <InputField
+            name="location"
+            type="text"
+            required={false}
+            errors={errors}
             control={control}
-            render={({ field: { onChange, value } }): React.ReactElement => (
-              <InputField
-                name="Location"
-                type="text"
-                required={false}
-                errors={''}
-                value={value}
-                onChange={onChange}
-              />
-            )}
+            label="Location"
           />
 
           {isError && (

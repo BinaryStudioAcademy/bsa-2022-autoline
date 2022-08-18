@@ -7,9 +7,7 @@ import {
 } from '@reduxjs/toolkit/query/react';
 
 type ErrorType = {
-  data: {
-    message: string;
-  };
+  data: string;
   status: number;
 };
 

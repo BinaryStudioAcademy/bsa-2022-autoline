@@ -1,1 +1,1 @@
-export { getCarsAutoRia } from './api_autoria.helper';
+export { getCarsAutoRia } from './api-autoria.helper';

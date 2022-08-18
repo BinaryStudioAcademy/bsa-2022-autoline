@@ -1,5 +1,5 @@
 import { CarsSearchParams } from '@autoline/shared';
-import { AutoriaRequestParams } from '@common/types/cars/autoria_request_params';
+import { AutoriaRequestParams } from '@common/types/cars/autoria-request-params';
 import { prisma } from '@data/prisma-client';
 
 const carsSearch = async (

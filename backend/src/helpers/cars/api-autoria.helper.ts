@@ -5,7 +5,7 @@ import axios from 'axios';
 const URL = 'https://developers.ria.com/auto/search';
 
 const getCarsAutoRia = async (
-  requestParams: AutoriaRequestParams,
+  requestParams: Partial<AutoriaRequestParams>,
 ): Promise<Response | undefined> => {
   try {
     const response = await axios.get(URL, {

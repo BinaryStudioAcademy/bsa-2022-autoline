@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ResetPasswordRequestData } from '@autoline/shared/common/types/types';
+import { resetPassword as resetPasswordValidationSchema } from '@autoline/shared/validation-schemas/validation-schemas';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { InputField } from '@components/common/input-field/input-field';
 import { useAppForm } from '@hooks/hooks';
 import { Alert } from '@mui/material';
 import { useResetPasswordMutation } from '@store/queries/auth';
 
-import { resetPassword as resetPasswordValidationSchema } from '../../../../shared/src/validation-schemas/validation-schemas';
 import { AuthWrapper } from '../common/auth-wrapper/auth-wrapper';
 import { DEFAULT_RESET_PASSWORD_PAYLOAD } from './common';
 import styles from './styles.module.scss';
@@ -64,7 +64,7 @@ export const ResetPassword = (): React.ReactElement => {
               inputLabel="Confirm Password"
             />
             {error && 'data' in error && (
-              <Alert severity="error">{error.data.message}</Alert>
+              <Alert severity="error">{error.data}</Alert>
             )}
             <ButtonFill text="Submit" />
           </fieldset>

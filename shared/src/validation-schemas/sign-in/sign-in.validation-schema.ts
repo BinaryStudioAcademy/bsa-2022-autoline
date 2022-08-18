@@ -1,4 +1,3 @@
-//export { signInSchema } from '@autoline/shared/validation-schemas/validation-schemas';
 import * as Yup from 'yup';
 
 const signInSchema = Yup.object().shape({

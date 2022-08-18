@@ -1,7 +1,9 @@
-//export { signInSchema } from '@autoline/shared/validation-schemas/validation-schemas';
 import * as Yup from 'yup';
 
-const signInSchema = Yup.object().shape({
+const signUpSchema = Yup.object().shape({
+  name: Yup.string()
+    .required('Full name is required')
+    .max(100, 'Full name must not exceed 100 characters'),
   email: Yup.string().required('Email is required').email('Email is invalid'),
   password: Yup.string()
     .required('Password is required')
@@ -9,4 +11,4 @@ const signInSchema = Yup.object().shape({
     .max(20, 'Password must not exceed 20 characters'),
 });
 
-export { signInSchema };
+export { signUpSchema };

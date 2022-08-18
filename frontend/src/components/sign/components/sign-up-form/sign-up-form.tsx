@@ -25,7 +25,7 @@ import styles from './styles.module.scss';
 
 const signUpSchema = baseSchema.shape({
   repeatPassword: Yup.string()
-    .required('Repeat password is required')
+    .required('Please, repeat the password')
     .oneOf([Yup.ref('password'), null], 'Passwords must match'),
 });
 

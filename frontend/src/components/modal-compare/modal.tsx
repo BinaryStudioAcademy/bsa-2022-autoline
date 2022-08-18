@@ -1,6 +1,6 @@
 import { FC, Dispatch } from 'react';
 
-import fillCompare from '@assets/images/compare.svg';
+import fillCompare from '@assets/images/icon_balance.svg';
 
 import styles from './styles.module.scss';
 
@@ -23,7 +23,7 @@ const Modal: FC<ModalProps> = ({
 
   return (
     <div className={styles.container} hidden={isHidden}>
-      <div className={styles.body}>
+      <div className={styles.content}>
         <button className={styles.close} onClick={(): void => closeModal()}>
           ×
         </button>
@@ -35,9 +35,9 @@ const Modal: FC<ModalProps> = ({
           />
         </div>
         <div className={styles.message}>
-          {'You added '}
+          <p className={styles.inline}>{'You added '}</p>
           <p className={styles.carName}>{carName}</p>
-          {' to the Comparison!'}
+          <p className={styles.inline}>{' to the Comparison!'} </p>
           <div className={styles.carDescription}> {carDescription} </div>
         </div>
       </div>

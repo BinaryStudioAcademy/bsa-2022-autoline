@@ -48,8 +48,8 @@ export const Header = (): React.ReactElement => {
             <>
               <Tabs
                 sx={{ marginLeft: '40px' }}
-                value={value}
                 onChange={(e, value): void => setValue(value)}
+                value={value}
               >
                 <Tab
                   label="Used Cars"
@@ -89,14 +89,8 @@ export const Header = (): React.ReactElement => {
                   }}
                 />
               </Tabs>
-              <ButtonFill
-                className={(styles.button, styles.btnFill)}
-                text="Create Account"
-              />
-              <ButtonOutline
-                className={(styles.button, styles.btnOutline)}
-                text="Sign In"
-              />
+              <ButtonFill className={styles.btnFill} text="Create Account" />
+              <ButtonOutline className={styles.btnOutline} text="Sign In" />
             </>
           )}
         </Toolbar>

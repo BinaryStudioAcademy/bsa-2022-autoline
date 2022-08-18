@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app';
+import { LandingPage } from '@components/landing-page/landing-page';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 
 import { Sign } from '../../components/sign/sign';
@@ -24,7 +25,7 @@ const Routing: FC = () => {
           <Route path={AppRoute.SIGN_UP} element={<Sign />} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
-          <Route path={AppRoute.ROOT} element={<h2>Home page</h2>} />
+          <Route path={AppRoute.ROOT} element={<LandingPage />} />
         </Route>
         <Route path={AppRoute.NOT_FOUND} element={<h2>Not found</h2>} />
       </Routes>

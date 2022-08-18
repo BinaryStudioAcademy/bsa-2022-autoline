@@ -2,21 +2,37 @@
   height: 25px;
 }
 
+.btn {
+  font-weight: 700;
+}
+
 .btnOutline,
 .btnOutline:hover {
-  font-weight: 700;
+  width: 70px;
+  margin-right: 40px;
+  padding: 10px 0;
+  font-weight: 600;
   font-size: 12px;
   border-color: rgb(255 255 255);
 }
 
 .btnFill {
+  width: 150px;
   margin-left: auto;
-  font-weight: 700;
+  padding: 10px 0;
+  font-weight: 600;
   font-size: 12px;
 }
 
 .tab {
   height: 70px;
+}
+
+.MuiTab-root {
+  color: black;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: none;
 }
 
 body {

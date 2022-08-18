@@ -27,7 +27,7 @@ model User_Security {
   user_id                String  @unique @db.VarChar(300)
   password               String  @db.VarChar(300)
   password_change_token  String? @db.VarChar(300)
-  email_activation_token String? @db.VarChar(300)
+  email_activation_token String? @unique @db.VarChar(300)
   email_change_token     String? @db.VarChar(300)
   email_provisional      String? @db.VarChar(300)
   refresh_token          String? @db.VarChar(300)
@@ -77,6 +77,7 @@ model Model {
   manufacture_country_id String
   brand                  Brand                @relation(fields: [manufacturer_id], references: [id])
   name                   String               @db.VarChar(70)
+  description            String               @db.VarChar(1000)
   code_name              String               @db.VarChar(70)
   year_start             Int
   year_end               Int?
@@ -125,6 +126,7 @@ model Option {
 
 model Complectation {
   id                   String                    @id @default(uuid())
+  name                 String                    @db.VarChar(70)
   model_id             String
   model                Model                     @relation(fields: [model_id], references: [id])
   engine               String                    @db.VarChar(300)
@@ -161,6 +163,21 @@ model Prices_Range {
   price_start         Int
   price_end           Int
   created_at          DateTime       @default(now())
+}
+
+model City {
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
+  autoria_code Int
+  region_id    String
+  region       Region @relation(fields: [region_id], references: [id])
+}
+
+model Region {
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
+  autoria_code Int
+  cities       City[]
 }
 
 enum Role {

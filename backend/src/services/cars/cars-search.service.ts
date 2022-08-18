@@ -4,8 +4,8 @@ import { prisma } from '@data/prisma-client';
 
 const carsSearch = async (
   data: CarsSearchParams,
-): Promise<AutoriaRequestParams> => {
-  const result: AutoriaRequestParams = { category_id: 1 };
+): Promise<Partial<AutoriaRequestParams>> => {
+  const result: Partial<AutoriaRequestParams> = { category_id: 1 };
 
   if (data.brandId || data.modelId || data.bodyTypeId) {
     const model_from_db = await prisma.model.findMany({
@@ -48,15 +48,19 @@ const carsSearch = async (
     });
   }
 
-  await getData(data.colorId, 'color_id', prisma.color, result);
-  await getData(
-    data.transmissionTypeId,
-    'gear_id',
-    prisma.transmission_Type,
+  Object.assign(result, await getData(data.colorId, 'color_id', prisma.color));
+  Object.assign(
     result,
+    await getData(data.transmissionTypeId, 'gear_id', prisma.transmission_Type),
   );
-  await getData(data.fuelTypeId, 'type_id', prisma.fuel_Type, result);
-  await getData(data.drivetrainId, 'drive_id', prisma.drivetrain, result);
+  Object.assign(
+    result,
+    await getData(data.fuelTypeId, 'type_id', prisma.fuel_Type),
+  );
+  Object.assign(
+    result,
+    await getData(data.drivetrainId, 'drive_id', prisma.drivetrain),
+  );
 
   if (data.regionId || data.cityId) {
     const cityData = await prisma.city.findMany({
@@ -108,8 +112,7 @@ const getData = async (
     | typeof prisma.transmission_Type
     | typeof prisma.fuel_Type
     | typeof prisma.drivetrain,
-  result: AutoriaRequestParams,
-): Promise<void> => {
+): Promise<object | undefined> => {
   if (param) {
     const db_data_list = await table.findMany({
       select: {
@@ -123,12 +126,13 @@ const getData = async (
     });
 
     if (db_data_list.length === 0) throw new Error('NotFoundError');
-
+    const result = {};
     db_data_list.forEach((db_data, index) => {
       Object.assign(result, {
         [`${autoria_name}[${index}]`]: db_data.autoria_code,
       });
     });
+    return result;
   }
 };
 

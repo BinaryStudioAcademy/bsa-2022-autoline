@@ -4,4 +4,3 @@ export {
   userAuthMiddleware,
   adminAuthMiddleware,
 } from './roles-based-protection/role.middleware';
-export { userSignedMiddleware } from './user/user.middleware';

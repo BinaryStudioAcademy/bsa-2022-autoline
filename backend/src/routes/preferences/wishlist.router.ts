@@ -1,5 +1,5 @@
 import * as wishlistController from '@controllers/preferences/wishlist.controller';
-import { userSignedMiddleware } from '@middlewares/middlewares';
+import { userAuthMiddleware } from '@middlewares/middlewares';
 import { Router } from 'express';
 
 const PATH = '/wishlist';
@@ -8,19 +8,19 @@ const wishlistRouter = Router();
 
 wishlistRouter.post(
   `${PATH}`,
-  userSignedMiddleware,
+  userAuthMiddleware,
   wishlistController.setWishlist,
 );
 
 wishlistRouter.delete(
   `${PATH}`,
-  userSignedMiddleware,
+  userAuthMiddleware,
   wishlistController.deleteWishlist,
 );
 
 wishlistRouter.get(
   `${PATH}`,
-  userSignedMiddleware,
+  userAuthMiddleware,
   wishlistController.getWishlistByUserId,
 );
 

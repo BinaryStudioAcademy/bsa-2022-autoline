@@ -12,5 +12,6 @@ export type InputFieldPropsType = {
   defaultValue?: string;
   autoComplete?: string;
   required: boolean;
-  control: Control;
+  control?: Control;
+  label?: string;
 };

@@ -18,6 +18,7 @@ export const InputField: FC<InputFieldPropsType> = ({
   control,
   type,
   errors,
+  label,
 }) => {
   const {
     field: { ...field },
@@ -29,13 +30,13 @@ export const InputField: FC<InputFieldPropsType> = ({
       className={clsx(
         styles.inputField,
         styles.fieldWrapper,
-        errors && styles.inputFieldError,
+        errors?.[name] && styles.inputFieldError,
       )}
     >
       {type === 'password' && (
         <img className={styles.icon} src={PassIcon} alt="icon" />
       )}
-      <InputLabel className={styles.label}>{name}</InputLabel>
+      <InputLabel className={styles.label}>{label}</InputLabel>
       <OutlinedInput
         {...field}
         type={type}

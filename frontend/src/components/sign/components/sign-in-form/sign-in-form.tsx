@@ -51,6 +51,7 @@ export const SignInForm = (): React.ReactElement => {
             required={true}
             errors={errors}
             control={control}
+            label="Email"
           />
           <InputField
             name="password"
@@ -58,6 +59,7 @@ export const SignInForm = (): React.ReactElement => {
             required={true}
             errors={errors}
             control={control}
+            label="Password"
           />
           {error && 'data' in error && (
             <Alert severity="error">{error.data.message}</Alert>

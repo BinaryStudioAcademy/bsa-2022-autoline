@@ -1,0 +1,116 @@
+@import "@assets/css/styles";
+
+html {
+  font-size: 10px;
+}
+
+body {
+  width: 100%;
+  font: var(--primary-font);
+  background-color: #f1f4f6;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.main-container {
+  margin: var(--header-height) 0;
+  overflow-x: hidden;
+
+  .first-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 650px;
+
+    @include landing-page-margin;
+
+    padding-right: 0;
+    padding-left: 0;
+
+    .first-container-left {
+      width: 330px;
+      margin-bottom: 150px;
+
+      .first-container-left-text-main {
+        font-weight: 900;
+        font-size: 4.4rem;
+        text-transform: uppercase;
+      }
+
+      .first-container-left-text-secondary {
+        margin: 15px 0;
+        font-size: 1.2rem;
+      }
+
+      .button {
+        width: 150px;
+        margin-bottom: 10px;
+        padding: 10px 0;
+        font-weight: 600;
+      }
+
+      .buttonFill {
+        margin-right: 10px;
+      }
+    }
+
+    .first-container-right {
+      .car {
+        width: 750px;
+
+        @media (min-width: $global-sm) {
+          margin-right: calc(0px - var(--mui-padding-md));
+        }
+
+        @media (max-width: $global-sm) {
+          margin-right: calc(0px - var(--mui-padding-sm));
+        }
+      }
+    }
+  }
+
+  .second-container,
+  .fourth-container {
+    @include landing-page-margin;
+    
+    @media (min-width: $global-sm) {
+      margin-right: 40px;
+    }
+
+    @media (max-width: $global-sm) {
+      margin-right: 20px;
+    }
+
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-right: 0;
+
+    .second-container-header,
+    .fourth-container-header {
+      margin-bottom: 20px;
+      font-weight: 900;
+      font-size: 1.6rem;
+      text-transform: uppercase;
+    }
+
+    .second-container-cards,
+    .fourth-container-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      justify-items: center;
+      gap: 20px;
+    }
+  }
+
+  .third-container {
+    @media (min-width: $global-sm) {
+      margin: 70px calc(0px - var(--mui-padding-md));
+    }
+
+    @media (max-width: $global-sm) {
+      margin: 70px calc(0px - var(--mui-padding-sm));
+    }
+  }
+}

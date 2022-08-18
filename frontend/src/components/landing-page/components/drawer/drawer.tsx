@@ -24,18 +24,26 @@ export const DrawerComp = (): React.ReactElement => {
           {pages.map((page, index) => (
             <ListItemButton key={index}>
               <ListItemIcon>
-                <ListItemText>{page}</ListItemText>
+                <ListItemText
+                  sx={{
+                    color: 'black',
+                    fontWeight: 900,
+                    fontSize: '18px',
+                    textTransform: 'none',
+                  }}
+                >
+                  {page}
+                </ListItemText>
               </ListItemIcon>
             </ListItemButton>
           ))}
         </List>
       </Drawer>
       <IconButton
-        sx={{ color: 'white', marginLeft: 'auto' }}
+        sx={{ color: 'blue', marginLeft: 'auto' }}
         onClick={(): void => setOpenDrawer(!openDrawer)}
       >
-        {/* <MenuIcon color="white" /> */}
-        <MenuIcon />
+        <MenuIcon sx={{ color: 'blue' }} />
       </IconButton>
     </React.Fragment>
   );

@@ -1,0 +1,62 @@
+@import "@assets/css/styles";
+
+.logo {
+  height: 25px;
+
+  @include landing-page-margin;
+}
+
+.btn {
+  font-weight: 700;
+}
+
+.btnOutline,
+.btnOutline:hover {
+  width: 70px;
+
+  @media (min-width: $global-sm) {
+    margin-right: var(--land-page-margin-md);
+  }
+
+  @media (max-width: $global-sm) {
+    margin-right: var(--land-page-margin-sm);
+  }
+
+  padding: 10px 0;
+  font-weight: 600;
+  font-size: 1.2rem;
+  border-color: rgb(255 255 255);
+}
+
+.signupBtn {
+  margin-left: auto;
+}
+
+.btnFill {
+  width: 150px;
+  padding: 10px 0;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.MuiToolbar-root {
+  height: 70px;
+
+  .MuiTabs-scroller {
+    @include landing-page-margin;
+
+    .MuiButtonBase-root {
+      height: var(--header-height);
+      color: black;
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: none;
+    }
+  }
+}
+
+.auth-avatar {
+  height: 30px;
+
+  // margin-right: var(--land-page-margin-md);
+}

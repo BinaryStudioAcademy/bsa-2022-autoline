@@ -4,8 +4,9 @@
   grid-template-columns: 1fr 80px;
   box-sizing: border-box;
   max-width: 400px;
-  min-height: 430px;
-  padding: 0 30px;
+
+  // min-height: 430px;
+  padding: 25px;
   background-color: var(--white);
   border-radius: 5px;
 }
@@ -13,6 +14,7 @@
 .carImage {
   grid-column: span 2;
   width: 100%;
+  margin: 15px 0;
   border-radius: 5px;
 }
 
@@ -22,7 +24,7 @@
   justify-content: space-between;
   justify-self: end;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 }
 
 .carTitle {
@@ -32,26 +34,20 @@
 
 .carLogo {
   align-self: center;
-  width: 35px;
-  height: 35px;
+  height: 30px;
 }
 
 .carName {
   align-self: center;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .button {
-  width: 20px;
-  height: 20px;
+  height: 16px;
 
   &:hover {
     cursor: pointer;
-  }
-
-  &:last-child {
-    margin-left: 10px;
   }
 }
 
@@ -60,11 +56,11 @@
   grid-column: span 2;
   grid-row-start: 3;
   justify-content: center;
+  align-items: center;
 }
 
 .carContent {
   max-width: 200px;
-  margin-top: 17px;
 }
 
 .carDescription {
@@ -73,20 +69,18 @@
   overflow: hidden;
   color: var(--gray400);
   font-weight: 400;
-  font-size: 90%;
-  font-style: normal;
-  line-height: 17px;
+  font-size: 11px;
   opacity: 0.6;
 }
 
 .priceBox {
   display: flex;
   justify-content: end;
-  width: 100px;
   min-width: 36%;
-  margin-top: 26px;
-  text-align: end;
-  text-align-last: center;
+
+  // margin-top: 26px;
+  // text-align: end;
+  // text-align-last: center;
 }
 
 .price {
@@ -95,16 +89,53 @@
   padding: 0;
   color: var(--blue100);
   font-weight: 900;
-  font-size: 148%;
-  font-style: normal;
-  line-height: 25px;
-  text-transform: uppercase;
+  font-size: 18px;
 }
 
 .verticalLine {
   width: 1px;
   height: 70%;
-  margin: 10px;
+  margin: 10px 5px;
   background-color: var(--gray200);
   border: none;
+}
+
+.labelGroup {
+  display: flex;
+
+  & > div {
+    margin-right: 10px;
+  }
+
+  & > div:last-child {
+    margin-right: 0;
+  }
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  height: 25px;
+  margin-bottom: 10px;
+  padding: 4px 9px;
+  color: var(--white);
+  font-weight: 400;
+  font-size: 14px;
+  font-family: Lato, sans-serif;
+  font-style: normal;
+  line-height: 17px;
+  background: var(--blue300);
+  border-radius: 4px;
+
+  & > img {
+    margin-right: 10px;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 }

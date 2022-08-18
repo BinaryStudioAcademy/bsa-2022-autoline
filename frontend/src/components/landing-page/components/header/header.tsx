@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import UserIcon from '@assets/images/header/default-avatar.png';
 import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app-route.enum';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
@@ -10,20 +11,19 @@ import {
   Tab,
   Tabs,
   Toolbar,
-  Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
 
 import { DrawerComp } from '../drawer/drawer';
-import styles from './styles.module.scss';
+
+import './styles.scss';
 
 export const Header = (): React.ReactElement => {
   const [value, setValue] = useState();
   const theme = useTheme();
-  console.log(theme);
-  const isMatch = useMediaQuery(theme.breakpoints.down('md'));
-  console.log(isMatch);
+  const isMatchSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMatchMd = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <React.Fragment>
@@ -33,70 +33,36 @@ export const Header = (): React.ReactElement => {
           boxShadow: 0,
         }}
       >
-        <Toolbar sx={{ height: '70px' }}>
-          <Link to={AppRoute.ROOT} style={{ marginLeft: '40px' }}>
-            <img className={styles.logo} src={Logo} alt="Autoline" />
-          </Link>{' '}
-          {isMatch ? (
-            <>
-              <Typography sx={{ fontSize: '2rem', paddingLeft: '10%' }}>
-                Shoppee
-              </Typography>
-              <DrawerComp />
-            </>
+        <Toolbar>
+          <Link to={AppRoute.ROOT}>
+            <img className="logo" src={Logo} alt="Autoline" />
+          </Link>
+          {isMatchSm ? (
+            <DrawerComp />
           ) : (
             <>
               <Tabs
-                sx={{ marginLeft: '40px' }}
-                value={value}
                 onChange={(e, value): void => setValue(value)}
+                value={value}
               >
-                <Tab
-                  label="Used Cars"
-                  className={styles.tab}
-                  sx={{
-                    color: 'black',
-                    fontWeight: 600,
-                    fontSize: '14px',
-                    textTransform: 'none',
-                  }}
-                />
-                <Tab
-                  label="New Cars"
-                  sx={{
-                    color: 'black',
-                    fontWeight: 600,
-                    fontSize: '14px',
-                    textTransform: 'none',
-                  }}
-                />
-                <Tab
-                  label="Sell Your Car"
-                  sx={{
-                    color: 'black',
-                    fontWeight: 600,
-                    fontSize: '14px',
-                    textTransform: 'none',
-                  }}
-                />
-                <Tab
-                  label="About us"
-                  sx={{
-                    color: 'black',
-                    fontWeight: 600,
-                    fontSize: '14px',
-                    textTransform: 'none',
-                  }}
-                />
+                <Tab label="Used Cars" />
+                <Tab label="New Cars" />
+                <Tab label="About us" />
               </Tabs>
-              <ButtonFill
-                className={(styles.button, styles.btnFill)}
-                text="Create Account"
-              />
-              <ButtonOutline
-                className={(styles.button, styles.btnOutline)}
-                text="Sign In"
-              />
+              {isMatchMd ? (
+                <>
+                  <Link to={AppRoute.SIGN_UP} className="signupBtn">
+                    <ButtonFill className="btnFill" text="Create Account" />
+                  </Link>
+                  <Link to={AppRoute.SIGN_IN}>
+                    <ButtonOutline className="btnOutline" text="Sign In" />
+                  </Link>
+                </>
+              ) : (
+                <Link to={AppRoute.SIGN_IN} className="signupBtn">
+                  <img src={UserIcon} className="auth-avatar" />
+                </Link>
+              )}
             </>
           )}
         </Toolbar>

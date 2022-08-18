@@ -6,6 +6,7 @@ import { Administration } from '@components/administration';
 import { ForgotPassword } from '@components/forgot-password/forgot-password';
 import { PersonalPage } from '@components/personal-page/personal-page';
 import { ResetPassword } from '@components/reset-password/reset-password';
+import { LandingPage } from '@components/landing-page/landing-page';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 
 import { Sign } from '../../components/sign/sign';
@@ -36,7 +37,7 @@ const Routing: FC = () => {
           <Route path={AppRoute.FORGOT_PASSWORD} element={<ForgotPassword />} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
-          <Route path={AppRoute.RESET_PASSWORD} element={<ResetPassword />} />
+          <Route path={AppRoute.RESET_PASSWORD} element={<LandingPage />} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.ROOT} element={<h2>Home page</h2>} />

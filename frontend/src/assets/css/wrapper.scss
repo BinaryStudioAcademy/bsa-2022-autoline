@@ -1,3 +1,5 @@
+@import "@assets/css/variables";
+
 .bgImage {
   position: relative;
   z-index: 1;
@@ -43,7 +45,7 @@
   margin-bottom: 35px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: $global-sm) {
   .content {
     padding: 30px 25px;
   }

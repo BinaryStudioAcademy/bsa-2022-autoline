@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 
 import { DrawerComp } from '../drawer/drawer';
+import styles from './styles.module.scss';
 
 export const Header = (): React.ReactElement => {
   const [value, setValue] = useState();
@@ -26,14 +27,15 @@ export const Header = (): React.ReactElement => {
 
   return (
     <React.Fragment>
-      <AppBar sx={{ background: '#ffffff' }}>
-        <Toolbar>
-          <Link to={AppRoute.ROOT}>
-            <img
-              // className={styles.logo}
-              src={Logo}
-              alt="Autoline"
-            />
+      <AppBar
+        sx={{
+          background: '#ffffff',
+          boxShadow: 0,
+        }}
+      >
+        <Toolbar sx={{ height: '70px' }}>
+          <Link to={AppRoute.ROOT} style={{ marginLeft: '40px' }}>
+            <img className={styles.logo} src={Logo} alt="Autoline" />
           </Link>{' '}
           {isMatch ? (
             <>
@@ -45,19 +47,56 @@ export const Header = (): React.ReactElement => {
           ) : (
             <>
               <Tabs
-                sx={{ marginLeft: 'auto' }}
-                indicatorColor="secondary"
-                // textColor="inherit"
+                sx={{ marginLeft: '40px' }}
                 value={value}
                 onChange={(e, value): void => setValue(value)}
               >
-                <Tab label="Used Cars" style={{ textTransform: 'none' }} />
-                <Tab label="New Cars" style={{ textTransform: 'none' }} />
-                <Tab label="Sell Your Car" style={{ textTransform: 'none' }} />
-                <Tab label="About us" style={{ textTransform: 'none' }} />
+                <Tab
+                  label="Used Cars"
+                  className={styles.tab}
+                  sx={{
+                    color: 'black',
+                    fontWeight: 600,
+                    fontSize: '14px',
+                    textTransform: 'none',
+                  }}
+                />
+                <Tab
+                  label="New Cars"
+                  sx={{
+                    color: 'black',
+                    fontWeight: 600,
+                    fontSize: '14px',
+                    textTransform: 'none',
+                  }}
+                />
+                <Tab
+                  label="Sell Your Car"
+                  sx={{
+                    color: 'black',
+                    fontWeight: 600,
+                    fontSize: '14px',
+                    textTransform: 'none',
+                  }}
+                />
+                <Tab
+                  label="About us"
+                  sx={{
+                    color: 'black',
+                    fontWeight: 600,
+                    fontSize: '14px',
+                    textTransform: 'none',
+                  }}
+                />
               </Tabs>
-              <ButtonFill text="Create Account" />
-              <ButtonOutline text="Sign In" />
+              <ButtonFill
+                className={(styles.button, styles.btnFill)}
+                text="Create Account"
+              />
+              <ButtonOutline
+                className={(styles.button, styles.btnOutline)}
+                text="Sign In"
+              />
             </>
           )}
         </Toolbar>

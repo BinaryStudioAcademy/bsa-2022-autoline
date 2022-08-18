@@ -1,3 +1,4 @@
+import { ENV } from '@common/enums/app/env.enum';
 import { User } from '@prisma/client';
 import * as authService from '@services/auth/auth.service';
 import httpStatus from 'http-status-codes';
@@ -72,8 +73,7 @@ const resetPasswordCheckToken = async (
     if (!req.query.token) return;
     const token = req.query.token.toString();
     const userId = await authService.resetPasswordCheckToken(token);
-    // just an example link till front end page is created
-    res.redirect(`https://www.google.com?id=${userId}`);
+    res.redirect(`${ENV.APP.FRONTEND_URL}/reset-password?id=${userId}`);
   } catch (error) {
     console.error(error);
     if (error instanceof Error) {

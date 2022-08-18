@@ -4,4 +4,61 @@ interface WishlistResponseDto {
   complectationId?: string;
 }
 
-export { type WishlistResponseDto };
+type ModelResponseDto = {
+  id: string;
+  createdAt: Date;
+  name: string;
+  yearStart: number;
+  yearEnd: number | null;
+  photoUrls: string[] | [];
+  brand?: {
+    name: string;
+    logoUrl: string;
+  };
+  bodyType: string;
+  manufactureCountry: string;
+  pricesRanges: {
+    price_start: number;
+    price_end: number;
+  }[];
+};
+
+type ComplectationResponseDto = {
+  id: string;
+  createdAt: Date;
+  engine: string;
+  engineDisplacement: number;
+  enginePower: number;
+  color: {
+    name: string;
+  };
+  drivetrain: string;
+  fuelType: string;
+  transmissionType: string;
+  pricesRanges: {
+    price_start: number;
+    price_end: number;
+  }[];
+  name: string;
+  yearStart: number;
+  yearEnd: number | null;
+  photoUrls: string[] | [];
+  brand?: {
+    name: string;
+    logoUrl: string;
+  };
+  bodyType: string;
+  manufactureCountry: string;
+};
+
+interface WishlistsResponseDto {
+  models?: ModelResponseDto[];
+  complectations?: ComplectationResponseDto[];
+}
+
+export {
+  type WishlistResponseDto,
+  type WishlistsResponseDto,
+  type ModelResponseDto,
+  type ComplectationResponseDto,
+};

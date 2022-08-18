@@ -18,4 +18,9 @@ export {
   type SignUpResponseDto,
 } from './auth/auth';
 
-export { type WishlistResponseDto } from './preferences/preferences';
+export {
+  type WishlistResponseDto,
+  type WishlistsResponseDto,
+  type ModelResponseDto,
+  type ComplectationResponseDto,
+} from './preferences/preferences';

@@ -1,22 +1,24 @@
-// .headerWrp {
-//   display: flex;
-//   justify-content: space-between;
-//   flex-grow: 1;
-//   background-color: #867f7f;
-//   padding: 1em 2em;
-// }
-
-.link {
-  margin-right: 20;
+.logo {
+  height: 25px;
 }
 
-// .avatar {
-//   margin-right: auto;
-//   color: white;
-//   background-color: black;
-//   border-radius: 0;
-//   height: 30;
-//   border: 2px solid gray;
-//   border-left: 12px solid transparent;
-//   border-right: 12px solid transparent;
-// }
+.btnOutline,
+.btnOutline:hover {
+  font-weight: 700;
+  font-size: 12px;
+  border-color: rgb(255 255 255);
+}
+
+.btnFill {
+  margin-left: auto;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.tab {
+  height: 70px;
+}
+
+body {
+  background-color: #e5e5e5;
+}

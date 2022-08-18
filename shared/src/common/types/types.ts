@@ -16,8 +16,12 @@ export {
   type SignInResponseData,
   type ErrorMessage,
   type SignUpResponseDto,
+  type ForgotPasswordRequestData,
+  type ResetPasswordRequestData,
 } from './auth/auth';
 
-export { type WishlistResponseDto } from './preferences/preferences';
+export type { WishlistResponseDto } from './preferences/preferences';
 
-export { type CarsSearchParams } from './cars/cars-search-params';
+export type { ValidationSchema } from './validation/validation';
+
+export type { CarsSearchParams } from './cars/cars-search-params';

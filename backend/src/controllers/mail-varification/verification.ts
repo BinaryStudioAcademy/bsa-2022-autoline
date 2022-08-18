@@ -1,9 +1,9 @@
-import { MailActivate } from '@services/mail_verification/send_activation_link/constants';
-import { validateMailToken } from '@services/mail_verification/token.service';
+import { MailActivate } from '@services/mail-verification/send-activation-link/constants';
+import { validateMailToken } from '@services/mail-verification/token.service';
 import {
   getByToken,
   removeMailToken,
-} from '@services/mail_verification/user_data.service/user_security';
+} from '@services/mail-verification/user-data.service/user-security';
 
 import type { TypedRequestQuery } from '@common/types/controller/controller';
 import type { Response, NextFunction } from 'express';

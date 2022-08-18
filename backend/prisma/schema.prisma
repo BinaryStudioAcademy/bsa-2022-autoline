@@ -27,7 +27,7 @@ model User_Security {
   user_id                String  @unique @db.VarChar(300)
   password               String  @db.VarChar(300)
   password_change_token  String? @db.VarChar(300)
-  email_activation_token String? @db.VarChar(300)
+  email_activation_token String? @unique @db.VarChar(300)
   email_change_token     String? @db.VarChar(300)
   email_provisional      String? @db.VarChar(300)
   refresh_token          String? @db.VarChar(300)
@@ -125,6 +125,7 @@ model Option {
 
 model Complectation {
   id                   String                    @id @default(uuid())
+  name                 String                    @db.VarChar(70)
   model_id             String
   model                Model                     @relation(fields: [model_id], references: [id])
   engine               String                    @db.VarChar(300)

@@ -6,6 +6,7 @@
     "outDir": "build",
     "declaration": true,
     "module": "ESNext",
+    "moduleResolution": "Node",
     "baseUrl": ".",
     "paths": {
       "@common/*": ["./src/common/*"],

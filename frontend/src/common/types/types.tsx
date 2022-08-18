@@ -8,3 +8,9 @@ export {
   type SignInResponseData,
   type SignInRequestUser,
 } from './auth/auth';
+
+export type {
+  CarDataType,
+  CarDataPropsType,
+  CarDataListPropsType,
+} from './card/card';

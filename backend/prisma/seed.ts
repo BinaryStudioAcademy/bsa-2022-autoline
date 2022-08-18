@@ -100,6 +100,7 @@ async function main(): Promise<void> {
           body_type_id: bodyType.id,
           manufacture_country_id: brandCountry.id,
           name: model.name,
+          description: model.description,
           code_name: model.eng,
           year_start: model.year_start,
           year_end: model.year_end,

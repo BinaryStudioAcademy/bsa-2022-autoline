@@ -6,6 +6,7 @@ enum AppRoute {
   RESET_PASSWORD = '/reset-password',
   NOT_FOUND = '*',
   $ID = ':id',
+  PERSONAL = '/personal-page',
 }
 
 export { AppRoute };

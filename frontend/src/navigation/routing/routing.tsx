@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app';
 import { ForgotPassword } from '@components/forgot-password/forgot-password';
+import { PersonalPage } from '@components/personal-page/personal-page';
 import { ResetPassword } from '@components/reset-password/reset-password';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 
@@ -33,6 +34,9 @@ const Routing: FC = () => {
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.ROOT} element={<h2>Home page</h2>} />
+        </Route>
+        <Route element={<ProtectedRoute isAllowed={!!authData} />}>
+          <Route path={AppRoute.PERSONAL} element={<PersonalPage />} />
         </Route>
         <Route path={AppRoute.NOT_FOUND} element={<h2>Not found</h2>} />
       </Routes>

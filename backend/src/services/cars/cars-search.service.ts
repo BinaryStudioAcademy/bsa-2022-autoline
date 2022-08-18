@@ -41,10 +41,15 @@ const carsSearch = async (
       Object.assign(result, {
         [`body_type[${index}]`]: model.body_type?.autoria_code,
         [`marka_id[${index}]`]: model.brand?.autoria_code,
-        [`model_id[${index}]`]: data.modelId ? model.autoria_code : undefined,
+        [`model_id[${index}]`]: data.modelId ? model.autoria_code : 0,
         [`s_yers[${index}]`]: data.yearStart,
         [`po_yers[${index}]`]: data.yearEnd,
       });
+    });
+  } else {
+    Object.assign(result, {
+      's_yers[0]': data.yearStart,
+      'po_yers[0]': data.yearEnd,
     });
   }
 

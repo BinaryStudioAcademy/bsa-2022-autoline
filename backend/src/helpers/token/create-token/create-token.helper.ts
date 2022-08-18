@@ -1,4 +1,4 @@
-import { TokenPayload } from '@autoline/shared';
+import { TokenPayload } from '@autoline/shared/common/types/types';
 import { ENV } from '@common/enums/app/env.enum';
 import jwt from 'jsonwebtoken';
 

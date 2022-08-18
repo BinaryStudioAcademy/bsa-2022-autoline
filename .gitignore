@@ -22,3 +22,6 @@ yarn-error.log*
 # ide
 /.vscode
 /.idea
+
+# autoria
+/backend/api-autoria/cars/fetched-data/*.json

@@ -1,7 +1,7 @@
 import * as wishlistService from '@services/preferences/wishlist.service';
 import httpStatus from 'http-status-codes';
 
-import type { WishlistResponseDto } from '@autoline/shared';
+import type { WishlistResponseDto } from '@autoline/shared/common/types/types';
 import type { TypedRequestQuery } from '@common/types/controller/controller';
 import type { WishlistInput } from '@common/types/types';
 import type { NextFunction, Response } from 'express';

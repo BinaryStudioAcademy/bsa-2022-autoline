@@ -1,5 +1,5 @@
 import 'swiper/css/bundle';
-import './styles.css';
+import './styles.scss';
 import React, { useState } from 'react';
 
 import IconPark from '@assets/images/icon-park-solid_picture.svg';
@@ -15,7 +15,7 @@ import { images } from './mock-data';
 import type { Swiper as SwiperType } from 'swiper';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const Carousel = (props: { images: string[] }): React.ReactElement => {
+export const Carousel = (): React.ReactElement => {
   // const { images } = props;
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const [currentImage, setCurrentImage] = useState(1);

@@ -1,0 +1,102 @@
+$swiper-width: 540px;
+$font-lato: lato, arial, sans-serif;
+$z-index-current-image: 1;
+$preview-image-height: 70px;
+$main-image-height: 380px;
+
+html,
+body {
+  position: relative;
+  height: 100%;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mySwiper2 {
+  width: $swiper-width;
+  height: $main-image-height;
+  border-radius: 10px;
+
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    visibility: hidden;
+  }
+}
+
+.mySwiper {
+  box-sizing: border-box;
+  width: $swiper-width;
+  height: $preview-image-height;
+  margin-top: 10px;
+  padding: 10px 0;
+
+  .swiper-slide {
+    width: 20%;
+    height: 100%;
+    opacity: 0.5;
+
+    img {
+      border-radius: 3px;
+    }
+  }
+
+  .swiper-slide-thumb-active {
+    opacity: 1;
+
+    .swiper-underline {
+      position: absolute;
+      bottom: 0;
+      width: 98%;
+      height: 3px;
+      background-color: blue;
+      border-bottom-right-radius: 30%;
+      border-bottom-left-radius: 30%;
+    }
+  }
+}
+
+.mySwiper2:hover {
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    padding: 10px 15px;
+    color: rgb(0 0 255);
+    font-weight: 900;
+    font-size: 20px;
+    background: rgba(255 255 255 / 50%);
+    border-radius: 5px;
+    visibility: visible;
+  }
+
+  .swiper-button-next::after {
+    margin-right: 40px;
+  }
+
+  .swiper-button-prev::after {
+    margin-left: 40px;
+  }
+}
+
+.navigation-bar {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  z-index: $z-index-current-image;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+  height: 40px;
+  background: rgba(255 255 255 / 50%);
+  border-radius: 3.24px;
+
+  .current-image {
+    font: $font-lato;
+    font-weight: 400;
+    font-size: 16px;
+  }
+}

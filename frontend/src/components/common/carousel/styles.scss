@@ -53,7 +53,7 @@ body {
       bottom: 0;
       width: 98%;
       height: 3px;
-      background-color: blue;
+      background-color: var(--blue100);
       border-bottom-right-radius: 30%;
       border-bottom-left-radius: 30%;
     }
@@ -64,7 +64,7 @@ body {
   .swiper-button-prev::after,
   .swiper-button-next::after {
     padding: 10px 15px;
-    color: rgb(0 0 255);
+    color: var(--blue100);
     font-weight: 900;
     font-size: 20px;
     background: rgba(255 255 255 / 50%);
@@ -95,7 +95,7 @@ body {
   border-radius: 3.24px;
 
   .current-image {
-    font: $font-lato;
+    font: var(--primary-font);
     font-weight: 400;
     font-size: 16px;
   }

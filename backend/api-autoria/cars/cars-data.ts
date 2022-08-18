@@ -17,6 +17,8 @@ export const carsData = [
         'marka_id': 47,
         'model_id': 393,
         'name': '6',
+        'description':
+          'The Mazda 6 is a good midsize car. It boasts adept handling, responsive steering, and two peppy four-cylinder engine options. It also has an upscale cabin and comes with an abundance of safety tech and infotainment features.',
         'parent_id': 0,
         'slang': '6',
         'value': 393,
@@ -86,6 +88,8 @@ export const carsData = [
         'marka_id': 55,
         'model_id': 507,
         'name': 'X-Trail',
+        'description':
+          'The Nissan X-Trail is a compact crossover SUV (C-segment) produced by the Japanese automaker Nissan since 2000. It was one of Nissans first crossover SUVs and was released about the same time as several other companies car-based crossovers.',
         'parent_id': 0,
         'slang': 'Х-Трейл',
         'value': 507,

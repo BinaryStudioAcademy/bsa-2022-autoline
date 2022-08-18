@@ -10,3 +10,8 @@ export {
 } from './form/form';
 export { type ValidationSchema } from './validation/validation';
 export { type SignInRequestData, type SignInResponseData } from './auth/auth';
+export type {
+  CarDataType,
+  CarDataPropsType,
+  CarDataListPropsType,
+} from './card/card';

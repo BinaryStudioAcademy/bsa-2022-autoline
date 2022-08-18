@@ -1,14 +1,4 @@
-enum Role {
-  user,
-  admin,
-}
-
-enum Sex {
-  male,
-  female,
-  not_known,
-  not_appliable,
-}
+import { UserRole, UserSex } from './user.enum';
 
 interface User {
   id: string;
@@ -17,8 +7,8 @@ interface User {
   phone: string;
   location: string;
   photo_url: string;
-  role: Role;
-  sex: Sex;
+  role: UserRole;
+  sex: UserSex;
 }
 
-export { type User, type Role, type Sex };
+export { type User };

@@ -5,22 +5,15 @@ import { useGetUsersQuery } from '@store/queries/users';
 import { UsersList } from './users/users-list';
 
 export const Administration = (): React.ReactElement => {
-  const { data, isLoading, isSuccess } = useGetUsersQuery();
+  const { data: users, isLoading, isSuccess } = useGetUsersQuery();
 
   return (
     <Box sx={{ padding: '20px' }}>
       <h1>Admin panel</h1>
-      {isLoading ? (
-        'Loading data...'
-      ) : isSuccess ? (
-        data ? (
-          <UsersList users={data as User[]} />
-        ) : (
-          'User list is empty'
-        )
-      ) : (
-        'Error getting data'
-      )}
+      {isLoading && 'Loading data...'}
+      {isSuccess && users && <UsersList users={users as User[]} />}
+      {isSuccess && !users && 'There are no users'}
+      {!isLoading && !isSuccess && 'Error getting data from server'}
     </Box>
   );
 };

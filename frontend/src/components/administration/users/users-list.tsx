@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 
-import { User, Role } from '@autoline/shared/common/types/types';
+import { User, UserRole } from '@autoline/shared/common/types/types';
 import EditIcon from '@mui/icons-material/Edit';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -20,21 +20,19 @@ type UsersListProps = {
 };
 
 const UsersList: FC<UsersListProps> = ({ users }) => {
-  const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | undefined>();
   const [updateUser] = useUpdateUserMutation();
 
   const handleClickEdit = (user: User): void => {
-    setOpen(true);
     setSelectedUser(user);
   };
 
   const handleClose = (): void => {
-    setOpen(false);
+    setSelectedUser(undefined);
   };
 
-  const handleSubmit = async (user: User, newRole: Role): Promise<void> => {
-    setOpen(false);
+  const handleSubmit = async (user: User, newRole: UserRole): Promise<void> => {
+    setSelectedUser(undefined);
     if (newRole !== user.role) {
       await updateUser({
         id: user.id,
@@ -95,7 +93,6 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
 
       <DialogEditUser
         user={selectedUser}
-        open={open}
         handleClose={handleClose}
         handleSubmit={handleSubmit}
       />

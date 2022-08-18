@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 
-import { User, Role } from '@autoline/shared/common/types/types';
+import { User, UserRole } from '@autoline/shared/common/types/types';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -15,27 +15,26 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 type DialogEditUserProps = {
   user?: User;
-  open: boolean;
   handleClose: () => void;
-  handleSubmit: (user: User, newRole: Role) => void;
+  handleSubmit: (user: User, newRole: UserRole) => void;
 };
 
 const DialogEditUser: FC<DialogEditUserProps> = (props) => {
-  const { user, open, handleClose, handleSubmit } = props;
-  const [role, setRole] = useState<Role | undefined>(user?.role);
+  const { user, handleClose, handleSubmit } = props;
+  const [role, setRole] = useState<UserRole | undefined>(user?.role);
 
   useEffect(() => {
-    if (user && open) {
+    if (user?.role) {
       setRole(user.role);
     }
-  }, [user, open]);
+  }, [user?.role]);
 
-  const handleChangeRole = (event: SelectChangeEvent<Role>): void => {
-    setRole(event.target.value as Role);
+  const handleChangeRole = (event: SelectChangeEvent<UserRole>): void => {
+    setRole(event.target.value as UserRole);
   };
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={!!user} onClose={handleClose}>
       <DialogTitle>Edit user role</DialogTitle>
       <DialogContent>
         <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -60,7 +59,7 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           onClick={(): void => {
-            handleSubmit(user as User, role as Role);
+            handleSubmit(user as User, role as UserRole);
           }}
         >
           Ok

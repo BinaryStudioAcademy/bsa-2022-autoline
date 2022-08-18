@@ -4,6 +4,7 @@ const PATH = '/users';
 
 const userRouter = Router();
 
+// This mock is needed to be removed when we create this endpoint
 const mockUsers = `[
     {
       "id": "0cdfe5ca-256f-49e4-855f-f438a4fac3c9",

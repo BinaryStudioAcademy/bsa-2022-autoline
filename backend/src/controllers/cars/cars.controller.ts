@@ -1,7 +1,7 @@
 import { CarsSearchParams } from '@autoline/shared';
 import { TypedRequestQuery } from '@common/types/controller/controller';
-import { getCarsAutoRia } from '@helpers/cars/api_autoria.helper';
-import * as carsService from '@services/cars/carsSearch.service';
+import { getCarsAutoRia } from '@helpers/cars/api-autoria.helper';
+import * as carsService from '@services/cars/cars-search.service';
 import { NextFunction, Response } from 'express';
 
 const carsSearch = async (
@@ -11,11 +11,11 @@ const carsSearch = async (
 ): Promise<void> => {
   try {
     const carsData = await carsService.carsSearch(req.query);
-    const AutoRiaCarsData = await getCarsAutoRia(carsData);
+    const autoRiaCarsData = await getCarsAutoRia(carsData);
 
-    res.json(AutoRiaCarsData);
+    res.json(autoRiaCarsData);
   } catch (error) {
-    if ((error as Error)?.message === 'NotFoundError') {
+    if (error instanceof Error && error.message === 'NotFoundError') {
       res.json([]);
     } else {
       next(error);

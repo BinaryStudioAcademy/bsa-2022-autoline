@@ -9,4 +9,6 @@ wishlistRouter.post(`${PATH}/:userId`, wishlistController.setWishlist);
 
 wishlistRouter.delete(`${PATH}/:userId`, wishlistController.deleteWishlist);
 
+wishlistRouter.get(`${PATH}/:userId`, wishlistController.getWishlistByUserId);
+
 export { wishlistRouter };

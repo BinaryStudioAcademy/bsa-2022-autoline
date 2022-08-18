@@ -2,11 +2,15 @@ import { FC } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app';
+import { Collapse } from '@components/collapse_component/collapse';
 import { Failed } from '@components/mail-verification/verification-failed/failed';
 import { Success } from '@components/mail-verification/verification-success/success';
+// import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 
 import { Sign } from '../../components/sign/sign';
+
+// const myprop = { lable: 'complite set', el: Collapse };
 
 const Routing: FC = () => {
   const authData = { name: 'Oleksandr' };
@@ -24,6 +28,7 @@ const Routing: FC = () => {
         >
           <Route path={AppRoute.SIGN_IN} element={<Sign />} />
           <Route path={AppRoute.SIGN_UP} element={<Sign />} />
+          <Route path={'/collapse'} element={<Collapse />} />
           <Route
             path={AppRoute.MAIL_SUCCESS_VALIDATION}
             element={<Success />}

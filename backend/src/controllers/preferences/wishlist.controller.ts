@@ -12,7 +12,7 @@ const setWishlist = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const { userId } = req.params;
+    const { userId } = req.body;
     const { modelId, complectationId } = req.query;
 
     const wishlist: WishlistInput = {
@@ -38,7 +38,7 @@ const deleteWishlist = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const { userId } = req.params;
+    const { userId } = req.body;
     const { modelId, complectationId } = req.query;
 
     const wishlist: WishlistInput = {
@@ -64,7 +64,7 @@ const getWishlistByUserId = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const { userId } = req.params;
+    const { userId } = req.body;
 
     const wishlistResponseDto = await wishlistService.getWishlistByUserId(
       userId,

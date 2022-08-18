@@ -141,6 +141,7 @@ async function main(): Promise<void> {
         await prisma.complectation.create({
           data: {
             model_id: newModel.id,
+            name: complectation.name,
             engine: complectation.engine,
             engine_displacement: complectation.engine_displacement,
             engine_power: complectation.engine_power,

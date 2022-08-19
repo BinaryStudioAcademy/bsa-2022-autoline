@@ -55,6 +55,29 @@
   }
 }
 
+.iconButton {
+  padding: 0;
+  background: transparent;
+  border: none;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  path {
+    transition: all 300ms;
+  }
+
+  &.isLiked,
+  &:hover {
+    path {
+      transition: all 300ms;
+      fill: var(--blue100);
+    }
+  }
+}
+
 .cardFooter {
   display: flex;
   grid-column: span 2;

@@ -11,9 +11,6 @@ rules:
   declaration-no-important: true
   max-nesting-depth: 4
   no-descending-specificity: true
-  unit-disallowed-list:
-    - em
-    - rem
   order/order:
     - custom-properties
     - declarations

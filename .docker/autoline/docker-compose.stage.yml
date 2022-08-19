@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  autoline_mariadb:
+    image: mariadb
+    container_name: autoline_mariadb
+    build:
+      context: ./
+      dockerfile: database/Dockerfile
+    restart: on-failure
+    ports:
+      - "3306:3306"
+    volumes:
+      - autoline_mariadb_data:/var/lib/mysql
+    env_file:
+      - ../../.env/db.env
+    networks:
+      - autoline_backend_network
+  autoline_backend:
+    image: ghcr.io/binarystudioacademy/autoline-backend-dev:latest
+    container_name: autoline_backend
+    depends_on:
+      - autoline_mariadb
+    ports:
+      - "3001:3001"
+    env_file:
+      - ../../.env/backend.env
+    networks:
+      - autoline_backend_network
+      - autoline_frontend_network
+
+  autoline_frontend:
+    image: ghcr.io/binarystudioacademy/autoline-frontend-dev:latest
+    container_name: autoline_frontend
+    depends_on:
+      - autoline_backend
+    ports:
+      - '80:80'
+      - '443:443'
+    env_file:
+      - ../../.env/frontend.env
+    volumes:
+      - /etc/letsencrypt/live/dev.streamlet.tk/fullchain.pem:/etc/letsencrypt/live/autoline-not-autoria.xyz/fullchain.pem
+      - /etc/letsencrypt/live/dev.streamlet.tk/privkey.pem:/etc/letsencrypt/live/autoline-not-autoria.xyz/privkey.pem
+      - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
+      - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
+    networks:
+      - autoline_backend_network
+      - autoline_frontend_network
+
+volumes:
+  autoline_mariadb_data:
+    driver: local
+
+networks:
+  autoline_backend_network:
+    driver: bridge
+  autoline_frontend_network:
+    driver: bridge

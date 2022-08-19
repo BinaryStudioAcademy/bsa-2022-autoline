@@ -1,7 +1,6 @@
 version: '3'
 services:
   autoline_mariadb:
-    image: mariadb
     container_name: 'autoline_mariadb'
     build:
       context: ./

@@ -3,7 +3,7 @@ name: Deploy staging
 on:
   push:
     branches:
-      - development
+      - github-actions
   workflow_dispatch:
 
 jobs:
@@ -42,7 +42,61 @@ jobs:
           image_tag: latest
           context: ./
           dockerfile: ./.docker/autoline/frontend.Dockerfile
-  #deploy
+  deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - build-api
+      - build-web
+    environment: ${{ github.ref == 'refs/heads/main' && 'production' || github.ref == 'refs/heads/develop' && 'staging' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      - name: Load secret files
+        run: |
+          aws s3 cp s3://${{ secrets.AWS_BUCKET_NAME }}/${{ secrets.AWS_BUCKET_API_SECRETS_PATH }} api_secrets
+      - name: Copy secret files to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: api_secrets
+          target: secrets
+      - name: Copy docker-compose.stage.yml to deployment server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_KEY }}
+          source: .docker/auroline/docker-compose.stage.yml
+          target: app
+      - name: Run docker-compose.stage.yml on deployment server
+        uses: appleboy/ssh-action@master
+        env:
+            GITHUB_USERNAME: ${{ github.actor }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_KEY }}
+          envs: GITHUB_USERNAME,GITHUB_TOKEN
+          script: |
+            cd app/.docker/autoline
+            export GITHUB_USERNAME=$GITHUB_USERNAME
+            export GITHUB_TOKEN=$GITHUB_TOKEN
+            echo "$GITHUB_TOKEN" | sudo docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
+            sudo docker compose -f docker-compose.stage.yml pull
+            sudo docker compose -f docker-compose.stage.yml stop
+            sudo docker compose -f docker-compose.stage.yml up -d --build
   notify:
     needs: [build-backend, build-frontend]
     runs-on: ubuntu-latest

@@ -5,7 +5,8 @@ RUN apt-get install -y openssl
 
 WORKDIR /app
 
-COPY ./package*.json ./
+COPY ./package.json ./
+COPY ./yarn.lock ./
 COPY ./tsconfig.json ./
 COPY ./.eslintrc.yml ./
 COPY ./shared ./shared/

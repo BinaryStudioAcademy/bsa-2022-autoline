@@ -21,8 +21,9 @@ jobs:
           node-version-file: .nvmrc
 
       - name: Install Dependencies
-        run: |
-          yarn install
+        uses: bahmutov/npm-install@v1.6.0
+        with:
+          useRollingCache: true
 
       - name: Code Linting
         run: |

@@ -111,6 +111,6 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_USERNAME: Deployment Bot
           SLACK_ICON: https://avatar-prod-us-east-2.webexcontent.com/Avtr~V1~6078fba4-49d9-4291-9f7b-80116aab6974/V1~8d90dcca-87c5-4a7c-9808-8965a02be966~07b1fecf53a948688dabf01402621a0a
-          SLACK_MESSAGE: "Deployment finished with ${{ env.WORKFLOW_CONCLUSION == 'success' && 'Success 🟢' || env.WORKFLOW_CONCLUSION == 'cancelled' && 'Cancelled 🟡' || env.WORKFLOW_CONCLUSION == 'skipped' && 'Skipped 🔵' || 'Error 🔴' }} result"
+          SLACK_MESSAGE: "Deployment finished with ${{ env.WORKFLOW_CONCLUSION == 'success' && 'SUCCESS 🟢' || env.WORKFLOW_CONCLUSION == 'cancelled' && 'Cancelled 🟡' || env.WORKFLOW_CONCLUSION == 'skipped' && 'Skipped 🔵' || 'Error 🔴' }} result"
           SLACK_FOOTER: "Git branch: `development`"
           MSG_MINIMAL: event,actions url

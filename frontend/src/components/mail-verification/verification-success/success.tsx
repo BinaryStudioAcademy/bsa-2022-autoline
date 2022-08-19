@@ -8,7 +8,7 @@ import Container from '@mui/material/Container';
 
 import styles from './styles.module.scss';
 
-const Success: FC = (): React.ReactElement => {
+const Success: FC = () => {
   const navigate = useNavigate();
   const onClickHandler = (): void => {
     navigate(AppRoute.SIGN_IN);

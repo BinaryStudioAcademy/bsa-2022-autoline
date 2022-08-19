@@ -7,7 +7,7 @@ interface CollapseProps {
   children?: ReactNode;
 }
 
-const Collapse: React.FC<CollapseProps> = ({ children, label }) => {
+const CollapseElement: React.FC<CollapseProps> = ({ children, label }) => {
   const [selected, setSelected] = useState<boolean>(false);
 
   const toggle = (): void => {
@@ -31,4 +31,4 @@ const Collapse: React.FC<CollapseProps> = ({ children, label }) => {
   );
 };
 
-export { Collapse };
+export { CollapseElement };

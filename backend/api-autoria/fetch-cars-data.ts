@@ -32,6 +32,10 @@ const urls = [
     name: 'body-types',
     url: `/categories/${category}/bodystyles?api_key=${API_KEY}`,
   },
+  {
+    name: 'regions',
+    url: `/states?api_key=${API_KEY}`,
+  },
 ];
 
 urls.forEach(async ({ name, url }) => {
@@ -41,4 +45,25 @@ urls.forEach(async ({ name, url }) => {
     `${__dirname}/cars/fetched-data/${name}.json`,
     JSON.stringify(response.data),
   );
+
+  if (name === 'regions') {
+    const all_cities = [];
+
+    for (const region of response.data) {
+      const { value } = region;
+      const cities = await axios.get(
+        `${BASE_URL}/states/${value}/cities?api_key=${API_KEY}`,
+      );
+      const result = {
+        data: cities.data,
+        regionId: value,
+      };
+      all_cities.push(result);
+    }
+
+    fs.writeFileSync(
+      `${__dirname}/cars/fetched-data/cities.json`,
+      JSON.stringify(all_cities),
+    );
+  }
 });

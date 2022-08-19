@@ -10,3 +10,5 @@ export {
   type UserResetPassword,
   type WishlistInput,
 } from './prisma/prisma';
+
+export { type AutoriaRequestParams } from './cars/autoria-request-params';

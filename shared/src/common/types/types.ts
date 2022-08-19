@@ -1,21 +1,32 @@
-export {
-  type BindingAction,
-  type BindingCallback1,
-  type BindingCallback2,
-  type BindingCallback3,
-  type BindingActionFunction,
-  type BindingFunction1,
-  type BindingFunction2,
-  type BindingFunction3,
+export type {
+  BindingAction,
+  BindingCallback1,
+  BindingCallback2,
+  BindingCallback3,
+  BindingActionFunction,
+  BindingFunction1,
+  BindingFunction2,
+  BindingFunction3,
 } from './functions/functions';
 
-export {
-  type AuthResponseDto,
-  type TokenPayload,
-  type SignInRequestData,
-  type SignInResponseData,
-  type ErrorMessage,
-  type SignUpResponseDto,
+export type {
+  AuthResponseDto,
+  TokenPayload,
+  SignInRequestData,
+  SignInResponseData,
+  ErrorMessage,
+  SignUpResponseDto,
 } from './auth/auth';
 
-export { type WishlistResponseDto } from './preferences/preferences';
+export type {
+  WishlistResponseDto,
+  WishlistsResponseDto,
+  ModelResponseDto,
+  ComplectationResponseDto,
+} from './preferences/preferences';
+
+export type { User, UserRole, UserSex } from './user';
+
+export type { ValidationSchema } from './validation/validation';
+
+export type { CarsSearchParams } from './cars/cars-search-params';

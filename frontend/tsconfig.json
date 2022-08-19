@@ -15,6 +15,7 @@
     "baseUrl": ".",
     "paths": {
       "@assets/*": ["./src/assets/*"],
+      "@configs/*": ["./src/configs/*"],
       "@common/*": ["./src/common/*"],
       "@components/*": ["./src/components/*"],
       "@helpers/*": ["./src/helpers/*"],

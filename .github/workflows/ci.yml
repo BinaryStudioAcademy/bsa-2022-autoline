@@ -5,7 +5,7 @@ on:
     branches:
       - development
       - main
-      - github-actions
+      - docker
 
 jobs:
   lint:

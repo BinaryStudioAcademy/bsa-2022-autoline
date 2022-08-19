@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start:frontend": "yarn workspace @autoline/frontend run start:dev:local",
-    "start:backend": "yarn workspace @autoline/shared build && yarn workspace @autoline/backend start:dev",
+    "start:backend": "yarn workspace @autoline/backend start:dev",
     "migrate": "yarn workspace @autoline/backend run db:migrate:dev",
     "install:frontend": "yarn workspace @autoline/frontend install",
     "install:backend": "yarn workspace @autoline/backend install",

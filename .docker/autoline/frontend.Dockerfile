@@ -2,14 +2,15 @@ FROM node:16.16.0-alpine as frontend-build
 
 WORKDIR /app
 
-COPY ./package*.json ./
+COPY ./package.json ./
+COPY ./yarn.lock ./
 COPY ./tsconfig.json ./
 COPY ./.eslintrc.yml ./
 COPY ./shared ./shared/
 COPY ./frontend/package.json ./frontend/
 
-RUN yarn run workspace @autoline/shared install
-RUN yarn run workspace @autoline/frontend install
+RUN yarn workspace @autoline/shared install
+RUN yarn workspace @autoline/frontend install
 
 COPY ./frontend ./frontend/
 

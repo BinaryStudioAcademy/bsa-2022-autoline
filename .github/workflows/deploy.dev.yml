@@ -25,6 +25,7 @@ jobs:
           context: ./
           dockerfile: ./.docker/autoline/backend.Dockerfile
 
+
   build-frontend:
     runs-on: ubuntu-latest
     environment: development

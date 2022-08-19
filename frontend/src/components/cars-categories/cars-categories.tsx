@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { mockBrands } from '@components/cars-categories/mock-brands';
 import { SliderNavButton } from '@components/cars-categories/slider-nav-button/slider-nav-button';
-import { swiperParams } from '@components/cars-categories/slider-nav-button/swiper-params';
+import { swiperParams } from '@components/cars-categories/swiper-params';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';

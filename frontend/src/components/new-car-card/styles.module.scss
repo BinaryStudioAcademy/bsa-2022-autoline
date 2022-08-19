@@ -4,8 +4,6 @@
   grid-template-columns: 1fr 80px;
   box-sizing: border-box;
   max-width: 400px;
-
-  // min-height: 430px;
   padding: 25px;
   background-color: var(--white);
   border-radius: 5px;
@@ -77,10 +75,6 @@
   display: flex;
   justify-content: end;
   min-width: 36%;
-
-  // margin-top: 26px;
-  // text-align: end;
-  // text-align-last: center;
 }
 
 .price {

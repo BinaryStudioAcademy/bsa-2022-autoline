@@ -2,7 +2,7 @@ import React from 'react';
 import { FieldValues } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { SignInRequestData } from '@autoline/shared/common/types/types';
+import { SignUpRequestData } from '@autoline/shared/common/types/types';
 import { signUpSchema as baseSchema } from '@autoline/shared/validation-schemas';
 import { AppRoute } from '@common/enums/app/app-route.enum';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
@@ -30,7 +30,7 @@ const signUpSchema = baseSchema.shape({
 });
 
 export const SignUpForm = (): React.ReactElement => {
-  const { control, errors, handleSubmit } = useAppForm<SignInRequestData>({
+  const { control, errors, handleSubmit } = useAppForm<SignUpRequestData>({
     defaultValues: {},
     validationSchema: signUpSchema,
   });
@@ -41,8 +41,8 @@ export const SignUpForm = (): React.ReactElement => {
   const fetchErrorData = fetchError as ErrorType;
 
   const onSubmit = (formData: FieldValues): void => {
-    const { name, email, password, phone, location } = formData;
-    fetchSignUp({ name, email, password, phone, location });
+    const { name, email, password } = formData;
+    fetchSignUp({ name, email, password });
   };
 
   const navigateToSignIn = (): void => {
@@ -100,24 +100,6 @@ export const SignUpForm = (): React.ReactElement => {
             label="Repeat Password"
           />
 
-          <InputField
-            name="phone"
-            type="tel"
-            required={false}
-            errors={errors}
-            control={control}
-            label="Phone"
-          />
-
-          <InputField
-            name="location"
-            type="text"
-            required={false}
-            errors={errors}
-            control={control}
-            label="Location"
-          />
-
           {isError && (
             <Alert
               className={styles.alert}
@@ -131,11 +113,9 @@ export const SignUpForm = (): React.ReactElement => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            <DialogTitle id="alert-dialog-title">
-              {'Successful registration'}
-            </DialogTitle>
+            <DialogTitle>{'Successful registration'}</DialogTitle>
             <DialogContent>
-              <DialogContentText id="alert-dialog-description">
+              <DialogContentText className={styles.dialogContentText}>
                 Registration is successfully completed, you can sign in. Please
                 verify your e-mail in order to use full functionality of the
                 website.

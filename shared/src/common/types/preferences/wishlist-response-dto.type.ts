@@ -22,12 +22,13 @@ type ModelResponseDto = {
     price_end: number;
   }[];
   description: string;
+  complectationName?: string;
 };
 
 type ComplectationResponseDto = {
   id: string;
   createdAt: Date;
-  complectationName: string;
+  complectationName?: string;
   engine: string;
   engineDisplacement: number;
   enginePower: number;
@@ -59,9 +60,15 @@ interface WishlistsResponseDto {
   complectations?: ComplectationResponseDto[];
 }
 
+type WishlistInput = {
+  modelId?: string;
+  complectationId?: string;
+};
+
 export {
   type WishlistResponseDto,
   type WishlistsResponseDto,
   type ModelResponseDto,
   type ComplectationResponseDto,
+  type WishlistInput,
 };

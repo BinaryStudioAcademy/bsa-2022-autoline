@@ -23,6 +23,7 @@ export type {
   WishlistsResponseDto,
   ModelResponseDto,
   ComplectationResponseDto,
+  WishlistInput,
 } from './preferences/preferences';
 
 export type { User, UserRole, UserSex } from './user';

@@ -22,7 +22,7 @@ body {
 
 .main-container {
   // margin-top: var(--header-height);
-  margin-top: 70px;
+  margin: 70px 0;
   overflow-x: hidden;
   overflow-y: scroll;
   overflow-y: overlay;
@@ -106,35 +106,5 @@ body {
 
   .third-container {
     margin: 70px calc(0px - 24px);
-
-    .MuiBox-root {
-      height: 200px;
-
-      .MuiTabs-root {
-        display: flex;
-        align-items: center;
-        height: 100%;
-      }
-
-      .MuiTabs-scroller {
-        height: 100%;
-
-        .MuiTabs-flexContainer {
-          height: 100%;
-        }
-
-        .MuiTab-root {
-          padding: 0 2.5%;
-        }
-
-        .MuiTabScrollButton-root {
-          width: 30px;
-          height: 30px;
-          margin: 0 5px;
-          color: var(--blue100);
-          border-radius: 3px;
-        }
-      }
-    }
   }
 }

@@ -57,6 +57,7 @@
 .footer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 20px;
 }
 
@@ -102,8 +103,9 @@
 
 .separator {
   width: 1px;
+  height: 70%;
   margin: 0 5px;
-  background-color: lightgray;
+  background-color: var(--gray200);
   border: none;
 }
 

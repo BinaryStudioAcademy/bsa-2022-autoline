@@ -34,9 +34,10 @@ export const Header = (): React.ReactElement => {
         }}
       >
         <Toolbar sx={{ height: '70px' }}>
+          <div></div>
           <Link to={AppRoute.ROOT} style={{ marginLeft: '40px' }}>
             <img className={styles.logo} src={Logo} alt="Autoline" />
-          </Link>{' '}
+          </Link>
           {isMatch ? (
             <>
               <Typography sx={{ fontSize: '2rem', paddingLeft: '10%' }}>
@@ -91,6 +92,12 @@ export const Header = (): React.ReactElement => {
               </Tabs>
               <ButtonFill className={styles.btnFill} text="Create Account" />
               <ButtonOutline className={styles.btnOutline} text="Sign In" />
+              {/* <Link to={AppRoute.SIGN_UP}>
+                <ButtonFill className={styles.btnFill} text="Create Account" />
+              </Link>
+              <Link to={AppRoute.SIGN_IN}>
+                <ButtonOutline className={styles.btnOutline} text="Sign In" />
+              </Link> */}
             </>
           )}
         </Toolbar>

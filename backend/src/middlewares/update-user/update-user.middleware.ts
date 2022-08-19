@@ -1,10 +1,9 @@
-import { ErrorMessage } from '@autoline/shared';
+import { ErrorMessage, updateUserSchema } from '@autoline/shared';
 import { ExceptionMessage } from '@common/enums/exception/exception';
 import { TypedRequestBody } from '@common/types/controller/controller';
 import { UpdateUser } from '@controllers/update-user/update-user.controller';
 import { prisma } from '@data/prisma-client';
 import { validatePassword } from '@services/password-validation/password-validation.service';
-import { updateUserSchema } from '@validation-schemas/validation-schemas';
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
 

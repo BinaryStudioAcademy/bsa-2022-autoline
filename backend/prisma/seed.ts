@@ -8,8 +8,11 @@ import {
   drivetrains,
   fuelTypes,
   transmissionTypes,
+  regions,
+  cities,
 } from '../api-autoria/cars/fetched-data/fetched-data';
 import { optionsTypes } from '../api-autoria/cars/options-types';
+import { City } from '../api-autoria/city-type';
 import { OptionType } from '../api-autoria/option-type.enum';
 import { AutoriaPlainDataDto } from '../src/dtos/cars/autoria-plain-data.dto';
 import { users } from './seeds/users';
@@ -27,6 +30,25 @@ async function main(): Promise<void> {
     await prisma.user_Security.create({
       data: user_security,
     });
+  }
+  for (const region of regions) {
+    const dataToSeed = new AutoriaPlainDataDto(region);
+    const newRegion = await prisma.region.create({
+      data: dataToSeed,
+    });
+    const city = cities.find(
+      (city: City) => city.regionId === region.value,
+    ) as City;
+
+    for (const data of city.data) {
+      await prisma.city.create({
+        data: {
+          name: data.name,
+          autoria_code: data.value,
+          region_id: newRegion.id,
+        },
+      });
+    }
   }
 
   for (const bodyType of bodyTypes) {

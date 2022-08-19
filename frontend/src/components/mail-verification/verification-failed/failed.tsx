@@ -44,7 +44,7 @@ const Failed: FC = (): React.ReactElement => {
             <h3 className={styles.red}> Verification is failed.</h3>
             <p>
               You can request new verification link, type your email and click
-              button bellow.
+              button below.
             </p>
             <InputField
               name="email"

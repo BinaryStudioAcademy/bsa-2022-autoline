@@ -3,7 +3,7 @@ name: Deploy staging
 on:
   push:
     branches:
-      - github-actions
+      - docker
   workflow_dispatch:
 
 jobs:

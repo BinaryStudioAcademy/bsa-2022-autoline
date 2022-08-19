@@ -15,14 +15,15 @@ export interface ConfigInterface {
 const configuration = (): ConfigInterface => {
   config();
 
-  const { VITE_API_ORIGIN_URL, VITE_SENTRY_DSN, SENTRY_ENABLE } = process.env;
+  const { VITE_API_ORIGIN_URL, VITE_SENTRY_DSN, VITE_SENTRY_ENABLE } =
+    import.meta.env;
 
   return {
     APP: {
       API_PATH: VITE_API_ORIGIN_URL || 'http://localhost:3001/api/v1',
       SENTRY: {
         DSN: VITE_SENTRY_DSN || '',
-        ENABLE: SENTRY_ENABLE !== 'false',
+        ENABLE: VITE_SENTRY_ENABLE !== 'false',
       },
     },
   };

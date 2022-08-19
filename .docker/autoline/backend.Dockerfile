@@ -12,11 +12,8 @@ COPY ./.eslintrc.yml ./
 COPY ./shared ./shared/
 COPY ./backend ./backend/
 
-RUN yarn add workspace @autoline/backend instead
-RUN yarn add workspace @autoline/shared instead
-
-RUN yarn install workspace @autoline/backend
-RUN yarn install workspace @autoline/shared
+RUN yarn workspace @autoline/backend install
+RUN yarn workspace @autoline/shared install
 
 RUN yarn run build:backend
 RUN rm -rf ./backend/src

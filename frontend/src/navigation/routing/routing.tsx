@@ -7,6 +7,7 @@ import { ForgotPassword } from '@components/forgot-password/forgot-password';
 import { PersonalPage } from '@components/personal-page/personal-page';
 import { ResetPassword } from '@components/reset-password/reset-password';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
+
 import { Sign } from '../../components/sign/sign';
 
 const Routing: FC = () => {

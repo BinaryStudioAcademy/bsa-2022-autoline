@@ -2,57 +2,30 @@ import { ReactNode, useState } from 'react';
 
 import styles from './styles.module.scss';
 
-const data = [
-  {
-    title: 'complite set',
-    body: 'more text jdkf kdfjkd ksdjfk ksdfj more textd more text jdkf kdfjkd ksdjfk ksdfj more textd more text jdkf kdfjkd ksdjfk ksdfj more textd more text jdkf kdfjkd ksdjfk ksdfj more textd more text jdkf kdfjkd ksdjfk ksdfj more textd',
-  },
-  {
-    title: 'characteristics',
-    body: 'more text jdkf kdfjkd ksdjfk ksdfj more textd more text jdkf kdfjkd ksdjfk ksdfj more textd more text jdkf kdfjkd ksdjfk ksdfj more textd more text jdkf kdfjkd ksdjfk ksdfj more textd more text jdkf kdfjkd ksdjfk ksdfj more textd',
-  },
-  {
-    title: 'Where to by',
-    body: 'more text jdkf kdfjkd ksdjfk ksdfj more textd more text jdkf kdfjkd ksdjfk ksdfj more textd more text jdkf kdfjkd ksdjfk ksdfj more textd more text jdkf kdfjkd ksdjfk ksdfj more textd more text jdkf kdfjkd ksdjfk ksdfj more textd',
-  },
-];
-
 interface CollapseProps {
-  // elem: React.ReactElement;
+  label: string;
   children?: ReactNode;
 }
 
-const Collapse: React.FC<CollapseProps> = ({ children }) => {
-  // const reactEl = elem();
-  const [selected, setSelected] = useState<number | null>(null);
+const Collapse: React.FC<CollapseProps> = ({ children, label }) => {
+  const [selected, setSelected] = useState<boolean>(false);
 
-  const toggle = (i: number): void => {
-    if (selected == i) {
-      setSelected(null);
-      return;
-    }
-    setSelected(i);
+  const toggle = (): void => {
+    setSelected(!selected);
   };
 
   return (
-    <div className={styles.wrapper}>
-      {children}
-      <div className={styles.accordion}>
-        {data.map((item, i) => (
-          <div className={styles.item}>
-            <div className={styles.title} onClick={(): void => toggle(i)}>
-              <p className={styles.char}>{selected == i ? '-' : '+'}</p>
-              <h2 className={styles.lable}>{item.title}</h2>
-            </div>
-            <div
-              className={
-                selected == i
-                  ? `${styles.content} ${styles.show}`
-                  : `${styles.content}`
-              }
-            ></div>
-          </div>
-        ))}
+    <div>
+      <div className={styles.title} onClick={toggle}>
+        <p className={styles.char}>{selected ? '–' : '+'}</p>
+        <p className={styles.lable}>{label}</p>
+      </div>
+      <div
+        className={
+          selected ? `${styles.content} ${styles.show}` : `${styles.content}`
+        }
+      >
+        {children}
       </div>
     </div>
   );

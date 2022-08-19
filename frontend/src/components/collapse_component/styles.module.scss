@@ -1,25 +1,16 @@
 .wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-}
-
-.accordion {
-  width: 500px;
-}
-
-.item {
-  margin-top: 5px;
-  padding: 10px 20px;
-  background-color: var(--blue100);
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 30px;
+  background-color: lightgray;
 }
 
 .title {
-  display: flex;
+  display: inline-flex;
   justify-content: flex-start;
   align-items: center;
+  width: auto;
   cursor: pointer;
 }
 
@@ -32,16 +23,29 @@
 .show {
   height: auto;
   max-height: 9999px;
+  overflow: auto;
   transition: all 0.5s cubic-bezier(0, 1, 0, 1);
 }
 
 .char {
-  margin-right: 3px;
+  width: 13px;
+  height: 26px;
+  margin-right: 5px;
   color: var(--blue100);
-  font-weight: 600;
-  font-size: 24px;
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 25px;
+  text-align: center;
 }
 
 .lable {
+  margin: 15px 0;
+  color: var(--black);
+  font-weight: 800;
+  font-size: 24px;
   text-transform: uppercase;
+}
+
+p {
+  margin: 0;
 }

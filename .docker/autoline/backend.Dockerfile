@@ -12,7 +12,8 @@ COPY ./.eslintrc.yml ./
 COPY ./shared ./shared/
 COPY ./backend ./backend/
 
-RUN npm ci -w shared -w backend
+RUN yarn install workspace @autoline/backend
+RUN yarn install workspace @autoline/shared
 
 RUN yarn run build:backend
 RUN rm -rf ./backend/src

@@ -4,8 +4,10 @@ import {
   healthRouter,
   authRouter,
   protectedRouter,
+  userRouter,
   activateRouter,
   wishlistRouter,
+  carsRouter,
   activateLinkRouter,
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
@@ -44,7 +46,9 @@ const routes = [
   healthRouter,
   authRouter,
   protectedRouter,
+  userRouter,
   wishlistRouter,
+  carsRouter,
   activateRouter,
   activateLinkRouter,
 ];

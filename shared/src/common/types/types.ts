@@ -25,4 +25,8 @@ export type {
   ComplectationResponseDto,
 } from './preferences/preferences';
 
+export type { User, UserRole, UserSex } from './user';
+
 export type { ValidationSchema } from './validation/validation';
+
+export type { CarsSearchParams } from './cars/cars-search-params';

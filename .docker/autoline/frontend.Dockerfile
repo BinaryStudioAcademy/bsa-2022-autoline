@@ -10,6 +10,8 @@ COPY ./shared ./shared/
 COPY ./frontend/package.json ./frontend/
 
 RUN yarn workspace @autoline/shared install
+RUN yarn run build:shared
+
 RUN yarn workspace @autoline/frontend install
 
 COPY ./frontend ./frontend/

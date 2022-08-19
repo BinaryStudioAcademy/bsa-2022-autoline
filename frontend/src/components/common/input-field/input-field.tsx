@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { useController } from 'react-hook-form';
 
 import ErrorIcon from '@assets/images/error.svg';
@@ -12,24 +13,23 @@ import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
-export const InputField = ({
+export const InputField: FC<InputFieldPropsType> = ({
   name,
   control,
   type,
   errors,
   inputLabel,
-}: InputFieldPropsType): React.ReactElement => {
+}) => {
   const {
     field: { ...field },
   } = useController({ name, control });
-
   return (
     <FormControl
       variant="standard"
       className={clsx(
         styles.inputField,
         styles.fieldWrapper,
-        errors && styles.inputFieldError,
+        errors?.[name] && styles.inputFieldError,
       )}
     >
       {type === 'password' && (

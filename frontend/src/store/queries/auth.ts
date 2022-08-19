@@ -1,6 +1,6 @@
 import { ApiPath, AuthApiPath } from '@autoline/shared/common/enums/enums';
 import { ContentType } from '@common/enums/enums';
-import { SignInResponseData, SignInRequestData } from '@common/types/types';
+import { SignInResponseData, SignInRequestUser } from '@common/types/types';
 
 import { api } from './index';
 
@@ -11,9 +11,9 @@ type ResetPasswordRequestData = {
 
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    signIn: builder.mutation<SignInResponseData, SignInRequestData>({
+    signIn: builder.mutation<SignInResponseData, SignInRequestUser>({
       query: (credentials) => ({
-        url: `${ApiPath.AUTH}${AuthApiPath.SIGN_IN}`,
+        url: `${ApiPath.AUTH}/local/signin`,
         method: 'POST',
         body: credentials,
       }),

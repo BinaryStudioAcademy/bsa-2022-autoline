@@ -9,6 +9,8 @@ export {
   type SignInRequestUser,
 } from './auth/auth';
 
+export type { ValidationSchema } from './validation/validation';
+export type { TitlePropsType } from './title/title';
 export type {
   CarDataType,
   CarDataPropsType,

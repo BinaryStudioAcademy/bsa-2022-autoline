@@ -18,12 +18,11 @@ export const InputField: FC<InputFieldPropsType> = ({
   control,
   type,
   errors,
-  label,
+  inputLabel,
 }) => {
   const {
     field: { ...field },
   } = useController({ name, control });
-
   return (
     <FormControl
       variant="standard"
@@ -36,7 +35,7 @@ export const InputField: FC<InputFieldPropsType> = ({
       {type === 'password' && (
         <img className={styles.icon} src={PassIcon} alt="icon" />
       )}
-      <InputLabel className={styles.label}>{label}</InputLabel>
+      <InputLabel className={styles.label}>{inputLabel ?? name}</InputLabel>
       <OutlinedInput
         {...field}
         type={type}

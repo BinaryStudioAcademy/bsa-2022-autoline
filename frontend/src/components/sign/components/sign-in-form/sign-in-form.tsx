@@ -30,6 +30,7 @@ export const SignInForm = (): React.ReactElement => {
     };
     signIn(user).unwrap();
   };
+  console.log(error);
   return (
     <>
       <h1 className={styles.title}>Sign In</h1>
@@ -51,7 +52,7 @@ export const SignInForm = (): React.ReactElement => {
             required={true}
             errors={errors}
             control={control}
-            label="Email"
+            inputLabel="Email"
           />
           <InputField
             name="password"
@@ -59,7 +60,7 @@ export const SignInForm = (): React.ReactElement => {
             required={true}
             errors={errors}
             control={control}
-            label="Password"
+            inputLabel="Password"
           />
           {error && 'data' in error && (
             <Alert severity="error">{error.data.message}</Alert>

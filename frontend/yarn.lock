@@ -1299,10 +1299,17 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+<<<<<<< HEAD
 react-hook-form@^7.34.1:
   version "7.34.1"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.34.1.tgz#06cb216daf706bf9ae4969747115afae0d09410d"
   integrity sha512-tH7TaZgAURMhjzVE2M/EFmxHz2HdaPMAVs9FXTweNW551VlhXSuVcpcYlkiMZf2zHQiTztupVFpBHJFTma+N7w==
+=======
+react-hook-form@^7.34.2:
+  version "7.34.2"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.34.2.tgz#9ac6d1a309a7c4aaa369d1269357a70e9e9bf4de"
+  integrity sha512-1lYWbEqr0GW7HHUjMScXMidGvV0BE2RJV3ap2BL7G0EJirkqpccTaawbsvBO8GZaB3JjCeFBEbnEWI1P8ZoLRQ==
+>>>>>>> develop
 
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
@@ -1375,7 +1382,7 @@ redux-thunk@^2.4.1:
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.4.1.tgz#0dd8042cf47868f4b29699941de03c9301a75714"
   integrity sha512-OOYGNY5Jy2TWvTL1KgAlVy6dcx3siPJ1wTq741EPyUKfn6W6nChdICjZwCd0p8AZBs5kWpZlbkXW2nE/zjUa+Q==
 
-redux@^4.1.2:
+redux@^4.1.2, redux@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.2.0.tgz#46f10d6e29b6666df758780437651eeb2b969f13"
   integrity sha512-oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA==

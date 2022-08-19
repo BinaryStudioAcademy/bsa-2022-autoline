@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "joi": "^17.6.0",
-    "yup": "^0.32.11",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "concurrently": "^7.3.0",

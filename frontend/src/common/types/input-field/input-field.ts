@@ -13,5 +13,5 @@ export type InputFieldPropsType = {
   autoComplete?: string;
   required: boolean;
   control?: Control;
-  label?: string;
+  inputLabel?: string;
 };

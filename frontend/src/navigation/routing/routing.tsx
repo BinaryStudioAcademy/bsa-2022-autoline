@@ -4,9 +4,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '@common/enums/app/app';
 import { Administration } from '@components/administration';
 import { ForgotPassword } from '@components/forgot-password/forgot-password';
+import { LandingPage } from '@components/landing-page/landing-page';
 import { PersonalPage } from '@components/personal-page/personal-page';
 import { ResetPassword } from '@components/reset-password/reset-password';
-import { LandingPage } from '@components/landing-page/landing-page';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 
 import { Sign } from '../../components/sign/sign';
@@ -37,10 +37,10 @@ const Routing: FC = () => {
           <Route path={AppRoute.FORGOT_PASSWORD} element={<ForgotPassword />} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
-          <Route path={AppRoute.RESET_PASSWORD} element={<LandingPage />} />
+          <Route path={AppRoute.RESET_PASSWORD} element={<ResetPassword />} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
-          <Route path={AppRoute.ROOT} element={<h2>Home page</h2>} />
+          <Route path={AppRoute.ROOT} element={<LandingPage />} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={isAdmin} />}>
           <Route path={AppRoute.ADMINISTRATION} element={<Administration />} />

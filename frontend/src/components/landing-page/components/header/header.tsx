@@ -20,7 +20,7 @@ import { DrawerComp } from '../drawer/drawer';
 import './styles.scss';
 
 export const Header = (): React.ReactElement => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(0);
   const theme = useTheme();
   const isMatchSm = useMediaQuery(theme.breakpoints.down('sm'));
   const isMatchMd = useMediaQuery(theme.breakpoints.up('md'));
@@ -45,6 +45,7 @@ export const Header = (): React.ReactElement => {
                 onChange={(e, value): void => setValue(value)}
                 value={value}
               >
+                {/* <Tab sx={{ display: 'none' }} /> */}
                 <Tab label="Used Cars" />
                 <Tab label="New Cars" />
                 <Tab label="About us" />

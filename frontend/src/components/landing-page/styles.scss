@@ -74,7 +74,7 @@ body {
   .second-container,
   .fourth-container {
     @include landing-page-margin;
-    
+
     @media (min-width: $global-sm) {
       margin-right: 40px;
     }

@@ -1,6 +1,6 @@
 import { sendLink } from '@services/mail-verification/send-activation-link/send-link';
 import { generateMailToken } from '@services/mail-verification/token.service';
-import { getByEmail } from '@services/mail-varification/user-data.service/user';
+import { getByEmail } from '@services/mail-verification/user-data.service/user';
 import {
   updateMailToken,
   getByUserId,

@@ -6,8 +6,6 @@ import { Administration } from '@components/administration';
 import { ForgotPassword } from '@components/forgot-password/forgot-password';
 import { PersonalPage } from '@components/personal-page/personal-page';
 import { ResetPassword } from '@components/reset-password/reset-password';
-import { Failed } from '@components/mail-verification/verification-failed/failed';
-import { Success } from '@components/mail-verification/verification-success/success';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 
 import { Sign } from '../../components/sign/sign';

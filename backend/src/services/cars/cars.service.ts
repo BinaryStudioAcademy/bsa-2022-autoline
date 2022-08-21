@@ -1,5 +1,6 @@
 import { prisma } from '@data/prisma-client';
 import {
+  Region,
   Body_Type,
   Brand,
   Color,
@@ -10,6 +11,7 @@ import {
 } from '@prisma/client';
 
 type UsedOptionsType = {
+  regions: Region[];
   bodyTypes: Body_Type[];
   colors: Color[];
   drivetrains: Drivetrain[];
@@ -27,57 +29,31 @@ const getBrands = async (): Promise<Brand[]> => {
   });
 };
 
-const getModels = async (brandId: string): Promise<Model[]> => {
+const getModels = async (brandId: string): Promise<Partial<Model>[]> => {
   return await prisma.model.findMany({
     where: { manufacturer_id: brandId },
-    include: {
-      prices_ranges: true,
+    select: {
+      id: true,
+      name: true,
     },
   });
 };
 
 const getUsedOptions = async (): Promise<UsedOptionsType> => {
-  const bodyTypes = await prisma.body_Type.findMany({
-    where: {
-      models: {
-        some: {},
-      },
-    },
-  });
+  const regions = await prisma.region.findMany();
 
-  const colors = await prisma.color.findMany({
-    where: {
-      complectations: {
-        some: {},
-      },
-    },
-  });
+  const bodyTypes = await prisma.body_Type.findMany({});
 
-  const drivetrains = await prisma.drivetrain.findMany({
-    where: {
-      complectations: {
-        some: {},
-      },
-    },
-  });
+  const colors = await prisma.color.findMany({});
 
-  const fuelTypes = await prisma.fuel_Type.findMany({
-    where: {
-      complectations: {
-        some: {},
-      },
-    },
-  });
+  const drivetrains = await prisma.drivetrain.findMany({});
 
-  const transmissionTypes = await prisma.transmission_Type.findMany({
-    where: {
-      complectations: {
-        some: {},
-      },
-    },
-  });
+  const fuelTypes = await prisma.fuel_Type.findMany({});
+
+  const transmissionTypes = await prisma.transmission_Type.findMany({});
 
   return {
+    regions,
     bodyTypes,
     colors,
     drivetrains,

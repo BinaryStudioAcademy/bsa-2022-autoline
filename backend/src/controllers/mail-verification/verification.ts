@@ -1,5 +1,5 @@
 import { MailActivate } from '@services/mail-verification/send-activation-link/constants';
-import { validateMailToken } from '@services/mail-verification/token.service';
+import { validateMailToken } from '@services/mail-varification/token.service';
 import {
   getByToken,
   removeMailToken,

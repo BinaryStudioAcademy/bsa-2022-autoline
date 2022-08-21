@@ -1,0 +1,23 @@
+.title {
+  margin: 5px 0;
+  font-weight: 700;
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 10px;
+}
+
+.seeAll {
+  display: flex;
+  align-items: center;
+  color: var(--blue100);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.label {
+  height: 30px;
+}

@@ -6,7 +6,8 @@ export type SelectFieldPropsType = {
   children: React.ReactNode;
   id?: string;
   onChange: (event: SelectChangeEvent) => void;
-  onClose: (event: SelectChangeEvent) => void;
+  onClose?: (event: SelectChangeEvent) => void;
+  disabled?: boolean;
   className?: string;
   required: boolean;
   errors?: string;

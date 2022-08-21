@@ -4,14 +4,11 @@ import { createToken } from '@helpers/helpers';
 import { bcryptHash, sendEmail } from '@helpers/helpers';
 import { User } from '@prisma/client';
 import { mailSend } from '@services/mail-verification/send.service';
-import { updateMailToken } from '@services/mail-verification/user-data.service/user-security';
+import { updateMailToken } from '@services/mail-verification/user-security.service';
 import bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
-import type {
-  SignInResponseData,
-  SignUpResponseDto,
-} from '@autoline/shared/common/types/types';
+import type { SignInResponseData, SignUpResponseDto } from '@autoline/shared';
 import type { UserCreateInput } from '@common/types/types';
 
 const signupLocal = async (

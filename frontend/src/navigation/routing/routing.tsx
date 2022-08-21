@@ -33,11 +33,6 @@ const Routing: FC = () => {
         >
           <Route path={AppRoute.SIGN_IN} element={<Sign />} />
           <Route path={AppRoute.SIGN_UP} element={<Sign />} />
-          <Route
-            path={AppRoute.MAIL_SUCCESS_VALIDATION}
-            element={<Success />}
-          />
-          <Route path={AppRoute.MAIL_FAILED_VALIDATION} element={<Failed />} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.FORGOT_PASSWORD} element={<ForgotPassword />} />

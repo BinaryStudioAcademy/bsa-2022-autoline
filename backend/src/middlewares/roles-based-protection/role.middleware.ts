@@ -1,4 +1,4 @@
-import { TokenPayload } from '@autoline/shared/common/types/types';
+import { TokenPayload } from '@autoline/shared';
 import { ExceptionMessage } from '@common/enums/exception/exception-message.enum';
 import { TypedRequestBody } from '@common/types/controller/controller';
 import { verifyToken } from '@helpers/token/token';

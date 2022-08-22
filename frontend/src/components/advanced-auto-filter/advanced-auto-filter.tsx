@@ -1,23 +1,31 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 
+import { AutoRiaOption } from '@autoline/shared/common/types/types';
 import { pricesRange, raceRange, yearsRange } from '@common/enums/cars/ranges';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { CheckboxListDataType } from '@common/types/cars/checkbox-list-data.type';
 import { FiltersType } from '@common/types/cars/filters.type';
 import { BrandDetails } from '@components/advanced-auto-filter/brand-details/brand-details';
+import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
 import { toCamelCase } from '@helpers/strings';
+import UTurnRightIcon from '@mui/icons-material/UTurnRight';
 import {
   useGetFilteredCarsQuery,
   useGetUsedOptionsQuery,
 } from '@store/queries/cars';
 
+import { AutocompleteDataType } from '../../types/autocomplete.type';
 import styles from './styles.module.scss';
 
 const AdvancedAutoFilter: FC = (): JSX.Element => {
   const [queryParams, setQueryParams] = useState<string[][]>();
 
+  const [selectedRegion, setSelectedRegion] = useState({
+    label: '',
+    id: '',
+  });
   const [brandDetails, setBrandDetails] = useState<BrandDetailsType[]>([
     {
       id: Date.now().toString(),
@@ -25,8 +33,8 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
       modelId: '',
     },
   ]);
-  const [filters, setFilters] = useState<FiltersType>({
-    region: '',
+
+  const initialFiltersState = {
     yearMin: '',
     yearMax: '',
     $Min: '',
@@ -35,10 +43,11 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
     kmMax: '',
     color: [],
     drivetrain: [],
-    fuelType: [],
+    fuel: [],
     bodyType: [],
     transmission: [],
-  });
+  };
+  const [filters, setFilters] = useState<FiltersType>(initialFiltersState);
 
   const { data: options, isLoading } = useGetUsedOptionsQuery();
   const { data: filteredCars } = useGetFilteredCarsQuery(queryParams);
@@ -48,6 +57,7 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
 
   useEffect(() => {
     const params = {
+      regionId: selectedRegion.id,
       bodytypeId: filters.bodyType,
       brandId: brandDetails.map((detail) => detail.brandId),
       modelId: brandDetails.map((detail) => detail.modelId),
@@ -55,12 +65,11 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
       yearEnd: filters.yearMax,
       priceStart: filters.$Min,
       priceEnd: filters.$Max,
-      regionId: filters.region,
       colorId: filters.color,
       raceStart: filters.kmMin,
       raceEnd: filters.kmMax,
       transmissionTypeId: filters.transmission,
-      fueltypeId: filters.fuelType,
+      fueltypeId: filters.fuel,
       drivetrainId: filters.drivetrain,
     };
     const notEmpties = Object.fromEntries(
@@ -77,7 +86,7 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
     });
 
     setQueryParams(normalized);
-  }, [filters, brandDetails]);
+  }, [filters, brandDetails, selectedRegion]);
 
   const handleAddNewDetails = (): void => {
     setBrandDetails([
@@ -105,6 +114,10 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
     ]);
   };
 
+  const handleAutocompleteInputChange = (data: AutocompleteDataType): void => {
+    setSelectedRegion(data.value || { label: '', id: '' });
+  };
+
   const handleRangeChange = (range: { [p: number]: string }): void => {
     setFilters({
       ...filters,
@@ -112,11 +125,19 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
     });
   };
 
+  const years = useMemo(() => yearsRange(30), []);
+
   const handleCheckboxListChange = (data: CheckboxListDataType): void => {
     setFilters({
       ...filters,
       [toCamelCase(data.title)]: data.data,
     });
+  };
+
+  const resetFilters = (): void => {
+    setSelectedRegion({ label: '', id: '' });
+    setBrandDetails([]);
+    setFilters(initialFiltersState);
   };
 
   if (isLoading) return <h1>Loading...</h1>;
@@ -126,6 +147,19 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
       <h1>FILTER</h1>
       <div className={styles.row}>
         <div className={styles.column}>
+          <h4 className={styles.blockTitle}>Region</h4>
+          {options && (
+            <AutocompleteInput
+              label="Regions"
+              onChange={handleAutocompleteInputChange}
+              value={selectedRegion}
+              options={options?.regions?.map((item: AutoRiaOption) => ({
+                label: item.name,
+                id: item.id,
+              }))}
+            />
+          )}
+
           <CheckboxList
             title="Body Type"
             list={options && options.bodyTypes}
@@ -147,10 +181,10 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
             />
           ))}
 
-          <h4>Year</h4>
+          <h4 className={styles.blockTitle}>Year</h4>
           <div className={styles.row}>
             <RangeSelector
-              list={yearsRange}
+              list={years}
               minTitle="Year Min"
               maxTitle="Year Max"
               selectedMin={filters.yearMin}
@@ -159,7 +193,7 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
             />
           </div>
 
-          <h4>Price</h4>
+          <h4 className={styles.blockTitle}>Price</h4>
           <div className={styles.row}>
             <RangeSelector
               list={pricesRange.map((item: number) => item.toString())}
@@ -171,7 +205,7 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
             />
           </div>
 
-          <h4>Race</h4>
+          <h4 className={styles.blockTitle}>Race</h4>
           <div className={styles.row}>
             <RangeSelector
               list={raceRange.map((item: number) => item.toString())}
@@ -204,6 +238,11 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
           />
         </div>
       </div>
+
+      <p onClick={resetFilters} className={styles.reset}>
+        <UTurnRightIcon className={styles.icon} />
+        Reset All Filters
+      </p>
     </div>
   );
 };

@@ -1,19 +1,14 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { AutoRiaOption } from '@autoline/shared/common/types/types';
 import { AppRoute } from '@common/enums/app/app-route.enum';
 import { pricesRange, yearsRange } from '@common/enums/cars/ranges';
 import { FiltersType } from '@common/types/cars/filters.type';
+import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
 import { SelectField } from '@components/common/select-field/select-field';
-import {
-  Autocomplete,
-  MenuItem,
-  SelectChangeEvent,
-  SvgIcon,
-  TextField,
-} from '@mui/material';
+import { MenuItem, SelectChangeEvent } from '@mui/material';
 import {
   useGetBrandsQuery,
   useGetFilteredCarsQuery,
@@ -21,6 +16,7 @@ import {
   useGetUsedOptionsQuery,
 } from '@store/queries/cars';
 
+import { AutocompleteDataType } from '../../types/autocomplete.type';
 import styles from './styles.module.scss';
 
 const SimpleAutoFilter: FC = () => {
@@ -50,25 +46,20 @@ const SimpleAutoFilter: FC = () => {
       priceStart: filters.$Min || '',
       priceEnd: filters.$Max || '',
     };
-    // const notEmpties = Object.fromEntries(
-    //   Object.entries(params).filter(([_, value]) => value !== ''),
-    // );
-    //
-    // const normalized = Object.entries(notEmpties).flatMap(([key, value]) => {
-    //   return [[key, value]];
-    // });
 
     setQueryParams(Object.entries(params).filter(([_, value]) => value !== ''));
-  }, [filters, selectedModelId, selectedBrandId]);
+  }, [filters, selectedModelId, selectedBrandId, selectedRegion]);
 
   const { data: brands, isLoading } = useGetBrandsQuery();
   const { data: options, isLoading: isOptionsLoading } =
     useGetUsedOptionsQuery();
 
-  const { data: models, isLoading: isModelsLoading } = useGetModelsOfBrandQuery(
+  const { data: models, isSuccess: isModelsFetched } = useGetModelsOfBrandQuery(
     selectedBrandId,
     { skip: !selectedBrandId },
   );
+
+  const years = useMemo(() => yearsRange(30), []);
 
   const { data: filteredCars } = useGetFilteredCarsQuery(queryParams, {
     skip: !queryParams,
@@ -77,15 +68,8 @@ const SimpleAutoFilter: FC = () => {
   // eslint-disable-next-line no-console
   console.log(filteredCars);
 
-  const handleSelectChangeRegion = (
-    value: { label: string; id: string } | null,
-  ): void => {
-    setSelectedRegion(
-      value || {
-        label: '',
-        id: '',
-      },
-    );
+  const handleAutocompleteInputChange = (data: AutocompleteDataType): void => {
+    setSelectedRegion(data.value || { label: '', id: '' });
   };
 
   const handleSelectChangeBrand = (event: SelectChangeEvent): void => {
@@ -104,7 +88,7 @@ const SimpleAutoFilter: FC = () => {
     });
   };
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading || isOptionsLoading) return <h1>Loading...</h1>;
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -115,31 +99,14 @@ const SimpleAutoFilter: FC = () => {
       </div>
 
       {options && (
-        <Autocomplete
-          id="regions"
-          isOptionEqualToValue={(option, value): boolean =>
-            option.id === value.id
-          }
-          disabled={isOptionsLoading}
+        <AutocompleteInput
+          label="Regions"
+          onChange={handleAutocompleteInputChange}
           value={selectedRegion}
-          onChange={(event, value): void => handleSelectChangeRegion(value)}
-          popupIcon={
-            <SvgIcon viewBox="0 0 12 8" className={styles.arrow}>
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M10.59 0.100098L6 4.6801L1.41 0.100098L0 1.5101L6 7.5101L12 1.5101L10.59 0.100098Z"
-                fill="#C9CFDD"
-              />
-            </SvgIcon>
-          }
-          options={options.regions.map((item: AutoRiaOption) => ({
+          options={options?.regions?.map((item: AutoRiaOption) => ({
             label: item.name,
             id: item.id,
           }))}
-          renderInput={(params): JSX.Element => (
-            <TextField {...params} label="Region" />
-          )}
         />
       )}
 
@@ -162,7 +129,7 @@ const SimpleAutoFilter: FC = () => {
           <SelectField
             id="model"
             name="Model"
-            disabled={isModelsLoading}
+            disabled={!isModelsFetched}
             value={selectedModelId}
             onChange={handleSelectChangeModel}
             required={false}
@@ -178,7 +145,7 @@ const SimpleAutoFilter: FC = () => {
         <div className={styles.column}>
           <div className={styles.row}>
             <RangeSelector
-              list={yearsRange}
+              list={years}
               minTitle="Year Min"
               maxTitle="Year Max"
               selectedMin={filters.yearMin || ''}

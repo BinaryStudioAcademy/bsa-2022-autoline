@@ -6,11 +6,4 @@ const toCamelCase = (str: string): string => {
     .replace(/\s+/g, '');
 };
 
-const arrToQueryString = (arr: string[], paramName: string): string => {
-  if (arr && arr.length) {
-    return arr.map((item) => `${paramName}=${item}`).join('&');
-  }
-  return '';
-};
-
-export { toCamelCase, arrToQueryString };
+export { toCamelCase };

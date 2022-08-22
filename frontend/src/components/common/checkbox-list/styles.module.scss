@@ -4,20 +4,25 @@
 }
 
 .listContainer {
+  margin-bottom: 10px;
+}
+
+.labelsContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-left: 10px;
+  padding-left: 3px;
 }
 
 .seeAll {
   display: flex;
   align-items: center;
+  margin: 10px 0;
   color: var(--blue100);
   font-weight: 700;
   cursor: pointer;
 }
 
 .label {
-  height: 30px;
+  height: 35px;
 }

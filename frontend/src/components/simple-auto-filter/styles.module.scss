@@ -39,3 +39,30 @@
   font-weight: 700;
   text-decoration: none;
 }
+
+.autocompleteField {
+  margin-bottom: 15px;
+
+  .MuiAutocomplete-popupIndicator {
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+  }
+
+  .label {
+    left: 18px;
+    color: var(--gray300);
+    font-size: 14px;
+    transform: translate(0, 14px) scale(1);
+  }
+
+  fieldset {
+    top: 0;
+    border-color: var(--gray200);
+    border-radius: 50px;
+
+    legend {
+      display: none;
+    }
+  }
+}

@@ -1,7 +1,6 @@
 .container {
   width: 500px;
   padding: 10px 30px;
-  background-color: white;
 }
 
 .header {
@@ -12,6 +11,10 @@
   h3 {
     font-weight: 800;
   }
+}
+
+.blockTitle {
+  margin: 10px 0;
 }
 
 .mainRow {
@@ -41,4 +44,18 @@
   color: var(--blue100);
   font-weight: 700;
   cursor: pointer;
+}
+
+.reset {
+  display: flex;
+  align-items: center;
+  color: var(--blue100);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.icon {
+  margin-right: 5px;
+  transform: rotate(90deg);
 }

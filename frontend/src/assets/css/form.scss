@@ -32,3 +32,34 @@
     }
   }
 }
+
+.MuiAutocomplete-root {
+  .MuiFormControl-root {
+    label {
+      top: -3px;
+      color: var(--gray300);
+      font-size: 14px;
+    }
+  }
+
+  .MuiOutlinedInput-root {
+    height: 46px;
+
+    .MuiAutocomplete-endAdornment {
+      color: var(--gray300);
+    }
+  }
+
+  .MuiInputLabel-root.MuiInputLabel-shrink.Mui-focused,
+  .MuiInputLabel-root.MuiInputLabel-shrink.MuiFormLabel-filled {
+    transform: translate(15px, 7px) scale(0.75);
+  }
+
+  .MuiAutocomplete-popupIndicator {
+    margin-right: 7px;
+  }
+
+  .MuiAutocomplete-clearIndicator {
+    color: var(--gray300);
+  }
+}

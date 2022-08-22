@@ -48,32 +48,34 @@ const CheckboxList: FC<Props> = ({
   if (!list) return <p>Loading...</p>;
 
   return (
-    <FormControl onChange={handleChange}>
-      <h4 className={styles.title}>{title}</h4>
-      <div className={styles.listContainer}>
-        {limitedList.map((item) => (
-          <FormControlLabel
-            className={styles.label}
-            key={item.id}
-            value={item.id}
-            label={item.name}
-            control={
-              <Checkbox
-                value={item.id}
-                icon={<CustomCheckbox />}
-                checkedIcon={<CustomChecked />}
-              />
-            }
-          />
-        ))}
-      </div>
-      {listLimit === limitedList.length && (
-        <p onClick={showAll} className={styles.seeAll}>
-          See All
-          <ArrowDropDownIcon />
-        </p>
-      )}
-    </FormControl>
+    <div className={styles.listContainer}>
+      <FormControl onChange={handleChange}>
+        <h4 className={styles.title}>{title}</h4>
+        <div className={styles.labelsContainer}>
+          {limitedList.map((item) => (
+            <FormControlLabel
+              className={styles.label}
+              key={item.id}
+              value={item.id}
+              label={item.name}
+              control={
+                <Checkbox
+                  value={item.id}
+                  icon={<CustomCheckbox />}
+                  checkedIcon={<CustomChecked />}
+                />
+              }
+            />
+          ))}
+        </div>
+        {listLimit === limitedList.length && (
+          <p onClick={showAll} className={styles.seeAll}>
+            See All
+            <ArrowDropDownIcon />
+          </p>
+        )}
+      </FormControl>
+    </div>
   );
 };
 

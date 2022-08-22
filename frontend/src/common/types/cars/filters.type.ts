@@ -1,5 +1,4 @@
 export type FiltersType = {
-  region: string;
   yearMin: string;
   yearMax: string;
   $Min: string;
@@ -8,7 +7,7 @@ export type FiltersType = {
   kmMax: string;
   color: string[];
   drivetrain: string[];
-  fuelType: string[];
+  fuel: string[];
   bodyType: string[];
   transmission: string[];
 };

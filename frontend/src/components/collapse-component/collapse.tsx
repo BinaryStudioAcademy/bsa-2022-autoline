@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { CollapseElement } from './collapse-element/collapse-element';
 
 interface SingleComponentInterface {
-  lable: string;
+  label: string;
   component: ReactNode;
 }
 
@@ -11,12 +11,12 @@ interface CollapseProps {
   components: SingleComponentInterface[];
 }
 
-const Collaps: React.FC<CollapseProps> = ({ components }) => {
+const Collapse: React.FC<CollapseProps> = ({ components }) => {
   return (
     <div>
       {components.map((el, id) => {
         return (
-          <CollapseElement key={id} label={el.lable}>
+          <CollapseElement key={id} label={el.label}>
             {el.component}
           </CollapseElement>
         );
@@ -24,4 +24,4 @@ const Collaps: React.FC<CollapseProps> = ({ components }) => {
     </div>
   );
 };
-export { Collaps };
+export { Collapse };

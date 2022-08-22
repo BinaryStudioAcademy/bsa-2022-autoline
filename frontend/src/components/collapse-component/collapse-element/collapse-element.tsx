@@ -1,5 +1,7 @@
 import { ReactNode, useState } from 'react';
 
+import { clsx } from 'clsx';
+
 import styles from './styles.module.scss';
 
 interface CollapseProps {
@@ -20,11 +22,7 @@ const CollapseElement: React.FC<CollapseProps> = ({ children, label }) => {
         <p className={styles.char}>{selected ? '–' : '+'}</p>
         <p className={styles.lable}>{label}</p>
       </div>
-      <div
-        className={
-          selected ? `${styles.content} ${styles.show}` : `${styles.content}`
-        }
-      >
+      <div className={clsx(styles.content, { [styles.show]: selected })}>
         {children}
       </div>
     </div>

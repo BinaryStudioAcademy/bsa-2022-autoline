@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '@common/enums/app/app';
 import { ForgotPassword } from '@components/forgot-password/forgot-password';
 import { MailVerificationFailed } from '@components/mail-verification/verification-failed/MailVerificationFailed';
-import { Success } from '@components/mail-verification/verification-success/success';
+import { MailVerificationSuccess } from '@components/mail-verification/verification-success/MailVerificationSuccess';
 import { PersonalPage } from '@components/personal-page/personal-page';
 import { ResetPassword } from '@components/reset-password/reset-password';
 import { Sign } from '@components/sign/sign';
@@ -28,7 +28,7 @@ const Routing: FC = () => {
           <Route path={AppRoute.SIGN_UP} element={<Sign />} />
           <Route
             path={AppRoute.MAIL_SUCCESS_VALIDATION}
-            element={<Success />}
+            element={<MailVerificationSuccess />}
           />
           <Route
             path={AppRoute.MAIL_FAILED_VALIDATION}

@@ -1,3 +1,5 @@
+@import "@assets/css/mixins";
+
 .MuiInputLabel-root.MuiInputLabel-shrink.Mui-focused,
 .MuiInputLabel-root.MuiInputLabel-shrink.MuiFormLabel-filled {
   color: var(--gray300);
@@ -33,6 +35,21 @@
     .MuiSvgIcon-root {
       right: 18px;
       width: 12px;
+    }
+  }
+}
+
+.MuiToolbar-root {
+  height: 70px;
+
+  .MuiTabs-scroller {
+    @include landing-page-margin;
+
+    .MuiButtonBase-root {
+      height: var(--header-height);
+      color: black;
+      font-size: 13px;
+      text-transform: none;
     }
   }
 }

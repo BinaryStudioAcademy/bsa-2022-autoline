@@ -29,7 +29,9 @@ const NewCarCard: FC = () => {
         </div>
         <hr className={styles.verticalLine} />
         <div className={styles.priceBox}>
-          <span className={styles.price}>$ 34 000 - $ 52 450</span>
+          <span className={styles.price}>
+            $ 34 000 -<br />$ 52 450
+          </span>
         </div>
       </div>
     </div>

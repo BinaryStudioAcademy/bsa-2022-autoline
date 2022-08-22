@@ -21,10 +21,9 @@ const BrandDetails: FC<Props> = ({ onBrandDetailsChange, id }) => {
   const [selectedBrandId, setSelectedBrandId] = useState('');
 
   const { data: brands, isLoading } = useGetBrandsQuery();
-  const { data: models, isLoading: isModelsLoading } = useGetModelsOfBrandQuery(
-    selectedBrandId,
-    { skip: !selectedBrandId },
-  );
+  const { data: models } = useGetModelsOfBrandQuery(selectedBrandId, {
+    skip: !selectedBrandId,
+  });
 
   const handleSelectChangeBrand = (event: SelectChangeEvent): void => {
     setSelectedBrandId(event.target.value);
@@ -65,7 +64,6 @@ const BrandDetails: FC<Props> = ({ onBrandDetailsChange, id }) => {
       <SelectField
         id="model"
         name="Model"
-        disabled={!selectedBrandId || isModelsLoading}
         value={selectedModelId}
         onChange={handleSelectChangeModel}
         required={false}

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import { AutoRiaOption } from '@autoline/shared/common/types/cars/options';
 import { CheckboxListDataType } from '@common/types/cars/checkbox-list-data.type';
@@ -11,6 +11,7 @@ import styles from './styles.module.scss';
 type Props = {
   title: string;
   list: AutoRiaOption[] | undefined;
+  checkedList: string[];
   listLimit?: number;
   onListCheck: (data: CheckboxListDataType) => void;
 };
@@ -18,32 +19,31 @@ type Props = {
 const CheckboxList: FC<Props> = ({
   title,
   list = [],
+  checkedList = [],
   listLimit = 4,
   onListCheck,
 }) => {
-  const [data, setData] = useState<Array<string>>([]);
   const [limit, setLimit] = useState(listLimit);
 
   const limitedList = list?.slice(0, limit);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value;
-    if (data.includes(value)) {
-      return setData(data.filter((item) => item !== value));
+    if (checkedList.includes(value)) {
+      onListCheck({
+        title: title,
+        data: checkedList.filter((item) => item !== value),
+      });
     }
-    setData([...data, value]);
+    onListCheck({
+      title: title,
+      data: [...checkedList, value],
+    });
   };
 
   const showAll = (): void => {
     setLimit(list.length);
   };
-
-  useEffect(() => {
-    onListCheck({
-      title: title,
-      data: data,
-    });
-  }, [data]);
 
   if (!list) return <p>Loading...</p>;
 
@@ -60,6 +60,7 @@ const CheckboxList: FC<Props> = ({
               label={item.name}
               control={
                 <Checkbox
+                  checked={checkedList.includes(item.id)}
                   value={item.id}
                   icon={<CustomCheckbox />}
                   checkedIcon={<CustomChecked />}

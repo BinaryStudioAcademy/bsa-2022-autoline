@@ -163,6 +163,7 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
           <CheckboxList
             title="Body Type"
             list={options && options.bodyTypes}
+            checkedList={filters.bodyType}
             listLimit={4}
             onListCheck={handleCheckboxListChange}
           />
@@ -219,28 +220,32 @@ const AdvancedAutoFilter: FC = (): JSX.Element => {
           <CheckboxList
             title="Color"
             list={options && options.colors}
+            checkedList={filters.color}
             onListCheck={handleCheckboxListChange}
           />
           <CheckboxList
             title="Transmission"
             list={options && options.transmissionTypes}
+            checkedList={filters.transmission}
             onListCheck={handleCheckboxListChange}
           />
           <CheckboxList
             title="Drivetrain"
             list={options && options.drivetrains}
+            checkedList={filters.drivetrain}
             onListCheck={handleCheckboxListChange}
           />
           <CheckboxList
             title="Fuel"
             list={options && options.fuelTypes}
+            checkedList={filters.fuel}
             onListCheck={handleCheckboxListChange}
           />
         </div>
       </div>
 
       <p onClick={resetFilters} className={styles.reset}>
-        <UTurnRightIcon className={styles.icon} />
+        <UTurnRightIcon className={styles.resetIcon} />
         Reset All Filters
       </p>
     </div>

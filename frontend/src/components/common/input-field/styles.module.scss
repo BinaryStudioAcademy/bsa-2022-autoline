@@ -6,17 +6,6 @@
   margin-bottom: 10px;
 }
 
-.icon {
-  position: absolute;
-  top: 14px;
-  right: 18px;
-  z-index: 1;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
 .inputField .label {
   left: 18px;
   color: var(--gray300);

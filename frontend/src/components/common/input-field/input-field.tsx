@@ -1,40 +1,20 @@
 import React, { useState, FC } from 'react';
 import { useController } from 'react-hook-form';
-import { IMaskInput } from 'react-imask';
 
 import ErrorIcon from '@assets/images/error.svg';
-import PassIcon from '@assets/images/eye-slash.svg';
 import { InputFieldPropsType } from '@common/types/types';
 import { ErrorMessage } from '@hookform/error-message';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { IconButton, InputAdornment } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { clsx } from 'clsx';
 
+import { PhoneMask } from './input-masks/phone-mask/phone-mask';
 import styles from './styles.module.scss';
-
-interface CustomProps {
-  onChange: (event: { target: { name: string; value: string } }) => void;
-  name: string;
-}
-
-const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
-  (props, ref) => {
-    const { onChange, ...other } = props;
-    return (
-      <IMaskInput
-        {...other}
-        mask="+38 (000) 000-00-00"
-        inputRef={ref}
-        onAccept={(value: unknown): void =>
-          onChange({ target: { name: props.name, value } })
-        }
-        overwrite
-      />
-    );
-  },
-);
 
 export const InputField: FC<InputFieldPropsType> = ({
   name,
@@ -49,6 +29,14 @@ export const InputField: FC<InputFieldPropsType> = ({
     setShowPassword(!showPassword);
   };
 
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ): void => {
+    event.preventDefault();
+  };
+
+  const iconSize = { width: 18, height: 18 };
+
   const {
     field: { ...field },
   } = useController({ name, control });
@@ -62,22 +50,30 @@ export const InputField: FC<InputFieldPropsType> = ({
         errors?.[name] && styles.inputFieldError,
       )}
     >
-      {type === 'password' && (
-        <img
-          className={styles.icon}
-          onClick={handleClickShowPassword}
-          src={PassIcon}
-          alt="icon"
-        />
-      )}
-
       <InputLabel className={styles.label}>{label}</InputLabel>
       <OutlinedInput
         {...field}
         type={type === 'password' && showPassword ? 'text' : type}
         className={styles.input}
         error={errors?.[name] ? true : false}
-        inputComponent={type === 'tel' ? TextMaskCustom : undefined}
+        inputComponent={type === 'tel' ? PhoneMask : undefined}
+        endAdornment={
+          type === 'password' ? (
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+              >
+                {showPassword ? (
+                  <VisibilityOffIcon style={iconSize} />
+                ) : (
+                  <VisibilityIcon style={iconSize} />
+                )}
+              </IconButton>
+            </InputAdornment>
+          ) : undefined
+        }
       />
       {errors?.[name] && (
         <FormHelperText className={styles.error}>

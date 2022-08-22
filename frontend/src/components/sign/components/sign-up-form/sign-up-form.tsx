@@ -36,13 +36,13 @@ export const SignUpForm = (): React.ReactElement => {
   });
 
   const navigate = useNavigate();
-  const [fetchSignUp, { isLoading, isSuccess, isError, error: fetchError }] =
+  const [signUp, { isLoading, isSuccess, isError, error: signUpError }] =
     useSignUpMutation();
-  const fetchErrorData = fetchError as ErrorType;
+  const signUpErrorData = signUpError as ErrorType;
 
   const onSubmit = (formData: FieldValues): void => {
     const { name, email, password } = formData;
-    fetchSignUp({ name, email, password });
+    signUp({ name, email, password });
   };
 
   const navigateToSignIn = (): void => {
@@ -104,7 +104,7 @@ export const SignUpForm = (): React.ReactElement => {
             <Alert
               className={styles.alert}
               severity="error"
-            >{`${fetchErrorData.data.error}`}</Alert>
+            >{`${signUpErrorData.data.error}`}</Alert>
           )}
 
           <Dialog

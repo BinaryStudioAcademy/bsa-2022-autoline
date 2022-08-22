@@ -26,6 +26,7 @@
     "@sentry/react": "^7.9.0",
     "@sentry/tracing": "^7.9.0",
     "@types/yup": "^0.29.14",
+    "@types/node": "^17.0.45",
     "clsx": "1.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",

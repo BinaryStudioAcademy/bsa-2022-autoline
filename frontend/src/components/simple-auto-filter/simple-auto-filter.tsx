@@ -54,10 +54,9 @@ const SimpleAutoFilter: FC = () => {
   const { data: options, isLoading: isOptionsLoading } =
     useGetUsedOptionsQuery();
 
-  const { data: models, isSuccess: isModelsFetched } = useGetModelsOfBrandQuery(
-    selectedBrandId,
-    { skip: !selectedBrandId },
-  );
+  const { data: models } = useGetModelsOfBrandQuery(selectedBrandId, {
+    skip: !selectedBrandId,
+  });
 
   const years = useMemo(() => yearsRange(30), []);
 
@@ -129,7 +128,6 @@ const SimpleAutoFilter: FC = () => {
           <SelectField
             id="model"
             name="Model"
-            disabled={!isModelsFetched}
             value={selectedModelId}
             onChange={handleSelectChangeModel}
             required={false}

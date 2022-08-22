@@ -37,26 +37,11 @@ export const SignUpForm = (): React.ReactElement => {
       </p>
       <form name="signupForm" onSubmit={handleSubmit} className={styles.form}>
         <fieldset disabled={isLoading} className={styles.fieldset}>
-          <InputField
-            name="Full name"
-            type="text"
-            required={true}
-            errors={''}
-          />
-          <InputField name="Email" type="email" required={true} errors={''} />
-          <InputField
-            name="Password"
-            type="password"
-            required={true}
-            errors={'Must be at least 8 characters'}
-          />
-          <InputField
-            name="Repeat Password"
-            type="password"
-            required={true}
-            errors={''}
-          />
-          <InputField name="Phone" type="tel" required={false} errors={''} />
+          <InputField name="Full name" type="text" required={true} />
+          <InputField name="Email" type="email" required={true} />
+          <InputField name="Password" type="password" required={true} />
+          <InputField name="Repeat Password" type="password" required={true} />
+          <InputField name="Phone" type="tel" required={false} />
           <SelectField
             id="location"
             name="Location"

@@ -16,6 +16,7 @@ services:
       - ../../.env/db.env
     networks:
       - autoline_backend_network
+
   autoline_backend:
     image: ghcr.io/binarystudioacademy/autoline-backend-dev:latest
     container_name: autoline_backend

@@ -1,0 +1,40 @@
+.title {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: auto;
+  margin: 15px 0;
+  cursor: pointer;
+}
+
+.content {
+  max-height: 0;
+  overflow: hidden;
+  transition-duration: 0.8s;
+}
+
+.show {
+  height: auto;
+  max-height: 1500px;
+  transition-duration: 0.8s;
+}
+
+.char {
+  width: 13px;
+  height: 26px;
+  margin: 0;
+  margin-right: 5px;
+  color: var(--blue100);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 25px;
+  text-align: center;
+}
+
+.lable {
+  margin: 0;
+  color: var(--black);
+  font-weight: 800;
+  font-size: 24px;
+  text-transform: uppercase;
+}

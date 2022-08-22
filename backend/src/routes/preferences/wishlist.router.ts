@@ -1,12 +1,27 @@
 import * as wishlistController from '@controllers/preferences/wishlist.controller';
+import { userAuthMiddleware } from '@middlewares/middlewares';
 import { Router } from 'express';
 
 const PATH = '/wishlist';
 
 const wishlistRouter = Router();
 
-wishlistRouter.post(`${PATH}/:userId`, wishlistController.setWishlist);
+wishlistRouter.post(
+  `${PATH}`,
+  userAuthMiddleware,
+  wishlistController.setWishlist,
+);
 
-wishlistRouter.delete(`${PATH}/:userId`, wishlistController.deleteWishlist);
+wishlistRouter.delete(
+  `${PATH}`,
+  userAuthMiddleware,
+  wishlistController.deleteWishlist,
+);
+
+wishlistRouter.get(
+  `${PATH}`,
+  userAuthMiddleware,
+  wishlistController.getWishlistByUserId,
+);
 
 export { wishlistRouter };

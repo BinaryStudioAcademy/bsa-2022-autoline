@@ -89,6 +89,7 @@ model Model {
   manufacture_country_id String
   brand                  Brand                @relation(fields: [manufacturer_id], references: [id])
   name                   String               @db.VarChar(70)
+  description            String               @db.VarChar(1000)
   code_name              String               @db.VarChar(70)
   year_start             Int
   year_end               Int?

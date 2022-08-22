@@ -4,7 +4,7 @@ import { getByEmail } from '@services/mail-verification/user-data.service/user';
 import {
   updateMailToken,
   getByUserId,
-} from '@services/mail-verification/user-security.service';
+} from '@services/mail-verification/user-data.service/user-security';
 import httpStatus from 'http-status-codes';
 
 import type { TypedRequestBody } from '@common/types/controller/controller';

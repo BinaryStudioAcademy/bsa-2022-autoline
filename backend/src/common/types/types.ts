@@ -11,3 +11,5 @@ export {
   type WishlistInput,
   type getViewedCarsListResponse,
 } from './prisma/prisma';
+
+export { type AutoriaRequestParams } from './cars/autoria-request-params';

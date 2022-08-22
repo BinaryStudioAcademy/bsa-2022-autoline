@@ -6,12 +6,13 @@ interface WishlistResponseDto {
 
 type ModelResponseDto = {
   id: string;
+  wishlistId: string | null;
   createdAt: Date;
   name: string;
   yearStart: number;
   yearEnd: number | null;
   photoUrls: string[] | [];
-  brand?: {
+  brand: {
     name: string;
     logoUrl: string;
   };
@@ -27,6 +28,7 @@ type ModelResponseDto = {
 
 type ComplectationResponseDto = {
   id: string;
+  wishlistId: string | null;
   createdAt: Date;
   complectationName?: string;
   engine: string;
@@ -46,7 +48,7 @@ type ComplectationResponseDto = {
   yearStart: number;
   yearEnd: number | null;
   photoUrls: string[] | [];
-  brand?: {
+  brand: {
     name: string;
     logoUrl: string;
   };
@@ -65,10 +67,15 @@ type WishlistInput = {
   complectationId?: string;
 };
 
+type DeleteWishlistInput = {
+  wishlistId: string;
+};
+
 export {
   type WishlistResponseDto,
   type WishlistsResponseDto,
   type ModelResponseDto,
   type ComplectationResponseDto,
   type WishlistInput,
+  type DeleteWishlistInput,
 };

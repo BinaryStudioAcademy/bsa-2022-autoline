@@ -1,4 +1,8 @@
-import { WishlistsResponseDto } from '@autoline/shared/common/types/types';
+import {
+  DeleteWishlistInput,
+  WishlistInput,
+  WishlistsResponseDto,
+} from '@autoline/shared/common/types/types';
 
 import { API } from '../../api_routes';
 import { api } from '../../index';
@@ -9,13 +13,7 @@ const wishlistApi = api.injectEndpoints({
       query: () => API.WISHLIST,
       providesTags: ['WishlistCars'],
     }),
-    createWishlist: build.mutation<
-      WishlistsResponseDto,
-      {
-        modelId?: string;
-        complectationId?: string;
-      }
-    >({
+    createWishlist: build.mutation<WishlistsResponseDto, WishlistInput>({
       query: (params) => ({
         url: `${API.WISHLIST}`,
         method: 'POST',
@@ -23,10 +21,11 @@ const wishlistApi = api.injectEndpoints({
       }),
       invalidatesTags: ['WishlistCars'],
     }),
-    deleteWishlist: build.mutation<WishlistsResponseDto, string>({
-      query: (wishlistId: string) => ({
-        url: `${API.WISHLIST}?wishlistId=${wishlistId}`,
+    deleteWishlist: build.mutation<WishlistsResponseDto, DeleteWishlistInput>({
+      query: (params) => ({
+        url: `${API.WISHLIST}`,
         method: 'DELETE',
+        params,
       }),
       invalidatesTags: ['WishlistCars'],
     }),

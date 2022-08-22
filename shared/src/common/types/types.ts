@@ -24,6 +24,7 @@ export type {
   ModelResponseDto,
   ComplectationResponseDto,
   WishlistInput,
+  DeleteWishlistInput,
 } from './preferences/preferences';
 
 export type { User, UserRole, UserSex } from './user';

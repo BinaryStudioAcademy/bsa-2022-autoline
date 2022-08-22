@@ -1,6 +1,8 @@
 import { SvgIcon } from '@mui/material';
 
-export const Heart = (props: JSX.IntrinsicAttributes): React.ReactElement => (
+export const HeartIcon = (
+  props: JSX.IntrinsicAttributes,
+): React.ReactElement => (
   <SvgIcon {...props} viewBox="0 0 24 24">
     <path
       d="M3.75813 2.9128C7.23395 0.595573 10.4289 3.35159 11.5919 5.01925C12.3818 3.90021 13.8301 2.58344 17.9774 2.12263C24.363 4.88751 22.3222 10.2198 20.8081 12.6555C19.5969 14.6041 14.1593 19.0849 11.5919 21.0818C10.5167 20.226 7.44466 17.7376 3.75813 14.6304C0.334927 10.2856 -0.586643 5.80933 3.75813 2.9128Z"

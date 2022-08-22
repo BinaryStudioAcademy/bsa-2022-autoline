@@ -1,5 +1,6 @@
 import {
   ComplectationResponseDto,
+  DeleteWishlistInput,
   ModelResponseDto,
   WishlistInput,
 } from '@autoline/shared/common/types/types';
@@ -12,7 +13,7 @@ import {
   useDeleteWishlistMutation,
 } from '@store/queries/preferences/wishlist';
 
-const Wishlist = (): JSX.Element => {
+const Wishlist: React.FC = () => {
   const { data, isLoading } = useGetWishlistsQuery();
 
   const [createWishlist] = useCreateWishlistMutation();
@@ -22,8 +23,8 @@ const Wishlist = (): JSX.Element => {
     await createWishlist(args);
   };
 
-  const handleDelete = async (wishlistId: string): Promise<void> => {
-    await deleteWishlist(wishlistId);
+  const handleDelete = async (args: DeleteWishlistInput): Promise<void> => {
+    await deleteWishlist(args);
   };
 
   return (
@@ -32,41 +33,37 @@ const Wishlist = (): JSX.Element => {
         <>
           <Title element="h4">LIKED MODELS</Title>
           <Grid container spacing={2}>
-            {data &&
-              data.models &&
-              data.models.map((model: ModelResponseDto) => {
+            {data?.models?.map((model: ModelResponseDto) => {
+              return (
+                <Grid item xs={12} md={4} key={model.id}>
+                  <NewCarCard
+                    car={model}
+                    type="model"
+                    createWishlist={handleCreate}
+                    deleteWishlist={handleDelete}
+                    isLiked={true}
+                  />
+                </Grid>
+              );
+            })}
+          </Grid>
+          <Title element="h4">LIKED COMPLECTATIONS</Title>
+          <Grid container spacing={2}>
+            {data?.complectations?.map(
+              (complectation: ComplectationResponseDto) => {
                 return (
-                  <Grid item xs={12} md={4} key={model.id}>
+                  <Grid item xs={12} md={4} key={complectation.id}>
                     <NewCarCard
-                      car={model}
-                      type="model"
-                      deleteWishlist={handleDelete}
+                      car={complectation}
+                      type="complectation"
                       createWishlist={handleCreate}
+                      deleteWishlist={handleDelete}
                       isLiked={true}
                     />
                   </Grid>
                 );
-              })}
-          </Grid>
-          <Title element="h4">LIKED COMPLECTATIONS</Title>
-          <Grid container spacing={2}>
-            {data &&
-              data.complectations &&
-              data.complectations.map(
-                (complectation: ComplectationResponseDto) => {
-                  return (
-                    <Grid item xs={12} md={4} key={complectation.id}>
-                      <NewCarCard
-                        car={complectation}
-                        type="complectation"
-                        deleteWishlist={handleDelete}
-                        createWishlist={handleCreate}
-                        isLiked={true}
-                      />
-                    </Grid>
-                  );
-                },
-              )}
+              },
+            )}
           </Grid>
         </>
       )}

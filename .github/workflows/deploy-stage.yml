@@ -54,6 +54,7 @@ jobs:
       - name: Copy docker-compose.stage.yml to deployment server
         uses: appleboy/scp-action@master
         with:
+          script: echo ${{secrets.SSH_HOST}}
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_KEY }}

@@ -10,8 +10,7 @@ import { TopCarCard } from '@components/top-car-card/top-car-card';
 import { Container } from '@mui/material';
 
 import { Header } from './components/components';
-
-import './styles.scss';
+import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {
   return (
@@ -19,53 +18,53 @@ export const LandingPage = (): React.ReactElement => {
       <Header />
       <Container
         sx={{ maxWidth: '100% !important' }}
-        className="main-container"
+        className={styles.mainContainer}
       >
-        <div className="first-container">
-          <div className="first-container-left">
-            <div className="first-container-left-text-main">
+        <div className={styles.firstContainer}>
+          <div className={styles.firstContainerLeft}>
+            <div className={styles.firstContainerLeftTextMain}>
               find a car
               <br />
               at your price
             </div>
-            <div className="first-container-left-text-secondary">
+            <div className={styles.firstContainerLeftTextSecondary}>
               We are the best service to look for cars with the best offers.
               Here you can buy or sell the car.
             </div>
-            <div className="first-container-left-buttons">
+            <div className={styles.firstContainerLeftButtons}>
               <Link to={AppRoute.SIGN_UP}>
                 <ButtonFill
-                  className="button buttonFill"
+                  className={styles.buttonFill}
                   text="Create Account"
                 />
               </Link>
               <Link to={AppRoute.SIGN_IN}>
                 <ButtonOutline
-                  className="button buttonOutline"
+                  className={styles.buttonOutline}
                   text="Sign In"
                 />
               </Link>
             </div>
           </div>
-          <div className="first-container-right">
-            <img src={Car} className="car"></img>
+          <div className={styles.firstContainerRight}>
+            <img src={Car} className={styles.car}></img>
           </div>
         </div>
-        <div className="second-container">
-          <div className="second-container-header">New Cars</div>
-          <div className="second-container-cards">
+        <div className={styles.secondContainer}>
+          <div className={styles.secondContainerHeader}>New Cars</div>
+          <div className={styles.secondContainerCards}>
             <NewCarCard />
             <NewCarCard />
             <NewCarCard />
             <NewCarCard />
           </div>
         </div>
-        <div className="third-container">
+        <div className={styles.thirdContainer}>
           <CarsCategories />
         </div>
-        <div className="fourth-container">
-          <div className="fourth-container-header">Top Autoria</div>
-          <div className="fourth-container-cards">
+        <div className={styles.fourthContainer}>
+          <div className={styles.fourthContainerHeader}>Top Autoria</div>
+          <div className={styles.fourthContainerCards}>
             <TopCarCard />
             <TopCarCard />
             <TopCarCard />

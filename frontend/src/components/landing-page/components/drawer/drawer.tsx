@@ -9,12 +9,14 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
+
 const pages = ['Used Cars', 'New Cars', 'Sell Your Car', 'About Us'];
+
 export const DrawerComp = (): React.ReactElement => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
   return (
-    <React.Fragment>
+    <>
       <Drawer
         anchor="left"
         open={openDrawer}
@@ -45,6 +47,6 @@ export const DrawerComp = (): React.ReactElement => {
       >
         <MenuIcon sx={{ color: 'blue' }} />
       </IconButton>
-    </React.Fragment>
+    </>
   );
 };

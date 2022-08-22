@@ -16,8 +16,7 @@ import {
 } from '@mui/material';
 
 import { DrawerComp } from '../drawer/drawer';
-
-import './styles.scss';
+import styles from './styles.module.scss';
 
 export const Header = (): React.ReactElement => {
   const [value, setValue] = useState(0);
@@ -26,7 +25,7 @@ export const Header = (): React.ReactElement => {
   const isMatchMd = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
-    <React.Fragment>
+    <>
       <AppBar
         sx={{
           background: '#ffffff',
@@ -35,7 +34,7 @@ export const Header = (): React.ReactElement => {
       >
         <Toolbar>
           <Link to={AppRoute.ROOT}>
-            <img className="logo" src={Logo} alt="Autoline" />
+            <img className={styles.logo} src={Logo} alt="Autoline" />
           </Link>
           {isMatchSm ? (
             <DrawerComp />
@@ -52,22 +51,28 @@ export const Header = (): React.ReactElement => {
               </Tabs>
               {isMatchMd ? (
                 <>
-                  <Link to={AppRoute.SIGN_UP} className="signupBtn">
-                    <ButtonFill className="btnFill" text="Create Account" />
+                  <Link to={AppRoute.SIGN_UP} className={styles.signupBtn}>
+                    <ButtonFill
+                      className={styles.btnFill}
+                      text="Create Account"
+                    />
                   </Link>
                   <Link to={AppRoute.SIGN_IN}>
-                    <ButtonOutline className="btnOutline" text="Sign In" />
+                    <ButtonOutline
+                      className={styles.btnOutline}
+                      text="Sign In"
+                    />
                   </Link>
                 </>
               ) : (
-                <Link to={AppRoute.SIGN_IN} className="signupBtn">
-                  <img src={UserIcon} className="auth-avatar" />
+                <Link to={AppRoute.SIGN_IN} className={styles.signupBtn}>
+                  <img src={UserIcon} className={styles.authAvatar} />
                 </Link>
               )}
             </>
           )}
         </Toolbar>
       </AppBar>
-    </React.Fragment>
+    </>
   );
 };

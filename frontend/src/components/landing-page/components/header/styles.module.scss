@@ -6,10 +6,6 @@
   @include landing-page-margin;
 }
 
-.btn {
-  font-weight: 700;
-}
-
 .btnOutline,
 .btnOutline:hover {
   width: 70px;
@@ -39,23 +35,7 @@
   font-size: 1.2rem;
 }
 
-.MuiToolbar-root {
-  height: 70px;
-
-  .MuiTabs-scroller {
-    @include landing-page-margin;
-
-    .MuiButtonBase-root {
-      height: var(--header-height);
-      color: black;
-      font-weight: 600;
-      font-size: 14px;
-      text-transform: none;
-    }
-  }
-}
-
-.auth-avatar {
+.authAvatar {
   height: 30px;
 
   // margin-right: var(--land-page-margin-md);

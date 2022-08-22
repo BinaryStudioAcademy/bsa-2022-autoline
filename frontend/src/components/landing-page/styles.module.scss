@@ -2,6 +2,7 @@
 
 html {
   font-size: 10px;
+  font-family: var(--primary-font);
 }
 
 body {
@@ -14,11 +15,11 @@ body {
   }
 }
 
-.main-container {
+.mainContainer {
   margin: var(--header-height) 0;
   overflow-x: hidden;
 
-  .first-container {
+  .firstContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,22 +30,23 @@ body {
     padding-right: 0;
     padding-left: 0;
 
-    .first-container-left {
+    .firstContainerLeft {
       width: 330px;
       margin-bottom: 150px;
 
-      .first-container-left-text-main {
+      .firstContainerLeftTextMain {
         font-weight: 900;
         font-size: 4.4rem;
         text-transform: uppercase;
       }
 
-      .first-container-left-text-secondary {
+      .firstContainerLeftTextSecondary {
         margin: 15px 0;
         font-size: 1.2rem;
       }
 
-      .button {
+      .buttonFill,
+      .buttonOutline {
         width: 150px;
         margin-bottom: 10px;
         padding: 10px 0;
@@ -56,7 +58,7 @@ body {
       }
     }
 
-    .first-container-right {
+    .firstContainerRight {
       .car {
         width: 750px;
 
@@ -71,8 +73,8 @@ body {
     }
   }
 
-  .second-container,
-  .fourth-container {
+  .secondContainer,
+  .fourthContainer {
     @include landing-page-margin;
 
     @media (min-width: $global-sm) {
@@ -87,16 +89,16 @@ body {
     margin-bottom: 0;
     padding-right: 0;
 
-    .second-container-header,
-    .fourth-container-header {
+    .secondContainerHeader,
+    .fourthContainerHeader {
       margin-bottom: 20px;
       font-weight: 900;
       font-size: 1.6rem;
       text-transform: uppercase;
     }
 
-    .second-container-cards,
-    .fourth-container-cards {
+    .secondContainerCards,
+    .fourthContainerCards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       justify-items: center;
@@ -104,7 +106,7 @@ body {
     }
   }
 
-  .third-container {
+  .thirdContainer {
     @media (min-width: $global-sm) {
       margin: 70px calc(0px - var(--mui-padding-md));
     }

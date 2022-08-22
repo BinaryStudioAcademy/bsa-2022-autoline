@@ -57,7 +57,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          source: ".docker/autoline/docker-compose.stage.yml,.docker/autoline/nginx/nginx.rtmp.conf"
+          source: ".docker/autoline/docker-compose.stage.yml,.docker/autoline/nginx/nginx.rtmp.conf,.docker/autoline/database/Dockerfile,.docker/autoline/database/user_privileges.sql,.docker/autoline/nginx/nginx.conf"
           target: app
 
       - name: Run docker-compose.stage.yml on deployment server

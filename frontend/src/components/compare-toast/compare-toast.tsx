@@ -11,7 +11,7 @@ interface ModalProps {
   setIsHidden: Dispatch<boolean>;
 }
 
-const CompareModal: FC<ModalProps> = ({
+const CompareToast: FC<ModalProps> = ({
   carName,
   carDescription,
   isHidden,
@@ -47,4 +47,4 @@ const CompareModal: FC<ModalProps> = ({
   );
 };
 
-export { CompareModal };
+export { CompareToast };

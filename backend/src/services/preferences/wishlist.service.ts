@@ -253,9 +253,13 @@ const getWishlistByUserId = async (
     },
   );
 
+  const wishlistCount =
+    sanitizedModelsWishlist.length + sanitizedComplectationsWishlist.length;
+
   const wishlists: WishlistsResponseDto = {
     models: sanitizedModelsWishlist,
     complectations: sanitizedComplectationsWishlist,
+    count: wishlistCount,
   };
 
   return wishlists;

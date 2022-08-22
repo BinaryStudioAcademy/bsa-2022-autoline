@@ -60,6 +60,7 @@ type ComplectationResponseDto = {
 interface WishlistsResponseDto {
   models?: ModelResponseDto[];
   complectations?: ComplectationResponseDto[];
+  count: number;
 }
 
 type WishlistInput = {

@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
+import { AppRoute } from '@common/enums/enums';
 import { theme } from '@common/theme/theme';
 import BalanceIcon from '@mui/icons-material/Balance';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -22,9 +24,11 @@ export const Reminders: React.FC<RemindersProps> = ({
   return (
     <ThemeProvider theme={theme}>
       <Box className={styles.reminder}>
-        <Badge badgeContent={favorites} color="primary">
-          <FavoriteBorderIcon color="primary" />
-        </Badge>
+        <Link to={AppRoute.PERSONAL}>
+          <Badge badgeContent={favorites} color="primary">
+            <FavoriteBorderIcon color="primary" />
+          </Badge>
+        </Link>
         <Badge badgeContent={notifications} color="primary">
           <NotificationsNoneIcon color="primary" />
         </Badge>

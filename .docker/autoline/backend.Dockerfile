@@ -15,7 +15,6 @@ COPY ./backend ./backend
 RUN yarn install:shared
 RUN yarn install:backend
 
-
 RUN yarn run build:shared
 RUN yarn run build:backend
 

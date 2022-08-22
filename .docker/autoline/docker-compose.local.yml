@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.9'
 services:
   autoline_mariadb:
     container_name: autoline_mariadb
@@ -15,7 +15,7 @@ services:
     networks:
       - backend_network
   backend:
-    image: ghcr.io/binarystudioacademy/autoline-backend-dev:latest
+    image: backend
     container_name: backend
     depends_on:
       - autoline_mariadb
@@ -27,21 +27,17 @@ services:
       - backend_network
       - frontend_network
   frontend:
-    image: ghcr.io/binarystudioacademy/autoline-frontend-dev:latest
+    image: frontend
     container_name: frontend
     depends_on:
       - backend
     ports:
-      - '80:80'
+      - '8080:80'
       - '443:443'
     env_file:
       - ../../.env/frontend.env
-#    volumes:
-#      - /etc/letsencrypt/live/dev.streamlet.tk/fullchain.pem:/etc/letsencrypt/live/autoline-not-autoria.xyz/fullchain.pem
-#      - /etc/letsencrypt/live/dev.streamlet.tk/privkey.pem:/etc/letsencrypt/live/autoline-not-autoria.xyz/privkey.pem
-#      - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
-#      - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
-#      - ../playback:/assets/segments
+    volumes:
+      - ./nginx/nginx.local.conf:/etc/nginx/nginx.conf
     networks:
       - backend_network
       - frontend_network

@@ -47,7 +47,7 @@ services:
       - frontend_network
 
 volumes:
-  autoline_mariadb:
+  autoline_mariadb_data:
     driver: local
   shared:
     driver: local

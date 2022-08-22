@@ -1,0 +1,52 @@
+@import "@assets/css/variables";
+
+.bgImage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  background-position: center center;
+  background-size: cover;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-color: var(--blue300);
+    opacity: 0.5;
+  }
+}
+
+.wrapper {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.wrapperInner {
+  display: flex;
+  height: 100%;
+}
+
+.content {
+  width: 538px;
+  max-width: 100%;
+  margin: auto;
+  padding: 60px 90px;
+  background: var(--white);
+  border-radius: 10px;
+}
+
+.logo {
+  margin-bottom: 35px;
+}
+
+@media (max-width: $global-sm) {
+  .content {
+    padding: 30px 25px;
+  }
+}

@@ -4,6 +4,7 @@ export const users: User[] = [
   {
     id: 'c08c8770-6072-4618-b485-e0c0e5079122',
     name: 'Svetlana Nikolayeva',
+    birth_year: 1996,
     sex: Sex.female,
     phone: '+380507418621',
     email: 'svetlana-nikolayeva@proton.me',
@@ -14,6 +15,7 @@ export const users: User[] = [
   {
     id: '5bbac4a1-b8d6-4be8-868b-03a8a2a4d395',
     name: 'Leonid Osovchenko',
+    birth_year: 2000,
     sex: Sex.male,
     phone: '+380984524712',
     email: 'leonid-osovchenko@proton.me',
@@ -24,6 +26,7 @@ export const users: User[] = [
   {
     id: '50352569-7dcc-4e54-95d2-d2f8a0489fed',
     name: 'Petro Avdonin',
+    birth_year: 2003,
     sex: Sex.male,
     phone: '+380675931214',
     email: 'petro-avdonin@proton.me',
@@ -34,6 +37,7 @@ export const users: User[] = [
   {
     id: '3deba182-4766-4aa4-8a91-2478282dfa2e',
     name: 'Grigoriy Yanushevskiy',
+    birth_year: 2001,
     sex: Sex.male,
     phone: '+380939645225',
     email: 'grigoriy-yanushevskiy@proton.me',
@@ -44,6 +48,7 @@ export const users: User[] = [
   {
     id: 'd1a9523f-43c0-4eff-8232-c1f977d40aaa',
     name: 'Alina Zalizko',
+    birth_year: 1980,
     sex: Sex.female,
     phone: '+380571254874',
     email: 'alina-zalizko@proton.me',
@@ -54,6 +59,7 @@ export const users: User[] = [
   {
     id: 'f74f1bca-c70f-40eb-9245-2ed9b58bb003',
     name: 'Antonina Petryk',
+    birth_year: 1996,
     sex: Sex.female,
     phone: '+380997748445',
     email: 'antonina-petryk@proton.me',
@@ -64,6 +70,7 @@ export const users: User[] = [
   {
     id: '1c4ee034-3865-4a2e-8ea4-dbcbfcb758ac',
     name: 'Svyatoslav Ivanenko',
+    birth_year: 1996,
     sex: Sex.male,
     phone: '+380732541538',
     email: 'svyatoslav-ivanenko@proton.me',
@@ -74,6 +81,7 @@ export const users: User[] = [
   {
     id: '9a34d92e-2554-4bd8-bc4b-b2831d5cc8a8',
     name: 'Borys Leleka',
+    birth_year: 1996,
     sex: Sex.male,
     phone: '+380635415299',
     email: 'borys-leleka@proton.me',
@@ -84,6 +92,7 @@ export const users: User[] = [
   {
     id: 'e6d54471-bc7c-43a8-82bf-530ebae1df16',
     name: 'Sofiya Shoroh',
+    birth_year: 1996,
     sex: Sex.female,
     phone: '+380661543921',
     email: 'sofiya-shoroh@proton.me',
@@ -94,6 +103,7 @@ export const users: User[] = [
   {
     id: '0cdfe5ca-256f-49e4-855f-f438a4fac3c9',
     name: 'Bozhena Rudenko',
+    birth_year: 1996,
     sex: Sex.female,
     phone: '+380684125891',
     email: 'bozhena-rudenko@proton.me',

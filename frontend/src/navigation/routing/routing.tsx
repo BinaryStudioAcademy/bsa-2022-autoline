@@ -4,11 +4,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '@common/enums/app/app';
 import { Administration } from '@components/administration';
 import { ForgotPassword } from '@components/forgot-password/forgot-password';
+import { MailVerificationFailed } from '@components/mail-verification/verification-failed/MailVerificationFailed';
+import { MailVerificationSuccess } from '@components/mail-verification/verification-success/MailVerificationSuccess';
 import { PersonalPage } from '@components/personal-page/personal-page';
 import { ResetPassword } from '@components/reset-password/reset-password';
+import { Sign } from '@components/sign/sign';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
-
-import { Sign } from '../../components/sign/sign';
 
 const Routing: FC = () => {
   const authData = {
@@ -31,6 +32,14 @@ const Routing: FC = () => {
         >
           <Route path={AppRoute.SIGN_IN} element={<Sign />} />
           <Route path={AppRoute.SIGN_UP} element={<Sign />} />
+          <Route
+            path={AppRoute.MAIL_SUCCESS_VALIDATION}
+            element={<MailVerificationSuccess />}
+          />
+          <Route
+            path={AppRoute.MAIL_FAILED_VALIDATION}
+            element={<MailVerificationFailed />}
+          />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.FORGOT_PASSWORD} element={<ForgotPassword />} />

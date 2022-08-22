@@ -1,12 +1,11 @@
 -- CreateTable
 CREATE TABLE `Users_Viewed_Cars` (
     `id` VARCHAR(191) NOT NULL,
-    `user_id` VARCHAR(300) NOT NULL,
+    `user_id` VARCHAR(191) NOT NULL,
     `model_id` VARCHAR(300) NULL,
     `complectation_id` VARCHAR(300) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
-    UNIQUE INDEX `Users_Viewed_Cars_user_id_key`(`user_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

@@ -11,7 +11,7 @@ import { useRequestLinkMutation } from '@store/queries/verification-link';
 import styles from './styles.module.scss';
 import { emailSchema } from './validation-schema';
 
-const Failed: FC = (): React.ReactElement => {
+const MailVerificationFailed: FC = (): React.ReactElement => {
   const [email, setEmail] = useState<string>('');
   const [validationError, setValidationError] = useState('');
   const [getLink] = useRequestLinkMutation();
@@ -22,6 +22,7 @@ const Failed: FC = (): React.ReactElement => {
   ): Promise<void> => {
     setEmail(event.target.value);
   };
+
   const sendLinkHandler = async (): Promise<void> => {
     try {
       await emailSchema.validate({ email });
@@ -33,6 +34,7 @@ const Failed: FC = (): React.ReactElement => {
       }
     }
   };
+
   return (
     <div className={styles.bgImage}>
       <Container className={styles.wrapper}>
@@ -66,4 +68,4 @@ const Failed: FC = (): React.ReactElement => {
   );
 };
 
-export { Failed };
+export { MailVerificationFailed };

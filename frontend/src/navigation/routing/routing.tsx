@@ -3,13 +3,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app';
 import { ForgotPassword } from '@components/forgot-password/forgot-password';
+import { MailVerificationFailed } from '@components/mail-verification/verification-failed/MailVerificationFailed';
+import { Success } from '@components/mail-verification/verification-success/success';
 import { PersonalPage } from '@components/personal-page/personal-page';
 import { ResetPassword } from '@components/reset-password/reset-password';
-import { Failed } from '@components/mail-verification/verification-failed/failed';
-import { Success } from '@components/mail-verification/verification-success/success';
+import { Sign } from '@components/sign/sign';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
-
-import { Sign } from '../../components/sign/sign';
 
 const Routing: FC = () => {
   const authData = { name: 'Oleksandr' };
@@ -31,7 +30,10 @@ const Routing: FC = () => {
             path={AppRoute.MAIL_SUCCESS_VALIDATION}
             element={<Success />}
           />
-          <Route path={AppRoute.MAIL_FAILED_VALIDATION} element={<Failed />} />
+          <Route
+            path={AppRoute.MAIL_FAILED_VALIDATION}
+            element={<MailVerificationFailed />}
+          />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.FORGOT_PASSWORD} element={<ForgotPassword />} />

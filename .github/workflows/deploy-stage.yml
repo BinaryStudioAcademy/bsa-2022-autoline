@@ -71,7 +71,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           envs: GITHUB_USERNAME,GITHUB_TOKEN
           script: |
-            cd app/.docker/
+            cd app/.docker/autoline
             export GITHUB_USERNAME=$GITHUB_USERNAME
             export GITHUB_TOKEN=$GITHUB_TOKEN
             echo "$GITHUB_TOKEN" | sudo docker login ghcr.io -u $GITHUB_USERNAME --password-stdin

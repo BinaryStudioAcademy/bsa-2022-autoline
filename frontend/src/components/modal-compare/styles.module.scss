@@ -1,3 +1,5 @@
+@import "@assets/css/variables";
+
 .container {
   position: fixed;
   top: 20px;
@@ -37,21 +39,25 @@
 
 .icon {
   margin-top: 10px;
-  margin-right: 8px;
   padding: 0;
 }
 
-.button {
+.img {
   width: 20px;
   height: 20px;
 }
 
+.button {
+  background-color: var(--white);
+  border: none;
+}
+
 .message {
   align-self: center;
+  margin-top: 10px;
   padding-right: 20px;
   font-weight: 700;
   font-size: 16px;
-  line-height: 50%;
 }
 
 .carDescription {
@@ -67,18 +73,19 @@
   opacity: 0.6;
 }
 
-.inline {
-  display: inline;
-}
-
 .carName {
-  display: inline-block;
   color: var(--blue100);
   text-transform: uppercase;
 }
 
-@media (max-width: 440px) {
+@media (max-width: $global-sm) {
   .container {
     right: 0;
+    max-width: 600px;
+    margin: 0 20px;
+  }
+
+  .content {
+    padding: 15px;
   }
 }

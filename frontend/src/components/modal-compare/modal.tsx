@@ -24,20 +24,22 @@ const Modal: FC<ModalProps> = ({
   return (
     <div className={styles.container} hidden={isHidden}>
       <div className={styles.content}>
-        <button className={styles.close} onClick={(): void => closeModal()}>
+        <button className={styles.close} onClick={closeModal}>
           ×
         </button>
         <div className={styles.icon}>
-          <img
-            className={styles.button}
-            src={fillCompare}
-            alt="compare button"
-          />
+          <button className={styles.button}>
+            <img
+              className={styles.img}
+              src={fillCompare}
+              alt="compare button"
+            />
+          </button>
         </div>
         <div className={styles.message}>
-          <p className={styles.inline}>{'You added '}</p>
-          <p className={styles.carName}>{carName}</p>
-          <p className={styles.inline}>{' to the Comparison!'} </p>
+          <span>{'You added '}</span>
+          <span className={styles.carName}>{carName}</span>
+          <span>{' to the Comparison!'} </span>
           <div className={styles.carDescription}> {carDescription} </div>
         </div>
       </div>

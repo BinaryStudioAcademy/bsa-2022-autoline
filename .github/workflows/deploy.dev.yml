@@ -58,18 +58,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1
-
-      - name: Load secret files
-        run: |
-          aws s3 cp s3://${{ secrets.AWS_BUCKET_NAME }}/${{ secrets.AWS_BUCKET_API_SECRETS_PATH }} api_secrets
-      - name: Copy secret files to server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: api_secrets
-          target: secrets
       - name: Copy docker-compose.stage.yml to deployment server
         uses: appleboy/ssh-action@master
         with:

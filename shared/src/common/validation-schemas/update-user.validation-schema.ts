@@ -11,19 +11,19 @@ const updateUserSchema = Yup.object().shape({
   email: Yup.string().required('Email is required').email('Email is invalid'),
   phone: Yup.string().matches(phoneReg, 'Phone is invalid'),
   location: Yup.string().oneOf(['kyiv', 'kharkiv', 'odesa']),
-  birth_year: Yup.number()
+  birthYear: Yup.number()
     .min(new Date().getFullYear() - 110)
     .max(new Date().getFullYear()),
   password: Yup.string()
     .min(8, 'Password must be at least 8 characters')
     .max(20, 'Password must not exceed 20 characters'),
-  new_password: Yup.string()
+  newPassword: Yup.string()
     .min(8, 'Password must be at least 8 characters')
     .max(20, 'Password must not exceed 20 characters'),
-  repeat_new_password: Yup.string()
+  repeatNewPassword: Yup.string()
     .min(8, 'Password must be at least 8 characters')
     .max(20, 'Password must not exceed 20 characters'),
-  photo_url: Yup.string().matches(urlReg, 'Photo url should be a valid URL'),
+  photoUrl: Yup.string().matches(urlReg, 'Photo url should be a valid URL'),
   sex: Yup.string().oneOf(['male', 'female', 'not_known', 'not_appliable']),
 });
 

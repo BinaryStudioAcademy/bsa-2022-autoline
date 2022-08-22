@@ -1,5 +1,5 @@
 import { TypedRequestBody } from '@common/types/controller/controller';
-import { UpdateUser } from '@controllers/update-user/update-user.controller';
+import { UpdateUserReq } from '@controllers/update-user/update-user.controller';
 import { Sex } from '@prisma/client';
 
 class UpdateUserDto {
@@ -11,12 +11,12 @@ class UpdateUserDto {
     public readonly phone?: string | null,
     public readonly location?: string | null,
     public readonly photo_url?: string | null,
-    public readonly new_password?: string,
+    public readonly newPassword?: string,
     public readonly birth_year?: number | null,
   ) {}
 
   public static createFromRequest(
-    req: TypedRequestBody<UpdateUser>,
+    req: TypedRequestBody<UpdateUserReq>,
   ): UpdateUserDto {
     const {
       tokenPayload: { sub: id },
@@ -25,9 +25,9 @@ class UpdateUserDto {
       sex,
       phone,
       location,
-      photo_url,
-      new_password,
-      birth_year,
+      photoUrl,
+      newPassword,
+      birthYear,
     } = req.body;
 
     return new UpdateUserDto(
@@ -37,9 +37,9 @@ class UpdateUserDto {
       sex,
       phone,
       location,
-      photo_url,
-      new_password,
-      birth_year,
+      photoUrl,
+      newPassword,
+      birthYear,
     );
   }
 }

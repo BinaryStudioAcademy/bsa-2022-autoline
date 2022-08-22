@@ -1,29 +1,33 @@
 import { TokenPayload } from '@autoline/shared';
 import { TypedRequestBody } from '@common/types/controller/controller';
-import { UserCreateInput } from '@common/types/prisma/prisma';
 import { UpdateUserDto } from '@dtos/user/update-user.dto';
-import { User } from '@prisma/client';
+import { Sex } from '@prisma/client';
 import * as updateUserService from '@services/update-user/update-user.service';
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
 
-export interface UpdateUser extends UserCreateInput {
+export interface UpdateUserReq {
   tokenPayload: TokenPayload;
-  new_password: string;
-  repeat_new_password: string;
+  newPassword?: string;
+  repeatNewPassword?: string;
+  password?: string;
+  name: string;
+  birthYear?: number | null;
+  sex?: Sex | null;
+  phone?: string | null;
+  email: string;
+  location?: string | null;
+  photoUrl?: string | null;
 }
 
 const updateUser = async (
-  req: TypedRequestBody<UpdateUser>,
-  res: Response<User>,
+  req: TypedRequestBody<UpdateUserReq>,
+  res: Response<Partial<UpdateUserReq>>,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const user = UpdateUserDto.createFromRequest(req);
-
-    const { new_password, ...userData } = user;
-
-    const result = await updateUserService.updateUser(userData, new_password);
+    const result = await updateUserService.updateUser(user);
     res.status(httpStatus.OK).json(result);
   } catch (error) {
     console.log(error);
@@ -33,14 +37,12 @@ const updateUser = async (
 
 const deleteUser = async (
   req: TypedRequestBody<{ tokenPayload: TokenPayload }>,
-  res: Response<User>,
+  res: Response<Partial<UpdateUserReq>>,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const result = await updateUserService.deleteUser(
-      req.body.tokenPayload.sub,
-    );
-    res.status(httpStatus.OK).json(result);
+    await updateUserService.deleteUser(req.body.tokenPayload.sub);
+    res.status(httpStatus.OK).json();
   } catch (error) {
     console.log(error);
     next(error);

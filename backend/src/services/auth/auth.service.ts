@@ -99,7 +99,7 @@ const requestPasswordReset = async (email: string): Promise<string> => {
       name: user.name,
       link: link,
     },
-    './templates/reset-passwor-request.ts',
+    './templates/reset-password-request.ts',
   );
   return link;
 };
@@ -162,7 +162,7 @@ const resetPassword = async (id: string, password: string): Promise<void> => {
     {
       name: user.name,
     },
-    './templates/reset-password-confirmation.ts',
+    './templates/reset-password-confirm.ts',
   );
 };
 

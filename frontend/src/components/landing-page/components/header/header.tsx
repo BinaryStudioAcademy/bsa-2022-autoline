@@ -44,7 +44,6 @@ export const Header = (): React.ReactElement => {
                 onChange={(e, value): void => setValue(value)}
                 value={value}
               >
-                {/* <Tab sx={{ display: 'none' }} /> */}
                 <Tab label="Used Cars" />
                 <Tab label="New Cars" />
                 <Tab label="About us" />

@@ -9,7 +9,7 @@ on:
 jobs:
   build-backend:
     runs-on: ubuntu-latest
-    environment: development
+    environment: develop
     steps:
       - name: Checkout project
         uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
 
   build-frontend:
     runs-on: ubuntu-latest
-    environment: development
+    environment: develop
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -46,7 +46,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [build-backend, build-frontend]
-    environment: ${{ github.ref == 'refs/heads/main' && 'production' || github.ref == 'refs/heads/develop' && 'staging' }}
+    environment: develop
 
     steps:
       - name: Checkout

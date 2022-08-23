@@ -4,7 +4,8 @@
   grid-template-columns: 1fr 80px;
   box-sizing: border-box;
   max-width: 400px;
-  padding: 25px;
+  min-height: 400px;
+  padding: 0 20px;
   background-color: var(--white);
   border-radius: 5px;
 }
@@ -46,6 +47,29 @@
 
   &:hover {
     cursor: pointer;
+  }
+}
+
+.iconButton {
+  padding: 0;
+  background: transparent;
+  border: none;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  path {
+    transition: all 300ms;
+  }
+
+  &.isLiked,
+  &:hover {
+    path {
+      transition: all 300ms;
+      fill: var(--blue100);
+    }
   }
 }
 

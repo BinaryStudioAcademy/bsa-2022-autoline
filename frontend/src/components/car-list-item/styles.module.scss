@@ -1,0 +1,30 @@
+.listCard {
+  margin: 2.2rem 0;
+  padding: 1.875rem;
+  background-color: var(--white);
+  border: 1px solid var(--gray200);
+  border-radius: 10px;
+}
+
+.swiperWrapper {
+  border-radius: 7px;
+}
+
+.slide {
+  height: 22rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.carTitle {
+  margin-top: 0;
+}
+
+.complectationsTable {
+  border: 1px solid var(--gray100);
+  border-radius: 10px;
+}

@@ -30,7 +30,7 @@ export const SignInForm = (): React.ReactElement => {
     };
     signIn(user).unwrap();
   };
-  console.log(error);
+
   return (
     <>
       <h1 className={styles.title}>Sign In</h1>

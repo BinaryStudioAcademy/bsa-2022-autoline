@@ -1,3 +1,5 @@
+import { useController } from 'react-hook-form';
+
 import ErrorIcon from '@assets/images/error.svg';
 import { SelectFieldPropsType } from '@common/types/types';
 import { FormControl, InputLabel, FormHelperText } from '@mui/material';
@@ -10,6 +12,10 @@ import styles from './styles.module.scss';
 export const SelectField = (
   props: SelectFieldPropsType,
 ): React.ReactElement => {
+  const {
+    field: { ...field },
+  } = useController({ name: props.name, control: props.control });
+
   return (
     <FormControl
       variant="standard"
@@ -22,15 +28,15 @@ export const SelectField = (
       <InputLabel className={styles.label}>{props.name}</InputLabel>
       <Select
         id={props.id}
-        value={props.value}
-        onChange={props.onChange}
-        label={props.name}
+        label={props.label}
         variant="outlined"
         className={clsx(styles.select, styles.selectOutlined)}
         IconComponent={ArrowDown}
+        {...field}
       >
         {props.children}
       </Select>
+
       {props.errors && (
         <FormHelperText className={styles.error}>
           <img className={styles.errorIcon} src={ErrorIcon} alt="Error" />

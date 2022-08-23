@@ -40,7 +40,6 @@ const urls = [
 
 urls.forEach(async ({ name, url }) => {
   const response = await axios.get(`${BASE_URL}/${url}`);
-
   fs.writeFileSync(
     `${__dirname}/cars/fetched-data/${name}.json`,
     JSON.stringify(response.data),

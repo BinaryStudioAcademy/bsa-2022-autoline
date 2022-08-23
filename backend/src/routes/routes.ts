@@ -7,3 +7,4 @@ export { userRouter } from './user/user.router';
 export { wishlistRouter } from './preferences/wishlist.router';
 export { updateUserRouter } from './update-user/update-user.router';
 export { carsRouter } from './cars/cars.router';
+export { newCarsRouter } from './new-cars/new-cars.router';

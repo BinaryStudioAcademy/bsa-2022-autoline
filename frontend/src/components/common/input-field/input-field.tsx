@@ -19,6 +19,7 @@ export const InputField: FC<InputFieldPropsType> = ({
   type,
   errors,
   inputLabel,
+  // onChange,
 }) => {
   const {
     field: { ...field },
@@ -41,7 +42,7 @@ export const InputField: FC<InputFieldPropsType> = ({
         type={type}
         className={styles.input}
         error={errors?.[name] ? true : false}
-        onChange={props.onChange}
+        // onChange={onChange}
       />
       {errors?.[name] && (
         <FormHelperText className={styles.error}>

@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app';
 import { Administration } from '@components/administration';
+import { DetailsCarPanel } from '@components/details-car-panel/details-car-panel';
 import { ForgotPassword } from '@components/forgot-password/forgot-password';
 import { PersonalPage } from '@components/personal-page/personal-page';
 import { ResetPassword } from '@components/reset-password/reset-password';
@@ -39,7 +40,7 @@ const Routing: FC = () => {
           <Route path={AppRoute.RESET_PASSWORD} element={<ResetPassword />} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
-          <Route path={AppRoute.ROOT} element={<h2>Home page</h2>} />
+          <Route path={AppRoute.ROOT} element={<DetailsCarPanel />} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={isAdmin} />}>
           <Route path={AppRoute.ADMINISTRATION} element={<Administration />} />

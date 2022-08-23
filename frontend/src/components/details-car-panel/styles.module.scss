@@ -1,0 +1,85 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 680px;
+  margin: 30px;
+  padding: 30px;
+  background-color: var(--white);
+  border: solid 1px var(--white);
+  border-radius: 10px;
+
+  &:hover {
+    border: solid 1px var(--blue100);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.price {
+  color: var(--blue100);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 24px;
+  text-transform: uppercase;
+}
+
+.priceUah {
+  margin-left: 10px;
+  color: var(--gray400);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.lables {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  height: 25px;
+  margin: 10px 10px 10px 0;
+  padding: 4px 9px;
+  color: var(--white);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  background: var(--blue300);
+  border-radius: 4px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.complectation {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+}
+
+.complectationRow {
+  display: flex;
+  padding: 5px 0;
+}
+
+.complectationName {
+  min-width: 85px;
+  margin-right: 10px;
+  color: var(--gray400);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.complectationValue {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}

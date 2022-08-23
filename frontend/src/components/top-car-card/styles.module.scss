@@ -1,0 +1,119 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  padding: 25px;
+  background-color: var(--white);
+  border: solid 1px var(--white);
+  border-radius: 5px;
+}
+
+.carInfo,
+.iconGroup,
+.price {
+  display: flex;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.carLogo {
+  height: 30px;
+  padding-right: 10px;
+}
+
+.carName {
+  color: var(--black);
+  font-weight: 700;
+  font-size: 12px;
+  font-family: var(--primary-font);
+}
+
+.icon {
+  height: 16px;
+  margin-right: 5px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.carPicture {
+  width: 100%;
+  margin-top: 15px;
+  border-radius: 5px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.labelGroup {
+  display: flex;
+
+  & > div {
+    margin-right: 10px;
+  }
+
+  & > div:last-child {
+    margin-right: 0;
+  }
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  margin-bottom: 10px;
+  padding: 5px;
+  color: var(--white);
+  font-weight: 400;
+  font-size: 11px;
+  font-family: var(--primary-font);
+  font-style: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: var(--blue300);
+  border-radius: 4px;
+
+  & > img {
+    height: 11px;
+    margin-right: 5px;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.separator {
+  width: 1px;
+  height: 70%;
+  margin: 0 5px;
+  background-color: var(--gray200);
+  border: none;
+}
+
+.price {
+  margin: 0;
+  padding: 0;
+  color: var(--black);
+  font-weight: 900;
+  font-size: 18px;
+  font-family: var(--primary-font);
+}

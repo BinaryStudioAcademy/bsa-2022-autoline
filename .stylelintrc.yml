@@ -11,9 +11,8 @@ rules:
   declaration-no-important: true
   max-nesting-depth: 4
   no-descending-specificity: true
-  unit-disallowed-list:
-    - em
-    - rem
+  at-rule-no-unknown: null
+  scss/at-rule-no-unknown: true
   order/order:
     - custom-properties
     - declarations

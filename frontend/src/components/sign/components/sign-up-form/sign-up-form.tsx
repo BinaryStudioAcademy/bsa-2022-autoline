@@ -70,7 +70,7 @@ export const SignUpForm = (): React.ReactElement => {
             required={true}
             errors={errors}
             control={control}
-            label="Full name"
+            inputLabel="Full name"
           />
 
           <InputField
@@ -79,7 +79,7 @@ export const SignUpForm = (): React.ReactElement => {
             required={true}
             errors={errors}
             control={control}
-            label="Email"
+            inputLabel="Email"
           />
 
           <InputField
@@ -88,7 +88,7 @@ export const SignUpForm = (): React.ReactElement => {
             required={true}
             errors={errors}
             control={control}
-            label="Password"
+            inputLabel="Password"
           />
 
           <InputField
@@ -97,7 +97,7 @@ export const SignUpForm = (): React.ReactElement => {
             required={true}
             errors={errors}
             control={control}
-            label="Repeat Password"
+            inputLabel="Repeat Password"
           />
 
           {isError && (

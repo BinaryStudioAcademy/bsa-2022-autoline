@@ -6,6 +6,8 @@ export {
   type SignInResponseData,
   type ErrorMessage,
 } from './sign-in-data.type';
+export { type ForgotPasswordRequestData } from './forgot-password-data';
+export { type ResetPasswordRequestData } from './reset-password-data';
 export {
   type SignUpRequestData,
   type SignUpResponseData,

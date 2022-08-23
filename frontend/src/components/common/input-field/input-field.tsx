@@ -16,12 +16,13 @@ import { clsx } from 'clsx';
 import { PhoneMask } from './input-masks/phone-mask/phone-mask';
 import styles from './styles.module.scss';
 
-export const InputField: FC<InputFieldPropsType> = ({
+const InputField: FC<InputFieldPropsType> = ({
   name,
   control,
   type,
   errors,
-  label,
+  inputLabel,
+  onChange,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -39,7 +40,7 @@ export const InputField: FC<InputFieldPropsType> = ({
 
   const {
     field: { ...field },
-  } = useController({ name, control });
+  } = control ? useController({ name, control }) : { field: { onChange } };
 
   return (
     <FormControl
@@ -50,7 +51,7 @@ export const InputField: FC<InputFieldPropsType> = ({
         errors?.[name] && styles.inputFieldError,
       )}
     >
-      <InputLabel className={styles.label}>{label}</InputLabel>
+      <InputLabel className={styles.label}>{inputLabel}</InputLabel>
       <OutlinedInput
         {...field}
         type={type === 'password' && showPassword ? 'text' : type}
@@ -86,3 +87,11 @@ export const InputField: FC<InputFieldPropsType> = ({
     </FormControl>
   );
 };
+
+InputField.defaultProps = {
+  type: 'text',
+  required: false,
+  errors: [],
+};
+
+export { InputField };

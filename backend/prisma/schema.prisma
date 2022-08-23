@@ -11,6 +11,7 @@ model User {
   id            String         @id @default(uuid())
   /// Full name of a user
   name          String         @db.VarChar(200)
+  birth_year    Int?
   sex           Sex?
   phone         String?        @db.VarChar(20)
   email         String         @unique @db.VarChar(80)
@@ -18,20 +19,32 @@ model User {
   photo_url     String?        @db.VarChar(300)
   role          Role           @default(user)
   User_Security User_Security?
+  user_wishlist User_Wishlist[]
 }
 
 model User_Security {
   id                     String  @id @default(uuid())
-  user                   User    @relation(fields: [user_id], references: [id])
+  user                   User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id                String  @unique @db.VarChar(300)
   password               String  @db.VarChar(300)
   password_change_token  String? @db.VarChar(300)
-  email_activation_token String? @db.VarChar(300)
+  email_activation_token String? @unique @db.VarChar(300)
   email_change_token     String? @db.VarChar(300)
   email_provisional      String? @db.VarChar(300)
   refresh_token          String? @db.VarChar(300)
   google_acc_id          String? @db.VarChar(300)
   facebook_acc_id        String? @db.VarChar(300)
+}
+
+model User_Wishlist {
+  id               String        @id @default(uuid())
+  user_id          String
+  user             User    @relation(fields: [user_id], references: [id])
+  model_id         String?
+  model            Model?         @relation(fields: [model_id], references: [id])
+  complectation_id String?
+  complectation    Complectation? @relation(fields: [complectation_id], references: [id])
+  created_at       DateTime      @default(now())
 }
 
 model Body_Type {
@@ -65,13 +78,15 @@ model Model {
   manufacture_country_id String
   brand                  Brand                @relation(fields: [manufacturer_id], references: [id])
   name                   String               @db.VarChar(70)
+  description            String               @db.VarChar(1000)
   code_name              String               @db.VarChar(70)
   year_start             Int
-  year_end               Int
+  year_end               Int?
   photo_urls             Json
   autoria_code           Int
   complectations         Complectation[]
   prices_ranges          Prices_Range[]
+  users_wishlists        User_Wishlist[]
 }
 
 model Drivetrain {
@@ -112,6 +127,7 @@ model Option {
 
 model Complectation {
   id                   String                    @id @default(uuid())
+  name                 String                    @db.VarChar(70)
   model_id             String
   model                Model                     @relation(fields: [model_id], references: [id])
   engine               String                    @db.VarChar(300)
@@ -127,6 +143,7 @@ model Complectation {
   transmission_type    Transmission_Type         @relation(fields: [transmission_type_id], references: [id])
   options              ComplectationsOnOptions[]
   prices_ranges        Prices_Range[]
+  users_wishlists      User_Wishlist[]
 }
 
 model ComplectationsOnOptions {
@@ -139,14 +156,29 @@ model ComplectationsOnOptions {
 }
 
 model Prices_Range {
-  id                  String        @id @default(uuid())
-  model_id            String
-  model               Model         @relation(fields: [model_id], references: [id])
-  complectation_id    String
-  complectation       Complectation @relation(fields: [complectation_id], references: [id])
+  id                  String         @id @default(uuid())
+  model_id            String?
+  model               Model?         @relation(fields: [model_id], references: [id])
+  complectation_id    String?
+  complectation       Complectation? @relation(fields: [complectation_id], references: [id])
   price_start         Int
   price_end           Int
-  created_at          DateTime      @default(now())
+  created_at          DateTime       @default(now())
+}
+
+model City {
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
+  autoria_code Int
+  region_id    String
+  region       Region @relation(fields: [region_id], references: [id])
+}
+
+model Region {
+  id           String @id @default(uuid())
+  name         String @db.VarChar(300)
+  autoria_code Int
+  cities       City[]
 }
 
 enum Role {

@@ -1,0 +1,9 @@
+@mixin landing-page-margin {
+  @media (min-width: $global-sm) {
+    margin-left: var(--land-page-margin-md);
+  }
+
+  @media (max-width: $global-sm) {
+    margin-left: var(--land-page-margin-sm);
+  }
+}

@@ -72,7 +72,7 @@ const CompleteSetTable: React.FC = () => {
                 <div
                   className={styles.colorBox}
                   style={{ backgroundColor: car.color }}
-                ></div>
+                />
               </TableCell>
               <TableCell className={styles.tableRow}>{car.motor}</TableCell>
               <TableCell className={styles.tableRow}>

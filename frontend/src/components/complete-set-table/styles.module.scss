@@ -30,8 +30,8 @@
 .colorBox {
   width: 20px;
   height: 20px;
-  border: 1px solid var(--gray100);
   border-radius: 2px;
+  box-shadow: 0 0 4px 0 rgba(0 0 0 / 20%);
 }
 
 .price {

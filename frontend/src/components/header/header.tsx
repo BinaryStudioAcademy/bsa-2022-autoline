@@ -9,10 +9,10 @@ import { PrivateElements } from './private-elements/private-elements';
 import { PublicElements } from './public-elements/public-elements';
 
 export const Header: React.FC = () => {
-  const { data: wishlist } = useGetWishlistsQuery();
+  const { data: wishlist = 0 } = useGetWishlistsQuery();
 
   const user = {
-    favorites: wishlist?.count as number | 0,
+    favorites: wishlist && wishlist.count,
     comparisons: 5,
     notifications: 7,
     avatar: undefined,

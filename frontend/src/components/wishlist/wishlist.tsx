@@ -46,6 +46,9 @@ const Wishlist: React.FC = () => {
                 </Grid>
               );
             })}
+            {data?.models?.length === 0 && (
+              <Grid item>Nothing is in wishlist.</Grid>
+            )}
           </Grid>
           <Title element="h4">LIKED COMPLECTATIONS</Title>
           <Grid container spacing={2}>
@@ -63,6 +66,9 @@ const Wishlist: React.FC = () => {
                   </Grid>
                 );
               },
+            )}
+            {data?.complectations?.length === 0 && (
+              <Grid item>Nothing is in wishlist.</Grid>
             )}
           </Grid>
         </>

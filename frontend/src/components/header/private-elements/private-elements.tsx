@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 
 import DefaultAvatar from '@assets/images/header/default-avatar.png';
 import { AppRoute } from '@common/enums/enums';

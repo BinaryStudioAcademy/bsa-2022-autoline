@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import CrossIcon from '@assets/images/edit-profile/cross.svg';
 import DefaultAvatar from '@assets/images/edit-profile/default-avatar.png';
 import PencilIcon from '@assets/images/edit-profile/pencil.svg';
 import TrashIcon from '@assets/images/edit-profile/trash.svg';
+import { updateUserSchema } from '@autoline/shared';
+import { AppRoute } from '@common/enums/enums';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
+import { InputField } from '@components/common/input-field/input-field';
 import { SelectField } from '@components/common/select-field/select-field';
-import { FormInputText } from '@components/edit-profile/form-input-text/form-input-text';
+import { DialogDeleteAccount } from '@components/edit-profile/dialog-delete-account/dialog-delete-account';
 import { SelectYearsRange } from '@components/edit-profile/select-years-range/select-years-range';
 import { SignIn } from '@components/edit-profile/sign-in/sign-in';
-import { MenuItem, SelectChangeEvent } from '@mui/material';
+import { useAppForm } from '@hooks/app-form/app-form.hook';
+import { Alert, MenuItem, Stack } from '@mui/material';
+import {
+  ProfileFieldsRequestData,
+  useDeleteUserProfileMutation,
+  useUpdateUserProfileMutation,
+} from '@store/queries/user/update-user';
 
 import styles from './styles.module.scss';
 
@@ -19,75 +29,86 @@ interface EditProfileProps {
   onClose: () => void;
 }
 
-export interface ProfileFields {
-  sex: string;
-  year: string;
-  location: string;
-  fullName: string;
-  phone: string;
-  email: string;
-  currentPassword: string;
-  newPassword: string;
-  repeatNewPassword: string;
-}
-
 export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
   const user = {
-    sex: 'male',
-    year: '1996',
+    sex: null,
+    birthYear: '1996',
     location: 'kyiv',
-    fullName: 'stepan shevchenko',
+    name: 'stepan shevchenko',
     phone: '+380938889922',
     email: 'stepan1909@gmail.com',
   };
-
-  const [sex, setSex] = useState(user.sex);
-  const [year, setYear] = useState(user.year);
-  const [location, setLocation] = useState(user.location);
-  const { handleSubmit, watch, control } = useForm<ProfileFields>({
-    defaultValues: {
-      sex: user.sex,
-      year: user.year,
-      location: user.location,
-      fullName: user.fullName,
-      phone: user.phone,
-      email: user.email,
+  const navigate = useNavigate();
+  const [openDialog, setOpenDialog] = useState(false);
+  const [
+    updateUserProfile,
+    {
+      isLoading: updateIsLoading,
+      isSuccess: updateIsSuccess,
+      error: updateError,
     },
-    mode: 'onChange',
-  });
+  ] = useUpdateUserProfileMutation();
+
+  const [
+    deleteUserProfile,
+    {
+      isLoading: deleteIsLoading,
+      isSuccess: deleteIsSuccess,
+      error: deleteError,
+    },
+  ] = useDeleteUserProfileMutation();
+
+  const { control, errors, handleSubmit, setValue } =
+    useAppForm<ProfileFieldsRequestData>({
+      defaultValues: {
+        sex: user.sex || 'not_appliable',
+        birthYear: user.birthYear || 'not_appliable',
+        location: user.location || 'not_appliable',
+        name: user.name,
+        phone: user.phone,
+        email: user.email,
+      },
+      validationSchema: updateUserSchema,
+    });
 
   useEffect(() => {
-    const subscription = watch((value, { name, type }) =>
-      console.log(value, name, type),
-    );
-    return () => subscription.unsubscribe();
-  }, [watch]);
+    if (deleteIsSuccess) {
+      navigate(AppRoute.ROOT);
+    }
+  });
 
-  const [isLoading, setIsLoading] = useState(false);
+  const onSubmit: SubmitHandler<ProfileFieldsRequestData> = async (data) => {
+    const updatedUser = await updateUserProfile(data);
 
-  const handleSelectSexChange = (event: SelectChangeEvent): void => {
-    setSex(event.target.value as string);
+    if ('data' in updatedUser) {
+      const { data } = updatedUser;
+
+      for (const [key, value] of Object.entries(data)) {
+        setValue(key, value);
+      }
+    }
   };
 
-  const handleSelectAgeChange = (event: SelectChangeEvent): void => {
-    setYear(event.target.value as string);
+  const handleClickOpenDialog = (): void => {
+    setOpenDialog(true);
   };
 
-  const handleSelectLocationChange = (event: SelectChangeEvent): void => {
-    setLocation(event.target.value as string);
+  const handleCloseDialog = (): void => {
+    setOpenDialog(false);
   };
 
-  const handleSelectClose = (): void => {
-    setIsLoading(false);
-  };
-
-  const onSubmit: SubmitHandler<ProfileFields> = (data) => {
-    console.log('Submit', data);
-    setIsLoading(true);
+  const handleDeleteProfile = async (): Promise<void> => {
+    setOpenDialog(false);
+    await deleteUserProfile();
   };
 
   return (
     <div className={styles.popupWrapper}>
+      <DialogDeleteAccount
+        handleCloseDialog={handleCloseDialog}
+        handleDeleteProfile={handleDeleteProfile}
+        isOpen={openDialog}
+      />
       <div className={styles.popup}>
         <span className={styles.cross}>
           <img src={CrossIcon} alt="cross" onClick={(): void => onClose()} />
@@ -100,7 +121,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
               <img src={PencilIcon} alt="pencil" />
               <span>Change Photo</span>
             </button>
-            <button>
+            <button onClick={handleClickOpenDialog}>
               <img src={TrashIcon} alt="trash" />
               <span>Delete Profile</span>
             </button>
@@ -111,78 +132,96 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
               onSubmit={handleSubmit(onSubmit)}
               className={styles.form}
             >
-              <fieldset disabled={isLoading} className={styles.fieldset}>
+              <fieldset
+                disabled={updateIsLoading || deleteIsLoading}
+                className={styles.fieldset}
+              >
                 <h2 className={styles.title}>User Details</h2>
-                <FormInputText
-                  name="fullName"
-                  control={control}
-                  label="Full name"
+                <InputField
+                  name="name"
                   type="text"
+                  required={true}
+                  errors={errors}
+                  control={control}
+                  inputLabel="Full name"
                 />
                 <div className={styles.selectsWrapper}>
                   <SelectField
                     id="sex"
                     name="sex"
-                    value={sex}
-                    onChange={handleSelectSexChange}
-                    onClose={handleSelectClose}
                     required={false}
+                    control={control}
+                    label="sex"
+                    defaultValue="not_appliable"
                   >
                     <MenuItem value="male">Male</MenuItem>
                     <MenuItem value="female">Female</MenuItem>
+                    <MenuItem value="not_known">Other</MenuItem>
+                    <MenuItem value="not_appliable">Rather not say</MenuItem>
                   </SelectField>
                   <SelectYearsRange
                     start={1960}
                     end={new Date().getFullYear()}
-                    name="age"
-                    value={year}
-                    onChange={handleSelectAgeChange}
-                    onClose={handleSelectClose}
+                    name="birthYear"
                     required={false}
+                    control={control}
+                    label="birthday"
+                    defaultValue="not_appliable"
                   />
                 </div>
-                <FormInputText
+                <InputField
                   name="phone"
-                  control={control}
-                  label="Phone"
                   type="text"
+                  required={false}
+                  errors={errors}
+                  control={control}
+                  inputLabel="Phone"
                 />
-                <FormInputText
+                <InputField
                   name="email"
-                  control={control}
-                  label="Email"
                   type="text"
+                  required={true}
+                  errors={errors}
+                  control={control}
+                  inputLabel="Email"
                 />
                 <SelectField
                   id="location"
-                  name="Location"
-                  value={location}
-                  onChange={handleSelectLocationChange}
-                  onClose={handleSelectClose}
+                  name="location"
                   required={false}
+                  control={control}
+                  label="location"
+                  defaultValue="not_appliable"
                 >
+                  <MenuItem value="not_appliable">Rather not say</MenuItem>
                   <MenuItem value="kyiv">Kyiv</MenuItem>
                   <MenuItem value="kharkiv">Kharkiv</MenuItem>
                   <MenuItem value="odesa">Odesa</MenuItem>
                 </SelectField>
                 <h2 className={styles.title}>Change Password</h2>
-                <FormInputText
-                  name="currentPassword"
-                  control={control}
-                  label="Current Password"
+                <InputField
+                  name="password"
                   type="password"
+                  required={false}
+                  errors={errors}
+                  control={control}
+                  inputLabel="Current Password"
                 />
-                <FormInputText
+                <InputField
                   name="newPassword"
-                  control={control}
-                  label="New Password"
                   type="password"
+                  required={false}
+                  errors={errors}
+                  control={control}
+                  inputLabel="New Password"
                 />
-                <FormInputText
+                <InputField
                   name="repeatNewPassword"
-                  control={control}
-                  label="Repeat New Password"
                   type="password"
+                  required={false}
+                  errors={errors}
+                  control={control}
+                  inputLabel="Repeat New Password"
                 />
                 <SignIn />
                 <div className={styles.btnWrapper}>
@@ -193,6 +232,21 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   />
                   <ButtonFill text="Save" type="submit" />
                 </div>
+                <Stack sx={{ width: '100%' }} spacing={2}>
+                  {updateError && 'data' in updateError && (
+                    <Alert severity="error">
+                      Failed to update user data. Try again in a few minutes.
+                    </Alert>
+                  )}
+                  {deleteError && 'data' in deleteError && (
+                    <Alert severity="error">
+                      Failed to delete user. Try again in a few minutes.
+                    </Alert>
+                  )}
+                  {updateIsSuccess && (
+                    <Alert severity="success">User data updated</Alert>
+                  )}
+                </Stack>
               </fieldset>
             </form>
           </div>

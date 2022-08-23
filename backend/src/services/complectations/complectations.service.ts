@@ -1,12 +1,9 @@
 import { prisma } from '@data/prisma-client';
 
 import type {} from '@autoline/shared/common/types/types';
-import type {} from '@common/types/types';
 
 type datatype = {
-  comfort: Array<string>;
   complectations: {
-    comfort: Array<string>;
     engine_displacement: string;
     engine_power: number;
     color: {
@@ -30,13 +27,19 @@ type datatype = {
   }[];
 } | null;
 
-const getModel = async (modelId: string | undefined): Promise<datatype> => {
-  const data = (await prisma.model.findFirst({
+type resultType = {
+  complectations: datatype;
+  options: Array<object>;
+};
+
+const getComplectationsByModelId = async (
+  modelId: string | undefined,
+): Promise<resultType> => {
+  const data = (await prisma.model.findUnique({
     where: {
       id: modelId,
     },
     select: {
-      id: true,
       complectations: {
         select: {
           color: { select: { name: true } },
@@ -53,17 +56,34 @@ const getModel = async (modelId: string | undefined): Promise<datatype> => {
     },
   })) as datatype;
 
-  const comfort: Set<string> = new Set();
-  data?.complectations.forEach((complectattion) =>
-    complectattion.options.forEach((option) => {
-      if (option.option.type === 'comfort') {
-        comfort.add(option.option.name);
-      }
-    }),
-  );
-  //data?.complectations.map((e) => (e.comfort = Array.from(comfort)));
-  data?.comfort = Array.from(comfort);
-  return data;
+  const optionType = [
+    'security',
+    'optics',
+    'multimedia',
+    'upholstery',
+    'sound',
+    'design',
+    'comfort',
+    'auxiliary',
+  ];
+
+  const options: Array<object> = [];
+  optionType.forEach((e) => {
+    const optionsList: Set<string> = new Set();
+    data?.complectations.forEach((complectattion) =>
+      complectattion.options.forEach((option) => {
+        if (option.option.type === e) {
+          optionsList.add(option.option.name);
+        }
+      }),
+    );
+    options.push({ [e]: Array.from(optionsList) });
+  });
+  const result = {
+    complectations: data,
+    options: options,
+  };
+  return result;
 };
 
-export { getModel };
+export { getComplectationsByModelId };

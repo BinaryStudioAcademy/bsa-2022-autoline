@@ -4,7 +4,7 @@ import { createToken } from '@helpers/helpers';
 import { bcryptHash, sendEmail } from '@helpers/helpers';
 import { User } from '@prisma/client';
 import { mailSend } from '@services/mail-verification/send.service';
-import { updateMailToken } from '@services/mail-verification/user-security.service';
+import { updateMailToken } from '@services/mail-verification/user-data.service/user-security';
 import bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
@@ -99,7 +99,7 @@ const requestPasswordReset = async (email: string): Promise<string> => {
       name: user.name,
       link: link,
     },
-    './templates/reset-passwor-request.ts',
+    './templates/reset-password-request.ts',
   );
   return link;
 };
@@ -162,7 +162,7 @@ const resetPassword = async (id: string, password: string): Promise<void> => {
     {
       name: user.name,
     },
-    './templates/reset-password-confirmation.ts',
+    './templates/reset-password-confirm.ts',
   );
 };
 

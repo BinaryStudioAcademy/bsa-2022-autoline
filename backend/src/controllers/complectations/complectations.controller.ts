@@ -1,21 +1,21 @@
-import { getModel } from '@services/model/model.service';
+import { getComplectationsByModelId } from '@services/complectations/complectations.service';
 import httpStatus from 'http-status-codes';
 
 import type { TypedRequestQuery } from '@common/types/controller/controller';
 import type { NextFunction, Response } from 'express';
 
-type ModelInput = {
+type ModelIdInput = {
   modelId?: string | undefined;
 };
 
-const getModelById = async (
-  req: TypedRequestQuery<ModelInput>,
+const getComplectations = async (
+  req: TypedRequestQuery<ModelIdInput>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const { modelId } = req.body;
-    const ResponseDto = await getModel(modelId);
+    const ResponseDto = await getComplectationsByModelId(modelId);
     res.json(ResponseDto).status(httpStatus.CREATED);
   } catch (error) {
     console.error(error);
@@ -26,4 +26,4 @@ const getModelById = async (
   }
 };
 
-export { getModelById };
+export { getComplectations };

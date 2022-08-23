@@ -16,3 +16,4 @@ export type {
   CarDataPropsType,
   CarDataListPropsType,
 } from './card/card';
+export type { CompleteSetPropsType } from './complete-set/complete-set';

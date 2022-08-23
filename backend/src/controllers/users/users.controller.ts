@@ -5,6 +5,8 @@ import * as usersService from '@services/users/users.service';
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
 
+type UserUpdateInput = TypedRequestBody<Pick<User, 'id'> & Partial<User>>;
+
 const getUsers = async (
   req: TypedRequestQuery<Record<string, never>>,
   res: Response,
@@ -20,7 +22,7 @@ const getUsers = async (
 };
 
 const updateUser = async (
-  req: TypedRequestBody<Pick<User, 'id'> & Partial<User>>,
+  req: UserUpdateInput,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {

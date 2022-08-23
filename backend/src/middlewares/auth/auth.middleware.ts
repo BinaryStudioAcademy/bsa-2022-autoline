@@ -6,7 +6,10 @@ import httpStatus from 'http-status-codes';
 import passport from 'passport';
 
 import type { SignInRequestData, ErrorMessage } from '@autoline/shared';
-import type { TypedRequestBody } from '@common/types/controller/controller';
+import type {
+  TypedRequestBody,
+  TypedRequestQuery,
+} from '@common/types/controller/controller';
 import type { NextFunction, Response } from 'express';
 
 initializeStrategies();
@@ -58,4 +61,27 @@ const signUpMiddleware = async (
   }
 };
 
-export { localAuth, signUpMiddleware };
+const googleAuth = async (
+  req: TypedRequestQuery<{ token?: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  passport.authenticate('google', {
+    session: false,
+    failureRedirect: '/',
+    state: req.query.token?.toString(),
+  })(req, res, next);
+};
+
+const googleMiddleware = async (
+  req: TypedRequestBody<object>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  passport.authenticate('google', {
+    session: false,
+    failureRedirect: '/',
+  })(req, res, next);
+};
+
+export { localAuth, signUpMiddleware, googleAuth, googleMiddleware };

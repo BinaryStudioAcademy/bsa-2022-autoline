@@ -1,4 +1,5 @@
 import { ENV } from '@common/enums/app/env.enum';
+import { createToken } from '@helpers/helpers';
 import { User } from '@prisma/client';
 import * as authService from '@services/auth/auth.service';
 import httpStatus from 'http-status-codes';
@@ -104,10 +105,33 @@ const resetPassword = async (
   }
 };
 
+const signGoogle = (
+  req: TypedRequestBody<object>,
+  res: Response,
+  next: NextFunction,
+): void => {
+  try {
+    const user = req.user as User;
+    const tokenData = {
+      email: user.email,
+      sub: user.id,
+      role: user.role,
+    };
+    const accessToken = createToken(tokenData);
+    const refreshToken = createToken(tokenData, false);
+    res.redirect(
+      `${ENV.APP.FRONTEND_URL}/sign-redirect?accessToken=${accessToken}&refreshToken=${refreshToken}`,
+    );
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   signupLocal,
   signinLocal,
   resetPasswordRequest,
   resetPasswordCheckToken,
   resetPassword,
+  signGoogle,
 };

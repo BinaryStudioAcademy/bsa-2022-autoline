@@ -58,9 +58,8 @@ type ComplectationResponseDto = {
 };
 
 interface WishlistsResponseDto {
-  models?: ModelResponseDto[];
-  complectations?: ComplectationResponseDto[];
-  count: number;
+  models: ModelResponseDto[] | [];
+  complectations: ComplectationResponseDto[] | [];
 }
 
 type WishlistInput = {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 
@@ -9,10 +9,16 @@ import { PrivateElements } from './private-elements/private-elements';
 import { PublicElements } from './public-elements/public-elements';
 
 export const Header: React.FC = () => {
-  const { data: wishlist = 0 } = useGetWishlistsQuery();
+  const { data: wishlist = { models: [], complectations: [] } } =
+    useGetWishlistsQuery();
+  const [wishlistCount, setWishlistCount] = useState(0);
+
+  useEffect(() => {
+    setWishlistCount(wishlist.models.length + wishlist.complectations.length);
+  }, [wishlist]);
 
   const user = {
-    favorites: wishlist && wishlist.count,
+    favorites: wishlistCount,
     comparisons: 5,
     notifications: 7,
     avatar: undefined,

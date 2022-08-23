@@ -16,6 +16,8 @@ export type {
   SignInResponseData,
   ErrorMessage,
   SignUpResponseDto,
+  ForgotPasswordRequestData,
+  ResetPasswordRequestData,
 } from './auth/auth';
 
 export type {

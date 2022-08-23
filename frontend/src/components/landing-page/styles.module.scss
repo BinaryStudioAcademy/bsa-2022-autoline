@@ -1,0 +1,118 @@
+@import "@assets/css/styles";
+
+html {
+  font-size: 10px;
+  font-family: var(--primary-font);
+}
+
+body {
+  width: 100%;
+  font: var(--primary-font);
+  background-color: #f1f4f6;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.mainContainer {
+  margin: var(--header-height) 0;
+  overflow-x: hidden;
+
+  .firstContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 650px;
+
+    @include landing-page-margin;
+
+    padding-right: 0;
+    padding-left: 0;
+
+    .firstContainerLeft {
+      width: 330px;
+      margin-bottom: 150px;
+
+      .firstContainerLeftTextMain {
+        font-weight: 900;
+        font-size: 4.4rem;
+        text-transform: uppercase;
+      }
+
+      .firstContainerLeftTextSecondary {
+        margin: 15px 0;
+        font-size: 1.2rem;
+      }
+
+      .buttonFill,
+      .buttonOutline {
+        width: 150px;
+        margin-bottom: 10px;
+        padding: 10px 0;
+        font-weight: 600;
+      }
+
+      .buttonFill {
+        margin-right: 10px;
+      }
+    }
+
+    .firstContainerRight {
+      .car {
+        width: 750px;
+
+        @media (min-width: $global-sm) {
+          margin-right: calc(0px - var(--mui-padding-md));
+        }
+
+        @media (max-width: $global-sm) {
+          margin-right: calc(0px - var(--mui-padding-sm));
+        }
+      }
+    }
+  }
+
+  .secondContainer,
+  .fourthContainer {
+    @include landing-page-margin;
+
+    @media (min-width: $global-sm) {
+      margin-right: 40px;
+    }
+
+    @media (max-width: $global-sm) {
+      margin-right: 20px;
+    }
+
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-right: 0;
+
+    .secondContainerHeader,
+    .fourthContainerHeader {
+      margin-bottom: 20px;
+      font-weight: 900;
+      font-size: 1.6rem;
+      text-transform: uppercase;
+    }
+
+    .secondContainerCards,
+    .fourthContainerCards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      justify-items: center;
+      gap: 20px;
+    }
+  }
+
+  .thirdContainer {
+    @media (min-width: $global-sm) {
+      margin: 70px calc(0px - var(--mui-padding-md));
+    }
+
+    @media (max-width: $global-sm) {
+      margin: 70px calc(0px - var(--mui-padding-sm));
+    }
+  }
+}

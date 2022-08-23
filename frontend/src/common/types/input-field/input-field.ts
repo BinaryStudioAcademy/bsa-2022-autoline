@@ -14,4 +14,5 @@ export type InputFieldPropsType = {
   required: boolean;
   control?: Control;
   inputLabel?: string;
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };

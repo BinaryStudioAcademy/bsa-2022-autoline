@@ -15,4 +15,5 @@ export type {
   CarDataType,
   CarDataPropsType,
   CarDataListPropsType,
+  ExtendedCarCardPropsType,
 } from './card/card';

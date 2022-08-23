@@ -6,12 +6,13 @@ interface WishlistResponseDto {
 
 type ModelResponseDto = {
   id: string;
+  wishlistId: string | null;
   createdAt: Date;
   name: string;
   yearStart: number;
   yearEnd: number | null;
   photoUrls: string[] | [];
-  brand?: {
+  brand: {
     name: string;
     logoUrl: string;
   };
@@ -22,12 +23,14 @@ type ModelResponseDto = {
     price_end: number;
   }[];
   description: string;
+  complectationName?: string;
 };
 
 type ComplectationResponseDto = {
   id: string;
+  wishlistId: string | null;
   createdAt: Date;
-  complectationName: string;
+  complectationName?: string;
   engine: string;
   engineDisplacement: number;
   enginePower: number;
@@ -45,7 +48,7 @@ type ComplectationResponseDto = {
   yearStart: number;
   yearEnd: number | null;
   photoUrls: string[] | [];
-  brand?: {
+  brand: {
     name: string;
     logoUrl: string;
   };
@@ -59,9 +62,20 @@ interface WishlistsResponseDto {
   complectations?: ComplectationResponseDto[];
 }
 
+type WishlistInput = {
+  modelId?: string;
+  complectationId?: string;
+};
+
+type DeleteWishlistInput = {
+  wishlistId: string;
+};
+
 export {
   type WishlistResponseDto,
   type WishlistsResponseDto,
   type ModelResponseDto,
   type ComplectationResponseDto,
+  type WishlistInput,
+  type DeleteWishlistInput,
 };

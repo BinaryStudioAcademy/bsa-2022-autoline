@@ -24,32 +24,30 @@ const getList = async (
 
   const detailedListOfReviewedCars = await Promise.all(
     viewedСarsList.map(async ({ model_id, complectation_id }) => {
-      if (model_id && complectation_id) {
-        return await prisma.model.findFirst({
-          where: {
-            id: model_id,
-          },
-          select: {
-            name: true,
-            year_start: true,
-            year_end: true,
-            photo_urls: true,
-            brand: {
-              select: {
-                name: true,
-              },
-            },
-            complectations: {
-              where: {
-                id: complectation_id,
-              },
-              select: {
-                name: true,
-              },
+      return prisma.model.findFirst({
+        where: {
+          id: model_id as string,
+        },
+        select: {
+          name: true,
+          year_start: true,
+          year_end: true,
+          photo_urls: true,
+          brand: {
+            select: {
+              name: true,
             },
           },
-        });
-      }
+          complectations: {
+            where: {
+              id: complectation_id as string,
+            },
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
     }),
   );
 

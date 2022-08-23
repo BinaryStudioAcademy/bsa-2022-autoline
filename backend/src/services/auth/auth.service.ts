@@ -145,7 +145,10 @@ const resetPassword = async (id: string, password: string): Promise<void> => {
     throw new Error('User does not exist');
   }
 
-  const isSamePassword = await bcrypt.compare(password, userSecurity.password);
+  const isSamePassword = await bcrypt.compare(
+    password,
+    userSecurity.password as string,
+  );
   if (isSamePassword) {
     throw new Error('Same passwords error');
   }

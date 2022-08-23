@@ -1,4 +1,4 @@
-import * as reviewedCarsService from '@services/reviewed-cars/reviewed-cars.service';
+import * as viewedCarsService from '@services/viewed-cars/viewed-cars.service';
 import httpStatus from 'http-status-codes';
 
 import type {
@@ -17,7 +17,7 @@ const getList = async (
 ): Promise<void> => {
   try {
     const { userId } = req.params;
-    const result = await reviewedCarsService.getList(userId);
+    const result = await viewedCarsService.getList(userId);
     res.json(result).status(httpStatus.OK);
   } catch (error) {
     console.error(error);
@@ -43,7 +43,7 @@ const setCar = async (
       complectationId,
     };
 
-    const result = await reviewedCarsService.setCar(reviewedCarsList);
+    const result = await viewedCarsService.setCar(reviewedCarsList);
     res.json(result).status(httpStatus.CREATED);
   } catch (error) {
     console.error(error);

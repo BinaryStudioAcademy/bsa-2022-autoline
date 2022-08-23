@@ -36,4 +36,4 @@ export type { CarsSearchParams } from './cars/cars-search-params';
 export {
   type setViewedCarRequest,
   type setViewedCarResponse,
-} from './reviewed-cars/reviewed-cars';
+} from './viewed-cars/viewed-cars';

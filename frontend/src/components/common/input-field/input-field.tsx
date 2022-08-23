@@ -41,6 +41,7 @@ export const InputField: FC<InputFieldPropsType> = ({
         type={type}
         className={styles.input}
         error={errors?.[name] ? true : false}
+        onChange={props.onChange}
       />
       {errors?.[name] && (
         <FormHelperText className={styles.error}>

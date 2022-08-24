@@ -1,6 +1,6 @@
 import { prisma } from '@data/prisma-client';
 import { initializeStrategies } from '@middlewares/auth/strategies/strageties';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { signUpSchema } from '@validation-schemas/validation-schemas';
 import httpStatus from 'http-status-codes';
 import passport from 'passport';
@@ -74,7 +74,7 @@ const googleAuth = async (
 };
 
 const googleMiddleware = async (
-  req: TypedRequestBody<object>,
+  req: TypedRequestBody<User>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {

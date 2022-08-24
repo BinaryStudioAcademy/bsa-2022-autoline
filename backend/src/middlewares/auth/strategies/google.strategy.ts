@@ -15,41 +15,51 @@ const googleStrategy = new GoogleStrategy(
   async (req, accessToken, refreshToken, profile, done) => {
     let user;
     try {
-      user = await prisma.user_Security.findUnique({
+      user = await prisma.user.findFirst({
         where: {
-          google_acc_id: profile.id,
-        },
-        include: {
-          user: true,
+          User_Security: {
+            google_acc_id: profile.id,
+          },
         },
       });
       if (!user) {
         const payload = req.query.state
           ? (verifyToken(req.query.state as string) as JwtPayload)
           : undefined;
-        user = await prisma.user_Security.upsert({
-          where: {
-            user_id: payload ? payload.sub : '',
-          },
-          update: {
-            google_acc_id: profile.id,
-          },
-          create: {
-            google_acc_id: profile.id,
-            user: {
-              create: {
-                name: profile.displayName,
-                email: profile._json.email as string,
-                photo_url: profile._json.picture,
+        if (payload) {
+          user = await prisma.user.update({
+            where: {
+              id: payload ? payload.sub : '',
+            },
+            data: {
+              User_Security: {
+                update: {
+                  google_acc_id: profile.id,
+                },
               },
             },
-          },
-          include: {
-            user: true,
-          },
-        });
+          });
+        } else {
+          user = await prisma.user.upsert({
+            where: {
+              email: profile._json.email as string,
+            },
+            update: {
+              User_Security: {
+                update: {
+                  google_acc_id: profile.id,
+                },
+              },
+            },
+            create: {
+              name: profile.displayName,
+              email: profile._json.email as string,
+              photo_url: profile._json.picture,
+            },
+          });
+        }
       }
-      done(null, user.user);
+      done(null, user);
     } catch (err) {
       done(err as Error, false);
     }

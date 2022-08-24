@@ -12,6 +12,7 @@ const RedirectAfterSign = (): React.ReactElement => {
   useEffect(() => {
     if (accessToken && refreshToken) {
       localStorage.setItem(StorageKey.TOKEN, accessToken);
+      localStorage.setItem(StorageKey.REFRESH, refreshToken);
     }
     window.close();
   }, []);

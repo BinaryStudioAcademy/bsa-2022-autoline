@@ -16,6 +16,7 @@ const RedirectAfterSign = (): React.ReactElement => {
     }
     window.close();
   }, []);
+
   return (
     <Grid
       container

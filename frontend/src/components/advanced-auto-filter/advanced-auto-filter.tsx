@@ -12,6 +12,7 @@ import { AutocompleteInput } from '@components/common/autocomplete-input/autocom
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
 import { filtersToQuery } from '@helpers/filters-to-query';
+import { getValueById } from '@helpers/get-value-by-id';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import UTurnRightIcon from '@mui/icons-material/UTurnRight';
 import { resetAllFilters, setValue } from '@store/car-filter/slice';
@@ -112,23 +113,6 @@ const AdvancedAutoFilter: FC = () => {
     setBrandDetailsList([initialBrandDetails]);
   };
 
-  const selectedRegion = useMemo(() => {
-    const region = options?.regions?.find(
-      (region) => region.id === filters.regionId,
-    );
-
-    if (region) {
-      return {
-        label: region.name,
-        id: region.id,
-      };
-    }
-    return {
-      label: '',
-      id: '',
-    };
-  }, [filters.regionId]);
-
   const years = useMemo(() => yearsRange(30), []);
 
   if (isLoading) return <h1>Loading...</h1>;
@@ -143,7 +127,7 @@ const AdvancedAutoFilter: FC = () => {
             <AutocompleteInput
               label="Regions"
               onChange={handleRegionChange}
-              value={selectedRegion}
+              value={getValueById(options.region, filters.regionId)}
               options={options?.regions?.map((item: AutoRiaOption) => ({
                 label: item.name,
                 id: item.id,

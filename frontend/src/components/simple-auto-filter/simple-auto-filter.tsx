@@ -72,24 +72,6 @@ const SimpleAutoFilter: FC = () => {
     dispatch(setValue({ filterName: FiltersNames.REGION_ID, value }));
   };
 
-  // const selectedBrandName = (): AutocompleteValueType => {
-  //   const brand = brands?.find((brand) => brand.id === selectedBrandId);
-  //
-  //   return {
-  //     label: brand?.name || '',
-  //     id: brand?.id || '',
-  //   };
-  // };
-  //
-  // const selectedModelName = (): AutocompleteValueType => {
-  //   const model = models?.find((model) => model.id === selectedModelId);
-  //
-  //   return {
-  //     label: model?.name || '',
-  //     id: model?.id || '',
-  //   };
-  // };
-
   const handleSelectBrand = (data: AutocompleteValueType): void => {
     dispatch(
       setValue({
@@ -167,7 +149,7 @@ const SimpleAutoFilter: FC = () => {
           ) : (
             <SelectField
               id="disabled"
-              name=""
+              name="Model"
               value=""
               disabled={true}
               required={false}

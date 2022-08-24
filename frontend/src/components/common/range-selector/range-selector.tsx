@@ -3,7 +3,6 @@ import React, { FC, useEffect, useState } from 'react';
 import { FiltersNames } from '@common/enums/cars/filters-names.enum';
 import { RangeValueType } from '@common/types/cars/range-item.type';
 import { SelectField } from '@components/common/select-field/select-field';
-import { toCamelCase } from '@helpers/strings';
 import { MenuItem, SelectChangeEvent } from '@mui/material';
 
 type Props = {
@@ -51,7 +50,7 @@ const RangeSelector: FC<Props> = (props) => {
   return (
     <>
       <SelectField
-        id={toCamelCase(props.minTitle)}
+        id={props.minTitle}
         name={props.minTitle}
         value={String(props.selectedMin) || ''}
         onChange={handleMinChange}
@@ -64,7 +63,7 @@ const RangeSelector: FC<Props> = (props) => {
         ))}
       </SelectField>
       <SelectField
-        id={toCamelCase(props.maxTitle)}
+        id={props.maxTitle}
         name={props.maxTitle}
         value={String(props.selectedMax) || ''}
         onChange={handleMaxChange}

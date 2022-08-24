@@ -1,6 +1,5 @@
 .tableRow {
   min-width: 6rem;
-  font-family: var(--primary-font);
   border-bottom: 0;
 
   &:hover {
@@ -15,16 +14,24 @@
 
     .tableRow {
       padding: 0.3rem 0.9rem;
+      font-family: var(--primary-font);
       border-bottom: 0;
     }
+  }
+
+  th {
+    font-family: var(--primary-font);
   }
 }
 
 .tableTitle {
   color: var(--black);
-  font-family: var(--primary-font);
   border-color: var(--gray100);
   opacity: 0.3;
+}
+
+.model {
+  min-width: 10rem;
 }
 
 .colorBox {

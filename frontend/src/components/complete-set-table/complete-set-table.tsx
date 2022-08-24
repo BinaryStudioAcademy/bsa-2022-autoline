@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { CarSetOptions } from '@common/enums/enums';
-import { CompleteSetPropsType } from '@common/types/types';
+import { CompleteSetPropsType, CompleteSetDataType } from '@common/types/types';
 import { OptionsIcon } from '@components/common/icons/icons';
 import {
   TableContainer,
@@ -17,14 +17,15 @@ import { clsx } from 'clsx';
 import { mockCars } from './mock-cars';
 import styles from './styles.module.scss';
 
-const CompleteSetTable: React.FC = () => {
-  const [cars] = useState<CompleteSetPropsType[]>(mockCars);
+const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
+  const [cars] = useState<CompleteSetDataType[]>(mockCars);
+  const { className } = props;
 
   return (
     <TableContainer
       component={Paper}
       elevation={0}
-      className={clsx(styles.tableContainer, styles.container)}
+      className={clsx(styles.tableContainer, styles.container, className)}
     >
       <Table
         sx={{ minWidth: 650 }}
@@ -33,7 +34,7 @@ const CompleteSetTable: React.FC = () => {
       >
         <TableHead>
           <TableRow>
-            <TableCell className={styles.tableTitle}>
+            <TableCell className={clsx(styles.tableTitle, styles.model)}>
               {CarSetOptions.Model}
             </TableCell>
             <TableCell className={styles.tableTitle}>

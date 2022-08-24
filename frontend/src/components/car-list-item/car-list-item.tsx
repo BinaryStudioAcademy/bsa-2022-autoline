@@ -1,11 +1,12 @@
 import React from 'react';
 
 import new_car_1 from '@assets/images/mock_car_picture.png';
-import { SliderNavButton } from '@components/cars-categories/slider-nav-button/slider-nav-button';
-import { swiperParams } from '@components/cars-categories/swiper-params';
-import { Title } from '@components/common/title/title';
+import { SliderNavButton } from '@components/car-list-item/slider-nav-button/slider-nav-button';
+import { swiperParams } from '@components/car-list-item/swiper-params';
+import { CompleteSetTable } from '@components/complete-set-table/complete-set-table';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { Collapse, Grid } from '@mui/material';
+import { clsx } from 'clsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import styles from './styles.module.scss';
@@ -19,7 +20,7 @@ const CarListItem: React.FC = () => {
   return (
     <div className={styles.listCard}>
       <Grid container spacing={2}>
-        <Grid item sm={3}>
+        <Grid item sm={4}>
           <Swiper
             className={styles.swiperWrapper}
             {...swiperParams}
@@ -32,28 +33,62 @@ const CarListItem: React.FC = () => {
               <img src={new_car_1} alt="car" />
             </SwiperSlide>
           </Swiper>
-          Info
-        </Grid>
-        <Grid item sm={9}>
-          <Title className={styles.carTitle} element="h4">
-            BMW X5 m50d sport
-          </Title>
-          <div>Price</div>
-          <div>Table</div>
-          <div className={styles.complectationsTable}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse leo risus, molestie ut ipsum ac, suscipit maximus
-                erat. Proin dapibus pellentesque purus, suscipit aliquam mauris
-                accumsan ac. Lorem ipsum dolor sit amet, consectetur adipiscing
-                elit. Morbi porttitor dui nec imperdiet dapibus. Nunc hendrerit
-                nibh facilisis diam lobortis, a aliquet lacus gravida. Etiam
-                egestas nisi sit amet vehicula placerat. Donec finibus purus
-                quis arcu porttitor, id dictum ante pretium.
+          <div className={styles.carInfo}>
+            <div className={styles.infoRow}>
+              <p className={styles.title}>Engine</p>
+              <p className={styles.option}>
+                1.6l dCi 130 X-Tronic CVT 2WD / 2.0l 144 X-Tronic CVT 4WD
               </p>
+            </div>
+            <div className={styles.infoRow}>
+              <p className={styles.title}>Engine displacement</p>
+              <p className={styles.option}>3 / 3.5 / 4 / 5 l.</p>
+            </div>
+            <div className={styles.infoRow}>
+              <p className={styles.title}>Engine power</p>
+              <p className={styles.option}>185 / 205 / 231 h.p.</p>
+            </div>
+            <div className={styles.infoRow}>
+              <p className={styles.title}>Drivetrain</p>
+              <p className={styles.option}>All-Wheel Drive (AWD)</p>
+            </div>
+            <div className={styles.infoRow}>
+              <p className={styles.title}>Fuel type</p>
+              <p className={styles.option}>Diesel</p>
+            </div>
+            <div className={styles.infoRow}>
+              <p className={styles.title}>Transmission type</p>
+              <p className={styles.option}>Automatic</p>
+            </div>
+          </div>
+        </Grid>
+        <Grid item sm={8}>
+          <h4 className={styles.carTitle}>BMW X5 m50d sport</h4>
+          <div className={styles.priceBlock}>
+            <h4 className={styles.primaryPrice}>$ 34 000 - 52 450</h4>
+            <span className={styles.secondaryPrice}>
+              UAH 1 554 000 - 1 945 450
+            </span>
+          </div>
+          <div className={clsx(styles.options, 'styledScrollbar')}>
+            <button className={styles.pillButton}>Leather Interior</button>
+            <button className={styles.pillButton}>LED Headlight</button>
+            <button className={styles.pillButton}>Crossover</button>
+            <button className={styles.pillButton}>LCD screen</button>
+            <button className={styles.pillButton}>VSM</button>
+            <button className={styles.pillButton}>ABS</button>
+            <button className={styles.pillButton}>
+              Recognition of road signs
+            </button>
+          </div>
+          <div className={styles.tableWrapper}>
+            <Collapse in={open} timeout="auto" collapsedSize="290px">
+              <CompleteSetTable
+                data={[]}
+                className={clsx(styles.table, 'styledScrollbar')}
+              />
             </Collapse>
-            <button className={styles.expander} onClick={handleClick}>
+            <button className={styles.collapseButton} onClick={handleClick}>
               +3 {open ? <ExpandLess /> : <ExpandMore />}
             </button>
           </div>

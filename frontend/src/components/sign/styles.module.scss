@@ -20,6 +20,12 @@
   opacity: 0.5;
 }
 
+.scrollBar {
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+}
+
 .wrapper {
   padding-top: 30px;
   padding-bottom: 30px;

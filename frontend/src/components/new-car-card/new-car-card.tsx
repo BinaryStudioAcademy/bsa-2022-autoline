@@ -1,51 +1,100 @@
-import { FC, useState } from 'react';
+import React from 'react';
 
 import compare from '@assets/images/compare.svg';
-import heart from '@assets/images/heart.svg';
-import { NewCarsBrand } from '@autoline/shared/common/types/types';
-import { CompareToast } from '@components/compare-toast/compare-toast';
+import {
+  WishlistInput,
+  DeleteWishlistInput,
+} from '@autoline/shared/common/types/types';
+import { ExtendedCarCardPropsType } from '@common/types/types';
+import { HeartIcon } from '@components/common/icons/icons';
+import { formatPrice } from '@helpers/helpers';
+import {
+  useCreateWishlistMutation,
+  useDeleteWishlistMutation,
+} from '@store/queries/preferences/wishlist';
+import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
-interface NewCarsProps {
-  newCar: NewCarsBrand;
-}
+const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
+  const {
+    type,
+    isLiked = false,
+    car: {
+      id: carId,
+      wishlistId,
+      name: carName,
+      pricesRanges,
+      brand: { name: brandName, logoUrl: brandLogoUrl },
+      complectationName,
+      photoUrls,
+      description,
+    },
+  } = props;
 
-const NewCarCard: FC<NewCarsProps> = ({ newCar }) => {
-  const [isHidden, setIsHidden] = useState<boolean>(false);
-  const onCompareHandler = (): void => {
-    setIsHidden(false);
+  const minPrices = pricesRanges.map(
+    (price: { price_start: number; price_end: number }) => price.price_start,
+  );
+  const minPrice = formatPrice(Math.min(...minPrices));
+  const maxPrices = pricesRanges.map(
+    (price: { price_start: number; price_end: number }) => price.price_end,
+  );
+  const maxPrice = formatPrice(Math.max(...maxPrices));
+
+  const [createWishlist] = useCreateWishlistMutation();
+  const [deleteWishlist] = useDeleteWishlistMutation();
+
+  const handleCreateWishlist = async (): Promise<void> => {
+    const data: WishlistInput =
+      type === 'model' ? { modelId: carId } : { complectationId: carId };
+
+    await createWishlist(data);
   };
+
+  const handleDeleteWishlist = async (): Promise<void> => {
+    const data: DeleteWishlistInput = { wishlistId: wishlistId as string };
+    await deleteWishlist(data);
+  };
+
+  const handleLikeClick = (event: React.MouseEvent): void => {
+    event.stopPropagation();
+    isLiked ? handleDeleteWishlist() : handleCreateWishlist();
+  };
+
+  let name = `${brandName} ${carName}`;
+
+  if (complectationName) {
+    name = `${name} ${complectationName}`;
+  }
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.carTitle}>
-        <img className={styles.carLogo} src={newCar.logo_url} alt="car logo" />
-        <span className={styles.carName}>{newCar.name}</span>
+        <img className={styles.carLogo} src={brandLogoUrl} alt={brandName} />
+        <span className={styles.carName}>{name}</span>
       </div>
       <div className={styles.buttonsWrapper}>
-        <img className={styles.button} src={heart} alt="like button" />
-        <img
-          className={styles.button}
-          src={compare}
-          alt="compare button"
-          onClick={onCompareHandler}
-        />
+        <button
+          className={clsx(
+            styles.button,
+            styles.iconButton,
+            isLiked && styles.isLiked,
+          )}
+          onClick={handleLikeClick}
+        >
+          <HeartIcon />
+        </button>
+        <img className={styles.button} src={compare} alt="compare button" />
       </div>
-      <img
-        src={newCar.photo_urls[0]}
-        alt="car image"
-        className={styles.carImage}
-      ></img>
+      <img src={photoUrls[0]} alt="car image" className={styles.carImage} />
       <div className={styles.cardFooter}>
         <div className={styles.carContent}>
-          <p className={styles.carDescription}>{newCar.description} </p>
+          <p className={styles.carDescription}>{description}</p>
         </div>
         <hr className={styles.verticalLine} />
         <div className={styles.priceBox}>
           <span className={styles.price}>
-            $ {newCar.price_start.toLocaleString('ua')} -<br /> {'$ '}
-            {newCar.price_end.toLocaleString('ua')}
+            {minPrice} - {maxPrice}
           </span>
         </div>
       </div>

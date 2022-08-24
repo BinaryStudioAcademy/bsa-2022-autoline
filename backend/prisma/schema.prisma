@@ -8,18 +8,19 @@ datasource db {
 }
 
 model User {
-  id            String         @id @default(uuid())
+  id               String         @id @default(uuid())
   /// Full name of a user
-  name          String         @db.VarChar(200)
+  name             String         @db.VarChar(200)
   birth_year    Int?
-  sex           Sex?
-  phone         String?        @db.VarChar(20)
-  email         String         @unique @db.VarChar(80)
-  location      String?
-  photo_url     String?        @db.VarChar(300)
-  role          Role           @default(user)
-  User_Security User_Security?
+  sex              Sex?
+  phone            String?        @db.VarChar(20)
+  email            String         @unique @db.VarChar(80)
+  location         String?
+  photo_url        String?        @db.VarChar(300)
+  role             Role           @default(user)
+  User_Security    User_Security?
   user_wishlist User_Wishlist[]
+  viewed_cars      Users_Viewed_Cars[]
 }
 
 model User_Security {
@@ -45,6 +46,17 @@ model User_Wishlist {
   complectation_id String?
   complectation    Complectation? @relation(fields: [complectation_id], references: [id])
   created_at       DateTime      @default(now())
+}
+
+model Users_Viewed_Cars {
+  id                  String              @id @default(uuid())
+  user                User                @relation(fields: [user_id], references: [id])
+  user_id             String
+  model               Model?              @relation(fields: [model_id], references: [id])
+  model_id            String?             @db.VarChar(300)
+  complectation       Complectation?      @relation(fields: [complectation_id], references: [id])
+  complectation_id    String?             @db.VarChar(300)
+  created_at          DateTime            @default(now())
 }
 
 model Body_Type {
@@ -86,6 +98,7 @@ model Model {
   autoria_code           Int
   complectations         Complectation[]
   prices_ranges          Prices_Range[]
+  users_viewed_cars      Users_Viewed_Cars[]
   users_wishlists        User_Wishlist[]
 }
 
@@ -144,6 +157,7 @@ model Complectation {
   options              ComplectationsOnOptions[]
   prices_ranges        Prices_Range[]
   users_wishlists      User_Wishlist[]
+  users_viewed_cars    Users_Viewed_Cars[]
 }
 
 model ComplectationsOnOptions {

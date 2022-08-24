@@ -10,6 +10,7 @@ import {
   carsRouter,
   activateLinkRouter,
   updateUserRouter,
+  viewedCarsRouter,
   newCarsRouter,
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
@@ -55,6 +56,7 @@ const routes = [
   activateLinkRouter,
   updateUserRouter,
   newCarsRouter,
+  viewedCarsRouter,
 ];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 

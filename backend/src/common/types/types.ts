@@ -9,6 +9,7 @@ export {
   type UserCreateInput,
   type UserResetPassword,
   type WishlistInput,
+  type GetViewedCarsListResponse,
 } from './prisma/prisma';
 
 export { type NewCarsPrices } from './new-cars/new-cars';

@@ -1,11 +1,11 @@
 type FiltersType = {
-  regionId: '';
-  yearStart: '';
-  yearEnd: '';
-  priceStart: '';
-  priceEnd: '';
-  raceStart: '';
-  raceEnd: '';
+  regionId: string;
+  yearStart: string;
+  yearEnd: string;
+  priceStart: string;
+  priceEnd: string;
+  raceStart: string;
+  raceEnd: string;
   bodytypeId: string[];
   brandId: string[];
   modelId: string[];

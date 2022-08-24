@@ -23,9 +23,10 @@ const googleStrategy = new GoogleStrategy(
         },
       });
       if (!user) {
-        const payload = req.query.state
-          ? (verifyToken(req.query.state as string) as JwtPayload)
-          : undefined;
+        const payload =
+          req.query.state !== 'null'
+            ? (verifyToken(req.query.state as string) as JwtPayload)
+            : undefined;
         if (payload) {
           user = await prisma.user.update({
             where: {
@@ -55,6 +56,11 @@ const googleStrategy = new GoogleStrategy(
               name: profile.displayName,
               email: profile._json.email as string,
               photo_url: profile._json.picture,
+              User_Security: {
+                create: {
+                  google_acc_id: profile.id,
+                },
+              },
             },
           });
         }

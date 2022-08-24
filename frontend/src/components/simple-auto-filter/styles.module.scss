@@ -1,0 +1,62 @@
+.container {
+  width: 600px;
+  padding: 10px 30px;
+  background-color: var(--white);
+  border-radius: 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mainRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  column-gap: 30px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  column-gap: 10px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.autocompleteField {
+  margin-bottom: 15px;
+
+  .MuiAutocomplete-popupIndicator {
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+  }
+
+  .label {
+    left: 18px;
+    color: var(--gray300);
+    font-size: 14px;
+    transform: translate(0, 14px) scale(1);
+  }
+
+  fieldset {
+    top: 0;
+    border-color: var(--gray200);
+    border-radius: 50px;
+
+    legend {
+      display: none;
+    }
+  }
+}

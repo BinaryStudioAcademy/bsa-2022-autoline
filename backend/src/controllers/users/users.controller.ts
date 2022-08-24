@@ -42,7 +42,6 @@ const updateUser = async (
     const { tokenPayload, ...userData } = req.body;
     const user = await usersService.updateUser(userId, userData);
 
-    console.log(tokenPayload);
     res.json(user).status(httpStatus.OK);
   } catch (error) {
     errorsHandler(error as Error, req, res, next);

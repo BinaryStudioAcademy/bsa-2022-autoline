@@ -6,12 +6,12 @@ import { Autocomplete, SvgIcon, TextField } from '@mui/material';
 
 interface Props {
   label: string;
-  onChange: (data: AutocompleteValueType) => void;
   options: {
     label: string;
     id: string;
   }[];
   value: AutocompleteValueType;
+  onChange: (data: AutocompleteValueType) => void;
 }
 
 const AutocompleteInput: FC<Props> = (props): JSX.Element => {

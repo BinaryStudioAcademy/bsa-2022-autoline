@@ -29,6 +29,7 @@ const SimpleAutoFilter: FC = () => {
   const [queryParams, setQueryParams] = useState<string[][]>([]);
 
   const { data: brands, isLoading } = useGetBrandsQuery();
+
   const { data: options, isLoading: isOptionsLoading } =
     useGetUsedOptionsQuery();
 
@@ -48,24 +49,6 @@ const SimpleAutoFilter: FC = () => {
   console.log(filteredCars);
 
   const years = useMemo(() => yearsRange(30), []);
-
-  const selectedRegion = useMemo(() => {
-    if (!isLoading && options) {
-      const region = options?.regions?.find(
-        (region) => region.id === filters.regionId,
-      );
-      if (region) {
-        return {
-          label: region.name,
-          id: region.id,
-        };
-      }
-    }
-    return {
-      label: '',
-      id: '',
-    };
-  }, [filters.regionId]);
 
   const handleRegionChange = (data: AutocompleteValueType): void => {
     const value = data?.id || '';
@@ -114,7 +97,7 @@ const SimpleAutoFilter: FC = () => {
         <AutocompleteInput
           label="Regions"
           onChange={handleRegionChange}
-          value={selectedRegion}
+          value={getValueById(options.region, filters.regionId)}
           options={options?.regions?.map((item: AutoRiaOption) => ({
             label: item.name,
             id: item.id,

@@ -27,6 +27,6 @@ const baseQuery = fetchBaseQuery({
 
 export const api = createApi({
   baseQuery: baseQuery,
-  tagTypes: ['WishlistCars'],
+  tagTypes: ['WishlistCars', 'User'],
   endpoints: () => ({}),
 });

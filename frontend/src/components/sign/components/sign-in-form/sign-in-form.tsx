@@ -8,6 +8,7 @@ import { SignInRequestData } from '@common/types/types';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
+import { SignWithGoogle } from '@components/sign/components/sign-with-google/sign-with-google';
 import { useAppForm } from '@hooks/hooks';
 import Alert from '@mui/material/Alert';
 import Divider from '@mui/material/Divider';
@@ -43,7 +44,7 @@ export const SignInForm = (): React.ReactElement => {
         navigate(AppRoute.ROOT);
       });
   };
-  console.log(error);
+  if (error) console.log(error);
   return (
     <>
       <h1 className={styles.title}>Sign In</h1>
@@ -84,7 +85,7 @@ export const SignInForm = (): React.ReactElement => {
       <div className={styles.formBottom}>
         <Divider className={styles.divider}>or</Divider>
         <div className={styles.buttonsGroup}>
-          <ButtonOutline text="Sign In with Google" />
+          <SignWithGoogle />
           <ButtonOutline text="Sign In with Facebook" />
         </div>
       </div>

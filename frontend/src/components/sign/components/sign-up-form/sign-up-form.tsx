@@ -8,6 +8,7 @@ import { AppRoute } from '@common/enums/app/app-route.enum';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
+import { SignWithGoogle } from '@components/sign/components/sign-with-google/sign-with-google';
 import { useAppForm } from '@hooks/hooks';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -134,7 +135,7 @@ export const SignUpForm = (): React.ReactElement => {
       <div className={styles.formBottom}>
         <Divider className={styles.divider}>or</Divider>
         <div className={styles.buttonsGroup}>
-          <ButtonOutline text="Sign Up with Google" />
+          <SignWithGoogle />
           <ButtonOutline text="Sign Up with Facebook" />
         </div>
       </div>

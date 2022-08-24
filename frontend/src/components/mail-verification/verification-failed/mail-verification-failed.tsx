@@ -24,7 +24,7 @@ const MailVerificationFailed: FC = (): React.ReactElement => {
     validationSchema: emailSchema,
   });
 
-  const onGetLink = async ({ email }: EmailRequestData): Promise<void> => {
+  const handleGetLink = async ({ email }: EmailRequestData): Promise<void> => {
     await getLink(email);
     navigate(AppRoute.SIGN_IN);
   };
@@ -52,7 +52,7 @@ const MailVerificationFailed: FC = (): React.ReactElement => {
             <div className={styles.center}>
               <ButtonFill
                 text="Get verification link"
-                onClick={handleSubmit(onGetLink)}
+                onClick={handleSubmit(handleGetLink)}
               />
             </div>
           </div>

@@ -12,6 +12,4 @@ export {
   type GetViewedCarsListResponse,
 } from './prisma/prisma';
 
-export { type NewCarsPrices } from './new-cars/new-cars';
-
 export { type AutoriaRequestParams } from './cars/autoria-request-params';

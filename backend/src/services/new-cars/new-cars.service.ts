@@ -1,31 +1,77 @@
 import { prisma } from '@data/prisma-client';
-import Prisma from '@prisma/client';
 
-const getfourNewCars = async (): Promise<Prisma.Model[]> => {
-  const newcars = await prisma.model.findMany({
-    take: -4,
-  });
+import type { ModelResponseDto } from '@autoline/shared/common/types/types';
 
-  return newcars;
-};
-
-const getRangeCar = async (id: string): Promise<Prisma.Prices_Range | null> => {
-  const range = await prisma.prices_Range.findFirst({
-    where: {
-      model_id: id,
+const getNewCar = async (
+  take: number,
+  skip: number,
+): Promise<ModelResponseDto> => {
+  const newcar = await prisma.model.findMany({
+    skip,
+    take,
+    select: {
+      id: true,
+      name: true,
+      year_start: true,
+      year_end: true,
+      photo_urls: true,
+      description: true,
+      brand: {
+        select: {
+          name: true,
+          logo_url: true,
+        },
+      },
+      body_type: {
+        select: {
+          name: true,
+        },
+      },
+      manufacture_country: {
+        select: {
+          name: true,
+        },
+      },
+      users_wishlists: {
+        select: {
+          id: true,
+          created_at: true,
+        },
+      },
+      complectations: {
+        select: {
+          name: true,
+        },
+      },
+      prices_ranges: {
+        select: {
+          price_start: true,
+          price_end: true,
+        },
+      },
     },
   });
 
-  return range;
-};
-
-const getCarBrand = async (id: string): Promise<Prisma.Brand | null> => {
-  const brand = await prisma.brand.findFirst({
-    where: {
-      id: id,
+  const car = newcar[0];
+  const data = {
+    id: car.id,
+    createdAt: car.users_wishlists[0]?.created_at,
+    wishlistId: car.users_wishlists[0]?.id,
+    name: car.name,
+    yearStart: car.year_start,
+    yearEnd: car.year_end,
+    photoUrls: car.photo_urls,
+    brand: {
+      name: car.brand.name,
+      logoUrl: car.brand.logo_url,
     },
-  });
-  return brand;
+    bodyType: car.body_type.name,
+    manufactureCountry: car.manufacture_country.name,
+    pricesRanges: car.prices_ranges,
+    description: car.description,
+  } as ModelResponseDto;
+
+  return data;
 };
 
-export { getfourNewCars, getRangeCar, getCarBrand };
+export { getNewCar };

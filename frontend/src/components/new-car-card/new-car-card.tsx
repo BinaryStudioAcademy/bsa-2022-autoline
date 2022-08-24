@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import compare from '@assets/images/compare.svg';
 import {
@@ -7,6 +7,7 @@ import {
 } from '@autoline/shared/common/types/types';
 import { ExtendedCarCardPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
+import { CompareToast } from '@components/compare-toast/compare-toast';
 import { formatPrice } from '@helpers/helpers';
 import {
   useCreateWishlistMutation,
@@ -17,6 +18,11 @@ import { clsx } from 'clsx';
 import styles from './styles.module.scss';
 
 const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
+  const [isHidden, setIsHidden] = useState<boolean>(true);
+  const handleCompare = (): void => {
+    setIsHidden(false);
+  };
+
   const {
     type,
     isLiked = false,
@@ -84,7 +90,12 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
         >
           <HeartIcon />
         </button>
-        <img className={styles.button} src={compare} alt="compare button" />
+        <img
+          className={styles.button}
+          src={compare}
+          alt="compare button"
+          onClick={handleCompare}
+        />
       </div>
       <img src={photoUrls[0]} alt="car image" className={styles.carImage} />
       <div className={styles.cardFooter}>
@@ -99,8 +110,8 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
         </div>
       </div>
       <CompareToast
-        carName={newCar.name}
-        carDescription={newCar.description}
+        carName={carName}
+        carDescription={description}
         isHidden={isHidden}
         setIsHidden={setIsHidden}
       />

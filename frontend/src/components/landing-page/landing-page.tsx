@@ -15,6 +15,7 @@ import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {
   const { data: cars } = useGetNewCarsQuery();
+
   return (
     <>
       <Header />
@@ -55,9 +56,16 @@ export const LandingPage = (): React.ReactElement => {
         <div className={styles.secondContainer}>
           <div className={styles.secondContainerHeader}>New Cars</div>
           <div className={styles.secondContainerCards}>
-            {cars?.map((car) => (
-              <NewCarCard key={car.id} newCar={car} />
-            ))}
+            {!cars
+              ? null
+              : cars?.map((car) => (
+                  <NewCarCard
+                    type={'complectation'}
+                    isLiked={false}
+                    car={car}
+                    key={car.id}
+                  />
+                ))}
           </div>
         </div>
         <div className={styles.thirdContainer}>

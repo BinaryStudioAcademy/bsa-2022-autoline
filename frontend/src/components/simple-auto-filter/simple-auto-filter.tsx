@@ -89,9 +89,7 @@ const SimpleAutoFilter: FC = () => {
   if (isLoading || isOptionsLoading) return <h1>Loading...</h1>;
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <h4>SELECT YOUR CAR</h4>
-      </div>
+      <h5 className={styles.title}>SELECT YOUR CAR</h5>
 
       {options && (
         <AutocompleteInput

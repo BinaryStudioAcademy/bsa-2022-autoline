@@ -6,4 +6,4 @@ export { protectedRouter } from './test-protected-route/protected.router';
 export { userRouter } from './user/user.router';
 export { wishlistRouter } from './preferences/wishlist.router';
 export { updateUserRouter } from './update-user/update-user.router';
-export { carsRouter } from './cars/cars.router';
+export { viewedCarsRouter } from './viewed-cars/viewed.router';

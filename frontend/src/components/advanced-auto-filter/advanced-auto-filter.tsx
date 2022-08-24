@@ -40,6 +40,7 @@ const AdvancedAutoFilter: FC = () => {
   ]);
 
   const { data: options, isLoading } = useGetUsedOptionsQuery();
+
   useEffect(() => {
     setQueryParams(filtersToQuery(filters));
   }, [filters]);
@@ -119,15 +120,15 @@ const AdvancedAutoFilter: FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1>FILTER</h1>
+      <h4>FILTER</h4>
       <div className={styles.row}>
         <div className={styles.column}>
-          <h4 className={styles.blockTitle}>Region</h4>
+          <h5 className={styles.blockTitle}>Region</h5>
           {options && (
             <AutocompleteInput
               label="Regions"
               onChange={handleRegionChange}
-              value={getValueById(options.region, filters.regionId)}
+              value={getValueById(options.regions, filters.regionId)}
               options={options?.regions?.map((item: AutoRiaOption) => ({
                 label: item.name,
                 id: item.id,
@@ -144,10 +145,10 @@ const AdvancedAutoFilter: FC = () => {
           />
 
           <div className={styles.row}>
-            <h4 className={styles.blockTitle}>Brand Details</h4>
-            <p className={styles.addButton} onClick={handleAddNewDetails}>
+            <h5 className={styles.blockTitle}>Brand Details</h5>
+            <h6 className={styles.addButton} onClick={handleAddNewDetails}>
               + Add
-            </p>
+            </h6>
           </div>
           {brandDetailsList
             .sort((a, b) => parseInt(a.id) - parseInt(b.id))
@@ -159,7 +160,7 @@ const AdvancedAutoFilter: FC = () => {
               />
             ))}
 
-          <h4 className={styles.blockTitle}>Year</h4>
+          <h5 className={styles.blockTitle}>Year</h5>
           <div className={styles.row}>
             <RangeSelector
               list={years}
@@ -173,7 +174,7 @@ const AdvancedAutoFilter: FC = () => {
             />
           </div>
 
-          <h4 className={styles.blockTitle}>Price</h4>
+          <h5 className={styles.blockTitle}>Price</h5>
           <div className={styles.row}>
             <RangeSelector
               list={pricesRange.map((item: number) => item.toString())}
@@ -187,7 +188,7 @@ const AdvancedAutoFilter: FC = () => {
             />
           </div>
 
-          <h4 className={styles.blockTitle}>Race</h4>
+          <h5 className={styles.blockTitle}>Race</h5>
           <div className={styles.row}>
             <RangeSelector
               list={raceRange.map((item: number) => item.toString())}
@@ -231,10 +232,10 @@ const AdvancedAutoFilter: FC = () => {
         </div>
       </div>
 
-      <p onClick={resetFilters} className={styles.reset}>
+      <h6 onClick={resetFilters} className={styles.reset}>
         <UTurnRightIcon className={styles.resetIcon} />
         Reset All Filters
-      </p>
+      </h6>
     </div>
   );
 };

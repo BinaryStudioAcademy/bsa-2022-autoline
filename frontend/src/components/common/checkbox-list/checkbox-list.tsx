@@ -53,7 +53,7 @@ const CheckboxList: FC<Props> = ({
   return (
     <div className={styles.listContainer}>
       <FormControl onChange={handleChange}>
-        <h4 className={styles.title}>{title}</h4>
+        <h5 className={styles.title}>{title}</h5>
         <div className={styles.labelsContainer}>
           {limitedList.map((item) => (
             <FormControlLabel
@@ -73,10 +73,10 @@ const CheckboxList: FC<Props> = ({
           ))}
         </div>
         {listLimit === limitedList.length && (
-          <p onClick={showAll} className={styles.seeAll}>
+          <h6 onClick={showAll} className={styles.seeAll}>
             See All
             <ArrowDropDownIcon />
-          </p>
+          </h6>
         )}
       </FormControl>
     </div>

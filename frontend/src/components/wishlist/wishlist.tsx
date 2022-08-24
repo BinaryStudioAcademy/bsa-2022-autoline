@@ -18,7 +18,7 @@ const Wishlist: React.FC = () => {
         {data?.models?.map((model: ModelResponseDto) => {
           return (
             <Grid item xs={12} md={4} key={model.id}>
-              <NewCarCard car={model} type="model" />
+              <NewCarCard car={model} type="model" isLiked={true} />
             </Grid>
           );
         })}
@@ -29,7 +29,11 @@ const Wishlist: React.FC = () => {
           (complectation: ComplectationResponseDto) => {
             return (
               <Grid item xs={12} md={4} key={complectation.id}>
-                <NewCarCard car={complectation} type="complectation" />
+                <NewCarCard
+                  car={complectation}
+                  type="complectation"
+                  isLiked={true}
+                />
               </Grid>
             );
           },

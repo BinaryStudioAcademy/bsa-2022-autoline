@@ -135,7 +135,7 @@ export const SignUpForm = (): React.ReactElement => {
       <div className={styles.formBottom}>
         <Divider className={styles.divider}>or</Divider>
         <div className={styles.buttonsGroup}>
-          <SignWithGoogle />
+          <SignWithGoogle title={'Sign Up'} />
           <ButtonOutline text="Sign Up with Facebook" />
         </div>
       </div>

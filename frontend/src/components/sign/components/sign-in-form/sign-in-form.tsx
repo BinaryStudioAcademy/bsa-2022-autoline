@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app-route.enum';
 import { SignInRequestData } from '@common/types/types';
@@ -85,7 +84,7 @@ export const SignInForm = (): React.ReactElement => {
       <div className={styles.formBottom}>
         <Divider className={styles.divider}>or</Divider>
         <div className={styles.buttonsGroup}>
-          <SignWithGoogle />
+          <SignWithGoogle title={'Sign In'} />
           <ButtonOutline text="Sign In with Facebook" />
         </div>
       </div>

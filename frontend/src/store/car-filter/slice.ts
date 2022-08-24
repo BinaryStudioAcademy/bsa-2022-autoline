@@ -32,7 +32,6 @@ const { reducer, actions } = createSlice({
     ) => ({
       ...state,
       [action.payload.filterName]: action.payload.value,
-      // ...action.payload,
     }),
     resetAllFilters: () => initialState,
   },

@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app-route.enum';
@@ -10,10 +12,13 @@ import { useAppForm } from '@hooks/hooks';
 import Alert from '@mui/material/Alert';
 import Divider from '@mui/material/Divider';
 import { useSignInMutation } from '@store/queries/auth';
+import { setCredentials } from '@store/root-reducer';
 import { signInSchema as signInValidationSchema } from '@validation-schemas/validation-schemas';
 
 import { DEFAULT_SIGN_IN_PAYLOAD } from './common';
 import styles from './styles.module.scss';
+
+import type { SignInResponseData } from '@autoline/shared';
 
 export const SignInForm = (): React.ReactElement => {
   const { control, errors, handleSubmit } = useAppForm<SignInRequestData>({
@@ -21,6 +26,8 @@ export const SignInForm = (): React.ReactElement => {
     validationSchema: signInValidationSchema,
   });
   const [signIn, { isLoading, error }] = useSignInMutation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const onLogin = ({ email, password }: SignInRequestData): void => {
     const user = {
       user: {
@@ -28,7 +35,13 @@ export const SignInForm = (): React.ReactElement => {
         password,
       },
     };
-    signIn(user).unwrap();
+    signIn(user)
+      .unwrap()
+      .then(({ accessToken }: SignInResponseData) => {
+        localStorage.setItem('access-token', accessToken);
+        dispatch(setCredentials({ accessToken }));
+        navigate(AppRoute.ROOT);
+      });
   };
   console.log(error);
   return (

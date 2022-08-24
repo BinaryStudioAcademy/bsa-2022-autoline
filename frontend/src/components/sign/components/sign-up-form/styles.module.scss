@@ -29,6 +29,10 @@
   }
 }
 
+.alert {
+  margin-bottom: 10px;
+}
+
 .formBottom {
   padding-top: 10px;
 }
@@ -46,4 +50,8 @@
       margin-bottom: 15px;
     }
   }
+}
+
+.dialogContentText {
+  text-align: justify;
 }

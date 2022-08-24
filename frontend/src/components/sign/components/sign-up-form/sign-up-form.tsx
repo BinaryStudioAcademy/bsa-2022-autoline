@@ -1,29 +1,52 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { FieldValues } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
 
+import { SignUpRequestData } from '@autoline/shared/common/types/types';
+import { signUpSchema as baseSchema } from '@autoline/shared/validation-schemas';
 import { AppRoute } from '@common/enums/app/app-route.enum';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
-import { SelectField } from '@components/common/select-field/select-field';
-import { MenuItem, SelectChangeEvent } from '@mui/material';
+import { useAppForm } from '@hooks/hooks';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
+import { ErrorType } from '@store/queries';
+import { useSignUpMutation } from '@store/queries/auth';
+import * as Yup from 'yup';
 
 import styles from './styles.module.scss';
 
+const signUpSchema = baseSchema.shape({
+  repeatPassword: Yup.string()
+    .required('Please, repeat the password')
+    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+});
+
 export const SignUpForm = (): React.ReactElement => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [location, setLocation] = useState('');
-  const handleSubmit = (): void => {
-    setIsLoading(true);
+  const { control, errors, handleSubmit } = useAppForm<SignUpRequestData>({
+    defaultValues: {},
+    validationSchema: signUpSchema,
+  });
+
+  const navigate = useNavigate();
+  const [signUp, { isLoading, isSuccess, isError, error: signUpError }] =
+    useSignUpMutation();
+  const signUpErrorData = signUpError as ErrorType;
+
+  const onSubmit = (formData: FieldValues): void => {
+    const { name, email, password } = formData;
+    signUp({ name, email, password });
   };
 
-  const handleSelectChange = (event: SelectChangeEvent): void => {
-    setLocation(event.target.value as string);
-  };
-
-  const handleSelectClose = (): void => {
-    setIsLoading(false);
+  const navigateToSignIn = (): void => {
+    navigate('../sign-in');
   };
 
   return (
@@ -35,25 +58,76 @@ export const SignUpForm = (): React.ReactElement => {
           Sign In
         </Link>
       </p>
-      <form name="signupForm" onSubmit={handleSubmit} className={styles.form}>
+      <form
+        name="signupForm"
+        onSubmit={handleSubmit(onSubmit)}
+        className={styles.form}
+      >
         <fieldset disabled={isLoading} className={styles.fieldset}>
-          <InputField name="Full name" type="text" required={true} />
-          <InputField name="Email" type="email" required={true} />
-          <InputField name="Password" type="password" required={true} />
-          <InputField name="Repeat Password" type="password" required={true} />
-          <InputField name="Phone" type="tel" required={false} />
-          <SelectField
-            id="location"
-            name="Location"
-            value={location}
-            onChange={handleSelectChange}
-            onClose={handleSelectClose}
-            required={false}
+          <InputField
+            name="name"
+            type="text"
+            required={true}
+            errors={errors}
+            control={control}
+            inputLabel="Full name"
+          />
+
+          <InputField
+            name="email"
+            type="email"
+            required={true}
+            errors={errors}
+            control={control}
+            inputLabel="Email"
+          />
+
+          <InputField
+            name="password"
+            type="password"
+            required={true}
+            errors={errors}
+            control={control}
+            inputLabel="Password"
+          />
+
+          <InputField
+            name="repeatPassword"
+            type="password"
+            required={true}
+            errors={errors}
+            control={control}
+            inputLabel="Repeat Password"
+          />
+
+          {isError && (
+            <Alert
+              className={styles.alert}
+              severity="error"
+            >{`${signUpErrorData.data.error}`}</Alert>
+          )}
+
+          <Dialog
+            open={isSuccess}
+            onClose={navigateToSignIn}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
           >
-            <MenuItem value="kyiv">Kyiv</MenuItem>
-            <MenuItem value="kharkiv">Kharkiv</MenuItem>
-            <MenuItem value="odesa">Odesa</MenuItem>
-          </SelectField>
+            <DialogTitle>{'Successful registration'}</DialogTitle>
+            <DialogContent>
+              <DialogContentText className={styles.dialogContentText}>
+                Registration is successfully completed, you can sign in. Please
+                verify your e-mail in order to use full functionality of the
+                website.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={navigateToSignIn} autoFocus>
+                Sign In
+              </Button>
+            </DialogActions>
+          </Dialog>
+
           <ButtonFill text="Create Account" />
         </fieldset>
       </form>

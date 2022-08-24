@@ -32,16 +32,18 @@ export const Sign = (): React.ReactElement => {
 
   return (
     <div style={sectionStyle} className={styles.bgImage}>
-      <Container className={styles.wrapper}>
-        <div className={styles.wrapperInner}>
-          <div className={styles.content}>
-            <Link to={AppRoute.ROOT}>
-              <img className={styles.logo} src={Logo} alt="Autoline" />
-            </Link>
-            {getScreen(pathname)}
+      <div className={styles.scrollBar}>
+        <Container className={styles.wrapper}>
+          <div className={styles.wrapperInner}>
+            <div className={styles.content}>
+              <Link to={AppRoute.ROOT}>
+                <img className={styles.logo} src={Logo} alt="Autoline" />
+              </Link>
+              {getScreen(pathname)}
+            </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </div>
   );
 };

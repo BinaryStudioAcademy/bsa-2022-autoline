@@ -3,10 +3,12 @@ export type { InputFieldPropsType } from './input-field/input-field';
 export type { SelectFieldPropsType } from './select-field/select-field';
 export type { RootState } from './app/root-state.type';
 
-export {
-  type SignInRequestData,
-  type SignInResponseData,
-  type SignInRequestUser,
+export type {
+  SignInRequestData,
+  SignInResponseData,
+  SignInRequestUser,
+  SignUpRequestData,
+  SignUpResponseData,
 } from './auth/auth';
 
 export type { ValidationSchema } from './validation/validation';
@@ -15,4 +17,6 @@ export type {
   CarDataType,
   CarDataPropsType,
   CarDataListPropsType,
+  ExtendedCarCardPropsType,
 } from './card/card';
+export type { CompleteSetPropsType } from './complete-set/complete-set';

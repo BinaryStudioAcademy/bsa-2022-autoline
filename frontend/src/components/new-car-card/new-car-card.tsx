@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 import compare from '@assets/images/compare.svg';
 import heart from '@assets/images/heart.svg';
 import { NewCarsBrand } from '@autoline/shared/common/types/types';
+import { CompareToast } from '@components/compare-toast/compare-toast';
 
 import styles from './styles.module.scss';
 
@@ -11,6 +12,11 @@ interface NewCarsProps {
 }
 
 const NewCarCard: FC<NewCarsProps> = ({ newCar }) => {
+  const [isHidden, setIsHidden] = useState<boolean>(false);
+  const onCompareHandler = (): void => {
+    setIsHidden(false);
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.carTitle}>
@@ -19,7 +25,12 @@ const NewCarCard: FC<NewCarsProps> = ({ newCar }) => {
       </div>
       <div className={styles.buttonsWrapper}>
         <img className={styles.button} src={heart} alt="like button" />
-        <img className={styles.button} src={compare} alt="compare button" />
+        <img
+          className={styles.button}
+          src={compare}
+          alt="compare button"
+          onClick={onCompareHandler}
+        />
       </div>
       <img
         src={newCar.photo_urls[0]}
@@ -38,6 +49,12 @@ const NewCarCard: FC<NewCarsProps> = ({ newCar }) => {
           </span>
         </div>
       </div>
+      <CompareToast
+        carName={newCar.name}
+        carDescription={newCar.description}
+        isHidden={isHidden}
+        setIsHidden={setIsHidden}
+      />
     </div>
   );
 };

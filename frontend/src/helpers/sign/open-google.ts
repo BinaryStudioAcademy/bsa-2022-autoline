@@ -1,6 +1,6 @@
 import { ENV } from '@common/enums/app/env.enum';
 
-const openGooglePage = (token: string | null = null): void => {
+const openGoogleAuthPage = (token: string | null = null): void => {
   window.open(
     `${ENV.API_PATH}/auth/google/sign?token=${token}`,
     'Google OAuth',
@@ -8,4 +8,4 @@ const openGooglePage = (token: string | null = null): void => {
   );
 };
 
-export { openGooglePage };
+export { openGoogleAuthPage };

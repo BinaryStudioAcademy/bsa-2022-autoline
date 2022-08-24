@@ -1,3 +1,3 @@
 export { getFormValidationResolver } from './validation/validation';
 export { formatPrice } from './utils/format-price';
-export { openGooglePage } from './sign/open-google';
+export { openGoogleAuthPage } from './sign/open-google';

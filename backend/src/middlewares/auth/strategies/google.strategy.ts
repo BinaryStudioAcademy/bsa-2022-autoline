@@ -22,49 +22,53 @@ const googleStrategy = new GoogleStrategy(
           },
         },
       });
-      if (!user) {
-        const payload =
-          req.query.state !== 'null'
-            ? (verifyToken(req.query.state as string) as JwtPayload)
-            : undefined;
-        if (payload) {
-          user = await prisma.user.update({
-            where: {
-              id: payload ? payload.sub : '',
-            },
-            data: {
-              User_Security: {
-                update: {
-                  google_acc_id: profile.id,
-                },
+
+      if (user) return done(null, user);
+
+      const payload =
+        req.query.state !== 'null'
+          ? (verifyToken(req.query.state as string) as JwtPayload)
+          : undefined;
+      if (payload) {
+        user = await prisma.user.update({
+          where: {
+            id: payload ? payload.sub : '',
+          },
+          data: {
+            User_Security: {
+              update: {
+                google_acc_id: profile.id,
               },
             },
-          });
-        } else {
-          user = await prisma.user.upsert({
-            where: {
-              email: profile._json.email as string,
-            },
-            update: {
-              User_Security: {
-                update: {
-                  google_acc_id: profile.id,
-                },
-              },
-            },
-            create: {
-              name: profile.displayName,
-              email: profile._json.email as string,
-              photo_url: profile._json.picture,
-              User_Security: {
-                create: {
-                  google_acc_id: profile.id,
-                },
-              },
-            },
-          });
-        }
+          },
+        });
+
+        return done(null, user);
       }
+
+      user = await prisma.user.upsert({
+        where: {
+          email: profile._json.email as string,
+        },
+        update: {
+          User_Security: {
+            update: {
+              google_acc_id: profile.id,
+            },
+          },
+        },
+        create: {
+          name: profile.displayName,
+          email: profile._json.email as string,
+          photo_url: profile._json.picture,
+          User_Security: {
+            create: {
+              google_acc_id: profile.id,
+            },
+          },
+        },
+      });
+
       done(null, user);
     } catch (err) {
       done(err as Error, false);

@@ -1,4 +1,4 @@
-interface NewCarsPrices {
+interface NewCarsBrand {
   id: string;
   name: string;
   description: string;
@@ -6,6 +6,8 @@ interface NewCarsPrices {
   price_start: number;
   price_end: number;
   manufacturer_id: string;
+  brand_name: string;
+  logo_url: string;
 }
 
-export type { NewCarsPrices };
+export { type NewCarsBrand };

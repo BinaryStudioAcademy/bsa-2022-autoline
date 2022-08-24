@@ -8,11 +8,13 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { TopCarCard } from '@components/top-car-card/top-car-card';
 import { Container } from '@mui/material';
+import { useGetNewCarsQuery } from '@store/queries/new-cars';
 
 import { Header } from './components/components';
 import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {
+  const { data: cars } = useGetNewCarsQuery();
   return (
     <>
       <Header />
@@ -53,10 +55,9 @@ export const LandingPage = (): React.ReactElement => {
         <div className={styles.secondContainer}>
           <div className={styles.secondContainerHeader}>New Cars</div>
           <div className={styles.secondContainerCards}>
-            <NewCarCard />
-            <NewCarCard />
-            <NewCarCard />
-            <NewCarCard />
+            {cars?.map((car) => (
+              <NewCarCard key={car.id} newCar={car} />
+            ))}
           </div>
         </div>
         <div className={styles.thirdContainer}>

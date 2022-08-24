@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Logo from '@assets/images/logo.svg';
@@ -12,40 +12,21 @@ import { useRequestLinkMutation } from '@store/queries/verification-link';
 import styles from './styles.module.scss';
 import { emailSchema } from './validation-schema';
 
-declare type SignInRequestData = {
+declare type EmailRequestData = {
   email: string;
 };
 
 const MailVerificationFailed: FC = (): React.ReactElement => {
-  const [email, setEmail] = useState<string>('');
-  const [validationError, setValidationError] = useState({
-    email: { message: '' },
-  });
   const [getLink] = useRequestLinkMutation();
   const navigate = useNavigate();
-  setEmail('jkds');
-  const { control, errors } = useAppForm<SignInRequestData>({
+  const { control, errors, handleSubmit } = useAppForm<EmailRequestData>({
     defaultValues: { email: '' },
     validationSchema: emailSchema,
   });
-  // const onChangeHandler = async (
-  //   event: React.ChangeEvent<HTMLTextAreaElement>,
-  // ): Promise<void> => {
-  //   setEmail(event.target.value);
-  // };
-  console.log(errors);
-  const sendLinkHandler = async (): Promise<void> => {
-    try {
-      await emailSchema.validate({ email });
-      await getLink(email);
-      navigate(AppRoute.SIGN_IN);
-    } catch (error) {
-      if (error instanceof Error) {
-        setValidationError({
-          email: { message: error.message },
-        });
-      }
-    }
+
+  const onGetLink = async ({ email }: EmailRequestData): Promise<void> => {
+    await getLink(email);
+    navigate(AppRoute.SIGN_IN);
   };
 
   return (
@@ -61,28 +42,19 @@ const MailVerificationFailed: FC = (): React.ReactElement => {
               You can request new verification link, type your email and click
               button below.
             </p>
-            {/* <form
-              name="signinForm"
-              onSubmit={handleSubmit(onSendLink)}
-              className={styles.form}
-            > */}
             <InputField
               name="email"
               type="email"
               required={true}
               control={control}
-              errors={validationError}
-              // onChange={onChangeHandler}
-              placeholder="sdsd"
-              defaultValue="sdfsd"
+              errors={errors}
             />
             <div className={styles.center}>
               <ButtonFill
                 text="Get verification link"
-                onClick={sendLinkHandler}
+                onClick={handleSubmit(onGetLink)}
               />
             </div>
-            {/* </form> */}
           </div>
         </div>
       </Container>

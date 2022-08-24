@@ -1,4 +1,5 @@
-import { NewCarsPrices, NewCarsBrand } from '@common/types/types';
+import { NewCarsBrand } from '@autoline/shared/common/types/types';
+import { NewCarsPrices } from '@common/types/types';
 import {
   getfourNewCars,
   getRangeCar,
@@ -15,10 +16,11 @@ const carsWithPrices = async (): Promise<NewCarsPrices[]> => {
   for (const car of newCars) {
     for (const price of priceRanges) {
       if (car.id === price?.model_id) {
-        const { name, description, manufacturer_id } = { ...car };
+        const { id, name, description, manufacturer_id } = { ...car };
         const photo_urls = car.photo_urls as string[];
         const { price_start, price_end } = { ...price };
         carsWithPreces.push({
+          id,
           name,
           description,
           photo_urls,

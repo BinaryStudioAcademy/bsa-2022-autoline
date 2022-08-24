@@ -7,7 +7,7 @@ import {
   FetchArgs,
 } from '@reduxjs/toolkit/query/react';
 
-type ErrorType = {
+export type ErrorType = {
   data: {
     message: string;
   };

@@ -14,6 +14,8 @@ export type {
   TokenPayload,
   SignInRequestData,
   SignInResponseData,
+  SignUpRequestData,
+  SignUpResponseData,
   ErrorMessage,
   SignUpResponseDto,
   ForgotPasswordRequestData,

@@ -9,7 +9,7 @@ export {
   type UserCreateInput,
   type UserResetPassword,
   type WishlistInput,
-  type getViewedCarsListResponse,
+  type GetViewedCarsListResponse,
 } from './prisma/prisma';
 
 export { type AutoriaRequestParams } from './cars/autoria-request-params';

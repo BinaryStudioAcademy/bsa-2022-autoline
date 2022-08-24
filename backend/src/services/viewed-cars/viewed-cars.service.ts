@@ -4,11 +4,11 @@ import type {
   setViewedCarRequest,
   setViewedCarResponse,
 } from '@autoline/shared';
-import type { getViewedCarsListResponse } from '@common/types/types';
+import type { GetViewedCarsListResponse } from '@common/types/types';
 
-const getList = async (
+const getViewedCarsList = async (
   userId: string,
-): Promise<(getViewedCarsListResponse | null | undefined)[]> => {
+): Promise<(GetViewedCarsListResponse | null | undefined)[]> => {
   const viewedСarsList = await prisma.users_Viewed_Cars.findMany({
     where: {
       user_id: userId,
@@ -22,7 +22,7 @@ const getList = async (
     },
   });
 
-  const detailedListOfReviewedCars = await Promise.all(
+  const detailedListOfviewedCars = await Promise.all(
     viewedСarsList.map(async ({ model_id, complectation_id }) => {
       return prisma.model.findFirst({
         where: {
@@ -51,15 +51,15 @@ const getList = async (
     }),
   );
 
-  return detailedListOfReviewedCars;
+  return detailedListOfviewedCars;
 };
 
-const setCar = async ({
+const addCarToViewed = async ({
   userId,
   modelId,
   complectationId,
 }: setViewedCarRequest): Promise<setViewedCarResponse> => {
-  const reviewedCarList = await prisma.users_Viewed_Cars.findFirst({
+  const viewedCarList = await prisma.users_Viewed_Cars.findFirst({
     where: {
       user_id: userId,
       model_id: modelId,
@@ -67,7 +67,7 @@ const setCar = async ({
     },
   });
 
-  if (reviewedCarList) {
+  if (viewedCarList) {
     throw new Error('Viewed list of cars already exists');
   }
 
@@ -89,4 +89,4 @@ const setCar = async ({
   };
 };
 
-export { getList, setCar };
+export { getViewedCarsList, addCarToViewed };

@@ -1,12 +1,12 @@
 import * as viewedCarController from '@controllers/viewed-cars/viewed-cars.controller';
 import { Router } from 'express';
 
-const PATH = '/reviewed';
+const PATH = '/viewed';
 
 const viewedCarsRouter = Router();
 
-viewedCarsRouter.get(`${PATH}/:userId`, viewedCarController.getList);
+viewedCarsRouter.get(`${PATH}/:userId`, viewedCarController.getViewedCarsList);
 
-viewedCarsRouter.post(`${PATH}/:userId`, viewedCarController.setCar);
+viewedCarsRouter.post(`${PATH}/:userId`, viewedCarController.addCarToViewed);
 
 export { viewedCarsRouter };

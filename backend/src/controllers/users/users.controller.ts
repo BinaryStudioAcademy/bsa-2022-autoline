@@ -40,6 +40,7 @@ const updateUser = async (
   try {
     const { id: userId } = req.params;
     const { tokenPayload, ...userData } = req.body;
+    console.log(tokenPayload);
     const user = await usersService.updateUser(userId, userData);
 
     res.json(user).status(httpStatus.OK);

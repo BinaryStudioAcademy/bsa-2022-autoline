@@ -15,7 +15,7 @@ type WishlistInput = {
   complectationId?: string;
 };
 
-interface getViewedCarsListResponse {
+interface GetViewedCarsListResponse {
   name: string;
   year_start: number;
   year_end: number | null;
@@ -32,5 +32,5 @@ export type {
   UserCreateInput,
   UserResetPassword,
   WishlistInput,
-  getViewedCarsListResponse,
+  GetViewedCarsListResponse,
 };

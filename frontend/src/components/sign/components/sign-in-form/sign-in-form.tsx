@@ -1,19 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app-route.enum';
+import { StorageKey } from '@common/enums/app/storage-key.enum';
 import { SignInRequestData } from '@common/types/types';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
+import { SignWithGoogle } from '@components/sign/components/sign-with-google/sign-with-google';
 import { useAppForm } from '@hooks/hooks';
 import Alert from '@mui/material/Alert';
 import Divider from '@mui/material/Divider';
 import { useSignInMutation } from '@store/queries/auth';
+import { setCredentials } from '@store/root-reducer';
 import { signInSchema as signInValidationSchema } from '@validation-schemas/validation-schemas';
 
 import { DEFAULT_SIGN_IN_PAYLOAD } from './common';
 import styles from './styles.module.scss';
+
+import type { SignInResponseData } from '@autoline/shared';
 
 export const SignInForm = (): React.ReactElement => {
   const { control, errors, handleSubmit } = useAppForm<SignInRequestData>({
@@ -21,6 +26,8 @@ export const SignInForm = (): React.ReactElement => {
     validationSchema: signInValidationSchema,
   });
   const [signIn, { isLoading, error }] = useSignInMutation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const onLogin = ({ email, password }: SignInRequestData): void => {
     const user = {
       user: {
@@ -28,9 +35,15 @@ export const SignInForm = (): React.ReactElement => {
         password,
       },
     };
-    signIn(user).unwrap();
+    signIn(user)
+      .unwrap()
+      .then(({ accessToken }: SignInResponseData) => {
+        localStorage.setItem(StorageKey.TOKEN, accessToken);
+        dispatch(setCredentials({ accessToken }));
+        navigate(AppRoute.ROOT);
+      });
   };
-  console.log(error);
+
   return (
     <>
       <h1 className={styles.title}>Sign In</h1>
@@ -71,7 +84,7 @@ export const SignInForm = (): React.ReactElement => {
       <div className={styles.formBottom}>
         <Divider className={styles.divider}>or</Divider>
         <div className={styles.buttonsGroup}>
-          <ButtonOutline text="Sign In with Google" />
+          <SignWithGoogle title={'Sign In'} />
           <ButtonOutline text="Sign In with Facebook" />
         </div>
       </div>

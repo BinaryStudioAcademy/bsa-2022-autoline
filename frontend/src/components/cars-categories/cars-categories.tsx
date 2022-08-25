@@ -1,17 +1,16 @@
 import React, { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { Brand } from '@common/types/cars/brand.type';
 import { mockBrands } from '@components/cars-categories/mock-brands';
 import { SliderNavButton } from '@components/cars-categories/slider-nav-button/slider-nav-button';
 import { swiperParams } from '@components/cars-categories/swiper-params';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/mousewheel';
 
-import { Brand } from '../../types/brand.type';
 import styles from './styles.module.scss';
 
 const CarsCategories: FC = () => {

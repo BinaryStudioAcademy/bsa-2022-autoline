@@ -1,3 +1,4 @@
+import { StorageKey } from '@common/enums/enums';
 import { createSlice } from '@reduxjs/toolkit';
 
 type AuthState = {
@@ -7,14 +8,23 @@ type AuthState = {
 
 const initialState: AuthState = {
   user: null,
-  token: null,
+  token: localStorage.getItem(StorageKey.TOKEN) || null,
 };
 
-const { reducer } = createSlice({
+const { reducer, actions } = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setCredentials: (state, action) => {
+      const { accessToken } = action.payload;
+      state.token = accessToken;
+    },
+    logOut: (state) => {
+      state.token = null;
+    },
+  },
   extraReducers: {},
 });
 
+export const { setCredentials, logOut } = actions;
 export { reducer };

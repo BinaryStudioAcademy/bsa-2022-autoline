@@ -7,7 +7,7 @@ import {
   FetchArgs,
 } from '@reduxjs/toolkit/query/react';
 
-type ErrorType = {
+export type ErrorType = {
   data: {
     message: string;
   };
@@ -27,5 +27,6 @@ const baseQuery = fetchBaseQuery({
 
 export const api = createApi({
   baseQuery: baseQuery,
+  tagTypes: ['WishlistCars', 'User'],
   endpoints: () => ({}),
 });

@@ -43,14 +43,10 @@ const setWishlist = async (
   };
 };
 
-const deleteWishlist = async (input: WishlistInput): Promise<void> => {
-  const { userId, modelId, complectationId } = input;
-
-  const wishlist = await prisma.user_Wishlist.findFirst({
+const deleteWishlist = async (wishlistId: string): Promise<void> => {
+  const wishlist = await prisma.user_Wishlist.findUnique({
     where: {
-      user_id: userId,
-      model_id: modelId,
-      complectation_id: complectationId,
+      id: wishlistId,
     },
   });
 
@@ -84,6 +80,7 @@ const getWishlistByUserId = async (
       created_at: true,
       model: {
         select: {
+          id: true,
           name: true,
           year_start: true,
           year_end: true,
@@ -124,8 +121,9 @@ const getWishlistByUserId = async (
     }
 
     const data = {
-      id: wishlist.id,
+      id: wishlist.model?.id,
       createdAt: wishlist.created_at,
+      wishlistId: wishlist.id,
       name: wishlist.model?.name,
       yearStart: wishlist.model?.year_start,
       yearEnd: wishlist.model?.year_end,
@@ -157,6 +155,7 @@ const getWishlistByUserId = async (
       created_at: true,
       complectation: {
         select: {
+          id: true,
           name: true,
           engine: true,
           engine_displacement: true,
@@ -222,8 +221,9 @@ const getWishlistByUserId = async (
       const modelData = wishlist.complectation?.model;
 
       const data = {
-        id: wishlist.id,
+        id: wishlist.complectation?.id,
         createdAt: wishlist.created_at,
+        wishlistId: wishlist.id,
         complectationName: wishlist.complectation?.name,
         engine: wishlist.complectation?.engine,
         engineDisplacement:

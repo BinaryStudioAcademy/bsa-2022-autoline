@@ -1,14 +1,13 @@
 import { getUsers, updateUser } from '@controllers/users/users.controller';
+import { adminAuthMiddleware } from '@middlewares/middlewares';
 import { Router } from 'express';
 
 const PATH = '/users';
 
 const userRouter = Router();
 
-// We need to add adminAuthMiddleware here
-userRouter.get(`${PATH}`, getUsers);
+userRouter.get(`${PATH}`, adminAuthMiddleware, getUsers);
 
-// We need to add adminAuthMiddleware here
-userRouter.patch(`${PATH}/:id`, updateUser);
+userRouter.patch(`${PATH}/:id`, adminAuthMiddleware, updateUser);
 
 export { userRouter };

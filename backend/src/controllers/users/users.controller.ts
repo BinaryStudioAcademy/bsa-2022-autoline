@@ -1,11 +1,22 @@
-import { TypedRequestBody, TypedRequestQuery } from '@common/types/types';
+import { TokenPayload } from '@autoline/shared';
+import { TypedRequest, TypedRequestQuery } from '@common/types/types';
 import { errorsHandler } from '@middlewares/middlewares';
-import { User } from '@prisma/client';
+import { Role, Sex } from '@prisma/client';
 import * as usersService from '@services/users/users.service';
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
 
-type UserUpdateInput = TypedRequestBody<Pick<User, 'id'> & Partial<User>>;
+interface UserUpdateInput {
+  id: string;
+  tokenPayload: TokenPayload;
+  name?: string;
+  sex?: Sex;
+  role?: Role;
+  phone?: string;
+  email?: string;
+  location?: string;
+  photoUrl?: string;
+}
 
 const getUsers = async (
   req: TypedRequestQuery<Record<string, never>>,
@@ -22,13 +33,13 @@ const getUsers = async (
 };
 
 const updateUser = async (
-  req: UserUpdateInput,
+  req: TypedRequest<{ id: string }, UserUpdateInput>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const { id: userId } = req.params;
-    const userData = req.body;
+    const { ...userData } = req.body;
     const user = await usersService.updateUser(userId, userData);
 
     res.json(user).status(httpStatus.OK);

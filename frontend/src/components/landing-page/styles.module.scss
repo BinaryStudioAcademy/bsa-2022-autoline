@@ -1,7 +1,6 @@
 @import "@assets/css/styles";
 
 html {
-  font-size: 10px;
   font-family: var(--primary-font);
 }
 
@@ -31,18 +30,17 @@ body {
     padding-left: 0;
 
     .firstContainerLeft {
-      width: 330px;
+      width: 28rem;
       margin-bottom: 150px;
 
       .firstContainerLeftTextMain {
         font-weight: 900;
-        font-size: 4.4rem;
+        font-size: 3.625rem;
         text-transform: uppercase;
       }
 
       .firstContainerLeftTextSecondary {
         margin: 15px 0;
-        font-size: 1.2rem;
       }
 
       .buttonFill,
@@ -100,7 +98,7 @@ body {
     .secondContainerCards,
     .fourthContainerCards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(4, minmax(250px, 1fr));
       justify-items: center;
       gap: 20px;
     }

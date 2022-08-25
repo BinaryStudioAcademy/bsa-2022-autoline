@@ -54,7 +54,7 @@ export const SignUpForm = (): React.ReactElement => {
     <>
       <h1 className={styles.title}>Sign Up</h1>
       <p className={styles.subtitle}>
-        <span>I have an account? </span>
+        <span>Have an account? </span>
         <Link className={styles.link} to={AppRoute.SIGN_IN}>
           Sign In
         </Link>
@@ -105,7 +105,7 @@ export const SignUpForm = (): React.ReactElement => {
             <Alert
               className={styles.alert}
               severity="error"
-            >{`${signUpErrorData.data.error}`}</Alert>
+            >{`${signUpErrorData.data.message}`}</Alert>
           )}
 
           <Dialog

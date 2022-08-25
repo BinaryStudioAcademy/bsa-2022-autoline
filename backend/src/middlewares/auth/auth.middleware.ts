@@ -56,7 +56,7 @@ const signUpMiddleware = async (
   } catch (err) {
     const { message } = err as ErrorMessage;
     console.error(err);
-    res.status(httpStatus.FORBIDDEN).json({ error: message });
+    res.status(httpStatus.FORBIDDEN).json({ message });
     next(err);
   }
 };

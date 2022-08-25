@@ -5,11 +5,12 @@ import { AppRoute } from '@common/enums/app/app-route.enum';
 import { CarsCategories } from '@components/cars-categories/cars-categories';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
-// import { NewCarCard } from '@components/new-car-card/new-car-card';
+import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { TopCarCard } from '@components/top-car-card/top-car-card';
 import { Container } from '@mui/material';
 
 import { Header } from './components/components';
+import { newCars } from './mock-new-cars';
 import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {
@@ -57,6 +58,16 @@ export const LandingPage = (): React.ReactElement => {
             {/*<NewCarCard />*/}
             {/*<NewCarCard />*/}
             {/*<NewCarCard />*/}
+            {!newCars
+              ? null
+              : newCars?.map((car) => (
+                  <NewCarCard
+                    type={'complectation'}
+                    isLiked={false}
+                    car={car}
+                    key={car.id}
+                  />
+                ))}
           </div>
         </div>
         <div className={styles.thirdContainer}>

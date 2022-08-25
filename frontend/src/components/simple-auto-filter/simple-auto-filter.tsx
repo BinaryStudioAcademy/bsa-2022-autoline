@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { AutoRiaOption } from '@autoline/shared/common/types/types';
 import { FiltersNames } from '@common/enums/cars/filters-names.enum';
@@ -11,6 +12,7 @@ import { SelectField } from '@components/common/select-field/select-field';
 import { filtersToQuery } from '@helpers/filters-to-query';
 import { getValueById } from '@helpers/get-value-by-id';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
+import { Button, Zoom } from '@mui/material';
 import { setValue } from '@store/car-filter/slice';
 import {
   useGetBrandsQuery,
@@ -22,6 +24,7 @@ import {
 import styles from './styles.module.scss';
 
 const SimpleAutoFilter: FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const filters = useAppSelector((state) => state.carFilter);
@@ -86,6 +89,12 @@ const SimpleAutoFilter: FC = () => {
     });
   };
 
+  const isButtonVisible = Boolean(
+    Object.values(filters).some((filter) => filter.length >= 1),
+  );
+
+  const navigateToSearch = (): void => navigate('/search');
+
   if (isLoading || isOptionsLoading) return <h1>Loading...</h1>;
   return (
     <div className={styles.container}>
@@ -95,7 +104,7 @@ const SimpleAutoFilter: FC = () => {
         <AutocompleteInput
           label="Regions"
           onChange={handleRegionChange}
-          value={getValueById(options.region, filters.regionId)}
+          value={getValueById(options.regions, filters.regionId)}
           options={options?.regions?.map((item: AutoRiaOption) => ({
             label: item.name,
             id: item.id,
@@ -166,6 +175,18 @@ const SimpleAutoFilter: FC = () => {
             />
           </div>
         </div>
+      </div>
+      <div className={styles.button}>
+        <Zoom in={isButtonVisible}>
+          <Button
+            onClick={navigateToSearch}
+            disabled={!isButtonVisible}
+            className={styles.searchButton}
+            variant="contained"
+          >
+            SEARCH
+          </Button>
+        </Zoom>
       </div>
     </div>
   );

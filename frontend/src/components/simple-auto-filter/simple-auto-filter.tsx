@@ -95,7 +95,7 @@ const SimpleAutoFilter: FC = () => {
         <AutocompleteInput
           label="Regions"
           onChange={handleRegionChange}
-          value={getValueById(options.region, filters.regionId)}
+          value={getValueById(options.regions, filters.regionId)}
           options={options?.regions?.map((item: AutoRiaOption) => ({
             label: item.name,
             id: item.id,

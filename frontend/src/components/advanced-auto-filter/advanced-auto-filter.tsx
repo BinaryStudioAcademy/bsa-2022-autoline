@@ -2,7 +2,12 @@ import React, { FC, useEffect, useMemo, useState } from 'react';
 
 import { AutoRiaOption } from '@autoline/shared/common/types/types';
 import { FiltersNames } from '@common/enums/cars/filters-names.enum';
-import { pricesRange, raceRange, yearsRange } from '@common/enums/cars/ranges';
+import {
+  engineDisplacementRange,
+  enginePowerRange,
+  pricesRange,
+  yearsRange,
+} from '@common/enums/cars/ranges';
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { CheckboxListDataType } from '@common/types/cars/checkbox-list-data.type';
@@ -188,16 +193,29 @@ const AdvancedAutoFilter: FC = () => {
             />
           </div>
 
-          <h5 className={styles.blockTitle}>Race</h5>
+          <h5 className={styles.blockTitle}>Engine Power</h5>
           <div className={styles.row}>
             <RangeSelector
-              list={raceRange.map((item: number) => item.toString())}
-              minTitle="Km Min"
-              maxTitle="Km Max"
-              minFilterName={FiltersNames.RACE_START}
-              maxFilterName={FiltersNames.RACE_END}
-              selectedMin={filters.raceStart}
-              selectedMax={filters.raceEnd}
+              list={enginePowerRange.map((item: number) => item.toString())}
+              minTitle="hP Min"
+              maxTitle="hP Max"
+              minFilterName={FiltersNames.ENGINE_POWER_START}
+              maxFilterName={FiltersNames.ENGINE_POWER_END}
+              selectedMin={filters.enginePowerStart}
+              selectedMax={filters.enginePowerEnd}
+              onChange={handleRangeChange}
+            />
+          </div>
+          <h5 className={styles.blockTitle}>Engine Displacement</h5>
+          <div className={styles.row}>
+            <RangeSelector
+              list={engineDisplacementRange}
+              minTitle="L Min"
+              maxTitle="L Max"
+              minFilterName={FiltersNames.ENGINE_DISPLACEMENT_START}
+              maxFilterName={FiltersNames.ENGINE_DISPLACEMENT_END}
+              selectedMin={filters.engineDisplacementStart}
+              selectedMax={filters.engineDisplacementEnd}
               onChange={handleRangeChange}
             />
           </div>

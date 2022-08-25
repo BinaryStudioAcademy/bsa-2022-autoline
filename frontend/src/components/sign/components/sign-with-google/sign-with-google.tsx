@@ -10,13 +10,16 @@ const SignWithGoogle = ({ title }: { title: string }): React.ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const onStorageEvent = useCallback((e: StorageEvent): void => {
-    if (e.key === 'token') {
-      const accessToken = localStorage.getItem('token');
-      dispatch(setCredentials({ accessToken }));
-      navigate('/', { replace: true });
-    }
-  }, []);
+  const onStorageEvent = useCallback(
+    (e: StorageEvent): void => {
+      if (e.key === 'token') {
+        const accessToken = localStorage.getItem('token');
+        dispatch(setCredentials({ accessToken }));
+        navigate('/', { replace: true });
+      }
+    },
+    [title],
+  );
 
   const onGoogleSign = (): void => {
     openGoogleAuthPage();

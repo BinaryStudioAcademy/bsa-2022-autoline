@@ -58,7 +58,7 @@ const routes = [
 ];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 
-app.use(Sentry.Handlers.errorHandler());
+// app.use(Sentry.Handlers.errorHandler());
 
 // Handle arbitrary errors that are thrown from any controller above
 app.use(errorsHandler);

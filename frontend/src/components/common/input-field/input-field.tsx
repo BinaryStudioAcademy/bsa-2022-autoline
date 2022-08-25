@@ -13,7 +13,7 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { clsx } from 'clsx';
 
-import { PhoneMask } from './input-masks/phone-mask/phone-mask';
+// import { PhoneMask } from './input-masks/phone-mask/phone-mask';
 import styles from './styles.module.scss';
 
 const InputField: FC<InputFieldPropsType> = ({
@@ -57,7 +57,7 @@ const InputField: FC<InputFieldPropsType> = ({
         type={type === 'password' && showPassword ? 'text' : type}
         className={styles.input}
         error={errors?.[name] ? true : false}
-        inputComponent={type === 'tel' ? PhoneMask : undefined}
+        // inputComponent={type === 'tel' ? PhoneMask : undefined}
         endAdornment={
           type === 'password' ? (
             <InputAdornment position="end">
@@ -91,7 +91,7 @@ const InputField: FC<InputFieldPropsType> = ({
 InputField.defaultProps = {
   type: 'text',
   required: false,
-  errors: [],
+  // errors: [],
 };
 
 export { InputField };

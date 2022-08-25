@@ -80,6 +80,13 @@ export const SignInForm = (): React.ReactElement => {
             control={control}
             inputLabel="Password"
           />
+
+          <p className={styles.forgotPassword}>
+            <Link to={AppRoute.FORGOT_PASSWORD} className={styles.link}>
+              Forgot password?
+            </Link>
+          </p>
+
           {error && 'data' in error && (
             <Alert severity="error">{error.data.message}</Alert>
           )}

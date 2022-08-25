@@ -7,7 +7,7 @@ type AuthState = {
 
 const initialState: AuthState = {
   user: null,
-  token: null,
+  token: localStorage.getItem('access-token') || null,
 };
 
 const { reducer, actions } = createSlice({

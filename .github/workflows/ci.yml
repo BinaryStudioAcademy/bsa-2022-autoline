@@ -26,9 +26,9 @@ jobs:
         run: |
           yarn install
 
-      - name: Code Linting
-        run: |
-          yarn run lint --max-warnings=0
+#      - name: Code Linting
+#        run: |
+#          yarn run lint --max-warnings=0
 
       - name: Code Building
         run: |

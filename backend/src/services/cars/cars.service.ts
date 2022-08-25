@@ -8,7 +8,6 @@ import {
   Fuel_Type,
   Model,
   Transmission_Type,
-  City,
 } from '@prisma/client';
 
 type UsedOptionsType = {
@@ -63,14 +62,4 @@ const getUsedOptions = async (): Promise<UsedOptionsType> => {
   };
 };
 
-const getCities = async (regionId: string): Promise<Partial<City>[]> => {
-  return await prisma.city.findMany({
-    where: { region_id: regionId },
-    select: {
-      id: true,
-      name: true,
-    },
-  });
-};
-
-export { getBrands, getModels, getUsedOptions, getCities };
+export { getBrands, getModels, getUsedOptions };

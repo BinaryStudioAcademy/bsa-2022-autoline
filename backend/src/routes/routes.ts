@@ -8,3 +8,4 @@ export { wishlistRouter } from './preferences/wishlist.router';
 export { updateUserRouter } from './update-user/update-user.router';
 export { viewedCarsRouter } from './viewed-cars/viewed.router';
 export { carsRouter } from './cars/cars.router';
+export { locationRouter } from './location/location.router';

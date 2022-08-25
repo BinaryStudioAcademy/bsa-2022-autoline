@@ -66,4 +66,23 @@ const getUsedOptions = async (
   }
 };
 
-export { carsSearchAutoria, getBrands, getModelsOfBrand, getUsedOptions };
+const getCitiesOfRegion = async (
+  req: TypedRequestParams<{ id: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const models = await carsService.getCities(req.params.id);
+    res.json(models);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export {
+  carsSearchAutoria,
+  getBrands,
+  getModelsOfBrand,
+  getUsedOptions,
+  getCitiesOfRegion,
+};

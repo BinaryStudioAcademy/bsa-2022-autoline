@@ -10,7 +10,7 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import { InputField } from '@components/common/input-field/input-field';
 import { SignWithGoogle } from '@components/sign/components/sign-with-google/sign-with-google';
 import { useAppForm } from '@hooks/hooks';
-import Alert from '@mui/material/Alert';
+// import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -42,8 +42,16 @@ export const SignUpForm = (): React.ReactElement => {
   const signUpErrorData = signUpError as ErrorType;
 
   const onSubmit = (formData: FieldValues): void => {
-    const { name, email, password } = formData;
-    signUp({ name, email, password });
+    // const { name, email, password } = formData;
+    // signUp({ name, email, password });
+    // eslint-disable-next-line no-console
+    console.log(formData);
+    // eslint-disable-next-line no-console
+    console.log(signUp);
+    // eslint-disable-next-line no-console
+    console.log(isError);
+    // eslint-disable-next-line no-console
+    console.log(signUpErrorData);
   };
 
   const navigateToSignIn = (): void => {
@@ -101,12 +109,12 @@ export const SignUpForm = (): React.ReactElement => {
             inputLabel="Repeat Password"
           />
 
-          {isError && (
-            <Alert
-              className={styles.alert}
-              severity="error"
-            >{`${signUpErrorData.data.error}`}</Alert>
-          )}
+          {/*{isError && (*/}
+          {/*  <Alert*/}
+          {/*    className={styles.alert}*/}
+          {/*    severity="error"*/}
+          {/*  >{`${signUpErrorData.data.error}`}</Alert>*/}
+          {/*)}*/}
 
           <Dialog
             open={isSuccess}

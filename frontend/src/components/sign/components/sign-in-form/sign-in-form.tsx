@@ -15,6 +15,7 @@ import Divider from '@mui/material/Divider';
 import { useSignInMutation } from '@store/queries/auth';
 import { setCredentials } from '@store/root-reducer';
 import { signInSchema as signInValidationSchema } from '@validation-schemas/validation-schemas';
+import { clsx } from 'clsx';
 
 import { DEFAULT_SIGN_IN_PAYLOAD } from './common';
 import styles from './styles.module.scss';
@@ -81,11 +82,12 @@ export const SignInForm = (): React.ReactElement => {
             inputLabel="Password"
           />
 
-          <p className={styles.forgotPassword}>
-            <Link to={AppRoute.FORGOT_PASSWORD} className={styles.link}>
-              Forgot password?
-            </Link>
-          </p>
+          <Link
+            to={AppRoute.FORGOT_PASSWORD}
+            className={clsx(styles.link, styles.forgotPassword)}
+          >
+            Forgot password?
+          </Link>
 
           {error && 'data' in error && (
             <Alert severity="error">{error.data.message}</Alert>

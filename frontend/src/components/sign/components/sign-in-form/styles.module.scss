@@ -29,10 +29,6 @@
   width: 100%;
 }
 
-.formBottom {
-  padding-top: 10px;
-}
-
 .divider {
   padding: 30px 0;
   color: var(--gray300);
@@ -47,7 +43,8 @@
 }
 
 .forgotPassword {
-  margin: 0 0 10px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 40px;
   font-size: 12px;
-  text-align: right;
 }

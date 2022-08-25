@@ -12,7 +12,6 @@ import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
 import { DialogDeleteAccount } from '@components/edit-profile/dialog-delete-account/dialog-delete-account';
-import { SelectFieldForm } from '@components/edit-profile/select-field-form/select-field-form';
 import { SelectYearRange } from '@components/edit-profile/select-years-range/select-year-range';
 import { SignIn } from '@components/edit-profile/sign-in/sign-in';
 import { useAppForm } from '@hooks/app-form/app-form.hook';
@@ -23,6 +22,7 @@ import {
   useUpdateUserProfileMutation,
 } from '@store/queries/user/update-user';
 
+import { SelectFieldForm } from './select-field-form/select-field-form';
 import styles from './styles.module.scss';
 
 interface EditProfileProps {
@@ -103,7 +103,6 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
   };
 
   return (
-    // <div className={styles.popupWrapper}>
     <Modal
       open={true}
       onClose={onClose}
@@ -259,6 +258,5 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
         </div>
       </div>
     </Modal>
-    // </div>
   );
 };

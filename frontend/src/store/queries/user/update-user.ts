@@ -1,4 +1,4 @@
-import { API } from '../api_routes';
+import { API } from '../api-routes';
 import { api } from '../index';
 
 interface UserFields {

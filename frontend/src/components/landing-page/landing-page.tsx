@@ -11,6 +11,7 @@ import { Container } from '@mui/material';
 
 import { Header } from './components/components';
 import { newCars } from './mock-new-cars';
+import { topCars } from './mock-top-cars';
 import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {
@@ -54,10 +55,6 @@ export const LandingPage = (): React.ReactElement => {
         <div className={styles.secondContainer}>
           <div className={styles.secondContainerHeader}>New Cars</div>
           <div className={styles.secondContainerCards}>
-            {/*<NewCarCard />*/}
-            {/*<NewCarCard />*/}
-            {/*<NewCarCard />*/}
-            {/*<NewCarCard />*/}
             {!newCars
               ? null
               : newCars?.map((car) => (
@@ -76,18 +73,9 @@ export const LandingPage = (): React.ReactElement => {
         <div className={styles.fourthContainer}>
           <div className={styles.fourthContainerHeader}>Top Autoria</div>
           <div className={styles.fourthContainerCards}>
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
+            {topCars.map((car) => (
+              <TopCarCard car={car} key={car.id} />
+            ))}
           </div>
         </div>
       </Container>

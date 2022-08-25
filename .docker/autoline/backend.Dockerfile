@@ -12,14 +12,12 @@ COPY ./.eslintrc.yml ./
 COPY ./shared ./shared/
 COPY ./backend ./backend
 
-RUN yarn install:shared
-RUN yarn install:backend
-
-RUN yarn run build:shared
-RUN yarn run build:backend
-
-RUN rm -rf ./backend/src
-RUN rm -rf ./shared/src
+RUN yarn install:shared && \
+    yarn install:backend && \
+    yarn run build:shared:be && \
+    yarn run build:backend && \
+    rm -rf ./backend/src && \
+    rm -rf ./shared/src
 
 EXPOSE 3001
 CMD ["node", "./backend/build/src/server.js"]

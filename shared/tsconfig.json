@@ -5,8 +5,8 @@
   "compilerOptions": {
     "outDir": "build",
     "declaration": true,
-    "module": "commonjs",
     "moduleResolution": "Node",
+    "module": "ESNext",
     "baseUrl": ".",
     "paths": {
       "@common/*": ["./src/common/*"],

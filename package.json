@@ -20,6 +20,7 @@
     "install:backend": "cd backend && yarn",
     "install:all": "yarn && yarn install:shared && yarn build:shared && yarn install:frontend && yarn install:backend",
     "build:shared": "cd shared && yarn build",
+    "build:shared:be": "cd shared && yarn build:ts:be",
     "build:frontend": "cd frontend && yarn build",
     "build:backend": "cd backend && yarn build",
     "build": "yarn build:shared && yarn build:frontend && yarn build:backend",

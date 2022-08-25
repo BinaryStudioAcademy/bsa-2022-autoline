@@ -8,3 +8,7 @@ export {
 } from './sign-in-data.type';
 export { type ForgotPasswordRequestData } from './forgot-password-data';
 export { type ResetPasswordRequestData } from './reset-password-data';
+export {
+  type SignUpRequestData,
+  type SignUpResponseData,
+} from './sign-up-data.type';

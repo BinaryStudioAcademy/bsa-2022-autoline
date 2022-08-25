@@ -1,6 +1,11 @@
 import { ApiPath, AuthApiPath } from '@autoline/shared/common/enums/enums';
 import { ContentType } from '@common/enums/enums';
-import { SignInResponseData, SignInRequestUser } from '@common/types/types';
+import {
+  SignInResponseData,
+  SignInRequestUser,
+  SignUpResponseData,
+  SignUpRequestData,
+} from '@common/types/types';
 
 import { api } from './index';
 
@@ -14,6 +19,13 @@ export const authApi = api.injectEndpoints({
     signIn: builder.mutation<SignInResponseData, SignInRequestUser>({
       query: (credentials) => ({
         url: `${ApiPath.AUTH}/local/signin`,
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
+    signUp: builder.mutation<SignUpResponseData, SignUpRequestData>({
+      query: (credentials) => ({
+        url: `${ApiPath.AUTH}/local/signup`,
         method: 'POST',
         body: credentials,
       }),
@@ -37,6 +49,7 @@ export const authApi = api.injectEndpoints({
 
 export const {
   useSignInMutation,
+  useSignUpMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
 } = authApi;

@@ -5,7 +5,7 @@ import { AppRoute } from '@common/enums/app/app-route.enum';
 import { CarsCategories } from '@components/cars-categories/cars-categories';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
-import { NewCarCard } from '@components/new-car-card/new-car-card';
+// import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { TopCarCard } from '@components/top-car-card/top-car-card';
 import { Container } from '@mui/material';
 
@@ -53,10 +53,10 @@ export const LandingPage = (): React.ReactElement => {
         <div className={styles.secondContainer}>
           <div className={styles.secondContainerHeader}>New Cars</div>
           <div className={styles.secondContainerCards}>
-            <NewCarCard />
-            <NewCarCard />
-            <NewCarCard />
-            <NewCarCard />
+            {/*<NewCarCard />*/}
+            {/*<NewCarCard />*/}
+            {/*<NewCarCard />*/}
+            {/*<NewCarCard />*/}
           </div>
         </div>
         <div className={styles.thirdContainer}>

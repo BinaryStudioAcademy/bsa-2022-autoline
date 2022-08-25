@@ -1,0 +1,18 @@
+.ViewedСars {
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+
+  &Title {
+    margin-top: 0;
+    font-weight: 800;
+    font-size: 22;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  &Btn {
+    text-transform: uppercase;
+  }
+}

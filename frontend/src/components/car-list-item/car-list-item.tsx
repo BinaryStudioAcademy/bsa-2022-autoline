@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import new_car_1 from '@assets/images/mock_car_picture.png';
+import { CompleteSetDataType } from '@common/types/types';
 import { SliderNavButton } from '@components/car-list-item/slider-nav-button/slider-nav-button';
 import { swiperParams } from '@components/car-list-item/swiper-params';
 import { CompleteSetTable } from '@components/complete-set-table/complete-set-table';
@@ -9,12 +10,22 @@ import { Collapse, Grid } from '@mui/material';
 import { clsx } from 'clsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { mockCars } from './mock-cars';
 import styles from './styles.module.scss';
 
 const CarListItem: React.FC = () => {
-  const [open, setOpen] = React.useState(true);
+  const [cars] = useState<CompleteSetDataType[]>(mockCars);
+  const initialRows = 5;
+  const rowsHidden = cars.length - initialRows;
+  const [carsDisplayed, setCarsDisplayed] = useState(
+    cars.slice(0, initialRows),
+  );
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = (): void => {
+    open
+      ? setCarsDisplayed(cars.slice(0, initialRows))
+      : setCarsDisplayed(cars);
     setOpen(!open);
   };
   return (
@@ -36,12 +47,6 @@ const CarListItem: React.FC = () => {
           <div className={styles.carInfo}>
             <div className={styles.infoRow}>
               <p className={styles.title}>Engine</p>
-              <p className={styles.option}>
-                1.6l dCi 130 X-Tronic CVT 2WD / 2.0l 144 X-Tronic CVT 4WD
-              </p>
-            </div>
-            <div className={styles.infoRow}>
-              <p className={styles.title}>Engine displacement</p>
               <p className={styles.option}>3 / 3.5 / 4 / 5 l.</p>
             </div>
             <div className={styles.infoRow}>
@@ -84,12 +89,12 @@ const CarListItem: React.FC = () => {
           <div className={styles.tableWrapper}>
             <Collapse in={open} timeout="auto" collapsedSize="290px">
               <CompleteSetTable
-                data={[]}
+                data={carsDisplayed}
                 className={clsx(styles.table, 'styledScrollbar')}
               />
             </Collapse>
             <button className={styles.collapseButton} onClick={handleClick}>
-              +3 {open ? <ExpandLess /> : <ExpandMore />}
+              + {rowsHidden} {open ? <ExpandLess /> : <ExpandMore />}
             </button>
           </div>
         </Grid>

@@ -19,7 +19,7 @@ import styles from './styles.module.scss';
 
 const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
   const [cars] = useState<CompleteSetDataType[]>(mockCars);
-  const { className } = props;
+  const { className, data = cars } = props;
 
   return (
     <TableContainer
@@ -61,7 +61,7 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {cars.map((car) => (
+          {data.map((car) => (
             <TableRow key={car.id} className={styles.tableRow}>
               <TableCell className={styles.tableRow}>
                 {car.brand} {car.model}

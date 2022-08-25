@@ -80,7 +80,7 @@ const requestPasswordReset = async (email: string): Promise<string> => {
     {
       sub: user.id,
     },
-    ENV.JWT.SECRET!,
+    ENV.JWT.SECRET,
     { expiresIn: '1h' },
   );
 
@@ -104,7 +104,7 @@ const requestPasswordReset = async (email: string): Promise<string> => {
 };
 
 const resetPasswordCheckToken = async (token: string): Promise<string> => {
-  const payload = jwt.verify(token, ENV.JWT.SECRET!) as jwt.JwtPayload;
+  const payload = jwt.verify(token, ENV.JWT.SECRET) as jwt.JwtPayload;
   if (!payload.sub) {
     throw new Error('Payload token is invalid');
   }

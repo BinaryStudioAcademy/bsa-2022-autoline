@@ -12,27 +12,27 @@ import {
   updateUserRouter,
   viewedCarsRouter,
 } from '@routes/routes';
-// import * as Sentry from '@sentry/node';
-// import * as Tracing from '@sentry/tracing';
+import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
 import cors from 'cors';
 import express from 'express';
 
 // Express server configuration
 const app = express();
 
-// Sentry.init({
-//   environment: ENV.APP.NODE_ENV,
-//   dsn: ENV.SENTRY.DSN,
-//   integrations: [
-//     new Sentry.Integrations.Http({ tracing: true }),
-//     new Tracing.Integrations.Express({ app }),
-//   ],
-//
-//   tracesSampleRate: 1.0,
-// });
-//
-// app.use(Sentry.Handlers.requestHandler());
-// app.use(Sentry.Handlers.tracingHandler());
+Sentry.init({
+  environment: ENV.APP.NODE_ENV,
+  dsn: ENV.SENTRY.DSN,
+  integrations: [
+    new Sentry.Integrations.Http({ tracing: true }),
+    new Tracing.Integrations.Express({ app }),
+  ],
+
+  tracesSampleRate: 1.0,
+});
+
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
 
 app
   .use(

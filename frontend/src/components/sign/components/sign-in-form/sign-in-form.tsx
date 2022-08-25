@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -44,10 +43,6 @@ export const SignInForm = (): React.ReactElement => {
         navigate(AppRoute.ROOT);
       });
   };
-
-  useEffect(() => {
-    if (error) console.log(error);
-  }, [error]);
 
   return (
     <>

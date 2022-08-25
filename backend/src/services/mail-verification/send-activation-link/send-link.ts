@@ -39,9 +39,9 @@ const sendLink = async (email: string, token: string): Promise<void> => {
 
   transporter.sendMail(options, function (error, info) {
     if (error) {
-      console.log(error);
+      alert(error);
     } else {
-      console.log('Email sent: ' + info.response);
+      alert('Email sent: ' + info.response);
     }
   });
 };

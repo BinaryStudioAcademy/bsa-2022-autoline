@@ -1,24 +1,4 @@
-declare type ModelResponseDto = {
-  id: string;
-  wishlistId: string | null;
-  createdAt: Date;
-  name: string;
-  yearStart: number;
-  yearEnd: number | null;
-  photoUrls: string[] | [];
-  brand: {
-    name: string;
-    logoUrl: string;
-  };
-  bodyType: string;
-  manufactureCountry: string;
-  pricesRanges: {
-    price_start: number;
-    price_end: number;
-  }[];
-  description: string;
-  complectationName?: string;
-};
+import type { ModelResponseDto } from '@autoline/shared/common/types/types';
 
 const hondaCivic: ModelResponseDto = {
   id: '1111',

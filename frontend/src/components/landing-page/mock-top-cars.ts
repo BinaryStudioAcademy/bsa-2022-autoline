@@ -158,6 +158,41 @@ const VolvoXC40: TopCars = {
   fuel: 'Electro',
 };
 
+const BMW2: TopCars = {
+  id: '9999',
+  name: '2',
+  photoUrls: ['https://i.infocar.ua/i/12/3233/1400x936.jpg'],
+  brand: {
+    name: 'BMW',
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg',
+  },
+  price: 35422,
+  complectationName: '',
+  speedometr: 120200,
+  transmission: 'Mechanical',
+  location: 'Lutsk',
+  fuel: 'Disel',
+};
+
+const VolvoS90: TopCars = {
+  id: '11111',
+  name: 'S90 Recharge',
+  photoUrls: [
+    'https://images.thestar.com/1NT-_spTnMI1yoRyZ6ejfAID2KU=/1200x800/smart/filters:cb(1613624040778):format(webp)/https://www.thepeterboroughexaminer.com/content/dam/thestar/autos/review/2021/02/17/2021-volvo-s90-recharge-not-just-high-tech-its-a-fun-drive-too/_1_2021_volvo_s90_recharge_front_three_quarter.jpg',
+  ],
+  brand: {
+    name: 'Volvo',
+    logoUrl:
+      'https://upload.wikimedia.org/wikipedia/ru/thumb/7/74/Volvo_Logo.svg/120px-Volvo_Logo.svg.png?20080211173050',
+  },
+  price: 48500,
+  complectationName: '',
+  speedometr: 23200,
+  transmission: 'Automatic',
+  location: 'Chernivtsi',
+  fuel: 'Electro',
+};
+
 const topCars = [
   Mazda6,
   VolvoXC40,
@@ -165,8 +200,10 @@ const topCars = [
   HondaCRV,
   MazdaMX5,
   BMWMI4,
+  VolvoS90,
   HondaHRV,
   VolvoV60,
+  BMW2,
 ];
 
 export { type TopCars, topCars };

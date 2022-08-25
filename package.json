@@ -23,7 +23,7 @@
     "build:frontend": "cd frontend && yarn build",
     "build:backend": "cd backend && yarn build",
     "build": "yarn build:shared && yarn build:frontend && yarn build:backend",
-    "start:backend:dev": "cd backend && nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts"
+    "start:backend:dev": "cd backend && yarn start:dev"
   },
   "dependencies": {
     "@sentry/node": "^7.9.0"

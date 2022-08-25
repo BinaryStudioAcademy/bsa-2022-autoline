@@ -9,6 +9,8 @@ import {
   wishlistRouter,
   carsRouter,
   activateLinkRouter,
+  updateUserRouter,
+  viewedCarsRouter,
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -51,6 +53,8 @@ const routes = [
   carsRouter,
   activateRouter,
   activateLinkRouter,
+  updateUserRouter,
+  viewedCarsRouter,
 ];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 

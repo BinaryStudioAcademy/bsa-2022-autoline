@@ -9,6 +9,25 @@
   --black: #070a0c;
   --white: #ffffff;
   --red: #e81414;
+  --green: #008000;
   --primary-font: lato, sans-serif;
-  --header-height: 105px;
+  --font-weight-bold: 700;
+  --font-weight-semibold: 600;
+  --font-weight-medium: 500;
+  --font-weight-regular: 400;
+  --header-height: 70px;
+  --land-page-margin-md: 40px;
+  --land-page-margin-sm: 20px;
+  --mui-padding-md: 24px;
+  --mui-padding-sm: 16px;
+  --border-radius-button: 50px;
+  --border-radius-pill: 4px;
+  --border-radius-card: 5px;
+  --border-radius-container: 10px;
 }
+
+$global-xs: 0;
+$global-sm: 600px;
+$global-md: 900px;
+$global-lg: 1200px;
+$global-xl: 1536px;

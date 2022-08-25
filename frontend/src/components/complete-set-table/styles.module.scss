@@ -1,0 +1,67 @@
+.tableRow {
+  min-width: 6rem;
+  font-family: var(--primary-font);
+  border-bottom: 0;
+
+  &:hover {
+    background-color: var(--gray200);
+  }
+}
+
+.tableContainer {
+  &.container {
+    margin: 1.875rem 0;
+    border-radius: 10px;
+
+    .tableRow {
+      padding: 0.3rem 0.9rem;
+      border-bottom: 0;
+    }
+  }
+}
+
+.tableTitle {
+  color: var(--black);
+  font-family: var(--primary-font);
+  border-color: var(--gray100);
+  opacity: 0.3;
+}
+
+.colorBox {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  box-shadow: 0 0 4px 0 rgba(0 0 0 / 20%);
+}
+
+.price {
+  width: 6.25rem;
+}
+
+.pillButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 6.25rem;
+  padding: 5px;
+  color: var(--white);
+  font-size: 0.8rem;
+  background-color: var(--blue300);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 300ms;
+
+  &:hover {
+    background-color: var(--blue100);
+    transition: all 300ms;
+  }
+
+  span {
+    padding-left: 5px;
+  }
+
+  svg {
+    font-size: 17px;
+  }
+}

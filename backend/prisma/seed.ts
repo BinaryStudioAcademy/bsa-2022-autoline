@@ -223,6 +223,7 @@ async function main(): Promise<void> {
           body_type_id: bodyType.id,
           manufacture_country_id: brandCountry.id,
           name: model.name,
+          description: model.description,
           code_name: model.eng,
           year_start: model.year_start,
           year_end: model.year_end,
@@ -263,6 +264,7 @@ async function main(): Promise<void> {
 
         await prisma.complectation.create({
           data: {
+            name: complectation.name,
             model_id: newModel.id,
             engine: complectation.engine,
             engine_displacement: complectation.engine_displacement,

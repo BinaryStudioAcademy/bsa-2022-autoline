@@ -1,11 +1,11 @@
-import { getComplectationsByModelId } from '@services/complectations/complectations.service';
+import { getComplectationsById } from '@services/complectations/complectations.service';
 import httpStatus from 'http-status-codes';
 
 import type { TypedRequestQuery } from '@common/types/controller/controller';
 import type { NextFunction, Response } from 'express';
 
 type ModelIdInput = {
-  modelId: string;
+  complectationId: string;
 };
 
 const getComplectations = async (
@@ -14,8 +14,8 @@ const getComplectations = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const { modelId } = req.query;
-    const ResponseDto = await getComplectationsByModelId(modelId);
+    const { complectationId } = req.query;
+    const ResponseDto = await getComplectationsById(complectationId);
     res.json(ResponseDto).status(httpStatus.CREATED);
   } catch (error) {
     console.error(error);

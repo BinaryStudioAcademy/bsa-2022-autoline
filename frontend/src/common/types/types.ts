@@ -16,3 +16,5 @@ export type {
   CarDataPropsType,
   CarDataListPropsType,
 } from './card/card';
+
+export type { DetailsCarPanelPropsType } from './details-panel/details.panel';

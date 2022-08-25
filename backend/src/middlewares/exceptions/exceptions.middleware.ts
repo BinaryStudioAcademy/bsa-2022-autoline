@@ -8,7 +8,6 @@ export const errorsHandler = (
   res: Response,
   next: NextFunction,
 ): void => {
-  console.error(JSON.stringify(error), error.message);
   if (res.headersSent) {
     return next(error);
   }

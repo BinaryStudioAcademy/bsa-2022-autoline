@@ -15,7 +15,7 @@ const RedirectAfterSign = (): React.ReactElement => {
       localStorage.setItem(StorageKey.REFRESH, refreshToken);
     }
     window.close();
-  }, []);
+  }, [accessToken, refreshToken]);
 
   return (
     <Grid

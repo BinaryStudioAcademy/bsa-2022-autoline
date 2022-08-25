@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app-route.enum';
+import { StorageKey } from '@common/enums/app/storage-key.enum';
 import { SignInRequestData } from '@common/types/types';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
@@ -38,12 +39,16 @@ export const SignInForm = (): React.ReactElement => {
     signIn(user)
       .unwrap()
       .then(({ accessToken }: SignInResponseData) => {
-        localStorage.setItem('access-token', accessToken);
+        localStorage.setItem(StorageKey.TOKEN, accessToken);
         dispatch(setCredentials({ accessToken }));
         navigate(AppRoute.ROOT);
       });
   };
-  if (error) console.log(error);
+
+  useEffect(() => {
+    if (error) console.log(error);
+  }, [error]);
+
   return (
     <>
       <h1 className={styles.title}>Sign In</h1>

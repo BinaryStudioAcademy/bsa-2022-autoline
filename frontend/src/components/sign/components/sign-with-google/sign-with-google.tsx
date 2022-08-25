@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
@@ -10,13 +10,13 @@ const SignWithGoogle = ({ title }: { title: string }): React.ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const onStorageEvent = (e: StorageEvent): void => {
+  const onStorageEvent = useCallback((e: StorageEvent): void => {
     if (e.key === 'token') {
       const accessToken = localStorage.getItem('token');
       dispatch(setCredentials({ accessToken }));
       navigate('/', { replace: true });
     }
-  };
+  }, []);
 
   const onGoogleSign = (): void => {
     openGoogleAuthPage();
@@ -28,7 +28,7 @@ const SignWithGoogle = ({ title }: { title: string }): React.ReactElement => {
     return (): void => {
       window.removeEventListener('storage', onStorageEvent, false);
     };
-  }, []);
+  }, [onStorageEvent]);
 
   return <ButtonOutline text={title + ' with Google'} onClick={onGoogleSign} />;
 };

@@ -24,6 +24,7 @@ export const SelectField = (
         id={props.id}
         value={props.value}
         onChange={props.onChange}
+        disabled={props.disabled}
         label={props.name}
         variant="outlined"
         className={clsx(styles.select, styles.selectOutlined)}

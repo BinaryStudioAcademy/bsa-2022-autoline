@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { api } from '@store/queries';
 import { combineReducers } from 'redux';
 
-import { api } from './queries/index';
-import { auth } from './root-reducer';
+import { auth, carFilter } from './root-reducer';
 
 const rootReducer = combineReducers({
   auth,
+  carFilter,
   [api.reducerPath]: api.reducer,
 });
 
@@ -14,3 +15,6 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(api.middleware),
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

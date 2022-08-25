@@ -37,6 +37,14 @@ export type { ValidationSchema } from './validation/validation';
 
 export type { CarsSearchParams } from './cars/cars-search-params';
 
+
+export type {
+  BrandType,
+  OptionsType,
+  ModelType,
+  AutoRiaOption,
+} from './cars/cars';
+
 export {
   type setViewedCarRequest,
   type setViewedCarResponse,

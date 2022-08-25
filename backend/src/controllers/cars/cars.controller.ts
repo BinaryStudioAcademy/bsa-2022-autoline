@@ -8,13 +8,13 @@ import * as carsSearchService from '@services/cars/cars-search.service';
 import * as carsService from '@services/cars/cars.service';
 import { NextFunction, Request, Response } from 'express';
 
-const carsSearch = async (
+const carsSearchAutoria = async (
   req: TypedRequestQuery<CarsSearchParams>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const carsData = await carsSearchService.carsSearch(req.query);
+    const carsData = await carsSearchService.carsSearchAutoria(req.query);
     const autoRiaCarsData = await getCarsAutoRia(carsData);
 
     res.json(autoRiaCarsData);
@@ -66,4 +66,4 @@ const getUsedOptions = async (
   }
 };
 
-export { carsSearch, getBrands, getModelsOfBrand, getUsedOptions };
+export { carsSearchAutoria, getBrands, getModelsOfBrand, getUsedOptions };

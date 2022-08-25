@@ -3,7 +3,7 @@ name: Deploy staging
 on:
   push:
     branches:
-      - deployment
+      - develop
   workflow_dispatch:
 
 jobs:
@@ -78,22 +78,22 @@ jobs:
             sudo docker compose -f docker-compose.stage.yml pull
             sudo docker compose -f docker-compose.stage.yml down
             sudo docker compose -f docker-compose.stage.yml up -d
-#  notify:
-#    needs: deploy
-#    runs-on: ubuntu-latest
-#    if: always()
-#    environment: development
-#    steps:
-#      - name: Trigger this job at the end of workflow
-#        uses: technote-space/workflow-conclusion-action@v2
-#
-#      - name: Slack Notification
-#        if: always()
-#        uses: rtCamp/action-slack-notify@v2.2.0
-#        env:
-#          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-#          SLACK_USERNAME: Deployment Bot
-#          SLACK_ICON: https://avatar-prod-us-east-2.webexcontent.com/Avtr~V1~6078fba4-49d9-4291-9f7b-80116aab6974/V1~8d90dcca-87c5-4a7c-9808-8965a02be966~07b1fecf53a948688dabf01402621a0a
-#          SLACK_MESSAGE: "Deployment finished with ${{ env.WORKFLOW_CONCLUSION == 'success' && 'Success 🟢' || env.WORKFLOW_CONCLUSION == 'cancelled' && 'Cancelled 🟡' || env.WORKFLOW_CONCLUSION == 'skipped' && 'Skipped 🔵' || 'Error 🔴' }} result"
-#          SLACK_FOOTER: "Git branch: `deployment`"
-#          MSG_MINIMAL: event,actions url
+  notify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: always()
+    environment: development
+    steps:
+      - name: Trigger this job at the end of workflow
+        uses: technote-space/workflow-conclusion-action@v2
+
+      - name: Slack Notification
+        if: always()
+        uses: rtCamp/action-slack-notify@v2.2.0
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_USERNAME: Deployment Bot
+          SLACK_ICON: https://avatar-prod-us-east-2.webexcontent.com/Avtr~V1~6078fba4-49d9-4291-9f7b-80116aab6974/V1~8d90dcca-87c5-4a7c-9808-8965a02be966~07b1fecf53a948688dabf01402621a0a
+          SLACK_MESSAGE: "Deployment finished with ${{ env.WORKFLOW_CONCLUSION == 'success' && 'Success 🟢' || env.WORKFLOW_CONCLUSION == 'cancelled' && 'Cancelled 🟡' || env.WORKFLOW_CONCLUSION == 'skipped' && 'Skipped 🔵' || 'Error 🔴' }} result"
+          SLACK_FOOTER: "Git branch: `deployment`"
+          MSG_MINIMAL: event,actions url

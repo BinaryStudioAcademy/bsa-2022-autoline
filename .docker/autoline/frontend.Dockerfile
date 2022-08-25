@@ -13,13 +13,10 @@ COPY ./frontend ./frontend/
 COPY ./frontend/package.json ./frontend/
 COPY ./frontend/yarn.lock ./frontend/
 
-RUN yarn install:shared
-RUN yarn install:frontend
-
-RUN yarn run build:shared
-
-
-RUN yarn build:frontend
+RUN yarn install:shared && \
+    yarn install:frontend && \
+    yarn run build:shared && \
+    yarn build:frontend
 
 FROM nginx:1.22.0-alpine
 

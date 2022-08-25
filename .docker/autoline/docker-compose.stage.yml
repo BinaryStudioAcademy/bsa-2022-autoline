@@ -36,12 +36,6 @@ services:
       - '443:443'
     env_file:
       - ../../.env/frontend.env
-#    volumes:
-#      - /etc/letsencrypt/live/dev.streamlet.tk/fullchain.pem:/etc/letsencrypt/live/autoline-not-autoria.xyz/fullchain.pem
-#      - /etc/letsencrypt/live/dev.streamlet.tk/privkey.pem:/etc/letsencrypt/live/autoline-not-autoria.xyz/privkey.pem
-#      - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
-#      - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
-#      - ../playback:/assets/segments
     networks:
       - backend_network
       - frontend_network

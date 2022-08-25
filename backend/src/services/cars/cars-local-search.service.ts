@@ -1,8 +1,8 @@
 import { CarsSearchParams } from '@autoline/shared';
+import { SearchResult } from '@common/types/types';
 import { prisma } from '@data/prisma-client';
-import { Model } from '@prisma/client';
-// fix return type
-const carsSearch = async (data: CarsSearchParams): Promise<Model> =>
+
+const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> =>
   await prisma.model.findMany({
     include: {
       body_type: true,

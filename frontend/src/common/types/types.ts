@@ -20,3 +20,9 @@ export type {
   ExtendedCarCardPropsType,
 } from './card/card';
 export type { CompleteSetPropsType } from './complete-set/complete-set';
+export type {
+  ViewedCarDataList,
+  ViewedCarData,
+  ViewedCarsResponse,
+  ViewedCarsParams,
+} from './history-of-viewed-cars/history-of-viewed-cars';

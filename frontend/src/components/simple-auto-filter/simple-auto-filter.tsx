@@ -14,6 +14,7 @@ import { getValueById } from '@helpers/get-value-by-id';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import { Button, Zoom } from '@mui/material';
 import { setValue } from '@store/car-filter/slice';
+import { API } from '@store/queries/api_routes';
 import {
   useGetBrandsQuery,
   useGetFilteredCarsQuery,
@@ -93,7 +94,7 @@ const SimpleAutoFilter: FC = () => {
     Object.values(filters).some((filter) => filter.length >= 1),
   );
 
-  const navigateToSearch = (): void => navigate('/search');
+  const navigateToSearch = (): void => navigate(API.SEARCH);
 
   if (isLoading || isOptionsLoading) return <h1>Loading...</h1>;
   return (
@@ -176,7 +177,7 @@ const SimpleAutoFilter: FC = () => {
           </div>
         </div>
       </div>
-      <div className={styles.button}>
+      <div className={styles.buttonWrapper}>
         <Zoom in={isButtonVisible}>
           <Button
             onClick={navigateToSearch}

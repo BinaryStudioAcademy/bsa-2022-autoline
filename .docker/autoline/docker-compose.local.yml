@@ -1,8 +1,4 @@
-version: "3.8"
-
-# Using `node_modules` mounting pattern described here:
-# https://burnedikt.com/dockerized-node-development-and-mounting-node-volumes/#prevent-hosts-node_modules-from-being-mounted
-
+version: '3.9'
 services:
   autoline_mariadb:
     container_name: autoline_mariadb
@@ -11,65 +7,52 @@ services:
       dockerfile: database/Dockerfile
     restart: on-failure
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
       - autoline_mariadb_data:/var/lib/mysql
     env_file:
       - ../../.env/backend.env
     networks:
-      - autoline_backend_network
-
-  autoline_backend:
-    container_name: autoline_backend
+      - backend_network
+  backend:
+    image: backend
+    container_name: backend
     depends_on:
       - autoline_mariadb
-    image: ghcr.io/binarystudioacademy/autoline-backend-dev:latest
-    restart: unless-stopped
     ports:
-      - "3001:3001"
-    volumes:
-      - ../../shared:/shared/
-      - exclude_shared:/shared/node_modules/
-      - ../../backend:/backend/
-      - exclude_backend:/backend/node_modules/
+      - '3001:3001'
     env_file:
       - ../../.env/backend.env
-    environment:
-      - FRONTEND_URL=http://autoline_frontend:3000
-    networks:
-      - autoline_backend_network
-      - autoline_frontend_network
-
-  autoline_frontend:
-    container_name: autoline_frontend
-    depends_on:
-      - autoline_backend
-    image: ghcr.io/binarystudioacademy/autoline-frontend-dev:latest
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
     volumes:
-      - ../../shared:/shared/
-      - exclude_shared:/shared/node_modules/
-      - ../../frontend:/frontend/
-      - exclude_frontend:/frontend/node_modules/
+      - .:/backend
+      - /backend/node_modules
+    networks:
+      - backend_network
+      - frontend_network
+  frontend:
+    image: frontend
+    container_name: frontend
+    depends_on:
+      - backend
+    ports:
+      - '8080:80'
+      - '443:443'
     env_file:
       - ../../.env/frontend.env
-    environment:
-      - VITE_API_ORIGIN_URL=http://autoline_backend:3001/api/v1
+    volumes:
+      - ./nginx/nginx.local.conf:/etc/nginx/nginx.conf
     networks:
-      - autoline_backend_network
-      - autoline_frontend_network
+      - backend_network
+      - frontend_network
 
 volumes:
-  exclude_shared:
-  exclude_backend:
-  exclude_frontend:
   autoline_mariadb_data:
+    driver: local
+  shared:
     driver: local
 
 networks:
-  autoline_backend_network:
+  backend_network:
     driver: bridge
-  autoline_frontend_network:
+  frontend_network:
     driver: bridge

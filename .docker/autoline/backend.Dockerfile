@@ -22,4 +22,4 @@ RUN rm -rf ./backend/src
 RUN rm -rf ./shared/src
 
 EXPOSE 3001
-CMD yarn run start:dev
+CMD node ./backend/build/server.js"

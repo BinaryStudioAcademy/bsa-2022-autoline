@@ -5,7 +5,7 @@ ENV VITE_API_ORIGIN_URL=$VITE_API_ORIGIN_URL
 WORKDIR /app
 
 COPY ./package.json ./
-
+COPY ./yarn.lock ./
 COPY ./tsconfig.json ./
 COPY ./.eslintrc.yml ./
 COPY ./shared ./shared/
@@ -15,8 +15,6 @@ COPY ./frontend/yarn.lock ./frontend/
 
 RUN yarn install:shared
 RUN yarn install:frontend
-
-COPY ./yarn.lock ./
 
 RUN yarn run build:shared
 

@@ -43,6 +43,7 @@ export const SignInForm = (): React.ReactElement => {
         navigate(AppRoute.ROOT);
       });
   };
+  console.log(error);
   return (
     <>
       <h1 className={styles.title}>Sign In</h1>

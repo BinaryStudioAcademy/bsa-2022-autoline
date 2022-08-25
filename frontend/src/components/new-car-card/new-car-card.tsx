@@ -110,7 +110,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
         </div>
       </div>
       <CompareToast
-        carName={carName}
+        carName={name}
         carDescription={description}
         isHidden={isHidden}
         setIsHidden={setIsHidden}

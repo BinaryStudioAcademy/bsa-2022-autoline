@@ -25,7 +25,8 @@
     "build": "yarn build:shared && yarn build:frontend && yarn build:backend"
   },
   "dependencies": {
-    "@sentry/node": "^7.9.0"
+    "@sentry/node": "^7.9.0",
+    "react-imask": "^6.4.2"
   },
   "devDependencies": {
     "@ls-lint/ls-lint": "1.11.2",

@@ -3,7 +3,7 @@ import {
   ModelType,
   OptionsType,
 } from '@autoline/shared/common/types/types';
-import { API } from '@store/queries/api_routes';
+import { API } from '@store/queries/api-routes';
 
 import { api } from '..';
 
@@ -20,10 +20,9 @@ export const carsApi = api.injectEndpoints({
     }),
     getFilteredCars: builder.query<void, string[][] | undefined>({
       query: (params) => ({
-          url: `${API.CARS}/search`,
-          params,
-      });
-      },
+        url: `${API.CARS}/search`,
+        params,
+      }),
     }),
   }),
 });

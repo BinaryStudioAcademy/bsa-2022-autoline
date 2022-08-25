@@ -1,5 +1,5 @@
 .container {
-  padding: 1.875rem; // 30px;
+  padding: 1.875rem;
   background-color: var(--white);
   border-radius: var(--border-radius-container);
 }
@@ -11,13 +11,13 @@
 .pillRow {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 0.625rem // 10px;
+  margin-top: 0.625rem;
 }
 
 .pill {
-  margin-top: 0.625rem; // 10px;
-  margin-right: 0.625rem; // 10px;
-  padding: 0.25rem 0.563rem; // 4px 9px;
+  margin-top: 0.625rem;
+  margin-right: 0.625rem;
+  padding: 0.25rem 0.563rem;
   color: var(--white);
   background-color: var(--blue300);
   border-radius: var(--border-radius-pill);
@@ -25,11 +25,11 @@
 
 .bodyRow {
   display: flex;
-  margin-top: 1.25rem; // 20px;
+  margin-top: 1.25rem;
 
   & .bodyColumn {
-    margin-left: 1.875rem; // 30px;
-    padding-left: 1.875rem; // 30px;
+    margin-left: 1.875rem;
+    padding-left: 1.875rem;
     border-left: 1px solid var(--gray200);
   }
 

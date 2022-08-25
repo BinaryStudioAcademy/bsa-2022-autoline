@@ -104,10 +104,28 @@ const resetPassword = async (
   }
 };
 
+const signGoogle = async (
+  req: TypedRequestBody<User>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const { accessToken, refreshToken } = await authService.signinLocal(
+      req.user as User,
+    );
+    res.redirect(
+      `${ENV.APP.FRONTEND_URL}/sign-redirect?accessToken=${accessToken}&refreshToken=${refreshToken}`,
+    );
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   signupLocal,
   signinLocal,
   resetPasswordRequest,
   resetPasswordCheckToken,
   resetPassword,
+  signGoogle,
 };

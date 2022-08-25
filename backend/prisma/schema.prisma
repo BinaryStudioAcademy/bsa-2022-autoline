@@ -27,14 +27,14 @@ model User_Security {
   id                     String  @id @default(uuid())
   user                   User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id                String  @unique @db.VarChar(300)
-  password               String  @db.VarChar(300)
+  password               String? @db.VarChar(300)
   password_change_token  String? @db.VarChar(300)
   email_activation_token String? @unique @db.VarChar(300)
   email_change_token     String? @db.VarChar(300)
   email_provisional      String? @db.VarChar(300)
   refresh_token          String? @db.VarChar(300)
-  google_acc_id          String? @db.VarChar(300)
-  facebook_acc_id        String? @db.VarChar(300)
+  google_acc_id          String? @unique @db.VarChar(300)
+  facebook_acc_id        String? @unique @db.VarChar(300)
 }
 
 model User_Wishlist {

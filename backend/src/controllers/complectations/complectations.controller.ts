@@ -5,7 +5,7 @@ import type { TypedRequestQuery } from '@common/types/controller/controller';
 import type { NextFunction, Response } from 'express';
 
 type ModelIdInput = {
-  modelId?: string | undefined;
+  modelId: string;
 };
 
 const getComplectations = async (
@@ -14,7 +14,7 @@ const getComplectations = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const { modelId } = req.body;
+    const { modelId } = req.query;
     const ResponseDto = await getComplectationsByModelId(modelId);
     res.json(ResponseDto).status(httpStatus.CREATED);
   } catch (error) {

@@ -1,0 +1,23 @@
+.title {
+  margin: 1.875rem 0 0.313rem// 30px 0 5px;
+}
+
+.option {
+  display: flex;
+  margin-top: 0.625rem; // 10px;
+}
+
+.optionName {
+  width: 35%;
+  margin-right: 0.625rem; // 10px;
+  color: var(--gray400);
+  word-wrap: break-word;
+}
+
+.optionColor {
+  width: 1.25rem; // 20px;
+  height: 1.25rem; // 20px;
+  margin-right: 0.625rem; // 10px;
+  border-radius: 2px;
+  box-shadow: 0 0 4px lightgray;
+}

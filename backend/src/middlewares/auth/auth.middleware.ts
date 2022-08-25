@@ -5,7 +5,10 @@ import { signUpSchema } from '@validation-schemas/validation-schemas';
 import httpStatus from 'http-status-codes';
 import passport from 'passport';
 
-import type { SignInRequestData, ErrorMessage } from '@autoline/shared';
+import type {
+  SignInRequestData,
+  ErrorMessage,
+} from '@autoline/shared/common/types/types';
 import type {
   TypedRequestBody,
   TypedRequestQuery,
@@ -55,7 +58,7 @@ const signUpMiddleware = async (
     next();
   } catch (err) {
     const { message } = err as ErrorMessage;
-    res.status(httpStatus.FORBIDDEN).json({ error: message });
+    res.status(httpStatus.FORBIDDEN).json({ message });
     next(err);
   }
 };

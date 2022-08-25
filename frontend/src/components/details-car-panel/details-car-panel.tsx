@@ -12,18 +12,13 @@ const DetailsCarPanel: FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.price}>$ 34 000 - 52 450</div>
+        <div className={styles.price}>$</div>
         <div className={styles.priceUah}>UAH 1 554 000 - 1 945 450</div>
       </div>
       <div className={styles.lables}>
-        <div className={styles.label}>Lather Interior</div>
-        <div className={styles.label}>LED Headlight</div>
-        <div className={styles.label}>Crossover</div>
-        <div className={styles.label}>LCD screen</div>
-        <div className={styles.label}>ABS</div>
-        <div className={styles.label}>BAS / EBD</div>
-        <div className={styles.label}>Recognition of road signs</div>
-        <div className={styles.label}>VSM</div>
+        {data?.options.important.map((option) => (
+          <div className={styles.label}>{option}</div>
+        ))}
       </div>
       <div className={styles.complectation}>
         <div className={styles.complectationRow}>

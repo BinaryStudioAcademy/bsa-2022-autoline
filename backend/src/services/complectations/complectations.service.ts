@@ -29,7 +29,10 @@ const getComplectationsByModelId = async (
           fuel_type: { select: { name: true } },
           transmission_type: { select: { name: true } },
           options: {
-            select: { option: { select: { name: true, type: true } } },
+            select: {
+              option: { select: { name: true, type: true } },
+              important: true,
+            },
           },
         },
       },
@@ -56,17 +59,23 @@ const getComplectationsByModelId = async (
     design: [],
     comfort: [],
     auxiliary: [],
+    important: [],
   };
 
   optionType.forEach((optionName) => {
     const optionsList: Set<string> = new Set();
+    const importantOptionsList: Set<string> = new Set();
     data?.complectations.forEach((complectattion) =>
       complectattion.options.forEach((option) => {
         if (option.option.type === optionName) {
           optionsList.add(option.option.name);
         }
+        if (option.important === false) {
+          importantOptionsList.add(option.option.name);
+        }
       }),
     );
+    options.important = Array.from(importantOptionsList);
     switch (optionName) {
       case 'security':
         options.security = Array.from(optionsList);

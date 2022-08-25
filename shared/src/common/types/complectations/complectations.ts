@@ -1,6 +1,9 @@
 type ModelComplectationsResponseDto = {
+  prices_ranges: {
+    price_start: number;
+    price_end: number;
+  };
   complectations: {
-    price_start: string;
     engine_displacement: string;
     engine_power: number;
     color: {
@@ -16,6 +19,7 @@ type ModelComplectationsResponseDto = {
       name: string;
     };
     options: {
+      important: boolean;
       option: {
         name: string;
         type: string;
@@ -33,6 +37,7 @@ type OptionType = {
   design: string[];
   comfort: string[];
   auxiliary: string[];
+  important: string[];
 };
 
 type ComplectationsResponseDto = {

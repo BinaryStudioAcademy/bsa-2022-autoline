@@ -19,11 +19,10 @@ export const carsApi = api.injectEndpoints({
       query: () => `${API.CARS}/options`,
     }),
     getFilteredCars: builder.query<void, string[][] | undefined>({
-      query: (params) => {
-        return {
+      query: (params) => ({
           url: `${API.CARS}/search`,
-          params: params,
-        };
+          params,
+      });
       },
     }),
   }),

@@ -7,7 +7,7 @@
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
+    "module": "commonjs",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "types": ["node"],

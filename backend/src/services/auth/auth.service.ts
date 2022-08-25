@@ -1,7 +1,6 @@
 import { ENV } from '@common/enums/app/app';
 import { prisma } from '@data/prisma-client';
-import { createToken } from '@helpers/helpers';
-import { bcryptHash, sendEmail } from '@helpers/helpers';
+import { bcryptHash, sendEmail, createToken } from '@helpers/helpers';
 import { User } from '@prisma/client';
 import { mailSend } from '@services/mail-verification/send.service';
 import { updateMailToken } from '@services/mail-verification/user-data.service/user-security';
@@ -145,7 +144,10 @@ const resetPassword = async (id: string, password: string): Promise<void> => {
     throw new Error('User does not exist');
   }
 
-  const isSamePassword = await bcrypt.compare(password, userSecurity.password);
+  const isSamePassword = await bcrypt.compare(
+    password,
+    userSecurity.password as string,
+  );
   if (isSamePassword) {
     throw new Error('Same passwords error');
   }

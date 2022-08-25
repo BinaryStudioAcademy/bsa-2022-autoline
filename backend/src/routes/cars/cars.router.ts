@@ -1,5 +1,5 @@
 import {
-  carsSearch,
+  carsSearchAutoria,
   getBrands,
   getModelsOfBrand,
   getUsedOptions,
@@ -10,7 +10,7 @@ const PATH = '/cars';
 
 const carsRouter = Router();
 
-carsRouter.get(`${PATH}/search`, carsSearch);
+carsRouter.get(`${PATH}/search-autoria`, carsSearchAutoria);
 
 carsRouter.get(`${PATH}/brands`, getBrands);
 

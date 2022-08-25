@@ -63,7 +63,7 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
         <TableBody>
           {data.map((car) => (
             <TableRow key={car.id} className={styles.tableRow}>
-              <TableCell className={styles.tableRow}>
+              <TableCell className={clsx(styles.tableRow, styles.model)}>
                 {car.brand} {car.model}
               </TableCell>
               <TableCell className={styles.tableRow}>

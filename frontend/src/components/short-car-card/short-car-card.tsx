@@ -1,17 +1,18 @@
 import { FC } from 'react';
 
-import { CarDataPropsType } from '@common/types/card/card';
+import { ViewedCarData } from '@common/types/types';
 
 import styles from './styles.module.scss';
 
-const ShortCarCard: FC<CarDataPropsType> = ({ carData }) => {
-  const { photo_url, title, price } = carData;
+const ShortCarCard: FC<ViewedCarData> = ({ carData }) => {
+  const { brand, model, complectation, year, photo_urls, price } = carData;
+  const carName = `${brand} ${model} ${complectation} ${year}`;
   return (
     <div className={styles.container}>
       <div className={styles.carPicture}>
-        <img src={photo_url} alt="car" />
+        <img src={photo_urls[0]} alt="car" />
       </div>
-      <p className={styles.carName}>{title}</p>
+      <p className={styles.carName}>{carName}</p>
       <p className={styles.price}>{price}</p>
     </div>
   );

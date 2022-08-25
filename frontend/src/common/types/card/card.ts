@@ -1,8 +1,6 @@
 import {
   ComplectationResponseDto,
-  DeleteWishlistInput,
   ModelResponseDto,
-  WishlistInput,
 } from '@autoline/shared/common/types/types';
 
 interface CarDataType {
@@ -22,9 +20,7 @@ interface CarDataListPropsType {
 interface ExtendedCarCardPropsType {
   type: 'model' | 'complectation';
   car: ComplectationResponseDto | ModelResponseDto;
-  createWishlist: (args: WishlistInput) => Promise<void>;
-  deleteWishlist: (args: DeleteWishlistInput) => Promise<void>;
-  isLiked: boolean;
+  isLiked?: boolean;
 }
 
 export type {

@@ -1,8 +1,12 @@
 import { CarsSearchParams } from '@autoline/shared';
-import { TypedRequestQuery } from '@common/types/controller/controller';
+import {
+  TypedRequestParams,
+  TypedRequestQuery,
+} from '@common/types/controller/controller';
 import { getCarsAutoRia } from '@helpers/cars/api-autoria.helper';
-import * as carsService from '@services/cars/cars-search.service';
-import { NextFunction, Response } from 'express';
+import * as carsSearchService from '@services/cars/cars-search.service';
+import * as carsService from '@services/cars/cars.service';
+import { NextFunction, Request, Response } from 'express';
 
 const carsSearch = async (
   req: TypedRequestQuery<CarsSearchParams>,
@@ -10,7 +14,7 @@ const carsSearch = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const carsData = await carsService.carsSearch(req.query);
+    const carsData = await carsSearchService.carsSearch(req.query);
     const autoRiaCarsData = await getCarsAutoRia(carsData);
 
     res.json(autoRiaCarsData);
@@ -23,4 +27,43 @@ const carsSearch = async (
   }
 };
 
-export { carsSearch };
+const getBrands = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const brands = await carsService.getBrands();
+    res.json(brands);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getModelsOfBrand = async (
+  req: TypedRequestParams<{ id: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const models = await carsService.getModels(req.params.id);
+    res.json(models);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getUsedOptions = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const models = await carsService.getUsedOptions();
+    res.json(models);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { carsSearch, getBrands, getModelsOfBrand, getUsedOptions };

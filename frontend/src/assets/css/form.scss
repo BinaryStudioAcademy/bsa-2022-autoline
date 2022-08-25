@@ -1,5 +1,3 @@
-@import "@assets/css/mixins";
-
 .MuiInputLabel-root.MuiInputLabel-shrink.Mui-focused,
 .MuiInputLabel-root.MuiInputLabel-shrink.MuiFormLabel-filled {
   color: var(--gray300);
@@ -12,12 +10,12 @@
   border-color: var(--blue100);
 }
 
-.MuiInputBase-root.Mui-error input {
-  color: var(--red);
+.MuiInputBase-root.MuiOutlinedInput-root.Mui-disabled fieldset {
+  border-color: var(--gray200);
 }
 
-.MuiAlert-standard {
-  margin-bottom: 10px;
+.MuiInputBase-root.Mui-error input {
+  color: var(--red);
 }
 
 .MuiInputBase-root {
@@ -39,17 +37,33 @@
   }
 }
 
-.MuiToolbar-root {
-  height: 70px;
-
-  .MuiTabs-scroller {
-    @include landing-page-margin;
-
-    .MuiButtonBase-root {
-      height: var(--header-height);
-      color: black;
-      font-size: 13px;
-      text-transform: none;
+.MuiAutocomplete-root {
+  .MuiFormControl-root {
+    label {
+      top: -3px;
+      color: var(--gray300);
+      font-size: 14px;
     }
+  }
+
+  .MuiOutlinedInput-root {
+    height: 46px;
+
+    .MuiAutocomplete-endAdornment {
+      color: var(--gray300);
+    }
+  }
+
+  .MuiInputLabel-root.MuiInputLabel-shrink.Mui-focused,
+  .MuiInputLabel-root.MuiInputLabel-shrink.MuiFormLabel-filled {
+    transform: translate(15px, 7px) scale(0.75);
+  }
+
+  .MuiAutocomplete-popupIndicator {
+    margin-right: 7px;
+  }
+
+  .MuiAutocomplete-clearIndicator {
+    color: var(--gray300);
   }
 }

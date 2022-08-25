@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app-route.enum';
-import { StorageKey } from '@common/enums/app/storage-key.enum';
+import { StorageKey } from '@common/enums/enums';
 import { SignInRequestData } from '@common/types/types';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
-import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
+import { SignWithFacebook } from '@components/sign/components/sign-with-facebook/sign-with-facebook';
 import { SignWithGoogle } from '@components/sign/components/sign-with-google/sign-with-google';
 import { useAppForm } from '@hooks/hooks';
 import Alert from '@mui/material/Alert';
@@ -90,7 +90,7 @@ export const SignInForm = (): React.ReactElement => {
         <Divider className={styles.divider}>or</Divider>
         <div className={styles.buttonsGroup}>
           <SignWithGoogle title={'Sign In'} />
-          <ButtonOutline text="Sign In with Facebook" />
+          <SignWithFacebook title={'Sign In'} />
         </div>
       </div>
     </>

@@ -41,6 +41,7 @@
     "nodemailer": "^6.7.7",
     "nodemailer-express-handlebars": "^5.0.0",
     "passport": "^0.6.0",
+    "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "yup": "^0.32.11"
@@ -53,6 +54,7 @@
     "@types/node": "^18.0.1",
     "@types/nodemailer": "^6.4.5",
     "@types/passport": "^1.0.9",
+    "@types/passport-facebook": "^2.1.11",
     "@types/passport-google-oauth20": "^2.0.11",
     "@types/passport-local": "^1.0.34",
     "dotenv-cli": "^6.0.0",

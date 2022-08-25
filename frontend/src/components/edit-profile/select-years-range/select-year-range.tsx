@@ -1,9 +1,9 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
 
-import { SelectFieldForm } from '@components/common/select-field-form/select-field-form';
 import { MenuItem } from '@mui/material';
 
+import { SelectFieldForm } from '../select-field-form/select-field-form';
 import styles from './styles.module.scss';
 
 interface RangeYearsProps {

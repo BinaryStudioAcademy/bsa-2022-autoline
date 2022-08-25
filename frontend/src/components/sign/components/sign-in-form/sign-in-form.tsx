@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app-route.enum';
+import { StorageKey } from '@common/enums/enums';
 import { SignInRequestData } from '@common/types/types';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
@@ -38,7 +38,7 @@ export const SignInForm = (): React.ReactElement => {
     signIn(user)
       .unwrap()
       .then(({ accessToken }: SignInResponseData) => {
-        localStorage.setItem('access-token', accessToken);
+        localStorage.setItem(StorageKey.TOKEN, accessToken);
         dispatch(setCredentials({ accessToken }));
         navigate(AppRoute.ROOT);
       });

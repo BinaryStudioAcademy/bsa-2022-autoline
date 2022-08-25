@@ -30,9 +30,9 @@ jobs:
 #        run: |
 #          yarn run lint --max-warnings=0
 
-      - name: Code Building
-        run: |
-          yarn run build
+#      - name: Code Building
+#        run: |
+#          yarn run build
 
   build-backend:
     name: Autoline build backend.Dockerfile

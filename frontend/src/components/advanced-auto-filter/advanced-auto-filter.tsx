@@ -15,7 +15,12 @@ import { filtersToQuery } from '@helpers/filters-to-query';
 import { getValueById } from '@helpers/get-value-by-id';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import UTurnRightIcon from '@mui/icons-material/UTurnRight';
-import { resetAllFilters, setValue } from '@store/car-filter/slice';
+import {
+  addNewBrandDetails,
+  changeBrandDetails,
+  resetAllFilters,
+  setValue,
+} from '@store/car-filter/slice';
 import {
   useGetFilteredCarsQuery,
   useGetUsedOptionsQuery,
@@ -26,24 +31,23 @@ import styles from './styles.module.scss';
 const AdvancedAutoFilter: FC = () => {
   const dispatch = useAppDispatch();
 
-  const filters = useAppSelector((state) => state.carFilter);
+  const filters = useAppSelector((state) => state.carFilter.filters);
+
+  const brandDetails = useAppSelector((state) => state.carFilter.brandDetails);
 
   const [queryParams, setQueryParams] = useState<string[][]>();
-
-  const initialBrandDetails = {
-    id: Date.now().toString(),
-    brandId: '',
-    modelId: '',
-  };
-  const [brandDetailsList, setBrandDetailsList] = useState<BrandDetailsType[]>([
-    initialBrandDetails,
-  ]);
 
   const { data: options, isLoading } = useGetUsedOptionsQuery();
 
   useEffect(() => {
-    setQueryParams(filtersToQuery(filters));
-  }, [filters]);
+    setQueryParams(
+      filtersToQuery({
+        ...filters,
+        brandId: brandDetails.map((item) => item.brandId),
+        modelId: brandDetails.map((item) => item.modelId),
+      }),
+    );
+  }, [filters, brandDetails]);
 
   const { data: filteredCars } = useGetFilteredCarsQuery(queryParams, {
     skip: !queryParams,
@@ -53,45 +57,11 @@ const AdvancedAutoFilter: FC = () => {
   console.log(filteredCars);
 
   const handleAddNewDetails = (): void => {
-    setBrandDetailsList([
-      ...brandDetailsList,
-      {
-        id: Date.now().toString(),
-        brandId: '',
-        modelId: '',
-      },
-    ]);
+    dispatch(addNewBrandDetails());
   };
 
-  const handleBrandDetailsChange = (data: {
-    id: string;
-    brandId: string;
-    modelId: string;
-  }): void => {
-    const { brandId, modelId } = data;
-    setBrandDetailsList([
-      ...brandDetailsList.filter((item) => item.id !== data.id),
-      {
-        id: data.id,
-        brandId,
-        modelId,
-      },
-    ]);
-    if (!filters.brandId.includes(brandId) && brandId !== '') {
-      dispatch(
-        setValue({
-          filterName: FiltersNames.BRAND_ID,
-          value: [...filters.brandId, data.brandId],
-        }),
-      );
-    }
-    if (!filters.modelId.includes(modelId) && modelId !== '')
-      dispatch(
-        setValue({
-          filterName: FiltersNames.MODEL_ID,
-          value: [...filters.modelId, data.modelId],
-        }),
-      );
+  const handleBrandDetailsChange = (data: BrandDetailsType): void => {
+    dispatch(changeBrandDetails(data));
   };
 
   const handleRegionChange = (data: AutocompleteValueType): void => {
@@ -111,7 +81,6 @@ const AdvancedAutoFilter: FC = () => {
 
   const resetFilters = (): void => {
     dispatch(resetAllFilters());
-    setBrandDetailsList([initialBrandDetails]);
   };
 
   const years = useMemo(() => yearsRange(30), []);
@@ -150,15 +119,15 @@ const AdvancedAutoFilter: FC = () => {
               + Add
             </h6>
           </div>
-          {brandDetailsList
-            .sort((a, b) => parseInt(a.id) - parseInt(b.id))
-            .map((brandDetail) => (
-              <BrandDetails
-                key={brandDetail.id}
-                id={brandDetail.id}
-                onBrandDetailsChange={handleBrandDetailsChange}
-              />
-            ))}
+          {brandDetails.map((brandDetail) => (
+            <BrandDetails
+              key={brandDetail.id}
+              id={brandDetail.id}
+              selectedBrandId={brandDetail.brandId}
+              selectedModelId={brandDetail.modelId}
+              onBrandDetailsChange={handleBrandDetailsChange}
+            />
+          ))}
 
           <h5 className={styles.blockTitle}>Year</h5>
           <div className={styles.row}>

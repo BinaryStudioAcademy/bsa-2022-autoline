@@ -43,10 +43,11 @@ export const Header = (): React.ReactElement => {
               <Tabs
                 onChange={(e, value): void => setValue(value)}
                 value={value}
+                className={styles.nav}
               >
-                <Tab label="Used Cars" />
-                <Tab label="New Cars" />
-                <Tab label="About us" />
+                <Tab label="Used Cars" className={styles.navLink} />
+                <Tab label="New Cars" className={styles.navLink} />
+                <Tab label="About us" className={styles.navLink} />
               </Tabs>
               {isMatchMd ? (
                 <>

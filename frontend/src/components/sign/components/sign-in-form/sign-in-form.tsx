@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -45,10 +44,6 @@ export const SignInForm = (): React.ReactElement => {
       });
   };
 
-  useEffect(() => {
-    if (error) console.log(error);
-  }, [error]);
-
   return (
     <>
       <h1 className={styles.title}>Sign In</h1>
@@ -81,7 +76,9 @@ export const SignInForm = (): React.ReactElement => {
             inputLabel="Password"
           />
           {error && 'data' in error && (
-            <Alert severity="error">{error.data.message}</Alert>
+            <Alert className={styles.alert} severity="error">
+              {error.data.message}
+            </Alert>
           )}
           <ButtonFill text="Sign In" />
         </fieldset>

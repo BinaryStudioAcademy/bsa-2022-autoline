@@ -13,10 +13,9 @@ declare module 'jsonwebtoken' {
 }
 
 function generateMailToken(payload: EmailTokenPayload): string {
-  const emailToken = jwt.sign(payload, ENV.JWT.SECRET as string, {
+  return jwt.sign(payload, ENV.JWT.SECRET as string, {
     expiresIn: '7d',
   });
-  return emailToken;
 }
 
 function validateMailToken(token: string): string | boolean {
@@ -26,6 +25,7 @@ function validateMailToken(token: string): string | boolean {
     );
     return email;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     return false;
   }

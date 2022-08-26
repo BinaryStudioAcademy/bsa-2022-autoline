@@ -27,7 +27,6 @@ const setWishlist = async (
     const wishlistResponseDto = await wishlistService.setWishlist(wishlist);
     res.json(wishlistResponseDto).status(httpStatus.CREATED);
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       res.sendStatus(400);
     }
@@ -46,7 +45,6 @@ const deleteWishlist = async (
     await wishlistService.deleteWishlist(wishlistId);
     res.json('Wishlist deleted successfully').status(httpStatus.CREATED);
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       res.sendStatus(404);
     }
@@ -67,7 +65,6 @@ const getWishlistByUserId = async (
     );
     res.json(wishlistResponseDto).status(httpStatus.CREATED);
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       res.sendStatus(404);
     }

@@ -35,13 +35,13 @@ export type { User, UserRole, UserSex } from './user';
 
 export type { ValidationSchema } from './validation/validation';
 
-export type { CarsSearchParams } from './cars/cars-search-params';
-
 export type {
   BrandType,
   OptionsType,
   ModelType,
   AutoRiaOption,
+  CarsSearchParams,
+  SearchResult,
 } from './cars/cars';
 
 export {

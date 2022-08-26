@@ -1,4 +1,4 @@
-import { TokenPayload } from '@autoline/shared';
+import { TokenPayload } from '@autoline/shared/common/types/types';
 import { ExceptionMessage } from '@common/enums/exception/exception-message.enum';
 import { TypedRequestBody } from '@common/types/controller/controller';
 import { verifyToken } from '@helpers/token/token';
@@ -20,7 +20,9 @@ const availableFor =
       const payload = verifyToken(token) as TokenPayload;
 
       if (roles.includes(payload.role as Role)) {
-        req.body.tokenPayload = payload;
+        if (req.route.path !== '/users/:id') {
+          req.body.tokenPayload = payload;
+        }
         return next();
       }
     }

@@ -4,6 +4,7 @@ import {
   TypedRequestQuery,
 } from '@common/types/controller/controller';
 import { getCarsAutoRia } from '@helpers/cars/api-autoria.helper';
+import * as carsLocalSearchService from '@services/cars/cars-local-search.service';
 import * as carsSearchService from '@services/cars/cars-search.service';
 import * as carsService from '@services/cars/cars.service';
 import { NextFunction, Request, Response } from 'express';
@@ -66,4 +67,23 @@ const getUsedOptions = async (
   }
 };
 
-export { carsSearchAutoria, getBrands, getModelsOfBrand, getUsedOptions };
+const carsSearchLocal = async (
+  req: TypedRequestQuery<CarsSearchParams>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const carsData = await carsLocalSearchService.carsSearch(req.query);
+    res.json(carsData);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export {
+  carsSearchAutoria,
+  getBrands,
+  getModelsOfBrand,
+  getUsedOptions,
+  carsSearchLocal,
+};

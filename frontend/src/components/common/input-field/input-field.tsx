@@ -22,6 +22,7 @@ const InputField: FC<InputFieldPropsType> = ({
   type,
   errors,
   inputLabel,
+  value,
   onChange,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -40,7 +41,9 @@ const InputField: FC<InputFieldPropsType> = ({
 
   const {
     field: { ...field },
-  } = control ? useController({ name, control }) : { field: { onChange } };
+  } = control
+    ? useController({ name, control })
+    : { field: { onChange, value } };
 
   return (
     <FormControl

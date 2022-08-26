@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 
-import { User, UserRole } from '@autoline/shared/common/types/types';
+import { User } from '@autoline/shared/common/types/types';
 import EditIcon from '@mui/icons-material/Edit';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -31,14 +31,28 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
     setSelectedUser(undefined);
   };
 
-  const handleSubmit = async (user: User, newRole: UserRole): Promise<void> => {
+  const handleSubmit = async (
+    user: User,
+    newUserData: Partial<User>,
+  ): Promise<void> => {
     setSelectedUser(undefined);
-    if (newRole !== user.role) {
-      await updateUser({
-        id: user.id,
-        role: newRole,
-      });
+    if (
+      newUserData?.name === user.name &&
+      newUserData?.email === user.email &&
+      newUserData?.phone === user.phone &&
+      newUserData?.location === user.location &&
+      newUserData?.sex === user.sex &&
+      newUserData?.role === user.role
+    ) {
+      return;
     }
+
+    const newUser = {
+      id: user.id,
+      ...newUserData,
+    };
+
+    await updateUser(newUser);
   };
 
   return (

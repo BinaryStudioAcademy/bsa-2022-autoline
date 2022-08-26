@@ -85,7 +85,9 @@ export const SignInForm = (): React.ReactElement => {
           </Link>
 
           {error && 'data' in error && (
-            <Alert severity="error">{error.data.message}</Alert>
+            <Alert className={styles.alert} severity="error">
+              {error.data.message}
+            </Alert>
           )}
           <ButtonFill text="Sign In" />
         </fieldset>

@@ -13,4 +13,3 @@ export {
 } from './prisma/prisma';
 
 export { type AutoriaRequestParams } from './cars/autoria-request-params';
-export { type SearchResult } from './cars/search-result';

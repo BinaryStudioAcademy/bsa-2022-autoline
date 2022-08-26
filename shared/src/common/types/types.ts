@@ -41,6 +41,7 @@ export type {
   ModelType,
   AutoRiaOption,
   CarsSearchParams,
+  SearchResult,
 } from './cars/cars';
 
 export {

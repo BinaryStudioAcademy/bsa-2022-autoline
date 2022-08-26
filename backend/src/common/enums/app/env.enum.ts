@@ -28,7 +28,7 @@ const ENV = {
     AUTORIA_API_KEY: AUTORIA_API_KEY,
   },
   JWT: {
-    SECRET: SECRET_KEY,
+    SECRET: SECRET_KEY || '',
     EXPIRES_IN: '24h',
     REFRESH_EXPIRES_IN: '60d',
   },

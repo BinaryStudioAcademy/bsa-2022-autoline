@@ -27,8 +27,9 @@ export const ResetPassword = (): React.ReactElement => {
     password,
   }: ResetPasswordRequestData): Promise<void> => {
     const queryParams = new URLSearchParams(window.location.search);
-    const userId = queryParams.get('id');
-    await resetPassword({ id: userId!, password }).unwrap();
+    const userId = queryParams.get('id') as string;
+
+    await resetPassword({ id: userId, password }).unwrap();
   };
 
   useEffect(() => {

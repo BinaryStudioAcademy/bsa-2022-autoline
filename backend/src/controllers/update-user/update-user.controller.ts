@@ -30,7 +30,6 @@ const updateUser = async (
     const result = await updateUserService.updateUser(user);
     res.status(httpStatus.OK).json(result);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -44,7 +43,6 @@ const deleteUser = async (
     await updateUserService.deleteUser(req.body.tokenPayload.sub);
     res.status(httpStatus.OK).json();
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

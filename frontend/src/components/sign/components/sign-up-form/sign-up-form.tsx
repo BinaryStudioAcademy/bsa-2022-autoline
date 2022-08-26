@@ -105,7 +105,7 @@ export const SignUpForm = (): React.ReactElement => {
             <Alert
               className={styles.alert}
               severity="error"
-            >{`${signUpErrorData.data.error}`}</Alert>
+            >{`${signUpErrorData.data.message}`}</Alert>
           )}
 
           <Dialog

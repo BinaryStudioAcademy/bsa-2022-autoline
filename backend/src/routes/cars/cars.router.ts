@@ -3,12 +3,15 @@ import {
   getBrands,
   getModelsOfBrand,
   getUsedOptions,
+  carsSearchLocal,
 } from '@controllers/cars/cars.controller';
 import { Router } from 'express';
 
 const PATH = '/cars';
 
 const carsRouter = Router();
+
+carsRouter.get(`${PATH}/search`, carsSearchLocal);
 
 carsRouter.get(`${PATH}/search-autoria`, carsSearchAutoria);
 

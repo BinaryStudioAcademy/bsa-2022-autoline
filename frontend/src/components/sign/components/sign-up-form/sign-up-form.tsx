@@ -7,8 +7,7 @@ import { signUpSchema as baseSchema } from '@autoline/shared/validation-schemas'
 import { AppRoute } from '@common/enums/app/app-route.enum';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { InputField } from '@components/common/input-field/input-field';
-import { SignWithFacebook } from '@components/sign/components/sign-with-facebook/sign-with-facebook';
-import { SignWithGoogle } from '@components/sign/components/sign-with-google/sign-with-google';
+import { SignWithOAuth } from '@components/sign/components/sign-with-oauth/sign-with-oauth';
 import { useAppForm } from '@hooks/hooks';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -135,8 +134,8 @@ export const SignUpForm = (): React.ReactElement => {
       <div className={styles.formBottom}>
         <Divider className={styles.divider}>or</Divider>
         <div className={styles.buttonsGroup}>
-          <SignWithGoogle title={'Sign Up'} />
-          <SignWithFacebook title={'Sign Up'} />
+          <SignWithOAuth title={'Google'} />
+          <SignWithOAuth title={'Facebook'} />
         </div>
       </div>
     </>

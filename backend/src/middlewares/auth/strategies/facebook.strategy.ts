@@ -21,13 +21,8 @@ const facebookStrategy = new FacebookStrategy(
     passReqToCallback: true,
   },
   async (req, accessToken, refreshToken, profile, done) => {
-    console.log(profile);
-    console.log(parseInt(profile._json.birthday.substr(-4)));
-
-    let user;
-
     try {
-      user = await prisma.user.findFirst({
+      let user = await prisma.user.findFirst({
         where: {
           User_Security: {
             facebook_acc_id: profile.id,
@@ -37,7 +32,7 @@ const facebookStrategy = new FacebookStrategy(
 
       if (user) return done(null, user);
 
-      const payload: string | JwtPayload | undefined =
+      const payload =
         req.query.state !== 'null'
           ? (verifyToken(req.query.state as string) as JwtPayload)
           : undefined;
@@ -73,7 +68,7 @@ const facebookStrategy = new FacebookStrategy(
         create: {
           name: profile.displayName,
           email: profile._json.email as string,
-          photo_url: profile._json.picture,
+          photo_url: profile._json.picture.data.url,
           location: profile._json.location.name ?? profile._json.hometown.name,
           birth_year: parseInt(profile._json.birthday.substr(-4)), // birthday comes in such type '01/01/2001'
           User_Security: {

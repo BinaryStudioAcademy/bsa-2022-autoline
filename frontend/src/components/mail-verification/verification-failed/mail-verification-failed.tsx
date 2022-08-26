@@ -11,10 +11,7 @@ import { useRequestLinkMutation } from '@store/queries/verification-link';
 
 import styles from './styles.module.scss';
 import { emailSchema } from './validation-schema';
-
-declare type EmailRequestData = {
-  email: string;
-};
+import { EmailRequestData } from '@common/types/types';
 
 const MailVerificationFailed: FC = (): React.ReactElement => {
   const [getLink] = useRequestLinkMutation();

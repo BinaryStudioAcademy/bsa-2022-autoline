@@ -1,11 +1,12 @@
 import { FC, useState } from 'react';
 
-import { ViewedCarsResponse } from '@common/types/types';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
-import { ViewedCarsGrid } from '@components/viewed-cars-grid/viewed-cars-grid';
+import { ViewedCarsGrid } from '@components/viewed-cars/components/viewed-cars-grid/viewed-cars-grid';
 import { useGetHistoryOfViwedCarsQuery } from '@store/queries/history-viewed-cars';
 
 import styles from './styles.module.scss';
+
+import type { GetViewedCarsResponse } from '@autoline/shared';
 
 const ViewedCars: FC = () => {
   const [takeCars, setTakeCars] = useState(6);
@@ -16,18 +17,19 @@ const ViewedCars: FC = () => {
     take: String(takeCars),
   };
 
-  const getMoreCars = (): void => {
+  const { data, isLoading } = useGetHistoryOfViwedCarsQuery(params);
+
+  const getMoreCars = async (): Promise<void> => {
     setTakeCars(takeCars + 30);
   };
 
-  const { data, isLoading } = useGetHistoryOfViwedCarsQuery(params);
   const isAllData = takeCars >= Number(data?.count);
 
   return (
     <article className={styles.ViewedСars}>
-      <h2 className={styles.ViewedСarsTitle}>revised</h2>
+      <h3 className={styles.ViewedСarsTitle}>revised</h3>
       {isLoading ? null : (
-        <ViewedCarsGrid carDataList={data as ViewedCarsResponse} />
+        <ViewedCarsGrid carDataList={data as GetViewedCarsResponse} />
       )}
       {isAllData ? null : (
         <ButtonFill

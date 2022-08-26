@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { ViewedCarDataList } from '@common/types/types';
-import { ShortCarCard } from '@components/short-car-card/short-car-card';
+import { ShortCarCard } from '@components/viewed-cars/components/short-car-card/short-car-card';
 
 import styles from './style.module.scss';
 

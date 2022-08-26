@@ -75,7 +75,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
     if (deleteIsSuccess) {
       navigate(AppRoute.ROOT);
     }
-  });
+  }, [deleteIsSuccess]);
 
   const onSubmit: SubmitHandler<ProfileFieldsRequestData> = async (data) => {
     const updatedUser = await updateUserProfile(data);

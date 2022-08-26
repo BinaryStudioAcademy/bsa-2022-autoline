@@ -22,18 +22,6 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - name: Install Dependencies
-        run: |
-          yarn install
-
-#      - name: Code Linting
-#        run: |
-#          yarn run lint --max-warnings=0
-
-#      - name: Code Building
-#        run: |
-#          yarn run build
-
   build-backend:
     name: Autoline build backend.Dockerfile
     runs-on: ubuntu-latest

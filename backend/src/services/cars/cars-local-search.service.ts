@@ -5,33 +5,9 @@ const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
   return prisma.model.findMany({
     select: {
       id: true,
-      manufacturer_id: true,
-      body_type_id: true,
-      prices_ranges: {
-        select: {
-          id: true,
-        },
-        where: {
-          price_start: {
-            gte: data.priceStart ? +data.priceStart : undefined,
-          },
-          price_end: {
-            lte: data.priceEnd ? +data.priceEnd : undefined,
-          },
-        },
-      },
       complectations: {
         select: {
           id: true,
-          color_id: true,
-          drivetrain_id: true,
-          fuel_type_id: true,
-          transmission_type_id: true,
-          options: {
-            select: {
-              option_id: true,
-            },
-          },
         },
         where: {
           color_id: {

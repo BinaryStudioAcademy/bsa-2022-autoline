@@ -36,7 +36,11 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
     newUserData: Partial<User>,
   ): Promise<void> => {
     setSelectedUser(undefined);
-    if (newUserData?.name === user.name && newUserData?.role === user.role) {
+    if (
+      newUserData?.name === user.name &&
+      newUserData?.email === user.email &&
+      newUserData?.role === user.role
+    ) {
       return;
     }
 

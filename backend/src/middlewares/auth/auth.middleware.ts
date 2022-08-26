@@ -1,12 +1,18 @@
 import { prisma } from '@data/prisma-client';
 import { initializeStrategies } from '@middlewares/auth/strategies/strageties';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { signUpSchema } from '@validation-schemas/validation-schemas';
 import httpStatus from 'http-status-codes';
 import passport from 'passport';
 
-import type { SignInRequestData, ErrorMessage } from '@autoline/shared';
-import type { TypedRequestBody } from '@common/types/controller/controller';
+import type {
+  SignInRequestData,
+  ErrorMessage,
+} from '@autoline/shared/common/types/types';
+import type {
+  TypedRequestBody,
+  TypedRequestQuery,
+} from '@common/types/controller/controller';
 import type { NextFunction, Response } from 'express';
 
 initializeStrategies();
@@ -47,15 +53,37 @@ const signUpMiddleware = async (
         email: req.body.email,
       },
     });
-    if (existedUser) throw new Error('User with this email already exists!');
+    if (existedUser) next(new Error('User with this email already exists!'));
 
     next();
   } catch (err) {
     const { message } = err as ErrorMessage;
-    console.error(err);
-    res.status(httpStatus.FORBIDDEN).json({ error: message });
+    res.status(httpStatus.FORBIDDEN).json({ message });
     next(err);
   }
 };
 
-export { localAuth, signUpMiddleware };
+const googleAuth = async (
+  req: TypedRequestQuery<{ token?: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  passport.authenticate('google', {
+    session: false,
+    failureRedirect: '/',
+    state: req.query.token?.toString(),
+  })(req, res, next);
+};
+
+const googleMiddleware = async (
+  req: TypedRequestBody<User>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  passport.authenticate('google', {
+    session: false,
+    failureRedirect: '/',
+  })(req, res, next);
+};
+
+export { localAuth, signUpMiddleware, googleAuth, googleMiddleware };

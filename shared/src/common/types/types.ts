@@ -37,7 +37,6 @@ export type { ValidationSchema } from './validation/validation';
 
 export type { CarsSearchParams } from './cars/cars-search-params';
 
-
 export type {
   BrandType,
   OptionsType,

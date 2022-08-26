@@ -9,6 +9,7 @@ import { MailVerificationFailed } from '@components/mail-verification/verificati
 import { MailVerificationSuccess } from '@components/mail-verification/verification-success/mail-verification-success';
 import { PersonalPage } from '@components/personal-page/personal-page';
 import { ResetPassword } from '@components/reset-password/reset-password';
+import { RedirectAfterSign } from '@components/sign/components/redirect-after-sign/redirect-after-sign';
 import { Sign } from '@components/sign/sign';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 
@@ -40,6 +41,10 @@ const Routing: FC = () => {
           <Route
             path={AppRoute.MAIL_FAILED_VALIDATION}
             element={<MailVerificationFailed />}
+          />
+          <Route
+            path={AppRoute.SIGN_REDIRECT}
+            element={<RedirectAfterSign />}
           />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>

@@ -13,7 +13,7 @@ import { emailSchema } from './validation-schema';
 
 const MailVerificationFailed: FC = (): React.ReactElement => {
   const [email, setEmail] = useState<string>('');
-  const [validationError, setValidationError] = useState('');
+  // const [/*validationError, */ /*setValidationError*/] = useState('');
   const [getLink] = useRequestLinkMutation();
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ const MailVerificationFailed: FC = (): React.ReactElement => {
       navigate(AppRoute.SIGN_IN);
     } catch (error) {
       if (error instanceof Error) {
-        setValidationError(error.message);
+        // setValidationError(error.message);
       }
     }
   };
@@ -52,7 +52,7 @@ const MailVerificationFailed: FC = (): React.ReactElement => {
               name="email"
               type="email"
               required={true}
-              errors={validationError}
+              // errors={validationError}
               onChange={onChangeHandler}
             />
             <div className={styles.center}>

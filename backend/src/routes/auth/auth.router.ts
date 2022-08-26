@@ -18,6 +18,14 @@ authRouter.post(
   authController.signinLocal,
 );
 
+authRouter.get(`${PATH}/google/sign`, passportMiddleware.googleAuth);
+
+authRouter.get(
+  `${PATH}/google/redirect`,
+  passportMiddleware.googleMiddleware,
+  authController.signGoogle,
+);
+
 authRouter.post(
   `${PATH}/local/reset-password-request/:email`,
   authController.resetPasswordRequest,

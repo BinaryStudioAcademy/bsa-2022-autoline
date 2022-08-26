@@ -3,7 +3,7 @@ import {
   ModelType,
   OptionsType,
 } from '@autoline/shared/common/types/types';
-import { API } from '@store/queries/api_routes';
+import { API } from '@store/queries/api-routes';
 
 import { api } from '..';
 

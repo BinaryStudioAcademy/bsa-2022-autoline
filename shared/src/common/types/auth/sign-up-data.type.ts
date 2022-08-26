@@ -2,8 +2,6 @@ type SignUpRequestData = {
   name: string;
   email: string;
   password: string;
-  phone: string;
-  location: string;
 };
 
 type SignUpResponseData = {

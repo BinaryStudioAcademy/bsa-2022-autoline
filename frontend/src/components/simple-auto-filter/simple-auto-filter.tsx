@@ -4,18 +4,17 @@ import { AutoRiaOption } from '@autoline/shared/common/types/types';
 import { FiltersNames } from '@common/enums/cars/filters-names.enum';
 import { pricesRange, yearsRange } from '@common/enums/cars/ranges';
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
+import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { RangeValueType } from '@common/types/cars/range-item.type';
+import { BrandDetails } from '@components/advanced-auto-filter/brand-details/brand-details';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
-import { SelectField } from '@components/common/select-field/select-field';
 import { filtersToQuery } from '@helpers/filters-to-query';
 import { getValueById } from '@helpers/get-value-by-id';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
-import { setValue } from '@store/car-filter/slice';
+import { changeBrandDetails, setValue } from '@store/car-filter/slice';
 import {
-  useGetBrandsQuery,
   useGetFilteredCarsQuery,
-  useGetModelsOfBrandQuery,
   useGetUsedOptionsQuery,
 } from '@store/queries/cars';
 
@@ -24,22 +23,26 @@ import styles from './styles.module.scss';
 const SimpleAutoFilter: FC = () => {
   const dispatch = useAppDispatch();
 
-  const filters = useAppSelector((state) => state.carFilter);
+  const filters = useAppSelector((state) => state.carFilter.filters);
+
+  const brandDetail = useAppSelector(
+    (state) => state.carFilter.brandDetails,
+  )[0];
 
   const [queryParams, setQueryParams] = useState<string[][]>([]);
 
-  const { data: brands, isLoading } = useGetBrandsQuery();
+  useEffect(() => {
+    setQueryParams(
+      filtersToQuery({
+        ...filters,
+        brandId: [brandDetail.brandId],
+        modelId: [brandDetail.modelId],
+      }),
+    );
+  }, [filters, brandDetail]);
 
   const { data: options, isLoading: isOptionsLoading } =
     useGetUsedOptionsQuery();
-
-  const { data: models } = useGetModelsOfBrandQuery(filters.brandId[0], {
-    skip: !filters.brandId.length,
-  });
-
-  useEffect(() => {
-    setQueryParams(filtersToQuery(filters));
-  }, [filters]);
 
   const { data: filteredCars } = useGetFilteredCarsQuery(queryParams, {
     skip: !queryParams,
@@ -55,29 +58,8 @@ const SimpleAutoFilter: FC = () => {
     dispatch(setValue({ filterName: FiltersNames.REGION_ID, value }));
   };
 
-  const handleSelectBrand = (data: AutocompleteValueType): void => {
-    dispatch(
-      setValue({
-        filterName: FiltersNames.BRAND_ID,
-        value: data?.id ? [data.id] : [],
-      }),
-    );
-
-    dispatch(
-      setValue({
-        filterName: FiltersNames.MODEL_ID,
-        value: [],
-      }),
-    );
-  };
-
-  const handleSelectModel = (data: AutocompleteValueType): void => {
-    dispatch(
-      setValue({
-        filterName: FiltersNames.MODEL_ID,
-        value: data?.id ? [data.id] : [],
-      }),
-    );
+  const handleBrandDetailsChange = (data: BrandDetailsType): void => {
+    dispatch(changeBrandDetails(data));
   };
 
   const handleRangeChange = (range: RangeValueType[]): void => {
@@ -86,7 +68,7 @@ const SimpleAutoFilter: FC = () => {
     });
   };
 
-  if (isLoading || isOptionsLoading) return <h1>Loading...</h1>;
+  if (isOptionsLoading) return <h1>Loading...</h1>;
   return (
     <div className={styles.container}>
       <h5 className={styles.title}>SELECT YOUR CAR</h5>
@@ -95,7 +77,7 @@ const SimpleAutoFilter: FC = () => {
         <AutocompleteInput
           label="Regions"
           onChange={handleRegionChange}
-          value={getValueById(options.region, filters.regionId)}
+          value={getValueById(options.regions, filters.regionId)}
           options={options?.regions?.map((item: AutoRiaOption) => ({
             label: item.name,
             id: item.id,
@@ -105,39 +87,13 @@ const SimpleAutoFilter: FC = () => {
 
       <div className={styles.mainRow}>
         <div className={styles.column}>
-          {brands && (
-            <AutocompleteInput
-              label="Brand"
-              onChange={handleSelectBrand}
-              value={getValueById(brands, filters.brandId[0])}
-              options={brands?.map((item) => ({
-                label: item.name,
-                id: item.id,
-              }))}
-            />
-          )}
-
-          {models ? (
-            <AutocompleteInput
-              label="Model"
-              onChange={handleSelectModel}
-              value={getValueById(models, filters.modelId[0])}
-              options={models?.map((item) => ({
-                label: item.name,
-                id: item.id,
-              }))}
-            />
-          ) : (
-            <SelectField
-              id="disabled"
-              name="Model"
-              value=""
-              disabled={true}
-              required={false}
-            >
-              disabled
-            </SelectField>
-          )}
+          <BrandDetails
+            key={brandDetail.id}
+            id={brandDetail.id}
+            selectedBrandId={brandDetail.brandId}
+            selectedModelId={brandDetail.modelId}
+            onBrandDetailsChange={handleBrandDetailsChange}
+          />
         </div>
         <div className={styles.column}>
           <div className={styles.row}>

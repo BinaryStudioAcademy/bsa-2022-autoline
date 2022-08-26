@@ -1,11 +1,18 @@
-import { ViewedCarsResponse, ViewedCarsParams } from '@common/types/types';
-
 import { api } from '..';
 import { API } from '../api_routes';
 
+import type {
+  GetViewedCarsRequestDto,
+  GetViewedCarsResponse,
+  SetViewedCarRequestDto,
+} from '@autoline/shared';
+
 const historyViewedCarsApi = api.injectEndpoints({
-  endpoints: ({ query }) => ({
-    getHistoryOfViwedCars: query<ViewedCarsResponse, ViewedCarsParams>({
+  endpoints: (build) => ({
+    getHistoryOfViwedCars: build.query<
+      GetViewedCarsResponse,
+      GetViewedCarsRequestDto<string>
+    >({
       query: ({ userId, skip, take }) => ({
         url: `${API.VIEWED_CARS}/${userId}`,
         params: {
@@ -13,8 +20,21 @@ const historyViewedCarsApi = api.injectEndpoints({
           take,
         },
       }),
+      providesTags: ['ViewedCars'],
+    }),
+    addViewedCar: build.mutation<void, SetViewedCarRequestDto>({
+      query: ({ userId, modelId, complectationId }) => ({
+        url: `${API.VIEWED_CARS}/${userId}`,
+        method: 'POST',
+        params: {
+          modelId,
+          complectationId,
+        },
+      }),
+      invalidatesTags: ['ViewedCars'],
     }),
   }),
 });
 
-export const { useGetHistoryOfViwedCarsQuery } = historyViewedCarsApi;
+export const { useGetHistoryOfViwedCarsQuery, useAddViewedCarMutation } =
+  historyViewedCarsApi;

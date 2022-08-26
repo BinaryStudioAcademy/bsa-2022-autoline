@@ -52,10 +52,10 @@ model Users_Viewed_Cars {
   id                  String              @id @default(uuid())
   user                User                @relation(fields: [user_id], references: [id])
   user_id             String
-  model               Model?              @relation(fields: [model_id], references: [id])
-  model_id            String?             @db.VarChar(300)
-  complectation       Complectation?      @relation(fields: [complectation_id], references: [id])
-  complectation_id    String?             @db.VarChar(300)
+  model               Model               @relation(fields: [model_id], references: [id])
+  model_id            String              @db.VarChar(300)
+  complectation       Complectation       @relation(fields: [complectation_id], references: [id])
+  complectation_id    String              @db.VarChar(300)
   created_at          DateTime            @default(now())
 }
 

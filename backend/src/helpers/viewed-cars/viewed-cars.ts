@@ -1,6 +1,11 @@
-import type { viewedCar, formatViewedCarData } from '@common/types/types';
+import type {
+  ViewedCarPrismaDto,
+  ViewedCarResponseDto,
+} from '@autoline/shared';
 
-const formatDataForResponse = (data: viewedCar): formatViewedCarData => ({
+const formatDtoForResponse = (
+  data: ViewedCarPrismaDto,
+): ViewedCarResponseDto => ({
   brand: data.brand.name,
   model: data.name,
   complectation: data.complectations[0] ? data.complectations[0].name : '',
@@ -11,4 +16,4 @@ const formatDataForResponse = (data: viewedCar): formatViewedCarData => ({
   price: `$ ${data.prices_ranges[0].price_start} - ${data.prices_ranges[0].price_end}`,
 });
 
-export { formatDataForResponse };
+export { formatDtoForResponse };

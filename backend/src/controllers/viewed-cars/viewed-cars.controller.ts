@@ -2,29 +2,27 @@ import * as viewedCarsService from '@services/viewed-cars/viewed-cars.service';
 import httpStatus from 'http-status-codes';
 
 import type {
-  setViewedCarRequest,
-  setViewedCarResponse,
+  SetViewedCarRequestDto,
+  GetViewedCarsRequestDto,
+  GetViewedCarsResponse,
 } from '@autoline/shared';
 import type { TypedRequestQuery } from '@common/types/controller/controller';
-import type {
-  GetViewedCarsListResponse,
-  GetViewedCarsListRequest,
-} from '@common/types/types';
 import type { NextFunction, Response } from 'express';
 
 const getViewedCarsList = async (
-  req: TypedRequestQuery<GetViewedCarsListRequest>,
-  res: Response<GetViewedCarsListResponse>,
+  req: TypedRequestQuery<GetViewedCarsRequestDto<string>>,
+  res: Response<GetViewedCarsResponse>,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const { userId } = req.params;
     const { skip, take } = req.query;
-    const result = await viewedCarsService.getViewedCarsList(
+    const requestDataDto = {
       userId,
-      +skip,
-      +take,
-    );
+      skip: +skip,
+      take: +take,
+    };
+    const result = await viewedCarsService.getViewedCarsList(requestDataDto);
     res.json(result).status(httpStatus.OK);
   } catch (error) {
     if (error instanceof Error) {
@@ -35,8 +33,8 @@ const getViewedCarsList = async (
 };
 
 const addCarToViewed = async (
-  req: TypedRequestQuery<setViewedCarRequest>,
-  res: Response<setViewedCarResponse>,
+  req: TypedRequestQuery<SetViewedCarRequestDto>,
+  res: Response<void>,
   next: NextFunction,
 ): Promise<void> => {
   try {
@@ -49,8 +47,8 @@ const addCarToViewed = async (
       complectationId,
     };
 
-    const result = await viewedCarsService.addCarToViewed(viewedCar);
-    res.json(result).status(httpStatus.CREATED);
+    await viewedCarsService.addCarToViewed(viewedCar);
+    res.sendStatus(httpStatus.CREATED);
   } catch (error) {
     if (error instanceof Error) {
       res.sendStatus(400);

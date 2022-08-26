@@ -1,17 +1,18 @@
 import { prisma } from '@data/prisma-client';
-import { formatDataForResponse } from '@helpers/helpers';
+import { formatDtoForResponse } from '@helpers/helpers';
 
 import type {
-  setViewedCarRequest,
-  setViewedCarResponse,
+  SetViewedCarRequestDto,
+  GetViewedCarsRequestDto,
+  GetViewedCarsResponse,
+  ViewedCarPrismaDto,
 } from '@autoline/shared';
-import type { GetViewedCarsListResponse, viewedCar } from '@common/types/types';
 
-const getViewedCarsList = async (
-  userId: string,
-  skip: number,
-  take: number,
-): Promise<GetViewedCarsListResponse> => {
+const getViewedCarsList = async ({
+  userId,
+  skip,
+  take,
+}: GetViewedCarsRequestDto<number>): Promise<GetViewedCarsResponse> => {
   const viewedСarsList = await prisma.users_Viewed_Cars.findMany({
     skip,
     take,
@@ -38,7 +39,7 @@ const getViewedCarsList = async (
     viewedСarsList.map(async ({ id, model_id, complectation_id }) => {
       const viewedCar = await prisma.model.findFirst({
         where: {
-          id: model_id as string,
+          id: model_id,
         },
         select: {
           name: true,
@@ -52,7 +53,7 @@ const getViewedCarsList = async (
           },
           complectations: {
             where: {
-              id: complectation_id as string,
+              id: complectation_id,
             },
             select: {
               name: true,
@@ -62,10 +63,10 @@ const getViewedCarsList = async (
             where: {
               OR: [
                 {
-                  model_id: model_id as string,
+                  model_id: model_id,
                 },
                 {
-                  complectation_id: complectation_id as string,
+                  complectation_id: complectation_id,
                 },
               ],
             },
@@ -77,7 +78,7 @@ const getViewedCarsList = async (
         },
       });
 
-      const result = formatDataForResponse(viewedCar as viewedCar);
+      const result = formatDtoForResponse(viewedCar as ViewedCarPrismaDto);
 
       return { id, ...result };
     }),
@@ -93,7 +94,7 @@ const addCarToViewed = async ({
   userId,
   modelId,
   complectationId,
-}: setViewedCarRequest): Promise<setViewedCarResponse> => {
+}: SetViewedCarRequestDto): Promise<void> => {
   const viewedCar = await prisma.users_Viewed_Cars.findFirst({
     where: {
       user_id: userId,
@@ -114,9 +115,10 @@ const addCarToViewed = async ({
         created_at: new Date(),
       },
     });
+    return;
   }
 
-  const { id: viewedListId } = await prisma.users_Viewed_Cars.create({
+  await prisma.users_Viewed_Cars.create({
     data: {
       user_id: userId,
       model_id: modelId,
@@ -126,12 +128,6 @@ const addCarToViewed = async ({
       id: true,
     },
   });
-
-  return {
-    viewedListId,
-    modelId,
-    complectationId,
-  };
 };
 
 export { getViewedCarsList, addCarToViewed };

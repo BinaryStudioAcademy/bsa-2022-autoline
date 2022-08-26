@@ -14,7 +14,7 @@ import { getValueById } from '@helpers/get-value-by-id';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import { Button, Zoom } from '@mui/material';
 import { setValue } from '@store/car-filter/slice';
-import { API } from '@store/queries/api_routes';
+import { API } from '@store/queries/api-routes';
 import {
   useGetBrandsQuery,
   useGetFilteredCarsQuery,

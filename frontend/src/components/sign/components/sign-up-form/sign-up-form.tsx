@@ -43,7 +43,13 @@ export const SignUpForm = (): React.ReactElement => {
 
   const onSubmit = (formData: FieldValues): void => {
     const { name, email, password } = formData;
-    signUp({ name, email, password });
+    signUp({
+      name,
+      email,
+      password,
+      phone: '',
+      location: '',
+    });
   };
 
   const navigateToSignIn = (): void => {

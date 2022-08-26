@@ -1,34 +1,14 @@
+import type {
+  GetViewedCarsResponse,
+  ViewedCarResponseDto,
+} from '@autoline/shared';
+
 type ViewedCarDataList = {
-  carDataList: ViewedCarsResponse;
+  carDataList: GetViewedCarsResponse;
 };
 
 type ViewedCarData = {
-  carData: formatViewedCarData;
+  carData: ViewedCarResponseDto;
 };
 
-interface formatViewedCarData {
-  brand: string;
-  model: string;
-  complectation: string;
-  year: string;
-  photo_urls: string[];
-  price: string;
-}
-
-interface ViewedCarsResponse {
-  list: formatViewedCarData[];
-  count: number;
-}
-
-type ViewedCarsParams = {
-  userId: string;
-  skip: string;
-  take: string;
-};
-
-export {
-  type ViewedCarDataList,
-  type ViewedCarData,
-  type ViewedCarsResponse,
-  type ViewedCarsParams,
-};
+export { type ViewedCarDataList, type ViewedCarData };

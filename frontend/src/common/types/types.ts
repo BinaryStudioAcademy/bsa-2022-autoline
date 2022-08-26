@@ -26,6 +26,4 @@ export type {
 export type {
   ViewedCarDataList,
   ViewedCarData,
-  ViewedCarsResponse,
-  ViewedCarsParams,
 } from './history-of-viewed-cars/history-of-viewed-cars';

@@ -10,15 +10,15 @@ import {
 } from '@mui/material';
 
 interface DialogDeleteAccountProps {
+  isOpen: boolean;
   handleCloseDialog: () => void;
   handleDeleteProfile: () => Promise<void>;
-  isOpen: boolean;
 }
 
 export const DialogDeleteAccount: React.FC<DialogDeleteAccountProps> = ({
+  isOpen,
   handleDeleteProfile,
   handleCloseDialog,
-  isOpen,
 }) => {
   return (
     <Dialog

@@ -8,6 +8,7 @@ import { AppRoute } from '@common/enums/app/app-route.enum';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
+import { SignWithGoogle } from '@components/sign/components/sign-with-google/sign-with-google';
 import { useAppForm } from '@hooks/hooks';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -42,7 +43,16 @@ export const SignUpForm = (): React.ReactElement => {
 
   const onSubmit = (formData: FieldValues): void => {
     const { name, email, password } = formData;
-    signUp({ name, email, password });
+    const stringName = name as string;
+    const stringEmail = email as string;
+    const stringpassword = password as string;
+    signUp({
+      name: stringName,
+      email: stringEmail,
+      password: stringpassword,
+      phone: '1231',
+      location: 'ua',
+    } as SignUpRequestData);
   };
 
   const navigateToSignIn = (): void => {
@@ -53,7 +63,7 @@ export const SignUpForm = (): React.ReactElement => {
     <>
       <h1 className={styles.title}>Sign Up</h1>
       <p className={styles.subtitle}>
-        <span>I have an account? </span>
+        <span>Have an account? </span>
         <Link className={styles.link} to={AppRoute.SIGN_IN}>
           Sign In
         </Link>
@@ -104,7 +114,7 @@ export const SignUpForm = (): React.ReactElement => {
             <Alert
               className={styles.alert}
               severity="error"
-            >{`${signUpErrorData.data.error}`}</Alert>
+            >{`${signUpErrorData.data.message}`}</Alert>
           )}
 
           <Dialog
@@ -134,7 +144,7 @@ export const SignUpForm = (): React.ReactElement => {
       <div className={styles.formBottom}>
         <Divider className={styles.divider}>or</Divider>
         <div className={styles.buttonsGroup}>
-          <ButtonOutline text="Sign Up with Google" />
+          <SignWithGoogle title={'Sign Up'} />
           <ButtonOutline text="Sign Up with Facebook" />
         </div>
       </div>

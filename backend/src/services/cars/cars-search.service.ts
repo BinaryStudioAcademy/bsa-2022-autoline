@@ -2,7 +2,7 @@ import { CarsSearchParams } from '@autoline/shared';
 import { AutoriaRequestParams } from '@common/types/cars/autoria-request-params';
 import { prisma } from '@data/prisma-client';
 
-const carsSearch = async (
+const carsSearchAutoria = async (
   data: CarsSearchParams,
 ): Promise<Partial<AutoriaRequestParams>> => {
   const result: Partial<AutoriaRequestParams> = { category_id: 1 };
@@ -23,9 +23,13 @@ const carsSearch = async (
         },
       },
       where: {
-        id: data.modelId,
+        id: {
+          in: data.modelId,
+        },
         body_type: {
-          id: data.bodyTypeId,
+          id: {
+            in: data.bodyTypeId,
+          },
         },
         brand: {
           id: {
@@ -141,4 +145,4 @@ const getData = async (
   }
 };
 
-export { carsSearch };
+export { carsSearchAutoria };

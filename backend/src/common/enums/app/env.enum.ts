@@ -15,6 +15,8 @@ const {
   FROM_EMAIL,
   FROM_MAIL_VALIDATE,
   EMAIL_PORT,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
 } = process.env;
 
 const ENV = {
@@ -26,7 +28,7 @@ const ENV = {
     AUTORIA_API_KEY: AUTORIA_API_KEY,
   },
   JWT: {
-    SECRET: SECRET_KEY,
+    SECRET: SECRET_KEY || '',
     EXPIRES_IN: '24h',
     REFRESH_EXPIRES_IN: '60d',
   },
@@ -49,6 +51,10 @@ const ENV = {
   MAIL: {
     FROM_EMAIL_VALIDATE: FROM_MAIL_VALIDATE,
     PORT_MAIL_SEND_SERVICE: EMAIL_PORT,
+  },
+  GOOGLE: {
+    CLIENT_ID: GOOGLE_CLIENT_ID,
+    CLIENT_SECRET: GOOGLE_CLIENT_SECRET,
   },
 } as const;
 

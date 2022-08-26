@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { AutoRiaOption } from '@autoline/shared/common/types/types';
 import { FiltersNames } from '@common/enums/cars/filters-names.enum';
@@ -12,7 +13,9 @@ import { RangeSelector } from '@components/common/range-selector/range-selector'
 import { filtersToQuery } from '@helpers/filters-to-query';
 import { getValueById } from '@helpers/get-value-by-id';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
+import { Button, Zoom } from '@mui/material';
 import { changeBrandDetails, setValue } from '@store/car-filter/slice';
+import { API } from '@store/queries/api-routes';
 import {
   useGetFilteredCarsQuery,
   useGetUsedOptionsQuery,
@@ -21,6 +24,7 @@ import {
 import styles from './styles.module.scss';
 
 const SimpleAutoFilter: FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const filters = useAppSelector((state) => state.carFilter.filters);
@@ -67,6 +71,12 @@ const SimpleAutoFilter: FC = () => {
       dispatch(setValue({ filterName, value }));
     });
   };
+
+  const isButtonVisible = Boolean(
+    Object.values(filters).some((filter) => filter.length >= 1),
+  );
+
+  const navigateToSearch = (): void => navigate(API.SEARCH);
 
   if (isOptionsLoading) return <h1>Loading...</h1>;
   return (
@@ -122,6 +132,18 @@ const SimpleAutoFilter: FC = () => {
             />
           </div>
         </div>
+      </div>
+      <div className={styles.buttonWrapper}>
+        <Zoom in={isButtonVisible}>
+          <Button
+            onClick={navigateToSearch}
+            disabled={!isButtonVisible}
+            className={styles.searchButton}
+            variant="contained"
+          >
+            SEARCH
+          </Button>
+        </Zoom>
       </div>
     </div>
   );

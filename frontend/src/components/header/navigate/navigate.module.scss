@@ -7,8 +7,7 @@
     display: flex;
     align-content: center;
     align-items: center;
-    height: 105px;
-    margin-right: 56px;
+    margin-right: 3.4rem;
 
     &.itemActive {
       position: relative;
@@ -17,7 +16,7 @@
 
     a {
       color: #353535;
-      font-size: 18px;
+      font-size: 1.125rem;
       text-decoration: none;
 
       &:hover {

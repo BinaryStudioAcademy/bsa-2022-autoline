@@ -1,7 +1,7 @@
 import { User } from '@autoline/shared/common/types/types';
 
 import { api } from '..';
-import { API } from '../api_routes';
+import { API } from '../api-routes';
 
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({

@@ -1,7 +1,6 @@
 import { ENV } from '@common/enums/app/app';
 import { prisma } from '@data/prisma-client';
-import { createToken } from '@helpers/helpers';
-import { bcryptHash, sendEmail } from '@helpers/helpers';
+import { bcryptHash, sendEmail, createToken } from '@helpers/helpers';
 import { User } from '@prisma/client';
 import { mailSend } from '@services/mail-verification/send.service';
 import { updateMailToken } from '@services/mail-verification/user-data.service/user-security';
@@ -81,7 +80,7 @@ const requestPasswordReset = async (email: string): Promise<string> => {
     {
       sub: user.id,
     },
-    ENV.JWT.SECRET!,
+    ENV.JWT.SECRET,
     { expiresIn: '1h' },
   );
 
@@ -105,7 +104,7 @@ const requestPasswordReset = async (email: string): Promise<string> => {
 };
 
 const resetPasswordCheckToken = async (token: string): Promise<string> => {
-  const payload = jwt.verify(token, ENV.JWT.SECRET!) as jwt.JwtPayload;
+  const payload = jwt.verify(token, ENV.JWT.SECRET) as jwt.JwtPayload;
   if (!payload.sub) {
     throw new Error('Payload token is invalid');
   }
@@ -145,7 +144,10 @@ const resetPassword = async (id: string, password: string): Promise<void> => {
     throw new Error('User does not exist');
   }
 
-  const isSamePassword = await bcrypt.compare(password, userSecurity.password);
+  const isSamePassword = await bcrypt.compare(
+    password,
+    userSecurity.password as string,
+  );
   if (isSamePassword) {
     throw new Error('Same passwords error');
   }

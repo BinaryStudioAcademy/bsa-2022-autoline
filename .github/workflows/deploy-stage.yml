@@ -41,7 +41,7 @@ jobs:
           image_tag: latest
           context: ./
           dockerfile: ./.docker/autoline/frontend.Dockerfile
-          build_extra_args: "--build-arg=VITE_APP_API_ORIGIN_URL=${{ secrets.VITE_APP_API_ORIGIN_URL }}"
+          build_extra_args: "--build-arg=VITE_API_ORIGIN_URL=${{ secrets.VITE_APP_API_ORIGIN_URL }}"
 
   deploy:
     needs: [build-backend, build-frontend]

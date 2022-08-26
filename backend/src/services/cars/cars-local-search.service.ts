@@ -2,7 +2,7 @@ import { CarsSearchParams, SearchResult } from '@autoline/shared';
 import { prisma } from '@data/prisma-client';
 
 const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
-  return prisma.model.findMany({
+  const models = await prisma.model.findMany({
     select: {
       id: true,
       complectations: {
@@ -95,6 +95,13 @@ const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
       },
     },
   });
+
+  return models.map((model) => ({
+    model_id: model.id,
+    complectations_id: model.complectations.map(
+      (complectation) => complectation.id,
+    ),
+  }));
 };
 
 const getYearEndCondition = (

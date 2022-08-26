@@ -9,6 +9,7 @@ import { MailVerificationFailed } from '@components/mail-verification/verificati
 import { MailVerificationSuccess } from '@components/mail-verification/verification-success/mail-verification-success';
 import { PersonalPage } from '@components/personal-page/personal-page';
 import { ResetPassword } from '@components/reset-password/reset-password';
+import { SearchPage } from '@components/search-page/search-page';
 import { RedirectAfterSign } from '@components/sign/components/redirect-after-sign/redirect-after-sign';
 import { Sign } from '@components/sign/sign';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
@@ -61,6 +62,9 @@ const Routing: FC = () => {
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.PERSONAL} element={<PersonalPage />} />
+        </Route>
+        <Route element={<ProtectedRoute isAllowed={!!authData} />}>
+          <Route path={AppRoute.SEARCH} element={<SearchPage />} />
         </Route>
         <Route path={AppRoute.NOT_FOUND} element={<h2>Not found</h2>} />
       </Routes>

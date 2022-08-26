@@ -6,7 +6,7 @@
   padding: 30px;
   background-color: var(--white);
   border: solid 1px var(--white);
-  border-radius: 10px;
+  border-radius: var(--border-radius-container);
 }
 
 .header {
@@ -18,7 +18,7 @@
 .price {
   color: var(--blue100);
   font-weight: 800;
-  font-size: 22px;
+  font-size: 1.5rem;
   line-height: 24px;
   text-transform: uppercase;
 }
@@ -26,8 +26,8 @@
 .priceUah {
   margin-left: 10px;
   color: var(--gray400);
-  font-weight: 400;
-  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  font-size: 0.875rem;
   line-height: 18px;
 }
 
@@ -43,11 +43,11 @@
   margin: 10px 10px 10px 0;
   padding: 4px 9px;
   color: var(--white);
-  font-weight: 400;
-  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  font-size: 0.875rem;
   line-height: 17px;
   background: var(--blue300);
-  border-radius: 4px;
+  border-radius: var(--border-radius-pill);
 
   &:hover {
     cursor: pointer;
@@ -69,13 +69,13 @@
   min-width: 85px;
   margin-right: 10px;
   color: var(--gray400);
-  font-weight: 400;
-  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  font-size: 0.875rem;
   line-height: 17px;
 }
 
 .complectationValue {
-  font-weight: 400;
-  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  font-size: 0.875rem;
   line-height: 17px;
 }

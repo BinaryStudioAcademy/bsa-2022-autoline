@@ -266,7 +266,6 @@ async function main(): Promise<void> {
           data: {
             name: complectation.name,
             model_id: newModel.id,
-            name: complectation.name,
             engine: complectation.engine,
             engine_displacement: complectation.engine_displacement,
             engine_power: complectation.engine_power,

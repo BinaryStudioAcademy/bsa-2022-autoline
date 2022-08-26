@@ -1,0 +1,12 @@
+.checkbox {
+  font-size: 30px;
+  border-color: var(--blue100);
+}
+
+.seeAll {
+  display: flex;
+  align-items: center;
+  color: var(--blue100);
+  font-weight: 700;
+  cursor: pointer;
+}

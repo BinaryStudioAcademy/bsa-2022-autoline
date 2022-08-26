@@ -39,7 +39,6 @@ const sendVerificationLink = async (
     await updateMailToken(user.id, token);
     res.status(httpStatus.ACCEPTED).send();
   } catch (error) {
-    console.error(error);
     next(error);
   }
 };

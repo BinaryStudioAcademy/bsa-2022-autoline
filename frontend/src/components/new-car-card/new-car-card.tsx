@@ -1,10 +1,17 @@
 import React from 'react';
 
 import compare from '@assets/images/compare.svg';
-import { WishlistInput } from '@autoline/shared/common/types/types';
+import {
+  WishlistInput,
+  DeleteWishlistInput,
+} from '@autoline/shared/common/types/types';
 import { ExtendedCarCardPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
 import { formatPrice } from '@helpers/helpers';
+import {
+  useCreateWishlistMutation,
+  useDeleteWishlistMutation,
+} from '@store/queries/preferences/wishlist';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
@@ -12,7 +19,7 @@ import styles from './styles.module.scss';
 const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
   const {
     type,
-    isLiked,
+    isLiked = false,
     car: {
       id: carId,
       wishlistId,
@@ -23,8 +30,6 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
       photoUrls,
       description,
     },
-    createWishlist,
-    deleteWishlist,
   } = props;
 
   const minPrices = pricesRanges.map(
@@ -36,20 +41,24 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
   );
   const maxPrice = formatPrice(Math.max(...maxPrices));
 
-  const handleCreate = (): void => {
+  const [createWishlist] = useCreateWishlistMutation();
+  const [deleteWishlist] = useDeleteWishlistMutation();
+
+  const handleCreateWishlist = async (): Promise<void> => {
     const data: WishlistInput =
       type === 'model' ? { modelId: carId } : { complectationId: carId };
 
-    createWishlist(data);
+    await createWishlist(data);
   };
 
-  const handleDelete = (): void => {
-    deleteWishlist({ wishlistId: wishlistId as string });
+  const handleDeleteWishlist = async (): Promise<void> => {
+    const data: DeleteWishlistInput = { wishlistId: wishlistId as string };
+    await deleteWishlist(data);
   };
 
   const handleLikeClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
-    isLiked ? handleDelete() : handleCreate();
+    isLiked ? handleDeleteWishlist() : handleCreateWishlist();
   };
 
   let name = `${brandName} ${carName}`;

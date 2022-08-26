@@ -27,7 +27,6 @@ const getViewedCarsList = async (
     );
     res.json(result).status(httpStatus.OK);
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       res.sendStatus(400);
     }
@@ -53,7 +52,6 @@ const addCarToViewed = async (
     const result = await viewedCarsService.addCarToViewed(viewedCar);
     res.json(result).status(httpStatus.CREATED);
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       res.sendStatus(400);
     }

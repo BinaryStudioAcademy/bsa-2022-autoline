@@ -30,7 +30,6 @@ const activateMail = async (
 
     return res.redirect(MailActivate.SUCCESS_URL);
   } catch (error) {
-    console.error(error);
     next(error);
   }
 };

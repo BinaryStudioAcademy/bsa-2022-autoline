@@ -20,7 +20,6 @@
 
   padding: 10px 0;
   font-weight: 600;
-  font-size: 1.2rem;
   border-color: rgb(255 255 255);
 }
 
@@ -32,9 +31,16 @@
   width: 150px;
   padding: 10px 0;
   font-weight: 600;
-  font-size: 1.2rem;
 }
 
 .authAvatar {
   height: 30px;
+}
+
+.nav {
+  margin-left: 4rem;
+}
+
+.navLink {
+  height: var(--header-height);
 }

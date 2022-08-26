@@ -1,0 +1,91 @@
+.container {
+  position: absolute;
+  width: 600px;
+  padding: 25px 30px;
+  background-color: var(--white);
+  border-radius: 10px;
+
+  h5 {
+    margin-top: 0;
+    margin-bottom: 25px;
+  }
+
+  .buttonWrapper {
+    button {
+      position: absolute;
+      top: 256px;
+      right: 0;
+      left: 0;
+      width: 20%;
+      margin: auto;
+      padding: 10px 30px;
+      color: var(--white);
+      background-color: var(--blue100);
+      border-radius: 50px;
+    }
+  }
+}
+
+.title {
+  margin: 15px 0;
+  font-weight: 800;
+}
+
+.mainRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  column-gap: 30px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  column-gap: 10px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.autocompleteField {
+  margin-bottom: 15px;
+
+  .MuiAutocomplete-popupIndicator {
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+  }
+
+  .label {
+    left: 18px;
+    color: var(--gray300);
+    font-size: 14px;
+    transform: translate(0, 14px) scale(1);
+  }
+
+  fieldset {
+    top: 0;
+    border-color: var(--gray200);
+    border-radius: 50px;
+
+    legend {
+      display: none;
+    }
+  }
+}
+
+.searchButton {
+  .MuiButtonBase-root-MuiButton-root {
+    position: absolute;
+  }
+
+  background-color: var(--blue300);
+  border-radius: 50px;
+}

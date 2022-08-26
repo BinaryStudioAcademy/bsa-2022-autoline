@@ -8,12 +8,26 @@ import type {
 
 const getComplectationsById = async (
   complectationId: string | undefined,
+  userId: string,
 ): Promise<ComplectationsResponseDto> => {
   const data = (await prisma.complectation.findUnique({
     where: {
       id: complectationId,
     },
     select: {
+      users_wishlists: {
+        where: {
+          user_id: userId,
+        },
+        select: {
+          id: true,
+          complectation: {
+            select: {
+              id: true,
+            },
+          },
+        },
+      },
       prices_ranges: {
         select: {
           price_start: true,
@@ -35,17 +49,6 @@ const getComplectationsById = async (
     },
   })) as ModelComplectationsResponseDto;
 
-  const optionType = [
-    'security',
-    'optics',
-    'multimedia',
-    'upholstery',
-    'sound',
-    'design',
-    'comfort',
-    'auxiliary',
-  ];
-
   const options: OptionType = {
     security: [],
     optics: [],
@@ -58,14 +61,6 @@ const getComplectationsById = async (
     important: [],
   };
 
-  optionType.forEach((optionName) => {
-    data?.options.forEach((option) => {
-      if (option.option.type === optionName) {
-        options[optionName].push(option.option.name);
-      }
-    });
-  });
-
   const importantOptionsList: Set<string> = new Set();
   data?.options.forEach((option) => {
     if (option.important === false) {
@@ -74,9 +69,16 @@ const getComplectationsById = async (
   }),
     (options.important = Array.from(importantOptionsList));
 
+  const optionsList = data?.options.reduce((acc: OptionType, obj) => {
+    const key = obj.option['type'];
+    acc[key] ??= [];
+    acc[key].push(obj.option.name);
+    return acc;
+  }, {});
+
   const result = {
     complectation: data,
-    options: options,
+    options: { ...options, ...optionsList },
     price: `${data?.prices_ranges[0].price_start} - ${data?.prices_ranges[0].price_end}`,
   };
   return result;

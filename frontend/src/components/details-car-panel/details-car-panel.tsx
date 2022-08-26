@@ -1,19 +1,65 @@
 import { FC } from 'react';
 
+import {
+  WishlistInput,
+  DeleteWishlistInput,
+} from '@autoline/shared/common/types/types';
 import { DetailsCarPanelPropsType } from '@common/types/types';
+import { HeartIcon } from '@components/common/icons/icons';
 import { useGetComplectationsQuery } from '@store/queries/details-panel';
+import {
+  useCreateWishlistMutation,
+  useDeleteWishlistMutation,
+} from '@store/queries/preferences/wishlist';
+import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
 const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({ complectationId }) => {
   const { data, isLoading } = useGetComplectationsQuery(complectationId);
+  const [createWishlist] = useCreateWishlistMutation();
+  const [deleteWishlist] = useDeleteWishlistMutation();
 
+  const handleCreateWishlist = async (): Promise<void> => {
+    const inputData: WishlistInput = {
+      complectationId: '05b3a09b-fcb9-45fa-8871-60b89a851fae',
+    };
+
+    await createWishlist(inputData);
+  };
+
+  const handleDeleteWishlist = async (): Promise<void> => {
+    const inputData: DeleteWishlistInput = {
+      wishlistId: data?.complectation?.users_wishlists[0].id as string,
+    };
+    await deleteWishlist(inputData);
+  };
+
+  const handleLikeClick = (event: React.MouseEvent): void => {
+    event.stopPropagation();
+    data?.complectation?.users_wishlists.length != 0
+      ? handleDeleteWishlist()
+      : handleCreateWishlist();
+  };
   if (isLoading) return null;
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.price}>$ {data?.price}</div>
         <div className={styles.priceUah}>UAH 1 554 000 - 1 945 450</div>
+        <div className={styles.icons}>
+          <button
+            className={clsx(
+              styles.button,
+              styles.iconButton,
+              data?.complectation?.users_wishlists.length != 0 &&
+                styles.isLiked,
+            )}
+            onClick={handleLikeClick}
+          >
+            <HeartIcon />
+          </button>
+        </div>
       </div>
       <div className={styles.lables}>
         {data?.options.important.map((option) => (

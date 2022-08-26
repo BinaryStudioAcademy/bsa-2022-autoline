@@ -9,6 +9,12 @@ type OptionType = {
 };
 
 type ModelComplectationsResponseDto = {
+  users_wishlists: {
+    id: string;
+    complectation: {
+      id: string;
+    };
+  }[];
   prices_ranges: {
     price_start: number;
     price_end: number;

@@ -14,13 +14,13 @@ const getComplectations = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
+    const userId = req.body.tokenPayload.sub;
     const { complectationId } = req.query;
-    const ResponseDto = await getComplectationsById(complectationId);
-    res.json(ResponseDto).status(httpStatus.CREATED);
+    const ResponseDto = await getComplectationsById(complectationId, userId);
+    res.json(ResponseDto).status(httpStatus.OK);
   } catch (error) {
-    console.error(error);
-    if (error instanceof Error) {
-      res.sendStatus(404);
+    if (error instanceof Error && error.message === 'NotFoundError') {
+      res.sendStatus(httpStatus.NOT_FOUND);
     }
     next(error);
   }

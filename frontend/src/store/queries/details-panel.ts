@@ -10,6 +10,7 @@ export const detailsPanelApi = api.injectEndpoints({
         url: `${ApiPath.COMPLECTATION}?complectationId=${complectationId}`,
         method: 'GET',
       }),
+      providesTags: ['DetailsPanel'],
     }),
   }),
 });

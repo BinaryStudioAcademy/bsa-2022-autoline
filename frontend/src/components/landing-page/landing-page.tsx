@@ -8,6 +8,7 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { TopCarCard } from '@components/top-car-card/top-car-card';
 import { Container } from '@mui/material';
+import { clsx } from 'clsx';
 
 import { Header } from './components/components';
 import { newCars } from './mock-new-cars';
@@ -36,13 +37,13 @@ export const LandingPage = (): React.ReactElement => {
             <div className={styles.firstContainerLeftButtons}>
               <Link to={AppRoute.SIGN_UP}>
                 <ButtonFill
-                  className={styles.buttonFill}
+                  className={clsx(styles.button, styles.buttonFill)}
                   text="Create Account"
                 />
               </Link>
               <Link to={AppRoute.SIGN_IN}>
                 <ButtonOutline
-                  className={styles.buttonOutline}
+                  className={clsx(styles.button, styles.buttonOutline)}
                   text="Sign In"
                 />
               </Link>

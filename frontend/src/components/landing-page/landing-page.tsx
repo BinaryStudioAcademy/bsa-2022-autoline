@@ -8,15 +8,14 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { TopCarCard } from '@components/top-car-card/top-car-card';
 import { Container } from '@mui/material';
-// import { useGetNewCarsQuery } from '@store/queries/new-cars';
+import { useGetNewCarsQuery } from '@store/queries/new-cars';
 
 import { Header } from './components/components';
-import { newCars } from './mock-new-cars';
+import { topCars } from './mock-top-cars';
 import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {
-  // const { data: cars } = useGetNewCarsQuery();
-  // console.log(cars);
+  const { data: cars } = useGetNewCarsQuery(4);
 
   return (
     <>
@@ -58,19 +57,9 @@ export const LandingPage = (): React.ReactElement => {
         <div className={styles.secondContainer}>
           <div className={styles.secondContainerHeader}>New Cars</div>
           <div className={styles.secondContainerCards}>
-            {/* {!cars
+            {!cars
               ? null
               : cars?.map((car) => (
-                  <NewCarCard
-                    type={'complectation'}
-                    isLiked={false}
-                    car={car}
-                    key={car.id}
-                  />
-                ))} */}
-            {!newCars
-              ? null
-              : newCars?.map((car) => (
                   <NewCarCard
                     type={'complectation'}
                     isLiked={false}
@@ -86,18 +75,9 @@ export const LandingPage = (): React.ReactElement => {
         <div className={styles.fourthContainer}>
           <div className={styles.fourthContainerHeader}>Top Autoria</div>
           <div className={styles.fourthContainerCards}>
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
+            {topCars.map((car) => (
+              <TopCarCard car={car} key={car.id} />
+            ))}
           </div>
         </div>
       </Container>

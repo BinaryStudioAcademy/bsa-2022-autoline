@@ -1,15 +1,20 @@
-import { newerCars } from '@helpers/new-cars/new-cars-helper.ts';
+import * as newCarsService from '@services/new-cars/new-cars.service';
 import httpStatus from 'http-status-codes';
 
-import type { Response, NextFunction, Request } from 'express';
+import type { TypedRequestQuery } from '@common/types/controller/controller';
+import type { Response, NextFunction } from 'express';
 
-const newCars = async (
-  req: Request,
+type NewCarsRequestQuery = {
+  limit: string;
+};
+const getNewCars = async (
+  req: TypedRequestQuery<NewCarsRequestQuery>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const newCars = await newerCars(4);
+    const limit = +req.query.limit;
+    const newCars = await newCarsService.getNewCars(limit);
     res.status(httpStatus.OK).json(newCars);
   } catch (error) {
     console.error(error);
@@ -17,4 +22,4 @@ const newCars = async (
   }
 };
 
-export { newCars };
+export { getNewCars };

@@ -1,24 +1,4 @@
-declare type ModelResponseDto = {
-  id: string;
-  wishlistId: string | null;
-  createdAt: Date;
-  name: string;
-  yearStart: number;
-  yearEnd: number | null;
-  photoUrls: string[] | [];
-  brand: {
-    name: string;
-    logoUrl: string;
-  };
-  bodyType: string;
-  manufactureCountry: string;
-  pricesRanges: {
-    price_start: number;
-    price_end: number;
-  }[];
-  description: string;
-  complectationName?: string;
-};
+import type { ModelResponseDto } from '@autoline/shared/common/types/types';
 
 const hondaCivic: ModelResponseDto = {
   id: '1111',
@@ -34,8 +14,8 @@ const hondaCivic: ModelResponseDto = {
     name: 'Honda',
     logoUrl: 'https://www.downloadclipart.net/large/honda-logo-png.png',
   },
-  bodyType: 'Микровэн',
-  manufactureCountry: 'Японія',
+  bodyType: 'Minivan',
+  manufactureCountry: 'Japan',
   pricesRanges: [
     { price_start: 15000, price_end: 17300 },
     { price_start: 19700, price_end: 24500 },
@@ -60,7 +40,7 @@ const BMWiX3: ModelResponseDto = {
     name: 'BMW',
     logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg',
   },
-  bodyType: 'Внедорожник / Кроссовер',
+  bodyType: 'SUV / Crossover',
   manufactureCountry: 'Germany',
   pricesRanges: [
     { price_start: 37000, price_end: 38200 },

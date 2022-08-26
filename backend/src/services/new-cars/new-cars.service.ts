@@ -2,13 +2,14 @@ import { prisma } from '@data/prisma-client';
 
 import type { ModelResponseDto } from '@autoline/shared/common/types/types';
 
-const getNewCar = async (
-  take: number,
-  skip: number,
-): Promise<ModelResponseDto> => {
-  const newcar = await prisma.model.findMany({
-    skip,
-    take,
+const getNewCars = async (limit: number): Promise<ModelResponseDto[]> => {
+  const newCars = await prisma.model.findMany({
+    take: limit,
+    orderBy: [
+      {
+        created_at: 'desc',
+      },
+    ],
     select: {
       id: true,
       name: true,
@@ -51,27 +52,29 @@ const getNewCar = async (
       },
     },
   });
+  const cars: ModelResponseDto[] = [];
+  newCars.map((car) => {
+    const data = {
+      id: car.id,
+      createdAt: car.users_wishlists[0]?.created_at,
+      wishlistId: car.users_wishlists[0]?.id,
+      name: car.name,
+      yearStart: car.year_start,
+      yearEnd: car.year_end,
+      photoUrls: car.photo_urls,
+      brand: {
+        name: car.brand.name,
+        logoUrl: car.brand.logo_url,
+      },
+      bodyType: car.body_type.name,
+      manufactureCountry: car.manufacture_country.name,
+      pricesRanges: car.prices_ranges,
+      description: car.description,
+    } as ModelResponseDto;
+    cars.push(data);
+  });
 
-  const car = newcar[0];
-  const data = {
-    id: car.id,
-    createdAt: car.users_wishlists[0]?.created_at,
-    wishlistId: car.users_wishlists[0]?.id,
-    name: car.name,
-    yearStart: car.year_start,
-    yearEnd: car.year_end,
-    photoUrls: car.photo_urls,
-    brand: {
-      name: car.brand.name,
-      logoUrl: car.brand.logo_url,
-    },
-    bodyType: car.body_type.name,
-    manufactureCountry: car.manufacture_country.name,
-    pricesRanges: car.prices_ranges,
-    description: car.description,
-  } as ModelResponseDto;
-
-  return data;
+  return cars;
 };
 
-export { getNewCar };
+export { getNewCars };

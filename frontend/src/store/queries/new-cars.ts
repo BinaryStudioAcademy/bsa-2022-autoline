@@ -4,15 +4,18 @@ import { api } from './index';
 
 import type { ModelResponseDto } from '@autoline/shared/common/types/types';
 
-const newcarsApi = api.injectEndpoints({
+const newCarsApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getNewCars: build.query<ModelResponseDto[], void>({
-      query: () => ({
+    getNewCars: build.query<ModelResponseDto[], number>({
+      query: (limit: number) => ({
         url: `${NewCarPath.NEW_CARS}`,
         method: 'GET',
+        params: {
+          limit: limit,
+        },
       }),
     }),
   }),
 });
 
-export const { useGetNewCarsQuery } = newcarsApi;
+export const { useGetNewCarsQuery } = newCarsApi;

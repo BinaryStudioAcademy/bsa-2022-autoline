@@ -20,3 +20,4 @@ export type {
   ExtendedCarCardPropsType,
 } from './card/card';
 export type { CompleteSetPropsType } from './complete-set/complete-set';
+export type { TopCarsMockData } from './top-cars-mock/top-cars';

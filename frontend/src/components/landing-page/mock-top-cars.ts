@@ -1,20 +1,6 @@
-declare type TopCars = {
-  id: string;
-  name: string;
-  photoUrls: string[] | [];
-  brand: {
-    name: string;
-    logoUrl: string;
-  };
-  price: number;
-  complectationName?: string;
-  speedometr: number;
-  transmission: string;
-  location: string;
-  fuel: string;
-};
+import { TopCarsMockData } from '@common/types/types';
 
-const BMWM3: TopCars = {
+const BMWM3: TopCarsMockData = {
   id: '1111',
   name: 'M3',
   photoUrls: [
@@ -32,7 +18,7 @@ const BMWM3: TopCars = {
   fuel: 'Gasoline',
 };
 
-const BMWMI4: TopCars = {
+const BMWMI4: TopCarsMockData = {
   id: '2222',
   name: 'i4',
   photoUrls: [
@@ -50,7 +36,7 @@ const BMWMI4: TopCars = {
   fuel: 'Electro',
 };
 
-const MazdaMX5: TopCars = {
+const MazdaMX5: TopCarsMockData = {
   id: '3333',
   name: 'MX-5',
   photoUrls: [
@@ -68,7 +54,7 @@ const MazdaMX5: TopCars = {
   fuel: 'Gasoline',
 };
 
-const Mazda6: TopCars = {
+const Mazda6: TopCarsMockData = {
   id: '4444',
   name: '6',
   photoUrls: [
@@ -86,7 +72,7 @@ const Mazda6: TopCars = {
   fuel: 'Gasoline',
 };
 
-const HondaHRV: TopCars = {
+const HondaHRV: TopCarsMockData = {
   id: '5555',
   name: 'HR-V',
   photoUrls: [
@@ -104,7 +90,7 @@ const HondaHRV: TopCars = {
   fuel: 'Hybrid',
 };
 
-const HondaCRV: TopCars = {
+const HondaCRV: TopCarsMockData = {
   id: '6666',
   name: 'CR-V',
   photoUrls: [
@@ -122,7 +108,7 @@ const HondaCRV: TopCars = {
   fuel: 'Hybrid',
 };
 
-const VolvoV60: TopCars = {
+const VolvoV60: TopCarsMockData = {
   id: '7777',
   name: 'V60 Recharge',
   photoUrls: [
@@ -141,7 +127,7 @@ const VolvoV60: TopCars = {
   fuel: 'Hybrid',
 };
 
-const VolvoXC40: TopCars = {
+const VolvoXC40: TopCarsMockData = {
   id: '8888',
   name: 'XC40 Recharge',
   photoUrls: ['https://i.infocar.ua/i/12/6092/1400x936.jpg'],
@@ -158,7 +144,7 @@ const VolvoXC40: TopCars = {
   fuel: 'Electro',
 };
 
-const BMW2: TopCars = {
+const BMW2: TopCarsMockData = {
   id: '9999',
   name: '2',
   photoUrls: ['https://i.infocar.ua/i/12/3233/1400x936.jpg'],
@@ -174,7 +160,7 @@ const BMW2: TopCars = {
   fuel: 'Disel',
 };
 
-const VolvoS90: TopCars = {
+const VolvoS90: TopCarsMockData = {
   id: '11111',
   name: 'S90 Recharge',
   photoUrls: [
@@ -206,4 +192,4 @@ const topCars = [
   BMW2,
 ];
 
-export { type TopCars, topCars };
+export { topCars };

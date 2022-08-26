@@ -57,7 +57,7 @@ export const LandingPage = (): React.ReactElement => {
           <div className={styles.secondContainerCards}>
             {newCars.map((car) => (
               <NewCarCard
-                type={'complectation'}
+                type="complectation"
                 isLiked={false}
                 car={car}
                 key={car.id}

@@ -14,8 +14,8 @@ const hondaCivic: ModelResponseDto = {
     name: 'Honda',
     logoUrl: 'https://www.downloadclipart.net/large/honda-logo-png.png',
   },
-  bodyType: 'Микровэн',
-  manufactureCountry: 'Японія',
+  bodyType: 'Minivan',
+  manufactureCountry: 'Japan',
   pricesRanges: [
     { price_start: 15000, price_end: 17300 },
     { price_start: 19700, price_end: 24500 },
@@ -40,7 +40,7 @@ const BMWiX3: ModelResponseDto = {
     name: 'BMW',
     logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg',
   },
-  bodyType: 'Внедорожник / Кроссовер',
+  bodyType: 'SUV / Crossover',
   manufactureCountry: 'Germany',
   pricesRanges: [
     { price_start: 37000, price_end: 38200 },

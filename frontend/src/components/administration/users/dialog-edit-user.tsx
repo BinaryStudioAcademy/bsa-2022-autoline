@@ -14,8 +14,6 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import { SelectChangeEvent } from '@mui/material/Select';
 
-//import styles from './styles.module.scss';
-
 type DialogEditUserProps = {
   user?: User;
   handleClose: () => void;
@@ -27,11 +25,15 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
   const [role, setRole] = useState<UserRole | undefined>(user?.role);
   const [name, setName] = useState<string | undefined>(user?.name);
   const [email, setEmail] = useState<string | undefined>(user?.email);
+  const [phone, setPhone] = useState<string | undefined>(user?.phone);
+  const [location, setLocation] = useState<string | undefined>(user?.location);
 
   useEffect(() => {
     if (!user) return;
     setName(user.name);
     setEmail(user.email);
+    setPhone(user.phone);
+    setLocation(user.location);
     setRole(user.role);
   }, [user]);
 
@@ -41,6 +43,16 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
 
   const handleChangeEmail = (event: ChangeEvent<HTMLTextAreaElement>): void => {
     setEmail(event.target.value);
+  };
+
+  const handleChangePhone = (event: ChangeEvent<HTMLTextAreaElement>): void => {
+    setPhone(event.target.value);
+  };
+
+  const handleChangeLocation = (
+    event: ChangeEvent<HTMLTextAreaElement>,
+  ): void => {
+    setLocation(event.target.value);
   };
 
   const handleChangeRole = (event: SelectChangeEvent<string>): void => {
@@ -63,10 +75,24 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
               />
               <InputField
                 name="email"
-                type="text"
+                type="email"
                 inputLabel="e-mail"
                 value={email}
                 onChange={handleChangeEmail}
+              />
+              <InputField
+                name="phone"
+                type="phone"
+                inputLabel="Phone"
+                value={phone}
+                onChange={handleChangePhone}
+              />
+              <InputField
+                name="location"
+                type="text"
+                inputLabel="Location"
+                value={location}
+                onChange={handleChangeLocation}
               />
               <SelectField
                 name="Role"
@@ -89,6 +115,8 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
             handleSubmit(user as User, {
               name,
               email,
+              phone,
+              location,
               role,
             });
           }}

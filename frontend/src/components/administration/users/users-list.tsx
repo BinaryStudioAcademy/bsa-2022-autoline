@@ -39,6 +39,8 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
     if (
       newUserData?.name === user.name &&
       newUserData?.email === user.email &&
+      newUserData?.phone === user.phone &&
+      newUserData?.location === user.location &&
       newUserData?.role === user.role
     ) {
       return;

@@ -1,13 +1,16 @@
-import { CarsSearchParams } from '@autoline/shared';
-import { SearchResult } from '@common/types/types';
+import { CarsSearchParams, SearchResult } from '@autoline/shared';
 import { prisma } from '@data/prisma-client';
 
 const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
   return prisma.model.findMany({
-    include: {
-      body_type: true,
-      brand: true,
+    select: {
+      id: true,
+      manufacturer_id: true,
+      body_type_id: true,
       prices_ranges: {
+        select: {
+          id: true,
+        },
         where: {
           price_start: {
             gte: data.priceStart ? +data.priceStart : undefined,
@@ -18,6 +21,18 @@ const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
         },
       },
       complectations: {
+        select: {
+          id: true,
+          color_id: true,
+          drivetrain_id: true,
+          fuel_type_id: true,
+          transmission_type_id: true,
+          options: {
+            select: {
+              option_id: true,
+            },
+          },
+        },
         where: {
           color_id: {
             in: data.colorId,
@@ -31,13 +46,18 @@ const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
           fuel_type_id: {
             in: data.fuelTypeId,
           },
-        },
-        include: {
-          color: true,
-          options: true,
-          transmission_type: true,
-          drivetrain: true,
-          fuel_type: true,
+          engine_displacement: {
+            gte: data.engineDisplacementStart
+              ? +data.engineDisplacementStart
+              : undefined,
+            lte: data.engineDisplacementEnd
+              ? +data.engineDisplacementEnd
+              : undefined,
+          },
+          engine_power: {
+            gte: data.enginePowerStart ? +data.enginePowerStart : undefined,
+            lte: data.enginePowerEnd ? +data.enginePowerEnd : undefined,
+          },
         },
       },
     },
@@ -82,6 +102,18 @@ const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
           },
           fuel_type_id: {
             in: data.fuelTypeId,
+          },
+          engine_displacement: {
+            gte: data.engineDisplacementStart
+              ? +data.engineDisplacementStart
+              : undefined,
+            lte: data.engineDisplacementEnd
+              ? +data.engineDisplacementEnd
+              : undefined,
+          },
+          engine_power: {
+            gte: data.enginePowerStart ? +data.enginePowerStart : undefined,
+            lte: data.enginePowerEnd ? +data.enginePowerEnd : undefined,
           },
         },
       },

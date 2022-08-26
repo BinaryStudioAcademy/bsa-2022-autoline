@@ -31,11 +31,7 @@ const TopCarCard: FC<TopCarProps> = ({ car }) => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.carInfo}>
-          <img
-            className={styles.carLogo}
-            src={car.brand.logoUrl}
-            alt="car logo"
-          />
+          <img className={styles.carLogo} src={brand.logoUrl} alt="car logo" />
           <span className={styles.carName}>{fullName}</span>
         </div>
         <div className={styles.iconGroup}>

@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 
-import { User, UserRole } from '@autoline/shared/common/types/types';
+import { User, UserRole, UserSex } from '@autoline/shared/common/types/types';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
@@ -27,6 +27,7 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
   const [email, setEmail] = useState<string | undefined>(user?.email);
   const [phone, setPhone] = useState<string | undefined>(user?.phone);
   const [location, setLocation] = useState<string | undefined>(user?.location);
+  const [sex, setSex] = useState<UserSex | undefined>(user?.sex);
 
   useEffect(() => {
     if (!user) return;
@@ -34,6 +35,7 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
     setEmail(user.email);
     setPhone(user.phone);
     setLocation(user.location);
+    setSex(user.sex);
     setRole(user.role);
   }, [user]);
 
@@ -53,6 +55,10 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
     event: ChangeEvent<HTMLTextAreaElement>,
   ): void => {
     setLocation(event.target.value);
+  };
+
+  const handleChangeSex = (event: SelectChangeEvent<string>): void => {
+    setSex(event.target.value as unknown as UserSex);
   };
 
   const handleChangeRole = (event: SelectChangeEvent<string>): void => {
@@ -95,6 +101,17 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
                 onChange={handleChangeLocation}
               />
               <SelectField
+                name="Sex"
+                value={String(sex)}
+                required={false}
+                onChange={handleChangeSex}
+              >
+                <MenuItem value="male">male</MenuItem>not_known
+                <MenuItem value="female">female</MenuItem>
+                <MenuItem value="not_known">not known</MenuItem>
+                <MenuItem value="not_appliable">not appliable</MenuItem>
+              </SelectField>
+              <SelectField
                 name="Role"
                 value={String(role)}
                 required={true}
@@ -117,6 +134,7 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
               email,
               phone,
               location,
+              sex,
               role,
             });
           }}

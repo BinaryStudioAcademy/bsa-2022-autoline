@@ -27,16 +27,23 @@ const ViewedCars: FC = () => {
 
   return (
     <article className={styles.ViewedСars}>
-      <h3 className={styles.ViewedСarsTitle}>revised</h3>
-      {isLoading ? null : (
-        <ViewedCarsGrid carDataList={data as GetViewedCarsResponse} />
+      <h4 className={styles.ViewedСarsTitle}>revised</h4>
+      {isLoading || data?.count === 0 ? null : (
+        <>
+          <ViewedCarsGrid carDataList={data as GetViewedCarsResponse} />
+          <ButtonFill
+            onClick={getMoreCars}
+            text="load more"
+            className={
+              isAllData ? styles.VisibilityHidden : styles.ViewedСarsBtn
+            }
+          />
+        </>
       )}
-      {isAllData ? null : (
-        <ButtonFill
-          onClick={getMoreCars}
-          text="load more"
-          className={styles.ViewedСarsBtn}
-        />
+      {data?.count === 0 && (
+        <p className={styles.ViewedСarsText}>
+          Nothing in the list of viewed cars.
+        </p>
       )}
     </article>
   );

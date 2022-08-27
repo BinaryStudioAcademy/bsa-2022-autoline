@@ -1,8 +1,29 @@
 .container {
+  position: absolute;
   width: 600px;
-  padding: 10px 30px;
+  padding: 25px 30px;
   background-color: var(--white);
   border-radius: 10px;
+
+  h5 {
+    margin-top: 0;
+    margin-bottom: 25px;
+  }
+
+  .buttonWrapper {
+    button {
+      position: absolute;
+      top: 256px;
+      right: 0;
+      left: 0;
+      width: 20%;
+      margin: auto;
+      padding: 10px 30px;
+      color: var(--white);
+      background-color: var(--blue100);
+      border-radius: 50px;
+    }
+  }
 }
 
 .title {
@@ -58,4 +79,13 @@
       display: none;
     }
   }
+}
+
+.searchButton {
+  .MuiButtonBase-root-MuiButton-root {
+    position: absolute;
+  }
+
+  background-color: var(--blue300);
+  border-radius: 50px;
 }

@@ -19,4 +19,9 @@ export type {
   CarDataListPropsType,
   ExtendedCarCardPropsType,
 } from './card/card';
-export type { CompleteSetPropsType } from './complete-set/complete-set';
+export type {
+  CompleteSetPropsType,
+  CompleteSetDataType,
+} from './complete-set/complete-set';
+export type { TopCarsMockData } from './top-cars-mock/top-cars';
+export type { EmailRequestData } from './mail-verification/email-verification';

@@ -1,26 +1,29 @@
 @import "@assets/css/styles";
 
 .logo {
-  height: 25px;
+  height: 2rem;
 
   @include landing-page-margin;
 }
 
+.button {
+  height: 3rem;
+  padding: 0.6rem 0;
+  font-size: 1rem;
+}
+
 .btnOutline,
 .btnOutline:hover {
-  width: 70px;
+  width: 5rem;
 
-  @media (min-width: $global-sm) {
+  @media (min-width: $global-md) {
     margin-right: var(--land-page-margin-md);
   }
 
-  @media (max-width: $global-sm) {
+  @media (max-width: $global-md) {
     margin-right: var(--land-page-margin-sm);
   }
 
-  padding: 10px 0;
-  font-weight: 600;
-  font-size: 1.2rem;
   border-color: rgb(255 255 255);
 }
 
@@ -29,12 +32,13 @@
 }
 
 .btnFill {
-  width: 150px;
-  padding: 10px 0;
-  font-weight: 600;
-  font-size: 1.2rem;
+  width: 12rem;
 }
 
 .authAvatar {
-  height: 30px;
+  height: 3rem;
+}
+
+.navLink {
+  height: var(--header-height);
 }

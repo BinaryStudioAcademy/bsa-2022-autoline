@@ -1,5 +1,6 @@
 export const API = {
   USERS: '/users',
-  WISHLIST: '/wishlist/',
+  WISHLIST: '/wishlist',
   CARS: '/cars',
+  SEARCH: '/search',
 };

@@ -5,7 +5,10 @@ import { signUpSchema } from '@validation-schemas/validation-schemas';
 import httpStatus from 'http-status-codes';
 import passport from 'passport';
 
-import type { SignInRequestData, ErrorMessage } from '@autoline/shared';
+import type {
+  SignInRequestData,
+  ErrorMessage,
+} from '@autoline/shared/common/types/types';
 import type {
   TypedRequestBody,
   TypedRequestQuery,
@@ -50,13 +53,12 @@ const signUpMiddleware = async (
         email: req.body.email,
       },
     });
-    if (existedUser) throw new Error('User with this email already exists!');
+    if (existedUser) next(new Error('User with this email already exists!'));
 
     next();
   } catch (err) {
     const { message } = err as ErrorMessage;
-    console.error(err);
-    res.status(httpStatus.FORBIDDEN).json({ error: message });
+    res.status(httpStatus.FORBIDDEN).json({ message });
     next(err);
   }
 };

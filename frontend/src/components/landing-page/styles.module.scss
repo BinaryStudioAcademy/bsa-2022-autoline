@@ -1,6 +1,38 @@
 @import "@assets/css/styles";
 
 html {
+  @media (min-width: $global-xs) {
+    font-size: 10px;
+  }
+
+  @media (min-width: $global-md), (min-height: $global-height-md) {
+    font-size: 8px;
+  }
+
+  @media (min-width: $global-lg), (min-height: $global-height-lg) {
+    font-size: 11px;
+  }
+
+  @media (min-width: $global-xl), (min-height: $global-height-xl) {
+    font-size: 12px;
+  }
+
+  @media (min-width: $global-xxl), (min-height: $global-height-xxl) {
+    font-size: 15px;
+  }
+
+  @media (min-width: $global-3xl), (min-height: $global-height-3xl) {
+    font-size: 18px;
+  }
+
+  @media (min-width: $global-4xl), (min-height: $global-height-4xl) {
+    font-size: 24px;
+  }
+
+  @media (min-width: $global-5xl), (min-height: $global-height-5xl) {
+    font-size: 36px;
+  }
+
   font-family: var(--primary-font);
 }
 
@@ -22,7 +54,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 650px;
+    height: calc(100vh - var(--header-height));
 
     @include landing-page-margin;
 
@@ -30,36 +62,36 @@ body {
     padding-left: 0;
 
     .firstContainerLeft {
-      width: 330px;
-      margin-bottom: 150px;
+      width: 28rem;
+      margin-bottom: 10rem;
 
       .firstContainerLeftTextMain {
+        padding: 0;
         font-weight: 900;
-        font-size: 4.4rem;
+        font-size: 3.625rem;
         text-transform: uppercase;
       }
 
       .firstContainerLeftTextSecondary {
-        margin: 15px 0;
-        font-size: 1.2rem;
+        margin: 1rem 0;
       }
 
-      .buttonFill,
-      .buttonOutline {
-        width: 150px;
-        margin-bottom: 10px;
-        padding: 10px 0;
-        font-weight: 600;
+      .button {
+        width: 12rem;
+        height: 3rem;
+        margin-bottom: 0.6rem;
+        padding: 0.6rem 0;
+        font-size: 1rem;
       }
 
       .buttonFill {
-        margin-right: 10px;
+        margin-right: 0.6rem;
       }
     }
 
     .firstContainerRight {
       .car {
-        width: 750px;
+        width: 60rem;
 
         @media (min-width: $global-sm) {
           margin-right: calc(0px - var(--mui-padding-md));
@@ -77,11 +109,11 @@ body {
     @include landing-page-margin;
 
     @media (min-width: $global-sm) {
-      margin-right: 40px;
+      margin-right: 6rem;
     }
 
     @media (max-width: $global-sm) {
-      margin-right: 20px;
+      margin-right: 2rem;
     }
 
     margin-top: 0;
@@ -90,7 +122,7 @@ body {
 
     .secondContainerHeader,
     .fourthContainerHeader {
-      margin-bottom: 20px;
+      margin-bottom: 1.25rem;
       font-weight: 900;
       font-size: 1.6rem;
       text-transform: uppercase;
@@ -99,19 +131,19 @@ body {
     .secondContainerCards,
     .fourthContainerCards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
       justify-items: center;
-      gap: 20px;
+      gap: 1.5rem;
     }
   }
 
   .thirdContainer {
     @media (min-width: $global-sm) {
-      margin: 70px calc(0px - var(--mui-padding-md));
+      margin: var(--header-height) calc(0px - var(--mui-padding-md));
     }
 
     @media (max-width: $global-sm) {
-      margin: 70px calc(0px - var(--mui-padding-sm));
+      margin: var(--header-height) calc(0px - var(--mui-padding-sm));
     }
   }
 }

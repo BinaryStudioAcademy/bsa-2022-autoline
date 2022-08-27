@@ -33,7 +33,9 @@ const SignWithOAuth = ({ title }: { title: string }): React.ReactElement => {
     };
   }, [onStorageEvent]);
 
-  return <ButtonOutline text={'Sign In with ' + title} onClick={onOAuthSign} />;
+  return (
+    <ButtonOutline text={'Continue with ' + title} onClick={onOAuthSign} />
+  );
 };
 
 export { SignWithOAuth };

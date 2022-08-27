@@ -11,6 +11,7 @@ import {
   activateLinkRouter,
   updateUserRouter,
   viewedCarsRouter,
+  locationRouter,
   newCarsRouter,
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
@@ -57,10 +58,11 @@ const routes = [
   updateUserRouter,
   newCarsRouter,
   viewedCarsRouter,
+  locationRouter,
 ];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 
-app.use(Sentry.Handlers.errorHandler());
+// app.use(Sentry.Handlers.errorHandler());
 
 // Handle arbitrary errors that are thrown from any controller above
 app.use(errorsHandler);

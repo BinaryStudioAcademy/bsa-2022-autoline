@@ -17,10 +17,6 @@ export const Navigate: React.FC = () => {
     },
     {
       navigateTo: '#',
-      title: 'Sell your Car',
-    },
-    {
-      navigateTo: '#',
       title: 'About Us',
     },
   ];

@@ -26,7 +26,6 @@ const signupLocal = async (
     const authResponseDto = await authService.signupLocal(user);
     res.status(httpStatus.CREATED).json(authResponseDto);
   } catch (error) {
-    console.error(error);
     next(error);
   }
 };
@@ -41,7 +40,6 @@ const signinLocal = async (
     const loginResponseDto = await authService.signinLocal(user as User);
     res.json(loginResponseDto).status(httpStatus.OK);
   } catch (error) {
-    console.error(error);
     next(error);
   }
 };
@@ -55,7 +53,6 @@ const resetPasswordRequest = async (
     const emailLink = await authService.requestPasswordReset(req.params.email);
     res.json(emailLink);
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       res.statusCode = 400;
       res.json(error.message);
@@ -75,7 +72,6 @@ const resetPasswordCheckToken = async (
     const userId = await authService.resetPasswordCheckToken(token);
     res.redirect(`${ENV.APP.FRONTEND_URL}/reset-password?id=${userId}`);
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       res.statusCode = 403;
       res.json(error.message);
@@ -95,11 +91,27 @@ const resetPassword = async (
     await authService.resetPassword(req.body.id, req.body.password);
     res.json('Password changed successfully');
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       res.statusCode = 403;
       res.json(error.message);
     }
+    next(error);
+  }
+};
+
+const signGoogle = async (
+  req: TypedRequestBody<User>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const { accessToken, refreshToken } = await authService.signinLocal(
+      req.user as User,
+    );
+    res.redirect(
+      `${ENV.APP.FRONTEND_URL}/sign-redirect?accessToken=${accessToken}&refreshToken=${refreshToken}`,
+    );
+  } catch (error) {
     next(error);
   }
 };
@@ -110,4 +122,5 @@ export {
   resetPasswordRequest,
   resetPasswordCheckToken,
   resetPassword,
+  signGoogle,
 };

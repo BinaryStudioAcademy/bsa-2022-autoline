@@ -20,9 +20,11 @@
     "install:backend": "cd backend && yarn",
     "install:all": "yarn && yarn install:shared && yarn build:shared && yarn install:frontend && yarn install:backend",
     "build:shared": "cd shared && yarn build",
+    "build:shared:be": "cd shared && yarn build:ts:be",
     "build:frontend": "cd frontend && yarn build",
     "build:backend": "cd backend && yarn build",
-    "build": "yarn build:shared && yarn build:frontend && yarn build:backend"
+    "build": "yarn build:shared && yarn build:frontend && yarn build:backend",
+    "start:backend:dev": "cd backend && yarn start:dev"
   },
   "dependencies": {
     "@sentry/node": "^7.9.0",
@@ -44,8 +46,7 @@
     "simple-git-hooks": "2.8.0",
     "stylelint": "14.9.1",
     "stylelint-config-standard": "26.0.0",
-    "stylelint-order": "5.0.0",
-    "typescript": "4.7.4"
+    "stylelint-order": "5.0.0"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"

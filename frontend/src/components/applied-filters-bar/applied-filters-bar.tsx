@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 
 import { filtersToQuery } from '@helpers/filters-to-query';
 import { getValueById } from '@helpers/get-value-by-id';
@@ -6,12 +6,13 @@ import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Button } from '@mui/material';
-import { resetAllFilters } from '@store/car-filter/slice';
 import {
-  useGetBrandsQuery,
-  useGetModelsOfBrandQuery,
-  useGetUsedOptionsQuery,
-} from '@store/queries/cars';
+  removeBrandDetailsFilter,
+  removeCheckListFilter,
+  removeRangeFilter,
+  resetAllFilters,
+} from '@store/car-filter/slice';
+import { useGetUsedOptionsQuery } from '@store/queries/cars';
 
 import styles from './styles.module.scss';
 
@@ -20,48 +21,88 @@ const AppliedFiltersBar: FC = () => {
 
   const [appliedFIlters, setAppliedFilters] = useState<string[][]>([]);
 
-  const filters = useAppSelector((state) => state.carFilter);
-
-  const { data: brands } = useGetBrandsQuery();
-
-  const { data: models } = useGetModelsOfBrandQuery(filters.brandId[0], {
-    skip: !filters.brandId.length,
-  });
+  const { rangeFilters, checkLists, brandDetails } = useAppSelector(
+    (state) => state.carFilter,
+  );
 
   const { data: options } = useGetUsedOptionsQuery();
+  const allOptions = useMemo(
+    () => options && Object.values(options).flatMap((item) => item),
+    [options],
+  );
 
   const deleteFilter = (filterName: string, id: string): void => {
-    // eslint-disable-next-line no-console
-    console.log(filterName);
-    // eslint-disable-next-line no-console
-    console.log(id);
+    switch (filterName) {
+      case 'price':
+      case 'year':
+      case 'race':
+        dispatch(removeRangeFilter({ filterName }));
+        break;
+
+      case 'brandId':
+      case 'modelId':
+        dispatch(removeBrandDetailsFilter({ filterName, id }));
+        break;
+
+      default:
+        dispatch(removeCheckListFilter({ filterName, id }));
+        break;
+    }
+  };
+
+  const getRangeIcon = (rangeName: string): string => {
+    switch (rangeName) {
+      case 'year':
+        return 'year ';
+      case 'price':
+        return '$ ';
+      case 'race':
+        return 'km ';
+      default:
+        return '';
+    }
   };
 
   useEffect(() => {
-    if (brands && options) {
-      const allOptions = Object.values(options)
-        .flatMap((item) => item)
-        .concat(brands)
-        .concat(models || []);
+    if (options) {
+      const ranges = Object.entries(rangeFilters)
+        .map((item) => {
+          const label = Object.values(item[1])
+            .filter((value) => value !== '')
+            .sort((a, b) => +a - +b)
+            .join(' - ');
 
-      const filtersArr = filtersToQuery(filters);
+          const icon = label !== '' ? getRangeIcon(item[0]) : '';
 
-      //MAP!!!!!!!!!!!!!!
-      // const withLabels = filtersArr.map(([filterName, id, label]) => {
-      const withLabels = filtersArr.map(([filterName, id]) => {
-        if (filterName.includes('year')) {
-          const { yearStart, yearEnd } = filters;
-          return [filterName, id, `${yearStart} - ${yearEnd}`];
+          return [item[0], item[0], `${icon}${label}`];
+        })
+        .filter((range) => range[2] !== '');
+
+      const details: string[][] = [];
+
+      brandDetails.forEach((item) => {
+        if (item.brandId !== '') {
+          details.push(['brandId', item.brandId, item.brandName]);
         }
+        if (item.modelId !== '') {
+          details.push(['modelId', item.modelId, item.modelName]);
+        }
+      });
 
-        const value = getValueById(allOptions, id);
+      const uniqueDetails = [
+        ...new Set(details.map((o) => JSON.stringify(o))),
+      ].map((s) => JSON.parse(s));
 
+      const checkedArr = filtersToQuery(checkLists);
+
+      const checkboxes = checkedArr.map(([filterName, id]) => {
+        const value = allOptions && getValueById(allOptions, id);
         return [filterName, id, value?.label || ''];
       });
 
-      setAppliedFilters(withLabels);
+      setAppliedFilters([...uniqueDetails, ...ranges, ...checkboxes]);
     }
-  }, [filters]);
+  }, [rangeFilters, checkLists, brandDetails]);
 
   const resetFilters = (): void => {
     dispatch(resetAllFilters());

@@ -1,5 +1,7 @@
 .container {
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
   width: 100%;
   background-color: white;
 

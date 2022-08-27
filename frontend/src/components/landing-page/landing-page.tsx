@@ -31,8 +31,9 @@ export const LandingPage = (): React.ReactElement => {
               at your price
             </div>
             <div className={styles.firstContainerLeftTextSecondary}>
-              We are the best service to look for cars with the best offers.
-              Here you can buy or sell the car.
+              We are the best service for finding cars for sale.
+              <br />
+              Both new & used. Find the car of your dreams with us!
             </div>
             <div className={styles.firstContainerLeftButtons}>
               <Link to={AppRoute.SIGN_UP}>

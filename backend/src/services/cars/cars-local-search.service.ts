@@ -2,36 +2,12 @@ import { CarsSearchParams, SearchResult } from '@autoline/shared';
 import { prisma } from '@data/prisma-client';
 
 const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
-  return prisma.model.findMany({
+  const models = await prisma.model.findMany({
     select: {
       id: true,
-      manufacturer_id: true,
-      body_type_id: true,
-      prices_ranges: {
-        select: {
-          id: true,
-        },
-        where: {
-          price_start: {
-            gte: data.priceStart ? +data.priceStart : undefined,
-          },
-          price_end: {
-            lte: data.priceEnd ? +data.priceEnd : undefined,
-          },
-        },
-      },
       complectations: {
         select: {
           id: true,
-          color_id: true,
-          drivetrain_id: true,
-          fuel_type_id: true,
-          transmission_type_id: true,
-          options: {
-            select: {
-              option_id: true,
-            },
-          },
         },
         where: {
           color_id: {
@@ -119,6 +95,13 @@ const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
       },
     },
   });
+
+  return models.map((model) => ({
+    model_id: model.id,
+    complectations_id: model.complectations.map(
+      (complectation) => complectation.id,
+    ),
+  }));
 };
 
 const getYearEndCondition = (

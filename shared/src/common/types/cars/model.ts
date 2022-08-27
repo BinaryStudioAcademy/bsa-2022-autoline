@@ -26,8 +26,6 @@ type ModelDetailsType = {
   modelName: string;
   description: string;
   photoUrls: string[];
-  yearStart: number;
-  yearEnd: number;
   brandName: string;
   priceStart: number;
   priceEnd: number;

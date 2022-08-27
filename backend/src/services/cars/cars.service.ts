@@ -97,8 +97,6 @@ const getModelDetails = async (modelId: string): Promise<ModelDetailsType> => {
     modelName: model?.name,
     description: model?.description,
     photoUrls: model?.photo_urls,
-    yearStart: model?.year_start,
-    yearEnd: model?.year_end,
     brandName: model?.brand.name,
     priceStart: model?.prices_ranges[0].price_start,
     priceEnd: model?.prices_ranges[0].price_end,

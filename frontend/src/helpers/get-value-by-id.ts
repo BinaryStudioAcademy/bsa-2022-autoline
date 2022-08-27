@@ -1,5 +1,5 @@
 import { AutoRiaOption } from '@autoline/shared/common/types/cars/options';
-import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
+import { AutocompleteValueType } from '@common/types/car-filter/autocomplete.type';
 
 export const getValueById = (
   collection: AutoRiaOption[],

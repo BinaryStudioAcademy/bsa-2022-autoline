@@ -1,6 +1,6 @@
-import { FiltersType } from '@common/types/cars/filters.type';
-
-export const filtersToQuery = (filters: FiltersType): string[][] => {
+export const filtersToQuery = (filters: {
+  [p: string]: string[] | string;
+}): string[][] => {
   const notEmpties = Object.fromEntries(
     Object.entries(filters).filter(
       ([_, value]) => value.length >= 1 && value !== '' && value[0] !== '',

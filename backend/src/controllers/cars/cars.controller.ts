@@ -80,10 +80,40 @@ const carsSearchLocal = async (
   }
 };
 
+const getModelDetails = async (
+  req: TypedRequestParams<{ id: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const brandDetails = await carsService.getModelDetails(req.params.id);
+    res.json(brandDetails);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getComplectationDetails = async (
+  req: TypedRequestQuery<{ id: string[] }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const complectationDetails = await carsService.getComplectationsDetails(
+      req.query.id,
+    );
+    res.json(complectationDetails);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   carsSearchAutoria,
   getBrands,
   getModelsOfBrand,
   getUsedOptions,
   carsSearchLocal,
+  getModelDetails,
+  getComplectationDetails,
 };

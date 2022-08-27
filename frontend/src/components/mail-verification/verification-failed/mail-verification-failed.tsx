@@ -1,32 +1,38 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { InputField } from '@components/common/input-field/input-field';
-import { useAppForm } from '@hooks/hooks';
 import Container from '@mui/material/Container';
 import { useRequestLinkMutation } from '@store/queries/verification-link';
 
 import styles from './styles.module.scss';
 import { emailSchema } from './validation-schema';
 
-declare type EmailRequestData = {
-  email: string;
-};
-
 const MailVerificationFailed: FC = (): React.ReactElement => {
+  const [email, setEmail] = useState<string>('');
+  // const [/*validationError, */ /*setValidationError*/] = useState('');
   const [getLink] = useRequestLinkMutation();
   const navigate = useNavigate();
-  const { control, errors, handleSubmit } = useAppForm<EmailRequestData>({
-    defaultValues: { email: '' },
-    validationSchema: emailSchema,
-  });
 
-  const handleGetLink = async ({ email }: EmailRequestData): Promise<void> => {
-    await getLink(email);
-    navigate(AppRoute.SIGN_IN);
+  const onChangeHandler = async (
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+  ): Promise<void> => {
+    setEmail(event.target.value);
+  };
+
+  const sendLinkHandler = async (): Promise<void> => {
+    try {
+      await emailSchema.validate({ email });
+      await getLink(email);
+      navigate(AppRoute.SIGN_IN);
+    } catch (error) {
+      if (error instanceof Error) {
+        // setValidationError(error.message);
+      }
+    }
   };
 
   return (
@@ -46,13 +52,13 @@ const MailVerificationFailed: FC = (): React.ReactElement => {
               name="email"
               type="email"
               required={true}
-              control={control}
-              errors={errors}
+              // errors={validationError}
+              onChange={onChangeHandler}
             />
             <div className={styles.center}>
               <ButtonFill
                 text="Get verification link"
-                onClick={handleSubmit(handleGetLink)}
+                onClick={sendLinkHandler}
               />
             </div>
           </div>

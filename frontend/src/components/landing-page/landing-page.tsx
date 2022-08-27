@@ -57,16 +57,15 @@ export const LandingPage = (): React.ReactElement => {
         <div className={styles.secondContainer}>
           <div className={styles.secondContainerHeader}>New Cars</div>
           <div className={styles.secondContainerCards}>
-            {!cars
-              ? null
-              : cars?.map((car) => (
-                  <NewCarCard
-                    type={'complectation'}
-                    isLiked={false}
-                    car={car}
-                    key={car.id}
-                  />
-                ))}
+            {cars &&
+              cars?.map((car) => (
+                <NewCarCard
+                  type={'complectation'}
+                  isLiked={false}
+                  car={car}
+                  key={car.id}
+                />
+              ))}
           </div>
         </div>
         <div className={styles.thirdContainer}>

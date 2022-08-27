@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
+import { AutocompleteValueType } from '@common/types/car-filter/autocomplete.type';
 import styles from '@components/simple-auto-filter/styles.module.scss';
 import { Autocomplete, SvgIcon, TextField } from '@mui/material';
 

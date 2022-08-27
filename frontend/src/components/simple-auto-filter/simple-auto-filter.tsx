@@ -2,19 +2,28 @@ import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AutoRiaOption } from '@autoline/shared/common/types/types';
-import { FiltersNames } from '@common/enums/cars/filters-names.enum';
+import {
+  CheckListsNames,
+  RangeNames,
+  RangeValueNames,
+} from '@common/enums/cars/filter-names.enum';
 import { pricesRange, yearsRange } from '@common/enums/cars/ranges';
-import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
-import { BrandDetailsType } from '@common/types/cars/brand-details.type';
-import { RangeValueType } from '@common/types/cars/range-item.type';
+import { AutocompleteValueType } from '@common/types/car-filter/autocomplete.type';
+import { BrandDetailsType } from '@common/types/car-filter/brand-details.type';
+import { RangeValueType } from '@common/types/car-filter/range-value.type';
 import { BrandDetails } from '@components/advanced-auto-filter/brand-details/brand-details';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
+import { rangeFiltersToObject } from '@helpers/car-filter/range-filters-to-object';
 import { filtersToQuery } from '@helpers/filters-to-query';
 import { getValueById } from '@helpers/get-value-by-id';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import { Button, Zoom } from '@mui/material';
-import { changeBrandDetails, setValue } from '@store/car-filter/slice';
+import {
+  setBrandDetailsValue,
+  setCheckListValue,
+  setRangeValue,
+} from '@store/car-filter/slice';
 import { API } from '@store/queries/api-routes';
 import {
   useGetFilteredCarsQuery,
@@ -27,7 +36,9 @@ const SimpleAutoFilter: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const filters = useAppSelector((state) => state.carFilter.filters);
+  const { rangeFilters, checkLists, brandDetails } = useAppSelector(
+    (state) => state.carFilter,
+  );
 
   const brandDetail = useAppSelector(
     (state) => state.carFilter.brandDetails,
@@ -38,12 +49,13 @@ const SimpleAutoFilter: FC = () => {
   useEffect(() => {
     setQueryParams(
       filtersToQuery({
-        ...filters,
-        brandId: [brandDetail.brandId],
-        modelId: [brandDetail.modelId],
+        ...checkLists,
+        ...rangeFiltersToObject(rangeFilters),
+        brandId: brandDetails.map((item) => item.brandId),
+        modelId: brandDetails.map((item) => item.modelId),
       }),
     );
-  }, [filters, brandDetail]);
+  }, [rangeFilters, checkLists, brandDetails]);
 
   const { data: options, isLoading: isOptionsLoading } =
     useGetUsedOptionsQuery();
@@ -59,21 +71,28 @@ const SimpleAutoFilter: FC = () => {
 
   const handleRegionChange = (data: AutocompleteValueType): void => {
     const value = data?.id || '';
-    dispatch(setValue({ filterName: FiltersNames.REGION_ID, value }));
+    dispatch(
+      setCheckListValue({
+        filterName: CheckListsNames.REGION_ID,
+        value: [value],
+      }),
+    );
   };
 
   const handleBrandDetailsChange = (data: BrandDetailsType): void => {
-    dispatch(changeBrandDetails(data));
+    dispatch(setBrandDetailsValue(data));
   };
 
-  const handleRangeChange = (range: RangeValueType[]): void => {
-    range.forEach(({ filterName, value }) => {
-      dispatch(setValue({ filterName, value }));
-    });
+  const handleRangeChange = (range: RangeValueType): void => {
+    dispatch(setRangeValue(range));
   };
 
   const isButtonVisible = Boolean(
-    Object.values(filters).some((filter) => filter.length >= 1),
+    brandDetail.brandId !== '' ||
+      Object.values(checkLists).some((list) => list.length) ||
+      Object.values(rangeFiltersToObject(rangeFilters)).some(
+        (item) => item !== '',
+      ),
   );
 
   const navigateToSearch = (): void => navigate(API.SEARCH);
@@ -87,7 +106,7 @@ const SimpleAutoFilter: FC = () => {
         <AutocompleteInput
           label="Regions"
           onChange={handleRegionChange}
-          value={getValueById(options.regions, filters.regionId)}
+          value={getValueById(options.regions, checkLists.regionId[0])}
           options={options?.regions?.map((item: AutoRiaOption) => ({
             label: item.name,
             id: item.id,
@@ -111,11 +130,12 @@ const SimpleAutoFilter: FC = () => {
               list={years}
               minTitle="Year Min"
               maxTitle="Year Max"
-              selectedMin={filters.yearStart}
-              selectedMax={filters.yearEnd}
+              rangeName={RangeNames.YEAR}
+              selectedMin={rangeFilters.year.yearStart}
+              selectedMax={rangeFilters.year.yearEnd}
               onChange={handleRangeChange}
-              minFilterName={FiltersNames.YEAR_START}
-              maxFilterName={FiltersNames.YEAR_END}
+              minFilterName={RangeValueNames.YEAR_START}
+              maxFilterName={RangeValueNames.YEAR_END}
             />
           </div>
           <div className={styles.row}></div>
@@ -124,10 +144,11 @@ const SimpleAutoFilter: FC = () => {
               list={pricesRange.map((item: number) => item.toString())}
               minTitle="$ Min"
               maxTitle="$ Max"
-              minFilterName={FiltersNames.PRICE_START}
-              maxFilterName={FiltersNames.PRICE_END}
-              selectedMin={filters.priceStart}
-              selectedMax={filters.priceEnd}
+              rangeName={RangeNames.PRICE}
+              minFilterName={RangeValueNames.PRICE_START}
+              maxFilterName={RangeValueNames.PRICE_END}
+              selectedMin={rangeFilters.price.priceStart}
+              selectedMax={rangeFilters.price.priceEnd}
               onChange={handleRangeChange}
             />
           </div>

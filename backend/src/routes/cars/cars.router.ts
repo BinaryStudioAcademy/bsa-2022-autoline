@@ -4,6 +4,8 @@ import {
   getModelsOfBrand,
   getUsedOptions,
   carsSearchLocal,
+  getModelDetails,
+  getComplectationDetails,
 } from '@controllers/cars/cars.controller';
 import { Router } from 'express';
 
@@ -20,5 +22,9 @@ carsRouter.get(`${PATH}/brands`, getBrands);
 carsRouter.get(`${PATH}/brand/:id/models`, getModelsOfBrand);
 
 carsRouter.get(`${PATH}/options`, getUsedOptions);
+
+carsRouter.get(`${PATH}/model/:id`, getModelDetails);
+
+carsRouter.get(`${PATH}/complectations`, getComplectationDetails);
 
 export { carsRouter };

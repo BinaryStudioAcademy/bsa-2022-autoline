@@ -166,6 +166,7 @@ model ComplectationsOnOptions {
   complectation_id String
   option           Option        @relation(fields: [option_id], references: [id])
   option_id        String
+  important        Boolean       @default(false)
 
   @@id([complectation_id, option_id])
 }

@@ -8,6 +8,7 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { TopCarCard } from '@components/top-car-card/top-car-card';
 import { Container } from '@mui/material';
+import { clsx } from 'clsx';
 import { useGetNewCarsQuery } from '@store/queries/new-cars';
 
 import { Header } from './components/components';
@@ -32,19 +33,20 @@ export const LandingPage = (): React.ReactElement => {
               at your price
             </div>
             <div className={styles.firstContainerLeftTextSecondary}>
-              We are the best service to look for cars with the best offers.
-              Here you can buy or sell the car.
+              We are the best service for finding cars for sale.
+              <br />
+              Both new & used. Find the car of your dreams with us!
             </div>
             <div className={styles.firstContainerLeftButtons}>
               <Link to={AppRoute.SIGN_UP}>
                 <ButtonFill
-                  className={styles.buttonFill}
+                  className={clsx(styles.button, styles.buttonFill)}
                   text="Create Account"
                 />
               </Link>
               <Link to={AppRoute.SIGN_IN}>
                 <ButtonOutline
-                  className={styles.buttonOutline}
+                  className={clsx(styles.button, styles.buttonOutline)}
                   text="Sign In"
                 />
               </Link>

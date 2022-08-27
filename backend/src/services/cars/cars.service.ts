@@ -159,6 +159,9 @@ const getComplectationsDetails = async (
             },
           },
         },
+        where: {
+          important: true,
+        },
       },
     },
   });

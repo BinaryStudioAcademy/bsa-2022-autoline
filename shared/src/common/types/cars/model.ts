@@ -7,7 +7,7 @@ type PriceRangeType = {
   price_start: number;
 };
 
-export type ModelType = {
+type ModelType = {
   autoria_code: number;
   body_type_id: string;
   code_name: string;
@@ -20,3 +20,18 @@ export type ModelType = {
   year_end?: number;
   year_start: number;
 };
+
+type ModelDetailsType = {
+  id: string;
+  modelName: string;
+  description: string;
+  photoUrls: string[];
+  yearStart: number;
+  yearEnd: number;
+  brandName: string;
+  priceStart: number;
+  priceEnd: number;
+  // bodyTypeName: string;
+};
+
+export type { ModelType, ModelDetailsType };

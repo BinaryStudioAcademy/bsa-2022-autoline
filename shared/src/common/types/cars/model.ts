@@ -31,7 +31,6 @@ type ModelDetailsType = {
   brandName: string;
   priceStart: number;
   priceEnd: number;
-  // bodyTypeName: string;
 };
 
 export type { ModelType, ModelDetailsType };

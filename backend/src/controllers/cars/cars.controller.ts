@@ -86,8 +86,8 @@ const getModelDetails = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const brandDetails = await carsService.getModelDetails(req.params.id);
-    res.json(brandDetails);
+    const modelDetails = await carsService.getModelDetails(req.params.id);
+    res.json(modelDetails);
   } catch (error) {
     next(error);
   }

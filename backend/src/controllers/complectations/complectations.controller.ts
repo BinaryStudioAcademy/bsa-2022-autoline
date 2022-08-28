@@ -4,19 +4,26 @@ import httpStatus from 'http-status-codes';
 import type { TypedRequestQuery } from '@common/types/controller/controller';
 import type { NextFunction, Response } from 'express';
 
-type ModelIdInput = {
+type ComplectationsInput = {
   complectationId: string;
+  userId: string;
+  modelId: string;
 };
 
 const getComplectations = async (
-  req: TypedRequestQuery<ModelIdInput>,
+  req: TypedRequestQuery<ComplectationsInput>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const userId = req.body.tokenPayload.sub;
-    const { complectationId } = req.query;
-    const ResponseDto = await getComplectationsById(complectationId, userId);
+    const { complectationId, modelId } = req.query;
+    const input: ComplectationsInput = {
+      userId,
+      modelId,
+      complectationId,
+    };
+    const ResponseDto = await getComplectationsById(input);
     res.json(ResponseDto).status(httpStatus.OK);
   } catch (error) {
     if (error instanceof Error && error.message === 'NotFoundError') {

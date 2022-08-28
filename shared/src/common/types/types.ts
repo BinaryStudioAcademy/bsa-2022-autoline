@@ -38,9 +38,12 @@ export type { ValidationSchema } from './validation/validation';
 export type { CarsSearchParams } from './cars/cars-search-params';
 
 export type {
-  ModelComplectationsResponseDto,
-  ComplectationsResponseDto,
+  ModelReturnedData,
+  ComplectationReturnedData,
   OptionType,
+  ComplectationsInput,
+  ModelReturnedDbType,
+  ComplectationReturnedDbType,
 } from './complectations/complectations';
 export type {
   BrandType,

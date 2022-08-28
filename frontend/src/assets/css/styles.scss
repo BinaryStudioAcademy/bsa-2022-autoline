@@ -20,3 +20,19 @@ body {
   font-family: var(--primary-font);
   background-color: var(--gray100);
 }
+
+.styledScrollbar {
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--blue200);
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px #032081;
+  }
+}

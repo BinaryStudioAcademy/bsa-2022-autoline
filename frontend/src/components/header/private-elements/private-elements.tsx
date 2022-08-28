@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import DefaultAvatar from '@assets/images/header/default-avatar.png';
+import { AppRoute } from '@common/enums/enums';
+import { EditProfile } from '@components/edit-profile/edit-profile';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
@@ -20,6 +23,8 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const [openSettings, setOpenSettings] = useState(false);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
   };
@@ -63,9 +68,24 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Settings</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose} className={styles.userNavLink}>
+          <Link to={AppRoute.PERSONAL}>Account</Link>
+        </MenuItem>
+        <MenuItem
+          onClick={(): void => {
+            handleClose();
+            setOpenSettings(true);
+          }}
+        >
+          Settings
+        </MenuItem>
+        <MenuItem onClick={handleClose} className={styles.userNavLink}>
+          Logout
+        </MenuItem>
       </Menu>
+      {openSettings && (
+        <EditProfile onClose={(): void => setOpenSettings(false)} />
+      )}
     </div>
   );
 };

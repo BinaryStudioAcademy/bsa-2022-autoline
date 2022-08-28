@@ -1,4 +1,4 @@
-export type CompleteSetPropsType = {
+export type CompleteSetDataType = {
   id: string;
   model: string;
   brand: string;
@@ -9,4 +9,10 @@ export type CompleteSetPropsType = {
   race: string;
   price: string;
   options: string;
+  className?: string;
+};
+
+export type CompleteSetPropsType = {
+  data: CompleteSetDataType[];
+  className?: string;
 };

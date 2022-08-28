@@ -6,8 +6,10 @@ import type {
   setViewedCarResponse,
 } from '@autoline/shared';
 import type { TypedRequestQuery } from '@common/types/controller/controller';
-import type { GetViewedCarsListResponse } from '@common/types/types';
-import type { WishlistInput } from '@common/types/types';
+import type {
+  GetViewedCarsListResponse,
+  WishlistInput,
+} from '@common/types/types';
 import type { NextFunction, Response } from 'express';
 
 const getViewedCarsList = async (
@@ -20,7 +22,6 @@ const getViewedCarsList = async (
     const result = await viewedCarsService.getViewedCarsList(userId);
     res.json(result).status(httpStatus.OK);
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       res.sendStatus(400);
     }
@@ -46,7 +47,6 @@ const addCarToViewed = async (
     const result = await viewedCarsService.addCarToViewed(viewedCar);
     res.json(result).status(httpStatus.CREATED);
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       res.sendStatus(400);
     }

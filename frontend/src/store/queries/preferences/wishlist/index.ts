@@ -4,7 +4,7 @@ import {
   WishlistsResponseDto,
 } from '@autoline/shared/common/types/types';
 
-import { API } from '../../api_routes';
+import { API } from '../../api-routes';
 import { api } from '../../index';
 
 const wishlistApi = api.injectEndpoints({

@@ -1,19 +1,20 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app-route.enum';
+import { StorageKey } from '@common/enums/app/storage-key.enum';
 import { SignInRequestData } from '@common/types/types';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
+import { SignWithGoogle } from '@components/sign/components/sign-with-google/sign-with-google';
 import { useAppForm } from '@hooks/hooks';
 import Alert from '@mui/material/Alert';
 import Divider from '@mui/material/Divider';
 import { useSignInMutation } from '@store/queries/auth';
 import { setCredentials } from '@store/root-reducer';
 import { signInSchema as signInValidationSchema } from '@validation-schemas/validation-schemas';
+import { clsx } from 'clsx';
 
 import { DEFAULT_SIGN_IN_PAYLOAD } from './common';
 import styles from './styles.module.scss';
@@ -38,12 +39,12 @@ export const SignInForm = (): React.ReactElement => {
     signIn(user)
       .unwrap()
       .then(({ accessToken }: SignInResponseData) => {
-        localStorage.setItem('access-token', accessToken);
+        localStorage.setItem(StorageKey.TOKEN, accessToken);
         dispatch(setCredentials({ accessToken }));
         navigate(AppRoute.ROOT);
       });
   };
-  console.log(error);
+
   return (
     <>
       <h1 className={styles.title}>Sign In</h1>
@@ -75,8 +76,18 @@ export const SignInForm = (): React.ReactElement => {
             control={control}
             inputLabel="Password"
           />
+
+          <Link
+            to={AppRoute.FORGOT_PASSWORD}
+            className={clsx(styles.link, styles.forgotPassword)}
+          >
+            Forgot password?
+          </Link>
+
           {error && 'data' in error && (
-            <Alert severity="error">{error.data.message}</Alert>
+            <Alert className={styles.alert} severity="error">
+              {error.data.message}
+            </Alert>
           )}
           <ButtonFill text="Sign In" />
         </fieldset>
@@ -84,7 +95,7 @@ export const SignInForm = (): React.ReactElement => {
       <div className={styles.formBottom}>
         <Divider className={styles.divider}>or</Divider>
         <div className={styles.buttonsGroup}>
-          <ButtonOutline text="Sign In with Google" />
+          <SignWithGoogle title={'Sign In'} />
           <ButtonOutline text="Sign In with Facebook" />
         </div>
       </div>

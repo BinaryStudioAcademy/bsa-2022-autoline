@@ -25,10 +25,10 @@ jobs:
         uses: bahmutov/npm-install@v1.6.0
         with:
           useRollingCache: true
+      - name: Code Linting
         run: |
-          - name: Code Linting
-            run: |
-              yarn run lint --max-warnings=0
+          yarn run lint --max-warnings=0
+
 
   build-backend:
     name: Autoline build backend.Dockerfile

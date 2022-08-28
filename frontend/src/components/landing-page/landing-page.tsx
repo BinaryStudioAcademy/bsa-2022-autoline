@@ -8,8 +8,8 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { TopCarCard } from '@components/top-car-card/top-car-card';
 import { Container } from '@mui/material';
-import { clsx } from 'clsx';
 import { useGetNewCarsQuery } from '@store/queries/new-cars';
+import { clsx } from 'clsx';
 
 import { Header } from './components/components';
 import { topCars } from './mock-top-cars';

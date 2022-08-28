@@ -12,7 +12,7 @@ model User {
   /// Full name of a user
   name             String         @db.VarChar(200)
   birth_year    Int?
-  sex              Sex?
+  sex              Sex            @default(not_known)
   phone            String?        @db.VarChar(20)
   email            String         @unique @db.VarChar(80)
   location         String?

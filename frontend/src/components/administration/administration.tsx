@@ -1,26 +1,52 @@
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useState, ChangeEvent } from 'react';
 
-import { User } from '@autoline/shared/common/types/types';
+import { InputField } from '@components/common/input-field/input-field';
 import { Title } from '@components/common/title/title';
 import { Header } from '@components/header/header';
 import Container from '@mui/material/Container';
-import LinearProgress from '@mui/material/LinearProgress';
-import { useGetUsersQuery } from '@store/queries/users';
 
-import { UsersList } from './users/users-list';
+import { UsersListContainer } from './users/users-list-container';
+
+const useDebounce = (value: string, delay: number): string => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+};
 
 export const Administration = (): ReactElement => {
-  const { data: users, isLoading, isSuccess } = useGetUsersQuery();
+  const [searchName, setSearchName] = useState('');
+  const debouncedSearchName = useDebounce(searchName, 500);
+
+  const handleChangeSearchByName = (
+    event: ChangeEvent<HTMLTextAreaElement>,
+  ): void => {
+    setSearchName(event.target.value);
+  };
 
   return (
     <>
       <Header />
       <Container>
         <Title element="h3">Admin panel</Title>
-        {isLoading && <LinearProgress />}
-        {isSuccess && users && <UsersList users={users as User[]} />}
-        {isSuccess && !users && 'There are no users'}
-        {!isLoading && !isSuccess && 'Error getting data from server'}
+        <h2>Users</h2>
+        <InputField
+          name="searchByName"
+          type="text"
+          inputLabel="Search users by name"
+          value={searchName}
+          onChange={handleChangeSearchByName}
+        />
+        <UsersListContainer searchName={debouncedSearchName} />
       </Container>
     </>
   );

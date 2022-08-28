@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app';
+import { EmailRequestData } from '@common/types/types';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { InputField } from '@components/common/input-field/input-field';
 import { useAppForm } from '@hooks/hooks';
@@ -11,7 +12,6 @@ import { useRequestLinkMutation } from '@store/queries/verification-link';
 
 import styles from './styles.module.scss';
 import { emailSchema } from './validation-schema';
-import { EmailRequestData } from '@common/types/types';
 
 const MailVerificationFailed: FC = (): React.ReactElement => {
   const [getLink] = useRequestLinkMutation();

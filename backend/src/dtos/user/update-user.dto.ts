@@ -7,7 +7,7 @@ class UpdateUserDto {
     public readonly id: string,
     public readonly name: string,
     public readonly email: string,
-    public readonly sex?: Sex | null,
+    public readonly sex?: Sex,
     public readonly phone?: string | null,
     public readonly location?: string | null,
     public readonly photo_url?: string | null,

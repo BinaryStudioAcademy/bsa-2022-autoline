@@ -21,6 +21,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version-file: .nvmrc
+      - name: Install Dependencies
+        uses: bahmutov/npm-install@v1.6.0
+        with:
+          useRollingCache: true
+        run: |
+          - name: Code Linting
+            run: |
+              yarn run lint --max-warnings=0
 
   build-backend:
     name: Autoline build backend.Dockerfile

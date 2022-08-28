@@ -17,14 +17,14 @@ const CompareToast: FC<ModalProps> = ({
   isHidden,
   setIsHidden,
 }) => {
-  const closeModal = (): void => {
+  const closeToast = (): void => {
     setIsHidden(!isHidden);
   };
 
   return (
     <div className={styles.container} hidden={isHidden}>
       <div className={styles.content}>
-        <button className={styles.close} onClick={closeModal}>
+        <button className={styles.close} onClick={closeToast}>
           ×
         </button>
         <div className={styles.icon}>

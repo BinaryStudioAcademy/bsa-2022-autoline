@@ -32,7 +32,7 @@ interface EditProfileProps {
 
 export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
   const { data: user } = useGetUserQuery();
-  
+
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
   const [

@@ -63,7 +63,7 @@ export const SignUpForm = (): React.ReactElement => {
     <>
       <h1 className={styles.title}>Sign Up</h1>
       <p className={styles.subtitle}>
-        <span>Have an account? </span>
+        <span>Already have an account? </span>
         <Link className={styles.link} to={AppRoute.SIGN_IN}>
           Sign In
         </Link>

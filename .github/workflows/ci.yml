@@ -21,10 +21,18 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version-file: .nvmrc
-      - name: Install Dependencies
+      - name: Install Root Dependencies
         uses: bahmutov/npm-install@v1.6.0
         with:
           useRollingCache: true
+      - name: Install Subfolders Dependencies
+      - uses: bahmutov/npm-install@v1.6.0
+        with:
+          useRollingCache: true
+          working-directory: |
+            frontend
+            backend
+            shared
       - name: Code Linting
         run: |
           yarn run lint --max-warnings=0

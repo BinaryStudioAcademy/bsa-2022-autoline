@@ -82,6 +82,26 @@ const deleteUser = async (id: string): Promise<Partial<UpdateUserReq>> => {
   };
 };
 
+const getUser = async (id: string): Promise<Partial<UpdateUserReq> | null> => {
+  const user = await prisma.user.findFirst({
+    where: {
+      id,
+    },
+  });
+
+  return user
+    ? {
+        name: user.name,
+        birthYear: user.birth_year,
+        sex: user.sex,
+        phone: user.phone,
+        email: user.email,
+        location: user.location,
+        photoUrl: user.photo_url,
+      }
+    : null;
+};
+
 const emailExist = async (id: string, email: string): Promise<void> => {
   if (email) {
     const existedUser = await prisma.user.findFirst({
@@ -118,4 +138,4 @@ const passwordCheck = async (id: string, password: string): Promise<void> => {
   }
 };
 
-export { updateUser, deleteUser };
+export { updateUser, deleteUser, getUser };

@@ -9,7 +9,7 @@ const updateUserSchema = Yup.object().shape({
     .required('Full name is required')
     .max(150, 'Full name must not exceed 100 characters'),
   email: Yup.string().required('Email is required').email('Email is invalid'),
-  phone: Yup.string().matches(phoneReg, 'Phone is invalid'),
+  phone: Yup.string().matches(phoneReg, 'Phone is invalid').nullable(),
   location: Yup.string().oneOf(['kyiv', 'kharkiv', 'odesa']),
   birthYear: Yup.number()
     .min(new Date().getFullYear() - 110)

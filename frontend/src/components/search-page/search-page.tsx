@@ -20,6 +20,7 @@ const SearchPage: React.FC = () => {
         <Title element="h3">Search</Title>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
+            {cars.length === 0 && <p>No cars found.</p>}
             {cars.map((car) => (
               <CarListItem {...car} key={car.model_id} />
             ))}

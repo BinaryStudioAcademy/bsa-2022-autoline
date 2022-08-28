@@ -66,7 +66,7 @@ const getComplectationsById = async (
 
   const importantOptionsList: Set<string> = new Set();
   data?.options.forEach((option) => {
-    if (option.important === false) {
+    if (option.important === true) {
       importantOptionsList.add(option.option.name);
     }
   }),
@@ -154,7 +154,7 @@ const getComplectationsById = async (
         if (option.option.type === optionName) {
           optionsList.add(option.option.name);
         }
-        if (option.important === false) {
+        if (option.important === true) {
           importantOptionsList.add(option.option.name);
         }
       }),

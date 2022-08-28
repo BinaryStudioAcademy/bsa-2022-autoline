@@ -14,6 +14,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { clsx } from 'clsx';
 
 import { DrawerComp } from '../drawer/drawer';
 import styles from './styles.module.scss';
@@ -53,13 +54,13 @@ export const Header = (): React.ReactElement => {
                 <>
                   <Link to={AppRoute.SIGN_UP} className={styles.signupBtn}>
                     <ButtonFill
-                      className={styles.btnFill}
+                      className={clsx(styles.button, styles.btnFill)}
                       text="Create Account"
                     />
                   </Link>
                   <Link to={AppRoute.SIGN_IN}>
                     <ButtonOutline
-                      className={styles.btnOutline}
+                      className={clsx(styles.button, styles.btnOutline)}
                       text="Sign In"
                     />
                   </Link>

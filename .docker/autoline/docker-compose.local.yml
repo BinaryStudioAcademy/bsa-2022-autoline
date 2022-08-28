@@ -7,7 +7,7 @@ services:
       dockerfile: database/Dockerfile
     restart: on-failure
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - autoline_mariadb_data:/var/lib/mysql
     env_file:
@@ -37,7 +37,7 @@ services:
     env_file:
       - ../../.env/frontend.env
     volumes:
-      - ./nginx/nginx.local.conf:/etc/nginx/nginx.conf
+      - ./nginx/nginx.local.conf:/etc/nginx/nginx.local.conf
     networks:
       - backend_network
       - frontend_network

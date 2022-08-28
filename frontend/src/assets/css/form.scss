@@ -70,6 +70,10 @@
   }
 }
 
+.MuiAlert-standard {
+  margin-bottom: 10px;
+}
+
 .MuiTabs-root {
   .MuiTabs-scroller {
     @include landing-page-margin;

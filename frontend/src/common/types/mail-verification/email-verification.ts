@@ -1,5 +1,3 @@
-declare type EmailRequestData = {
-  email: string;
-};
+declare type EmailRequestData = { email: string };
 
-export {type EmailRequestData}
+export { type EmailRequestData };

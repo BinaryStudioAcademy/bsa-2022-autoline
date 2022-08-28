@@ -6,10 +6,10 @@ import { CarsCategories } from '@components/cars-categories/cars-categories';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 // import { NewCarCard } from '@components/new-car-card/new-car-card';
+import { Header } from '@components/header/header';
 import { TopCarCard } from '@components/top-car-card/top-car-card';
 import { Container } from '@mui/material';
 
-import { Header } from './components/components';
 import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {

@@ -81,7 +81,9 @@
 }
 
 .carDescription {
+  max-height: 5.3rem;
   margin: 0;
+  overflow: hidden;
   color: var(--gray400);
   font-weight: 400;
   font-size: 0.9rem;

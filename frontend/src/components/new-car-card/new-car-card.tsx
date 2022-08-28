@@ -105,7 +105,8 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
         <hr className={styles.verticalLine} />
         <div className={styles.priceBox}>
           <span className={styles.price}>
-            {minPrice} - {maxPrice}
+            {minPrice} -<br />
+            {maxPrice}
           </span>
         </div>
       </div>

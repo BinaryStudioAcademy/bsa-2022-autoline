@@ -31,5 +31,5 @@ export const {
   useGetBrandsQuery,
   useGetModelsOfBrandQuery,
   useGetUsedOptionsQuery,
-  useGetFilteredCarsQuery,
+  useLazyGetFilteredCarsQuery,
 } = carsApi;

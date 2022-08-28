@@ -15,9 +15,10 @@ import { filtersToQuery } from '@helpers/filters-to-query';
 import { getValueById } from '@helpers/get-value-by-id';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import UTurnRightIcon from '@mui/icons-material/UTurnRight';
+import { Button, Zoom } from '@mui/material';
 import { resetAllFilters, setValue } from '@store/car-filter/slice';
 import {
-  useGetFilteredCarsQuery,
+  useLazyGetFilteredCarsQuery,
   useGetUsedOptionsQuery,
 } from '@store/queries/cars';
 
@@ -45,9 +46,11 @@ const AdvancedAutoFilter: FC = () => {
     setQueryParams(filtersToQuery(filters));
   }, [filters]);
 
-  const { data: filteredCars } = useGetFilteredCarsQuery(queryParams, {
-    skip: !queryParams,
-  });
+  const [search, filteredCars] = useLazyGetFilteredCarsQuery();
+
+  const doSearch = (): void => {
+    search(queryParams);
+  };
 
   // eslint-disable-next-line no-console
   console.log(filteredCars);
@@ -114,6 +117,10 @@ const AdvancedAutoFilter: FC = () => {
     setBrandDetailsList([initialBrandDetails]);
   };
 
+  const isButtonVisible = Boolean(
+    Object.values(filters).some((filter) => filter.length >= 1),
+  );
+
   const years = useMemo(() => yearsRange(30), []);
 
   if (isLoading) return <h1>Loading...</h1>;
@@ -129,7 +136,7 @@ const AdvancedAutoFilter: FC = () => {
               label="Regions"
               onChange={handleRegionChange}
               value={getValueById(options.regions, filters.regionId)}
-              options={options?.regions?.map((item: AutoRiaOption) => ({
+              options={options.regions.map((item: AutoRiaOption) => ({
                 label: item.name,
                 id: item.id,
               }))}
@@ -236,6 +243,19 @@ const AdvancedAutoFilter: FC = () => {
         <UTurnRightIcon className={styles.resetIcon} />
         Reset All Filters
       </h6>
+      {isButtonVisible && (
+        <Zoom in={isButtonVisible}>
+          <div className={styles.searchButtonWrapper}>
+            <Button
+              onClick={doSearch}
+              className={styles.searchButton}
+              variant="contained"
+            >
+              SEARCH
+            </Button>
+          </div>
+        </Zoom>
+      )}
     </div>
   );
 };

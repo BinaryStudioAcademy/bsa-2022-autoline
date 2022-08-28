@@ -32,7 +32,7 @@ interface EditProfileProps {
 
 export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
   const { data: user } = useGetUserQuery();
-
+  
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
   const [
@@ -123,7 +123,6 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
             <form
               name="editForm"
               onSubmit={handleSubmit(onSubmit)}
-              // onSubmit={() => handleSubmit(onSubmit)}
               className={styles.form}
             >
               <fieldset

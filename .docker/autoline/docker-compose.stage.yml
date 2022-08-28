@@ -39,6 +39,11 @@ services:
     networks:
       - backend_network
       - frontend_network
+    volumes:
+      - /etc/letsencrypt/live/autoline-not-autoria.xyz/fullchain.pem:/etc/letsencrypt/live/autoline-not-autoria.xyz/fullchain.pem
+      - /etc/letsencrypt/live/autoline-not-autoria.xyz/privkey.pem:/etc/letsencrypt/live/autoline-not-autoria.xyz/privkey.pem
+      - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
+      - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
 
 volumes:
   autoline_mariadb_data:

@@ -12,7 +12,7 @@ import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
 import { DialogDeleteAccount } from '@components/edit-profile/dialog-delete-account/dialog-delete-account';
-import { SelectYearRange } from '@components/edit-profile/select-years-range/select-year-range';
+import { SelectYearRange } from '@components/edit-profile/select-year-range/select-year-range';
 import { SignIn } from '@components/edit-profile/sign-in/sign-in';
 import { useAppForm } from '@hooks/app-form/app-form.hook';
 import { Alert, MenuItem, Modal, Stack } from '@mui/material';
@@ -20,6 +20,7 @@ import {
   ProfileFieldsRequestData,
   useDeleteUserProfileMutation,
   useUpdateUserProfileMutation,
+  useGetUserQuery,
 } from '@store/queries/user/update-user';
 
 import { SelectFieldForm } from './select-field-form/select-field-form';
@@ -30,14 +31,8 @@ interface EditProfileProps {
 }
 
 export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
-  const user = {
-    sex: null,
-    birthYear: '1996',
-    location: 'kyiv',
-    name: 'stepan shevchenko',
-    phone: '+380938889922',
-    email: 'stepan1909@gmail.com',
-  };
+  const { data: user } = useGetUserQuery();
+
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
   const [
@@ -58,16 +53,18 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
     },
   ] = useDeleteUserProfileMutation();
 
-  const { control, errors, handleSubmit, setValue } =
+  const { control, errors, handleSubmit } =
     useAppForm<ProfileFieldsRequestData>({
-      defaultValues: {
-        sex: user.sex || 'not_appliable',
-        birthYear: user.birthYear || 'not_appliable',
-        location: user.location || 'not_appliable',
-        name: user.name,
-        phone: user.phone,
-        email: user.email,
-      },
+      defaultValues: user
+        ? {
+            sex: user.sex || 'not_appliable',
+            birthYear: user.birthYear || 'not_appliable',
+            location: user.location || 'not_appliable',
+            name: user.name,
+            phone: user.phone,
+            email: user.email,
+          }
+        : {},
       validationSchema: updateUserSchema,
     });
 
@@ -77,17 +74,8 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
     }
   }, [deleteIsSuccess]);
 
-  const onSubmit: SubmitHandler<ProfileFieldsRequestData> = async (data) => {
-    const updatedUser = await updateUserProfile(data);
-
-    if ('data' in updatedUser) {
-      const { data } = updatedUser;
-
-      for (const [key, value] of Object.entries(data)) {
-        setValue(key, value);
-      }
-    }
-  };
+  const onSubmit: SubmitHandler<ProfileFieldsRequestData> = async (data) =>
+    await updateUserProfile(data);
 
   const handleClickOpenDialog = (): void => {
     setOpenDialog(true);
@@ -135,6 +123,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
             <form
               name="editForm"
               onSubmit={handleSubmit(onSubmit)}
+              // onSubmit={() => handleSubmit(onSubmit)}
               className={styles.form}
             >
               <fieldset

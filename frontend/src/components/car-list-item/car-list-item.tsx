@@ -1,33 +1,89 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import new_car_1 from '@assets/images/mock_car_picture.png';
-import { CompleteSetDataType } from '@common/types/types';
+import { ComplectationDetailsType } from '@autoline/shared/common/types/types';
+import { CarListItemProps } from '@common/types/types';
 import { SliderNavButton } from '@components/car-list-item/slider-nav-button/slider-nav-button';
 import { swiperParams } from '@components/car-list-item/swiper-params';
-import { CompleteSetTable } from '@components/complete-set-table/complete-set-table';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { Collapse, Grid } from '@mui/material';
+import { CompleteSetTableCollapsed } from '@components/complete-set-table/complete-set-table-collapsed';
+import { formatPrice } from '@helpers/helpers';
+import { objectToQueryString } from '@helpers/object-to-query';
+import { Grid } from '@mui/material';
+import { uuid4 } from '@sentry/utils';
+import {
+  useGetComplectationsQuery,
+  useGetModelDetailsQuery,
+} from '@store/queries/cars';
 import { clsx } from 'clsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { mockCars } from './mock-cars';
 import styles from './styles.module.scss';
 
-const CarListItem: React.FC = () => {
-  const [cars] = useState<CompleteSetDataType[]>(mockCars);
-  const initialRows = 5;
-  const rowsHidden = cars.length - initialRows;
-  const [carsDisplayed, setCarsDisplayed] = useState(
-    cars.slice(0, initialRows),
-  );
-  const [open, setOpen] = React.useState(false);
+const CarListItem: React.FC<CarListItemProps> = (props) => {
+  const { model_id, complectations_id } = props;
 
-  const handleClick = (): void => {
-    open
-      ? setCarsDisplayed(cars.slice(0, initialRows))
-      : setCarsDisplayed(cars);
-    setOpen(!open);
-  };
+  const idParams = objectToQueryString({ 'id': complectations_id });
+
+  const { data: complectations = [] } = useGetComplectationsQuery(idParams);
+  const { data: model } = useGetModelDetailsQuery(model_id);
+
+  const modelName = `${model?.brandName} ${model?.modelName}`;
+  const [modelPrice, setModelPrice] = useState<string>();
+  const [modelOptions, setModelOptions] = useState<{ name: string }[]>();
+  const [modelEngine, setModelEngine] = useState<string>();
+  const [modelEnginePower, setModelEnginePower] = useState<string>();
+  const [modelFuelType, setModelFuelType] = useState<string>();
+  const [modelTransmission, setModelTransmission] = useState<string>();
+
+  useEffect(() => {
+    if (model?.priceStart && model?.priceEnd) {
+      setModelPrice(
+        `${formatPrice(model.priceStart)} - ${formatPrice(model.priceEnd)}`,
+      );
+    }
+  }, [model]);
+
+  useEffect(() => {
+    const options = [
+      ...new Set(
+        complectations
+          .map((car: ComplectationDetailsType) => car.options)
+          .flat(),
+      ),
+    ];
+    const engines = [
+      ...new Set(
+        complectations
+          .map((car: ComplectationDetailsType) => car.engineDisplacement)
+          .sort(),
+      ),
+    ].join(' / ');
+    const enginePowers = [
+      ...new Set(
+        complectations
+          .map((car: ComplectationDetailsType) => car.enginePower)
+          .sort(),
+      ),
+    ].join(' / ');
+    const fuelTypes = [
+      ...new Set(
+        complectations.map((car: ComplectationDetailsType) => car.fuelTypeName),
+      ),
+    ].join(' / ');
+    const transmissions = [
+      ...new Set(
+        complectations.map(
+          (car: ComplectationDetailsType) => car.transmissionTypeName,
+        ),
+      ),
+    ].join(' / ');
+
+    setModelOptions(options);
+    setModelEngine(engines);
+    setModelEnginePower(enginePowers);
+    setModelFuelType(fuelTypes);
+    setModelTransmission(transmissions);
+  }, [complectations]);
+
   return (
     <div className={styles.listCard}>
       <Grid container spacing={2}>
@@ -40,63 +96,55 @@ const CarListItem: React.FC = () => {
             <SliderNavButton direction="prev" />
             <SliderNavButton direction="next" />
 
-            <SwiperSlide className={styles.slide}>
-              <img src={new_car_1} alt="car" />
-            </SwiperSlide>
+            {model?.photoUrls.map((photoUrl) => (
+              <SwiperSlide className={styles.slide} key={uuid4()}>
+                <img src={photoUrl} alt="car" />
+              </SwiperSlide>
+            ))}
           </Swiper>
           <div className={styles.carInfo}>
             <div className={styles.infoRow}>
               <p className={styles.title}>Engine</p>
-              <p className={styles.option}>3 / 3.5 / 4 / 5 l.</p>
+              <p className={styles.option}>{modelEngine} l.</p>
             </div>
             <div className={styles.infoRow}>
               <p className={styles.title}>Engine power</p>
-              <p className={styles.option}>185 / 205 / 231 h.p.</p>
-            </div>
-            <div className={styles.infoRow}>
-              <p className={styles.title}>Drivetrain</p>
-              <p className={styles.option}>All-Wheel Drive (AWD)</p>
+              <p className={styles.option}>{modelEnginePower} h.p.</p>
             </div>
             <div className={styles.infoRow}>
               <p className={styles.title}>Fuel type</p>
-              <p className={styles.option}>Diesel</p>
+              <p className={styles.option}>{modelFuelType}</p>
             </div>
             <div className={styles.infoRow}>
-              <p className={styles.title}>Transmission type</p>
-              <p className={styles.option}>Automatic</p>
+              <p className={styles.title}>Transmission</p>
+              <p className={styles.option}>{modelTransmission}</p>
             </div>
           </div>
         </Grid>
         <Grid item sm={8}>
-          <h4 className={styles.carTitle}>BMW X5 m50d sport</h4>
+          <h4 className={styles.carTitle}>{modelName}</h4>
           <div className={styles.priceBlock}>
-            <h4 className={styles.primaryPrice}>$ 34 000 - 52 450</h4>
+            <h4 className={styles.primaryPrice}>{modelPrice}</h4>
+            {/* TODO: USD-UAH convertation
             <span className={styles.secondaryPrice}>
               UAH 1 554 000 - 1 945 450
-            </span>
+            </span> */}
           </div>
           <div className={clsx(styles.options, 'styledScrollbar')}>
-            <button className={styles.pillButton}>Leather Interior</button>
-            <button className={styles.pillButton}>LED Headlight</button>
-            <button className={styles.pillButton}>Crossover</button>
-            <button className={styles.pillButton}>LCD screen</button>
-            <button className={styles.pillButton}>VSM</button>
-            <button className={styles.pillButton}>ABS</button>
-            <button className={styles.pillButton}>
-              Recognition of road signs
-            </button>
+            {modelOptions?.map((option) => (
+              <button className={styles.pillButton} key={uuid4()}>
+                {option.name}
+              </button>
+            ))}
           </div>
-          <div className={styles.tableWrapper}>
-            <Collapse in={open} timeout="auto" collapsedSize="290px">
-              <CompleteSetTable
-                data={carsDisplayed}
+          {complectations && (
+            <div className={styles.tableWrapper}>
+              <CompleteSetTableCollapsed
+                data={complectations}
                 className={clsx(styles.table, 'styledScrollbar')}
               />
-            </Collapse>
-            <button className={styles.collapseButton} onClick={handleClick}>
-              + {rowsHidden} {open ? <ExpandLess /> : <ExpandMore />}
-            </button>
-          </div>
+            </div>
+          )}
         </Grid>
       </Grid>
     </div>

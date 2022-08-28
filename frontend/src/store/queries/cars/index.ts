@@ -1,5 +1,7 @@
 import {
   BrandType,
+  ComplectationDetailsType,
+  ModelDetailsType,
   ModelType,
   OptionsType,
 } from '@autoline/shared/common/types/types';
@@ -24,6 +26,15 @@ export const carsApi = api.injectEndpoints({
         params,
       }),
     }),
+    getModelDetails: builder.query<ModelDetailsType, string>({
+      query: (modelId) => `${API.CARS}/model/${modelId}`,
+    }),
+    getComplectations: builder.query<ComplectationDetailsType[], string[][]>({
+      query: (params) => ({
+        url: `${API.CARS}/complectations`,
+        params,
+      }),
+    }),
   }),
 });
 
@@ -32,4 +43,6 @@ export const {
   useGetModelsOfBrandQuery,
   useGetUsedOptionsQuery,
   useGetFilteredCarsQuery,
+  useGetModelDetailsQuery,
+  useGetComplectationsQuery,
 } = carsApi;

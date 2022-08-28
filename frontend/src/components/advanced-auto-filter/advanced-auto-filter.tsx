@@ -12,12 +12,13 @@ import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { CheckboxListDataType } from '@common/types/cars/checkbox-list-data.type';
 import { RangeValueType } from '@common/types/cars/range-item.type';
+import { AdvancedAutoFilterProps } from '@common/types/types';
 import { BrandDetails } from '@components/advanced-auto-filter/brand-details/brand-details';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
-import { filtersToQuery } from '@helpers/filters-to-query';
 import { getValueById } from '@helpers/get-value-by-id';
+import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import UTurnRightIcon from '@mui/icons-material/UTurnRight';
 import { resetAllFilters, setValue } from '@store/car-filter/slice';
@@ -28,7 +29,8 @@ import {
 
 import styles from './styles.module.scss';
 
-const AdvancedAutoFilter: FC = () => {
+const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
+  const { showFilteredCars } = props;
   const dispatch = useAppDispatch();
 
   const filters = useAppSelector((state) => state.carFilter);
@@ -47,15 +49,18 @@ const AdvancedAutoFilter: FC = () => {
   const { data: options, isLoading } = useGetUsedOptionsQuery();
 
   useEffect(() => {
-    setQueryParams(filtersToQuery(filters));
+    setQueryParams(objectToQueryString(filters));
   }, [filters]);
 
   const { data: filteredCars } = useGetFilteredCarsQuery(queryParams, {
     skip: !queryParams,
   });
 
-  // eslint-disable-next-line no-console
-  console.log(filteredCars);
+  useEffect(() => {
+    if (filteredCars) {
+      showFilteredCars(filteredCars);
+    }
+  }, [filteredCars]);
 
   const handleAddNewDetails = (): void => {
     setBrandDetailsList([

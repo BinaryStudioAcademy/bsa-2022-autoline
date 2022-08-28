@@ -27,7 +27,8 @@
     "start:backend:dev": "cd backend && yarn start:dev"
   },
   "dependencies": {
-    "@sentry/node": "^7.9.0"
+    "@sentry/node": "^7.9.0",
+    "typescript": "^4.8.2"
   },
   "devDependencies": {
     "@ls-lint/ls-lint": "1.11.2",

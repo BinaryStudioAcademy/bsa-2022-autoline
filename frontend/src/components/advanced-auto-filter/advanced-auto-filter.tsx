@@ -243,19 +243,17 @@ const AdvancedAutoFilter: FC = () => {
         <UTurnRightIcon className={styles.resetIcon} />
         Reset All Filters
       </h6>
-      {isButtonVisible && (
-        <Zoom in={isButtonVisible}>
-          <div className={styles.searchButtonWrapper}>
-            <Button
-              onClick={doSearch}
-              className={styles.searchButton}
-              variant="contained"
-            >
-              SEARCH
-            </Button>
-          </div>
-        </Zoom>
-      )}
+      <Zoom in={isButtonVisible} unmountOnExit={true}>
+        <div className={styles.searchButtonWrapper}>
+          <Button
+            onClick={doSearch}
+            className={styles.searchButton}
+            variant="contained"
+          >
+            SEARCH
+          </Button>
+        </div>
+      </Zoom>
     </div>
   );
 };

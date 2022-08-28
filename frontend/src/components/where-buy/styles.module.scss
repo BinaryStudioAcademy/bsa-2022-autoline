@@ -1,0 +1,38 @@
+.container {
+  max-width: 1250px;
+  margin: 30px;
+  padding: 25px 0;
+  background-color: var(--white);
+  border: solid 1px var(--white);
+  border-radius: 5px;
+}
+
+.dividerDiv {
+  padding: 0 25px;
+}
+
+.divider {
+  margin-left: 25px;
+  color: var(--gray300);
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 25px;
+}
+
+.carName {
+  font-weight: 800;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.priceButton {
+  width: 90px;
+  padding: 6px;
+  color: var(--black);
+  border-color: var(--gray300);
+  border-radius: 4px;
+}

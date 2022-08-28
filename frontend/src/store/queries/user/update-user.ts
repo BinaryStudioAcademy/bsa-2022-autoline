@@ -8,6 +8,7 @@ interface UserFields {
   name: string;
   phone: string;
   email: string;
+  photoUrl: string;
 }
 
 export interface ProfileFieldsRequestData extends UserFields {
@@ -29,6 +30,7 @@ export const updateUserApi = api.injectEndpoints({
         method: 'PUT',
         body: put,
       }),
+      invalidatesTags: ['User'],
     }),
     deleteUserProfile: builder.mutation<void, void>({
       query: () => ({
@@ -36,9 +38,16 @@ export const updateUserApi = api.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    getUser: builder.query<ProfileFieldsResponseData, void>({
+      query: () => API.USER,
+      providesTags: ['User'],
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useUpdateUserProfileMutation, useDeleteUserProfileMutation } =
-  updateUserApi;
+export const {
+  useUpdateUserProfileMutation,
+  useDeleteUserProfileMutation,
+  useGetUserQuery,
+} = updateUserApi;

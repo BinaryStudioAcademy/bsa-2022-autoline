@@ -75,8 +75,8 @@ jobs:
             export GITHUB_USERNAME=$GITHUB_USERNAME
             export GITHUB_TOKEN=$GITHUB_TOKEN
             echo "$GITHUB_TOKEN" | sudo docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
+            sudo docker compose -f docker-compose.dev.yml rm --force --stop
             sudo docker compose -f docker-compose.stage.yml pull
-            sudo docker compose -f docker-compose.stage.yml down
             sudo docker compose -f docker-compose.stage.yml up -d
   notify:
     needs: deploy

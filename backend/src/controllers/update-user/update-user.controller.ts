@@ -1,4 +1,5 @@
 import { TokenPayload } from '@autoline/shared';
+import { ExceptionMessage } from '@common/enums/exception/exception-message.enum';
 import { TypedRequestBody } from '@common/types/controller/controller';
 import { UpdateUserDto } from '@dtos/user/update-user.dto';
 import { Sex } from '@prisma/client';
@@ -47,4 +48,21 @@ const deleteUser = async (
   }
 };
 
-export { updateUser, deleteUser };
+const getUser = async (
+  req: TypedRequestBody<{ tokenPayload: TokenPayload }>,
+  res: Response<Partial<UpdateUserReq>>,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const user = await updateUserService.getUser(req.body.tokenPayload.sub);
+    if (user) {
+      res.status(httpStatus.OK).json(user);
+    } else {
+      throw new Error(ExceptionMessage.UNAUTHORIZED_USER);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { updateUser, deleteUser, getUser };

@@ -9,8 +9,8 @@ import { RangeValueType } from '@common/types/cars/range-item.type';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
 import { SelectField } from '@components/common/select-field/select-field';
-import { filtersToQuery } from '@helpers/filters-to-query';
 import { getValueById } from '@helpers/get-value-by-id';
+import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import { Button, Zoom } from '@mui/material';
 import { setValue } from '@store/car-filter/slice';
@@ -42,7 +42,7 @@ const SimpleAutoFilter: FC = () => {
   });
 
   useEffect(() => {
-    setQueryParams(filtersToQuery(filters));
+    setQueryParams(objectToQueryString(filters));
   }, [filters]);
 
   const [search, filteredCars] = useLazyGetFilteredCarsQuery();

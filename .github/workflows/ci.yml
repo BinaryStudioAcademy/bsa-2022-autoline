@@ -10,7 +10,7 @@ on:
 
 jobs:
   lint:
-    name: Autoline build test
+    name: Autoline lint
     runs-on: ubuntu-latest
 
     steps:

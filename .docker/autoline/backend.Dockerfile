@@ -16,7 +16,7 @@ RUN yarn install:shared && \
     yarn install:backend && \
     yarn run build:shared:be && \
     yarn run build:backend && \
-    yarn cd backned && db:migrate:prod && \
+    yarn run db:migrate:prod && \
     rm -rf ./backend/src && \
     rm -rf ./shared/src
 

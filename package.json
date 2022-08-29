@@ -24,7 +24,8 @@
     "build:frontend": "cd frontend && yarn build",
     "build:backend": "cd backend && yarn build",
     "build": "yarn build:shared && yarn build:frontend && yarn build:backend",
-    "start:backend:dev": "cd backend && yarn start:dev"
+    "start:backend:dev": "cd backend && yarn start:dev",
+    "db:migrate:prod": "cd backend && yarn db:migrate:prod"
   },
   "dependencies": {
     "@sentry/node": "^7.9.0"

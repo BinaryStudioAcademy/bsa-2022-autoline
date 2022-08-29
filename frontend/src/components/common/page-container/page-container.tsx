@@ -5,7 +5,7 @@ import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
-const PageContainer: React.FC<{ children: ReactNode; className: string }> = (
+const PageContainer: React.FC<{ children: ReactNode; className?: string }> = (
   props,
 ) => {
   const { children, className } = props;

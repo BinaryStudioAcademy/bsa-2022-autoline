@@ -3,9 +3,10 @@ import { useState } from 'react';
 import { FilterReturnType } from '@common/types/types';
 import { AdvancedAutoFilter } from '@components/advanced-auto-filter/advanced-auto-filter';
 import { CarListItem } from '@components/car-list-item/car-list-item';
+import { PageContainer } from '@components/common/page-container/page-container';
 import { Title } from '@components/common/title/title';
 import { Header } from '@components/header/header';
-import { Container, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 
 const SearchPage: React.FC = () => {
   const [cars, setCars] = useState<FilterReturnType>([]);
@@ -16,7 +17,7 @@ const SearchPage: React.FC = () => {
   return (
     <>
       <Header />
-      <Container>
+      <PageContainer>
         <Title element="h3">Search</Title>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
@@ -29,7 +30,7 @@ const SearchPage: React.FC = () => {
             <AdvancedAutoFilter showFilteredCars={handleShowCars} />
           </Grid>
         </Grid>
-      </Container>
+      </PageContainer>
     </>
   );
 };

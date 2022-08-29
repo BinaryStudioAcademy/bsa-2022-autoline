@@ -81,8 +81,11 @@
 }
 
 .carDescription {
-  max-height: 5.3rem;
+  /* stylelint-disable-next-line value-no-vendor-prefix */
+  display: -webkit-box;
   margin: 0;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
   overflow: hidden;
   color: var(--gray400);
   font-weight: 400;

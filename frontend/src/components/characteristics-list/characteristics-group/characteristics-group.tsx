@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { CharacteristicsGroupProps } from '@common/types/characteristics-list/characteristics-list';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 

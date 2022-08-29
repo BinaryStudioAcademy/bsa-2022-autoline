@@ -17,6 +17,7 @@ const getNewCars = async (
     const newCars = await newCarsService.getNewCars(limit);
     res.status(httpStatus.OK).json(newCars);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     next(error);
   }

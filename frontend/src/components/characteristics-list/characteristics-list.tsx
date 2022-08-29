@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { CharacteristicsListInfoProps } from '@common/types/characteristics-list/characteristics-list';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 import { CharacteristicsGroup } from './characteristics-group/characteristics-group';
 import { mockCarInfo } from './mock-car-info';

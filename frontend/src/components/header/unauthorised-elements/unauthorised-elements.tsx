@@ -8,7 +8,7 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import styles from '@components/header/styles.module.scss';
 import { useMediaQuery, useTheme } from '@mui/material';
 
-const DefaultElements: React.FC = () => {
+const UnauthorisedElements: React.FC = () => {
   const theme = useTheme();
   const isMatchMd = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -28,4 +28,4 @@ const DefaultElements: React.FC = () => {
   );
 };
 
-export { DefaultElements };
+export { UnauthorisedElements };

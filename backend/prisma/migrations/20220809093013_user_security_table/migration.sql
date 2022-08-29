@@ -10,7 +10,7 @@
 ALTER TABLE `User` DROP COLUMN `password`,
     ADD COLUMN `photo_url` VARCHAR(300) NULL,
     ADD COLUMN `role` ENUM('user', 'admin') NOT NULL DEFAULT 'user',
-    ADD COLUMN `sex` ENUM('male', 'female', 'not_known', 'not_appliable') NOT NULL DEFAULT 'not_known';
+    ADD COLUMN `sex` ENUM('male', 'female', 'not_known', 'not_appliable') NULL;
 
 -- CreateTable
 CREATE TABLE `User_Security` (

@@ -13,7 +13,7 @@ export interface UpdateUserReq {
   password?: string;
   name: string;
   birthYear?: number | null;
-  sex?: Sex;
+  sex?: Sex | null;
   phone?: string | null;
   email: string;
   location?: string | null;

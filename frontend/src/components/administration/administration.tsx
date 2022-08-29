@@ -1,27 +1,12 @@
-import { ReactElement, useEffect, useState, ChangeEvent } from 'react';
+import { ReactElement, useState, ChangeEvent } from 'react';
 
 import { InputField } from '@components/common/input-field/input-field';
 import { Title } from '@components/common/title/title';
 import { Header } from '@components/header/header';
+import { useDebounce } from '@hooks/common/hook';
 import Container from '@mui/material/Container';
 
 import { UsersListContainer } from './users/users-list-container';
-
-const useDebounce = (value: string, delay: number): string => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
-};
 
 export const Administration = (): ReactElement => {
   const [searchName, setSearchName] = useState('');

@@ -5,7 +5,7 @@ html {
     font-size: 10px;
   }
 
-  @media (min-width: $global-md), (min-height: $global-height-md) {
+  @media (min-width: $global-md) {
     font-size: 8px;
   }
 
@@ -61,15 +61,40 @@ body {
     padding-right: 0;
     padding-left: 0;
 
+    @media (max-width: $global-md) {
+      height: auto;
+    }
+
+    @media (max-width: $global-sm) {
+      flex-direction: column;
+      align-items: flex-start;
+      height: auto;
+    }
+
     .firstContainerLeft {
       width: 28rem;
       margin-bottom: 10rem;
+
+      @media (max-width: $global-md) {
+        margin-top: 4rem;
+        margin-bottom: 3rem;
+      }
+
+      @media (max-width: $global-sm) {
+        width: 100%;
+        margin-top: 4rem;
+        margin-bottom: 1.25rem;
+      }
 
       .firstContainerLeftTextMain {
         padding: 0;
         font-weight: 900;
         font-size: 3.625rem;
         text-transform: uppercase;
+
+        @media (max-width: $global-md) {
+          font-size: 1.5rem;
+        }
       }
 
       .firstContainerLeftTextSecondary {
@@ -90,8 +115,29 @@ body {
     }
 
     .firstContainerRight {
+      @media (max-width: $global-md) {
+        display: flex;
+        justify-content: right;
+        max-width: calc(100% - 29rem);
+      }
+
+      @media (max-width: $global-sm) {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 2rem;
+      }
+
       .car {
         width: 60rem;
+
+        @media (max-width: $global-md) {
+          width: 100%;
+        }
+
+        @media (max-width: $global-sm) {
+          width: 100%;
+          max-width: 33rem;
+        }
 
         @media (min-width: $global-sm) {
           margin-right: calc(0px - var(--mui-padding-md));

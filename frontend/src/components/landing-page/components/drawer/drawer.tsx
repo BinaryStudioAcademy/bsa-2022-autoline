@@ -10,7 +10,7 @@ import {
   ListItemText,
 } from '@mui/material';
 
-const pages = ['Used Cars', 'New Cars', 'Sell Your Car', 'About Us'];
+const pages = ['Used Cars', 'New Cars', 'About Us'];
 
 export const DrawerComp = (): React.ReactElement => {
   const [openDrawer, setOpenDrawer] = useState(false);

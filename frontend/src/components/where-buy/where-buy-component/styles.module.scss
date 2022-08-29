@@ -55,8 +55,8 @@
       div::before {
         content: "\2022";
         display: inline-block;
-        width: 1em;
-        margin-left: -1em;
+        width: 10px;
+        margin-left: -10px;
         color: var(--blue100);
         font-weight: bold;
       }

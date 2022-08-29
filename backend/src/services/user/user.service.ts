@@ -89,17 +89,19 @@ const getUser = async (id: string): Promise<Partial<UpdateUserReq> | null> => {
     },
   });
 
-  return user
-    ? {
-        name: user.name,
-        birthYear: user.birth_year,
-        sex: user.sex,
-        phone: user.phone,
-        email: user.email,
-        location: user.location,
-        photoUrl: user.photo_url,
-      }
-    : null;
+  if (!user) {
+    throw new Error(ExceptionMessage.USER_NOT_EXIST);
+  }
+
+  return {
+    name: user.name,
+    birthYear: user.birth_year,
+    sex: user.sex,
+    phone: user.phone,
+    email: user.email,
+    location: user.location,
+    photoUrl: user.photo_url,
+  };
 };
 
 const emailExist = async (id: string, email: string): Promise<void> => {

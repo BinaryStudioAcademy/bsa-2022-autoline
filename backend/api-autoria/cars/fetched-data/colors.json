@@ -1,0 +1,13 @@
+[
+  { "name": "Beige", "value": 1 },
+  { "name": "Black", "value": 2 },
+  { "name": "Blue", "value": 3 },
+  { "name": "Brown", "value": 5 },
+  { "name": "Green", "value": 7 },
+  { "name": "Grey", "value": 8 },
+  { "name": "Orange", "value": 9 },
+  { "name": "Purple", "value": 12 },
+  { "name": "Red", "value": 13 },
+  { "name": "White", "value": 15 },
+  { "name": "Yellow", "value": 16 }
+]

@@ -12,7 +12,7 @@ import {
 
 const pages = ['Used Cars', 'New Cars', 'Sell Your Car', 'About Us'];
 
-export const DrawerComp = (): React.ReactElement => {
+export const DrawerComponent = (): React.ReactElement => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
   return (

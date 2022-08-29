@@ -1,13 +1,15 @@
 .header {
   position: relative;
   z-index: 2;
+  background: var(--white);
+}
+
+.headerInner {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   height: var(--header-height);
-  padding: 0 113px;
-  background: var(--white);
 }
 
 .container {

@@ -64,7 +64,9 @@ export const ResetPassword = (): React.ReactElement => {
               control={control}
               inputLabel="Confirm Password"
             />
-            {error && 'data' in error && <Alert severity="error"></Alert>}
+            {error && 'data' in error && (
+              <Alert severity="error">{error.data.toString()}</Alert>
+            )}
             <ButtonFill text="Submit" />
           </fieldset>
         </form>

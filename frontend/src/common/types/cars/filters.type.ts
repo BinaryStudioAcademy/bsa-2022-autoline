@@ -4,8 +4,10 @@ type FiltersType = {
   yearEnd: string;
   priceStart: string;
   priceEnd: string;
-  raceStart: string;
-  raceEnd: string;
+  enginePowerStart: string;
+  enginePowerEnd: string;
+  engineDisplacementStart: string;
+  engineDisplacementEnd: string;
   bodytypeId: string[];
   brandId: string[];
   modelId: string[];

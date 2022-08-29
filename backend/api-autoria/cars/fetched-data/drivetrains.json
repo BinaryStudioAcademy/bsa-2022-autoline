@@ -1,0 +1,5 @@
+[
+  { "name": "All-Wheel Drive (AWD)", "value": 1 },
+  { "name": "Front-Wheel Drive (FWD)", "value": 2 },
+  { "name": "Rear-Wheel Drive (RWD)", "value": 3 }
+]

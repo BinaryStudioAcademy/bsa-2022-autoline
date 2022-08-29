@@ -23,7 +23,10 @@
     "db:reset": "dotenv -e ../.env/backend.env -- yarn prisma migrate reset",
     "db:migrate:dev": "yarn prisma migrate dev",
     "db:migrate:dev:local": "dotenv -e ../.env/backend.env -- yarn db:migrate:dev",
-    "db:migrate:prod": "yarn prisma migrate deploy"
+    "db:migrate:prod": "yarn prisma migrate deploy",
+    "seed:soft": "prisma db seed",
+    "postinstall": "prisma generate",
+    "prestart": "yarn run db:migrate:prod && yarn run seed:soft"
   },
   "dependencies": {
     "@autoline/shared": "link:../shared/build",

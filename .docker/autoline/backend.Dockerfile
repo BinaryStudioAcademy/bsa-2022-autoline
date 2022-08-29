@@ -21,6 +21,3 @@ RUN yarn install:shared && \
 
 EXPOSE 3001
 CMD ["node", "./backend/build/src/server.js"]
-
-RUN yarn run db:migrate:prod
-

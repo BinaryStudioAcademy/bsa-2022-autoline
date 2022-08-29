@@ -31,7 +31,14 @@ export type {
   DeleteWishlistInput,
 } from './preferences/preferences';
 
-export type { User, UserRole, UserSex } from './user';
+export type {
+  User,
+  UserRole,
+  UserSex,
+  UserFields,
+  ProfileFieldsRequestData,
+  ProfileFieldsResponseData,
+} from './user';
 
 export type { ValidationSchema } from './validation/validation';
 
@@ -42,6 +49,8 @@ export type {
   AutoRiaOption,
   CarsSearchParams,
   SearchResult,
+  ModelDetailsType,
+  ComplectationDetailsType,
 } from './cars/cars';
 
 export type {

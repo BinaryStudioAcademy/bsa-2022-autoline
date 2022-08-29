@@ -2,17 +2,23 @@ import React, { FC, useEffect, useMemo, useState } from 'react';
 
 import { AutoRiaOption } from '@autoline/shared/common/types/types';
 import { FiltersNames } from '@common/enums/cars/filters-names.enum';
-import { pricesRange, raceRange, yearsRange } from '@common/enums/cars/ranges';
+import {
+  engineDisplacementRange,
+  enginePowerRange,
+  pricesRange,
+  yearsRange,
+} from '@common/enums/cars/ranges';
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { CheckboxListDataType } from '@common/types/cars/checkbox-list-data.type';
 import { RangeValueType } from '@common/types/cars/range-item.type';
+import { AdvancedAutoFilterProps } from '@common/types/types';
 import { BrandDetails } from '@components/advanced-auto-filter/brand-details/brand-details';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
-import { filtersToQuery } from '@helpers/filters-to-query';
 import { getValueById } from '@helpers/get-value-by-id';
+import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import UTurnRightIcon from '@mui/icons-material/UTurnRight';
 import { resetAllFilters, setValue } from '@store/car-filter/slice';
@@ -23,7 +29,8 @@ import {
 
 import styles from './styles.module.scss';
 
-const AdvancedAutoFilter: FC = () => {
+const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
+  const { showFilteredCars } = props;
   const dispatch = useAppDispatch();
 
   const filters = useAppSelector((state) => state.carFilter);
@@ -42,15 +49,18 @@ const AdvancedAutoFilter: FC = () => {
   const { data: options, isLoading } = useGetUsedOptionsQuery();
 
   useEffect(() => {
-    setQueryParams(filtersToQuery(filters));
+    setQueryParams(objectToQueryString(filters));
   }, [filters]);
 
   const { data: filteredCars } = useGetFilteredCarsQuery(queryParams, {
     skip: !queryParams,
   });
 
-  // eslint-disable-next-line no-console
-  console.log(filteredCars);
+  useEffect(() => {
+    if (filteredCars) {
+      showFilteredCars(filteredCars);
+    }
+  }, [filteredCars]);
 
   const handleAddNewDetails = (): void => {
     setBrandDetailsList([
@@ -188,16 +198,29 @@ const AdvancedAutoFilter: FC = () => {
             />
           </div>
 
-          <h5 className={styles.blockTitle}>Race</h5>
+          <h5 className={styles.blockTitle}>Engine Power</h5>
           <div className={styles.row}>
             <RangeSelector
-              list={raceRange.map((item: number) => item.toString())}
-              minTitle="Km Min"
-              maxTitle="Km Max"
-              minFilterName={FiltersNames.RACE_START}
-              maxFilterName={FiltersNames.RACE_END}
-              selectedMin={filters.raceStart}
-              selectedMax={filters.raceEnd}
+              list={enginePowerRange.map((item: number) => item.toString())}
+              minTitle="hP Min"
+              maxTitle="hP Max"
+              minFilterName={FiltersNames.ENGINE_POWER_START}
+              maxFilterName={FiltersNames.ENGINE_POWER_END}
+              selectedMin={filters.enginePowerStart}
+              selectedMax={filters.enginePowerEnd}
+              onChange={handleRangeChange}
+            />
+          </div>
+          <h5 className={styles.blockTitle}>Engine Displacement</h5>
+          <div className={styles.row}>
+            <RangeSelector
+              list={engineDisplacementRange}
+              minTitle="L Min"
+              maxTitle="L Max"
+              minFilterName={FiltersNames.ENGINE_DISPLACEMENT_START}
+              maxFilterName={FiltersNames.ENGINE_DISPLACEMENT_END}
+              selectedMin={filters.engineDisplacementStart}
+              selectedMax={filters.engineDisplacementEnd}
               onChange={handleRangeChange}
             />
           </div>

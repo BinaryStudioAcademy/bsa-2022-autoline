@@ -4,7 +4,8 @@ enum CarSetOptions {
   Color = 'Color',
   Motor = 'Motor',
   WheelDrive = 'Wheel Drive',
-  Race = 'Race',
+  Engine = 'Engine',
+  EnginePower = 'Engine Power',
   Price = 'Price',
   Compare = 'Compare',
 }

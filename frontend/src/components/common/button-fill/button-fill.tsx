@@ -8,6 +8,7 @@ export const ButtonFill = (props: ButtonPropsType): React.ReactElement => {
     <button
       className={clsx(props.className, styles.btnFill)}
       onClick={props.onClick}
+      type={props.type}
     >
       {props.text}
     </button>

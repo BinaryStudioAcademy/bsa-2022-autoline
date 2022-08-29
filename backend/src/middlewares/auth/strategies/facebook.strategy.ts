@@ -1,23 +1,31 @@
-import { ENV } from '@common/enums/app/env.enum';
+import { ENV } from '@common/enums/app/app';
 import { prisma } from '@data/prisma-client';
 import { verifyToken } from '@helpers/helpers';
 import { JwtPayload } from 'jsonwebtoken';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as FacebookStrategy } from 'passport-facebook';
 
-const googleStrategy = new GoogleStrategy(
+const facebookStrategy = new FacebookStrategy(
   {
-    clientID: ENV.GOOGLE.CLIENT_ID as string,
-    clientSecret: ENV.GOOGLE.CLIENT_SECRET as string,
-    callbackURL: `${ENV.API.V1_PREFIX}/auth/google/redirect`,
+    clientID: ENV.FACEBOOK.APP_ID as string,
+    clientSecret: ENV.FACEBOOK.SECRET_KEY as string,
+    callbackURL: `${ENV.API.V1_PREFIX}/auth/facebook/redirect`,
+    profileFields: [
+      'email',
+      'gender',
+      'displayName',
+      'hometown',
+      'location',
+      'birthday',
+      'picture',
+    ],
     passReqToCallback: true,
-    scope: ['profile', 'email'],
   },
   async (req, accessToken, refreshToken, profile, done) => {
     try {
       let user = await prisma.user.findFirst({
         where: {
           User_Security: {
-            google_acc_id: profile.id,
+            facebook_acc_id: profile.id,
           },
         },
       });
@@ -28,15 +36,16 @@ const googleStrategy = new GoogleStrategy(
         req.query.state !== 'null'
           ? (verifyToken(req.query.state as string) as JwtPayload)
           : undefined;
+
       if (payload) {
         user = await prisma.user.update({
           where: {
-            id: payload ? payload.sub : '',
+            id: payload.sub,
           },
           data: {
             User_Security: {
               update: {
-                google_acc_id: profile.id,
+                facebook_acc_id: profile.id,
               },
             },
           },
@@ -52,17 +61,19 @@ const googleStrategy = new GoogleStrategy(
         update: {
           User_Security: {
             update: {
-              google_acc_id: profile.id,
+              facebook_acc_id: profile.id,
             },
           },
         },
         create: {
           name: profile.displayName,
           email: profile._json.email as string,
-          photo_url: profile._json.picture,
+          photo_url: profile._json.picture.data.url,
+          location: profile._json.location.name ?? profile._json.hometown.name,
+          birth_year: parseInt(profile._json.birthday.substr(-4)), // birthday comes in such type '01/01/2001'
           User_Security: {
             create: {
-              google_acc_id: profile.id,
+              facebook_acc_id: profile.id,
             },
           },
         },
@@ -75,4 +86,4 @@ const googleStrategy = new GoogleStrategy(
   },
 );
 
-export { googleStrategy };
+export { facebookStrategy };

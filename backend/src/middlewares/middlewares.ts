@@ -3,6 +3,8 @@ export {
   signUpMiddleware,
   googleAuth,
   googleMiddleware,
+  facebookAuth,
+  facebookMiddleware,
 } from './auth/auth.middleware';
 export { errorsHandler } from './exceptions/exceptions.middleware';
 export {

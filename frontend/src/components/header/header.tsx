@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app-route.enum';
 import { UnauthorisedElements } from '@components/header/unauthorised-elements/unauthorised-elements';
+import { useAppSelector } from '@hooks/hooks';
 import {
   AppBar,
   Tab,
@@ -27,6 +28,8 @@ export const Header = (): React.ReactElement => {
   const { data: wishlist = { models: [], complectations: [] } } =
     useGetWishlistsQuery();
   const [wishlistCount, setWishlistCount] = useState(0);
+
+  const userToken = useAppSelector((state) => state.auth.token);
 
   useEffect(() => {
     setWishlistCount(wishlist.models.length + wishlist.complectations.length);
@@ -66,7 +69,7 @@ export const Header = (): React.ReactElement => {
                 <Tab label="New Cars" className={styles.navLink} />
                 <Tab label="About us" className={styles.navLink} />
               </Tabs>
-              {store.getState().auth.token ? (
+              {userToken ? (
                 <PrivateElements
                   avatar={user.photoUrl}
                   notifications={user.notifications}

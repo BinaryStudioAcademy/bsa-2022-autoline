@@ -16,7 +16,7 @@ import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 import { useGetUserQuery } from '@store/queries/user/update-user';
 import { store } from '@store/store';
 
-import { DrawerComp } from '../landing-page/components/drawer/drawer';
+import { DrawerComponent } from '../landing-page/components/drawer/drawer';
 import { PrivateElements } from './private-elements/private-elements';
 import styles from './styles.module.scss';
 
@@ -54,7 +54,7 @@ export const Header = (): React.ReactElement => {
             <img className={styles.logo} src={Logo} alt="Autoline" />
           </Link>
           {isMatchSm ? (
-            <DrawerComp />
+            <DrawerComponent />
           ) : (
             <>
               <Tabs

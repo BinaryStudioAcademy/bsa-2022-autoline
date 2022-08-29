@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { SignUpRequestData } from '@autoline/shared/common/types/types';
 import { signUpSchema as baseSchema } from '@autoline/shared/validation-schemas';
 import { AppRoute } from '@common/enums/app/app-route.enum';
+import { StorageKey } from '@common/enums/enums';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { InputField } from '@components/common/input-field/input-field';
 import { SignWithOAuth } from '@components/sign/components/sign-with-oauth/sign-with-oauth';
@@ -57,6 +58,10 @@ export const SignUpForm = (): React.ReactElement => {
   const navigateToSignIn = (): void => {
     navigate('../sign-in');
   };
+
+  if (isSuccess) {
+    localStorage.setItem(StorageKey.VERIFICATION_LINK, 'sent');
+  }
 
   return (
     <>

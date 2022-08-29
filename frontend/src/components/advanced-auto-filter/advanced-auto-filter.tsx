@@ -60,8 +60,8 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
   };
 
   useEffect(() => {
-    if (filteredCars) {
-      showFilteredCars(filteredCars);
+    if (filteredCars.data) {
+      showFilteredCars(filteredCars.data);
     }
   }, [filteredCars]);
 

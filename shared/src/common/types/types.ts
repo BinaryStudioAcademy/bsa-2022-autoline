@@ -40,8 +40,6 @@ export type {
   ComplectationReturnedData,
   OptionType,
   ComplectationsInput,
-  ModelReturnedDbType,
-  ComplectationReturnedDbType,
 } from './complectations/complectations';
 export type {
   BrandType,

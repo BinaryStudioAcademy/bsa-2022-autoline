@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 
 import {
   WishlistInput,
@@ -7,9 +7,10 @@ import {
 import { DetailsCarPanelPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
 import { convertPrice } from '@helpers/utils/convertPrice';
-import { useAppSelector, useAppDispatch } from '@hooks/hooks';
-import { fetchRates } from '@store/exchange-rates/slice';
-import { useGetComplectationsQuery } from '@store/queries/details-panel';
+import {
+  useGetComplectationsQuery,
+  useGetRateQuery,
+} from '@store/queries/details-panel';
 import {
   useCreateWishlistMutation,
   useDeleteWishlistMutation,
@@ -20,20 +21,18 @@ import styles from './styles.module.scss';
 
 const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
   complectationId = '',
-  modelId = '',
+  modelId = '2cc33399-effa-4fb8-96da-69e9c02b55c3',
 }) => {
   const { data, isLoading } = useGetComplectationsQuery({
     complectationId,
     modelId,
   });
+  const { data: rate } = useGetRateQuery();
 
+  console.log(rate);
   const [createWishlist] = useCreateWishlistMutation();
   const [deleteWishlist] = useDeleteWishlistMutation();
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchRates());
-  }, []);
-  const rate = useAppSelector((state) => state.rates.rateUSD);
+
   const handleCreateWishlist = async (): Promise<void> => {
     const data: WishlistInput =
       complectationId === '' ? { modelId } : { complectationId };
@@ -43,14 +42,14 @@ const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
 
   const handleDeleteWishlist = async (): Promise<void> => {
     const inputData: DeleteWishlistInput = {
-      wishlistId: data?.data?.users_wishlists[0].id as string,
+      wishlistId: data?.wishlist[0].id as string,
     };
     await deleteWishlist(inputData);
   };
 
   const handleLikeClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
-    data?.data?.users_wishlists.length != 0
+    data?.wishlist.length != 0
       ? handleDeleteWishlist()
       : handleCreateWishlist();
   };
@@ -62,8 +61,8 @@ const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
           - ${data?.priceEnd}
           `}</div>
         <div className={styles.priceUah}>
-          {`UAH ${convertPrice(rate, data?.priceStart as number)}
-          - ${convertPrice(rate, data?.priceEnd as number)}
+          {`UAH ${convertPrice(rate as string, data?.priceStart as number)}
+          - ${convertPrice(rate as string, data?.priceEnd as number)}
           `}
         </div>
         <div className={styles.icons}>
@@ -71,7 +70,7 @@ const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
             className={clsx(
               styles.button,
               styles.iconButton,
-              data?.data?.users_wishlists.length != 0 && styles.isLiked,
+              data?.wishlist.length != 0 && styles.isLiked,
             )}
             onClick={handleLikeClick}
           >

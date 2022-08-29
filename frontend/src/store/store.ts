@@ -2,12 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { api } from '@store/queries';
 import { combineReducers } from 'redux';
 
-import { auth, carFilter, rates } from './root-reducer';
+import { auth, carFilter } from './root-reducer';
 
 const rootReducer = combineReducers({
   auth,
   carFilter,
-  rates,
   [api.reducerPath]: api.reducer,
 });
 

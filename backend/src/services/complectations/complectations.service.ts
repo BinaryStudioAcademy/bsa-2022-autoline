@@ -5,15 +5,13 @@ import type {
   ComplectationReturnedData,
   OptionType,
   ComplectationsInput,
-  ModelReturnedDbType,
-  ComplectationReturnedDbType,
 } from '@autoline/shared/common/types/types';
 
 const getComplectationsById = async (
   input: ComplectationsInput,
 ): Promise<ModelReturnedData | ComplectationReturnedData> => {
   const { userId, modelId, complectationId } = input;
-  const data = (await prisma.complectation.findUnique({
+  const data = await prisma.complectation.findUnique({
     where: {
       id: complectationId,
     },
@@ -24,11 +22,6 @@ const getComplectationsById = async (
         },
         select: {
           id: true,
-          complectation: {
-            select: {
-              id: true,
-            },
-          },
         },
       },
       prices_ranges: {
@@ -50,7 +43,7 @@ const getComplectationsById = async (
         },
       },
     },
-  })) as ComplectationReturnedDbType;
+  });
 
   const options: OptionType = {
     security: [],
@@ -72,27 +65,27 @@ const getComplectationsById = async (
   }),
     (options.important = Array.from(importantOptionsList));
 
-  const optionsList = data?.options.reduce((acc: OptionType, obj) => {
+  const optionsList = data?.options.reduce((options: OptionType, obj) => {
     const key = obj.option['type'];
-    acc[key] ??= [];
-    acc[key].push(obj.option.name);
-    return acc;
+    options[key] ??= [];
+    options[key].push(obj.option.name);
+    return options;
   }, {});
 
-  const complectationData: ComplectationReturnedData = {
-    data: data,
+  const complectationData = {
     enginePowers: [data?.engine_power],
     colors: [data?.color.name],
-    engineDisplacements: [data?.engine_displacement],
+    engineDisplacements: [data?.engine_displacement.toNumber()],
     drivetrains: [data?.drivetrain.name],
     fuelTypes: [data?.fuel_type.name],
     transmissionTypes: [data?.transmission_type.name],
     options: { ...options, ...optionsList },
     priceStart: data?.prices_ranges[0].price_start,
     priceEnd: data?.prices_ranges[0].price_end,
-  };
+    wishlist: data?.users_wishlists,
+  } as ComplectationReturnedData;
 
-  const model = (await prisma.model.findUnique({
+  const model = await prisma.model.findUnique({
     where: {
       id: modelId,
     },
@@ -103,11 +96,6 @@ const getComplectationsById = async (
         },
         select: {
           id: true,
-          model: {
-            select: {
-              id: true,
-            },
-          },
         },
       },
       prices_ranges: {
@@ -133,7 +121,7 @@ const getComplectationsById = async (
         },
       },
     },
-  })) as ModelReturnedDbType;
+  });
 
   const optionType = [
     'security',
@@ -192,22 +180,21 @@ const getComplectationsById = async (
 
   const enginePowers: Set<number> = new Set();
   const colors: Set<string> = new Set();
-  const engineDisplacements: Set<string> = new Set();
+  const engineDisplacements: Set<number> = new Set();
   const drivetrains: Set<string> = new Set();
   const fuelTypes: Set<string> = new Set();
   const transmissionTypes: Set<string> = new Set();
 
   model?.complectations.forEach((complectattion) => {
     enginePowers.add(complectattion.engine_power);
-    engineDisplacements.add(complectattion.engine_displacement);
+    engineDisplacements.add(complectattion.engine_displacement.toNumber());
     drivetrains.add(complectattion.drivetrain.name);
     fuelTypes.add(complectattion.fuel_type.name);
     transmissionTypes.add(complectattion.transmission_type.name);
     colors.add(complectattion.color.name);
   });
 
-  const modelData: ModelReturnedData = {
-    data: model,
+  const modelData = {
     enginePowers: Array.from(enginePowers),
     colors: Array.from(colors),
     engineDisplacements: Array.from(engineDisplacements),
@@ -217,7 +204,8 @@ const getComplectationsById = async (
     options: options,
     priceStart: model?.prices_ranges[0].price_start,
     priceEnd: model?.prices_ranges[0].price_end,
-  };
+    wishlist: model?.users_wishlists,
+  } as ModelReturnedData;
   const result = modelId === '' ? complectationData : modelData;
   return result;
 };

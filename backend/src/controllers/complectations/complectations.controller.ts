@@ -1,4 +1,4 @@
-import { getComplectationsById } from '@services/complectations/complectations.service';
+import * as complectationsService from '@services/complectations/complectations.service';
 import httpStatus from 'http-status-codes';
 
 import type { TypedRequestQuery } from '@common/types/controller/controller';
@@ -23,8 +23,10 @@ const getComplectations = async (
       modelId,
       complectationId,
     };
-    const ResponseDto = await getComplectationsById(input);
-    res.json(ResponseDto).status(httpStatus.OK);
+    const responseDto = await complectationsService.getComplectationsById(
+      input,
+    );
+    res.json(responseDto).status(httpStatus.OK);
   } catch (error) {
     if (error instanceof Error && error.message === 'NotFoundError') {
       res.sendStatus(httpStatus.NOT_FOUND);

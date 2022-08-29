@@ -23,7 +23,15 @@ authRouter.get(`${PATH}/google/sign`, passportMiddleware.googleAuth);
 authRouter.get(
   `${PATH}/google/redirect`,
   passportMiddleware.googleMiddleware,
-  authController.signGoogle,
+  authController.signOAuthProvider,
+);
+
+authRouter.get(`${PATH}/facebook/sign`, passportMiddleware.facebookAuth);
+
+authRouter.get(
+  `${PATH}/facebook/redirect`,
+  passportMiddleware.facebookMiddleware,
+  authController.signOAuthProvider,
 );
 
 authRouter.post(

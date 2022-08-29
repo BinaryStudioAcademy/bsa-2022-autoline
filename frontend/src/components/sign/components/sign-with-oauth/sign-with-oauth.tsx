@@ -2,11 +2,11 @@ import React, { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
-import { openGoogleAuthPage } from '@helpers/helpers';
+import { openOAuthPage } from '@helpers/helpers';
 import { useAppDispatch } from '@hooks/hooks';
 import { setCredentials } from '@store/root-reducer';
 
-const SignWithGoogle = ({ title }: { title: string }): React.ReactElement => {
+const SignWithOAuth = ({ title }: { title: string }): React.ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -21,8 +21,8 @@ const SignWithGoogle = ({ title }: { title: string }): React.ReactElement => {
     [title],
   );
 
-  const onGoogleSign = (): void => {
-    openGoogleAuthPage();
+  const onOAuthSign = (): void => {
+    openOAuthPage(title);
   };
 
   useEffect(() => {
@@ -33,7 +33,9 @@ const SignWithGoogle = ({ title }: { title: string }): React.ReactElement => {
     };
   }, [onStorageEvent]);
 
-  return <ButtonOutline text={title + ' with Google'} onClick={onGoogleSign} />;
+  return (
+    <ButtonOutline text={'Continue with ' + title} onClick={onOAuthSign} />
+  );
 };
 
-export { SignWithGoogle };
+export { SignWithOAuth };

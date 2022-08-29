@@ -70,6 +70,10 @@
   }
 }
 
+.MuiAlert-standard {
+  margin-bottom: 10px;
+}
+
 .MuiTabs-root {
   .MuiTabs-scroller {
     @include landing-page-margin;
@@ -83,4 +87,8 @@
       text-transform: none;
     }
   }
+}
+
+.MuiAlert-message {
+  font-size: 1.2rem;
 }

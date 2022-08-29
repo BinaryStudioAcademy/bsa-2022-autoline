@@ -33,9 +33,7 @@ const BMWiX3: ModelResponseDto = {
   name: 'iX3',
   yearStart: 2018,
   yearEnd: null,
-  photoUrls: [
-    'https://motor.ru/imgs/2022/03/20/12/5313126/62c12b1ca772092990d810337f5897ac99e44c7b.jpg',
-  ],
+  photoUrls: ['https://i.infocar.ua/i/2/6275/119269/1024x.jpg'],
   brand: {
     name: 'BMW',
     logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg',
@@ -59,9 +57,7 @@ const Mazda3: ModelResponseDto = {
   name: '3',
   yearStart: 2003,
   yearEnd: null,
-  photoUrls: [
-    'https://www.allcarz.ru/wp-content/uploads/2018/11/foto-mazda-3-iv_12.jpg',
-  ],
+  photoUrls: ['https://i.infocar.ua/i/12/5804/1200x800.jpg'],
   brand: {
     name: 'Mazda',
     logoUrl: 'https://www.pngall.com/wp-content/uploads/2/Mazda-PNG-Pic.png',

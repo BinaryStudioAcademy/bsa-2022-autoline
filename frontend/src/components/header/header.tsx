@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { PageContainer } from '@components/common/page-container/page-container';
 import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 
 import styles from './header.module.scss';
@@ -26,20 +27,24 @@ export const Header: React.FC = () => {
 
   return (
     <div className={styles.header}>
-      <div className={styles.container}>
-        <Logo />
-        <Navigate />
-      </div>
-      {user ? (
-        <PrivateElements
-          avatar={user.avatar}
-          notifications={user.notifications}
-          comparisons={user.comparisons}
-          favorites={user.favorites}
-        />
-      ) : (
-        <PublicElements />
-      )}
+      <PageContainer>
+        <div className={styles.headerInner}>
+          <div className={styles.container}>
+            <Logo />
+            <Navigate />
+          </div>
+          {user ? (
+            <PrivateElements
+              avatar={user.avatar}
+              notifications={user.notifications}
+              comparisons={user.comparisons}
+              favorites={user.favorites}
+            />
+          ) : (
+            <PublicElements />
+          )}
+        </div>
+      </PageContainer>
     </div>
   );
 };

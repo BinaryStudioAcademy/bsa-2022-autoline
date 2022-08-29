@@ -13,9 +13,8 @@ const googleStrategy = new GoogleStrategy(
     scope: ['profile', 'email'],
   },
   async (req, accessToken, refreshToken, profile, done) => {
-    let user;
     try {
-      user = await prisma.user.findFirst({
+      let user = await prisma.user.findFirst({
         where: {
           User_Security: {
             google_acc_id: profile.id,

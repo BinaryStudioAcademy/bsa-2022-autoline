@@ -8,14 +8,16 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { TopCarCard } from '@components/top-car-card/top-car-card';
 import { Container } from '@mui/material';
+import { useGetNewCarsQuery } from '@store/queries/new-cars';
 import { clsx } from 'clsx';
 
 import { Header } from './components/components';
-import { newCars } from './mock-new-cars';
 import { topCars } from './mock-top-cars';
 import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {
+  const { data: cars } = useGetNewCarsQuery(4);
+
   return (
     <>
       <Header />
@@ -57,14 +59,15 @@ export const LandingPage = (): React.ReactElement => {
         <div className={styles.secondContainer}>
           <div className={styles.secondContainerHeader}>New Cars</div>
           <div className={styles.secondContainerCards}>
-            {newCars.map((car) => (
-              <NewCarCard
-                type="complectation"
-                isLiked={false}
-                car={car}
-                key={car.id}
-              />
-            ))}
+            {cars &&
+              cars?.map((car) => (
+                <NewCarCard
+                  type={'complectation'}
+                  isLiked={false}
+                  car={car}
+                  key={car.id}
+                />
+              ))}
           </div>
         </div>
         <div className={styles.thirdContainer}>

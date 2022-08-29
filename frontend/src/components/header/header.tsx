@@ -15,7 +15,6 @@ import {
 } from '@mui/material';
 import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 import { useGetUserQuery } from '@store/queries/user/update-user';
-import { store } from '@store/store';
 
 import { DrawerComponent } from '../landing-page/components/drawer/drawer';
 import { PrivateElements } from './private-elements/private-elements';

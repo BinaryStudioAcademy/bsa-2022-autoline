@@ -23,9 +23,9 @@ const MailVerificationSuccess: FC = (): React.ReactElement => {
             <Link to={AppRoute.ROOT}>
               <img className={styles.logo} src={Logo} alt="Autoline" />
             </Link>
-            <h3 className={styles.green}>Verification is successful.</h3>
+            <h3 className={styles.message}>Verification is successful</h3>
             <div className={`${styles.center} ${styles.mgtop}`}>
-              <ButtonFill text="Sign in page" onClick={onClickHandler} />
+              <ButtonFill text="Sign in" onClick={onClickHandler} />
             </div>
           </div>
         </div>

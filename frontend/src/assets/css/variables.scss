@@ -15,9 +15,9 @@
   --font-weight-semibold: 600;
   --font-weight-medium: 500;
   --font-weight-regular: 400;
-  --header-height: 70px;
-  --land-page-margin-md: 40px;
-  --land-page-margin-sm: 20px;
+  --header-height: 10.5vh;
+  --land-page-margin-md: 6rem;
+  --land-page-margin-sm: 2rem;
   --mui-padding-md: 24px;
   --mui-padding-sm: 16px;
   --border-radius-button: 50px;
@@ -31,3 +31,16 @@ $global-sm: 600px;
 $global-md: 900px;
 $global-lg: 1200px;
 $global-xl: 1536px;
+$global-xxl: 1920px;
+$global-3xl: 2304px;
+$global-4xl: 3072px;
+$global-5xl: 4068px;
+
+// height globals
+$global-height-md: 450px;
+$global-height-lg: 650px;
+$global-height-xl: 820px;
+$global-height-xxl: 980px;
+$global-height-3xl: 1100px;
+$global-height-4xl: 1420px;
+$global-height-5xl: 2100px;

@@ -5,14 +5,19 @@ import { AppRoute } from '@common/enums/app/app-route.enum';
 import { CarsCategories } from '@components/cars-categories/cars-categories';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
-// import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { Header } from '@components/header/header';
+import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { TopCarCard } from '@components/top-car-card/top-car-card';
 import { Container } from '@mui/material';
+import { useGetNewCarsQuery } from '@store/queries/new-cars';
+import { clsx } from 'clsx';
 
+import { topCars } from './mock-top-cars';
 import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {
+  const { data: cars } = useGetNewCarsQuery(4);
+
   return (
     <>
       <Header />
@@ -28,19 +33,20 @@ export const LandingPage = (): React.ReactElement => {
               at your price
             </div>
             <div className={styles.firstContainerLeftTextSecondary}>
-              We are the best service to look for cars with the best offers.
-              Here you can buy or sell the car.
+              We are the best service for finding cars for sale.
+              <br />
+              Both new & used. Find the car of your dreams with us!
             </div>
             <div className={styles.firstContainerLeftButtons}>
               <Link to={AppRoute.SIGN_UP}>
                 <ButtonFill
-                  className={styles.buttonFill}
+                  className={clsx(styles.button, styles.buttonFill)}
                   text="Create Account"
                 />
               </Link>
               <Link to={AppRoute.SIGN_IN}>
                 <ButtonOutline
-                  className={styles.buttonOutline}
+                  className={clsx(styles.button, styles.buttonOutline)}
                   text="Sign In"
                 />
               </Link>
@@ -53,10 +59,15 @@ export const LandingPage = (): React.ReactElement => {
         <div className={styles.secondContainer}>
           <div className={styles.secondContainerHeader}>New Cars</div>
           <div className={styles.secondContainerCards}>
-            {/*<NewCarCard />*/}
-            {/*<NewCarCard />*/}
-            {/*<NewCarCard />*/}
-            {/*<NewCarCard />*/}
+            {cars &&
+              cars?.map((car) => (
+                <NewCarCard
+                  type={'complectation'}
+                  isLiked={false}
+                  car={car}
+                  key={car.id}
+                />
+              ))}
           </div>
         </div>
         <div className={styles.thirdContainer}>
@@ -65,18 +76,9 @@ export const LandingPage = (): React.ReactElement => {
         <div className={styles.fourthContainer}>
           <div className={styles.fourthContainerHeader}>Top Autoria</div>
           <div className={styles.fourthContainerCards}>
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
-            <TopCarCard />
+            {topCars.map((car) => (
+              <TopCarCard car={car} key={car.id} />
+            ))}
           </div>
         </div>
       </Container>

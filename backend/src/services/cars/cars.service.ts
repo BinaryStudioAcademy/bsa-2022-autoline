@@ -1,3 +1,4 @@
+import { ModelDetailsType, ComplectationDetailsType } from '@autoline/shared';
 import { prisma } from '@data/prisma-client';
 import {
   Region,
@@ -62,4 +63,129 @@ const getUsedOptions = async (): Promise<UsedOptionsType> => {
   };
 };
 
-export { getBrands, getModels, getUsedOptions };
+const getModelDetails = async (modelId: string): Promise<ModelDetailsType> => {
+  const model = await prisma.model.findFirst({
+    where: { id: modelId },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      photo_urls: true,
+      year_start: true,
+      year_end: true,
+      brand: {
+        select: {
+          name: true,
+        },
+      },
+      body_type: {
+        select: {
+          name: true,
+        },
+      },
+      prices_ranges: {
+        select: {
+          price_start: true,
+          price_end: true,
+        },
+      },
+    },
+  });
+
+  return {
+    id: model?.id,
+    modelName: model?.name,
+    description: model?.description,
+    photoUrls: model?.photo_urls,
+    brandName: model?.brand.name,
+    priceStart: model?.prices_ranges[0].price_start,
+    priceEnd: model?.prices_ranges[0].price_end,
+  } as ModelDetailsType;
+};
+
+const getComplectationsDetails = async (
+  complectationIds: string[],
+): Promise<ComplectationDetailsType[]> => {
+  const complectations = await prisma.complectation.findMany({
+    where: {
+      id: {
+        in: complectationIds,
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      engine: true,
+      engine_displacement: true,
+      engine_power: true,
+      color: {
+        select: {
+          name: true,
+        },
+      },
+      transmission_type: {
+        select: {
+          name: true,
+        },
+      },
+      drivetrain: {
+        select: {
+          name: true,
+        },
+      },
+      fuel_type: {
+        select: {
+          name: true,
+        },
+      },
+      prices_ranges: {
+        select: {
+          price_start: true,
+          price_end: true,
+        },
+      },
+      _count: {
+        select: {
+          options: true,
+        },
+      },
+      options: {
+        select: {
+          option: {
+            select: {
+              name: true,
+            },
+          },
+        },
+        where: {
+          important: true,
+        },
+      },
+    },
+  });
+  return complectations.map((complectation) => ({
+    id: complectation.id,
+    name: complectation.name,
+    engine: complectation.engine,
+    engineDisplacement: complectation.engine_displacement.toNumber(),
+    enginePower: complectation.engine_power,
+    colorName: complectation.color.name,
+    transmissionTypeName: complectation.transmission_type.name,
+    drivetrainName: complectation.drivetrain.name,
+    fuelTypeName: complectation.fuel_type.name,
+    priceStart: complectation.prices_ranges[0].price_start,
+    priceEnd: complectation.prices_ranges[0].price_end,
+    optionsCount: complectation._count.options,
+    options: complectation.options.map((option) => ({
+      name: option.option.name,
+    })),
+  }));
+};
+
+export {
+  getBrands,
+  getModels,
+  getUsedOptions,
+  getModelDetails,
+  getComplectationsDetails,
+};

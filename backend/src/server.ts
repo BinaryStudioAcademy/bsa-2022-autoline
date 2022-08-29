@@ -12,6 +12,7 @@ import {
   updateUserRouter,
   viewedCarsRouter,
   locationRouter,
+  newCarsRouter,
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -55,6 +56,7 @@ const routes = [
   activateRouter,
   activateLinkRouter,
   updateUserRouter,
+  newCarsRouter,
   viewedCarsRouter,
   locationRouter,
 ];

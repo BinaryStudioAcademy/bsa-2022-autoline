@@ -15,7 +15,7 @@ interface ProfileFieldsRequestData extends UserFields {
   repeatNewPassword: string;
 }
 
-interface ProfileFieldsResponseData extends UserFields {}
+type ProfileFieldsResponseData = UserFields;
 
 export {
   type UserFields,

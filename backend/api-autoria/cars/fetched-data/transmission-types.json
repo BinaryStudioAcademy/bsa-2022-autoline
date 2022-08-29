@@ -1,0 +1,7 @@
+[
+  { "name": "Manual / Mechanical", "value": 1 },
+  { "name": "Automatic", "value": 2 },
+  { "name": "Tiptronic", "value": 3 },
+  { "name": "Robot", "value": 4 },
+  { "name": "Continuously variable transmission (CVT)", "value": 5 }
+]

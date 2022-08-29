@@ -1,0 +1,15 @@
+[
+  { "name": "Sedan", "value": 3, "parentId": 0 },
+  { "name": "SUV / Crossover", "value": 5, "parentId": 0 },
+  { "name": "Minivan", "value": 8, "parentId": 0 },
+  { "name": "Microvan", "value": 449, "parentId": 0 },
+  { "name": "Hatchback", "value": 4, "parentId": 0 },
+  { "name": "Universal", "value": 2, "parentId": 0 },
+  { "name": "Coupe", "value": 6, "parentId": 0 },
+  { "name": "Convertible", "value": 7, "parentId": 0 },
+  { "name": "Pickup", "value": 9, "parentId": 0 },
+  { "name": "Liftback", "value": 307, "parentId": 0 },
+  { "name": "Fastback", "value": 448, "parentId": 0 },
+  { "name": "Limousine", "value": 252, "parentId": 0 },
+  { "name": "Roadster", "value": 315, "parentId": 0 }
+]

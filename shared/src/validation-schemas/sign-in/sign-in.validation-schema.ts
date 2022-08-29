@@ -5,11 +5,7 @@ const signInSchema = Yup.object().shape({
     .required('Email is required')
     .min(4, 'Email must be at least 4 characters')
     .max(70, 'Full name must not exceed 70 characters')
-    .email('Email is invalid')
-    .matches(
-      /^[\w-]+(\.[\w-]+)*@[A-Za-z0-9]+(-[A-Za-z0-9]+)*\.[A-Za-z]+$/,
-      'Email is invalid',
-    ),
+    .email('Email is invalid'),
   password: Yup.string()
     .required('Password is required')
     .min(8, 'Password must be at least 8 characters')

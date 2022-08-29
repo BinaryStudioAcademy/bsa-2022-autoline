@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app-route.enum';
-import { DefaultElements } from '@components/header/default-elements/default-elements';
+import { UnauthorisedElements } from '@components/header/unauthorised-elements/unauthorised-elements';
 import {
   AppBar,
   Tab,
@@ -74,7 +74,7 @@ export const Header = (): React.ReactElement => {
                   favorites={user.favorites}
                 />
               ) : (
-                <DefaultElements />
+                <UnauthorisedElements />
               )}
             </>
           )}

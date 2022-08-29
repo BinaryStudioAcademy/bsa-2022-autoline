@@ -44,4 +44,6 @@ authRouter.get(
 );
 authRouter.post(`${PATH}/local/reset-password`, authController.resetPassword);
 
+authRouter.post(`${PATH}/refreshToken`, authController.refreshToken);
+
 export { authRouter };

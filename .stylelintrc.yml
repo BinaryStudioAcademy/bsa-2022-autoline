@@ -10,6 +10,7 @@ rules:
   color-hex-length: long
   declaration-no-important: true
   max-nesting-depth: 4
+  max-empty-lines: 2
   no-descending-specificity: true
   at-rule-no-unknown: null
   scss/at-rule-no-unknown: true

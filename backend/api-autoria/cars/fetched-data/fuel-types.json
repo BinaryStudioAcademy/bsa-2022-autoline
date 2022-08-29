@@ -1,0 +1,11 @@
+[
+  { "name": "Gasoline", "value": 1 },
+  { "name": "Diesel", "value": 2 },
+  { "name": "Gas", "value": 3 },
+  { "name": "Gas / Petrol", "value": 4 },
+  { "name": "Hybrid", "value": 5 },
+  { "name": "Electricity", "value": 6 },
+  { "name": "Other", "value": 7 },
+  { "name": "Methane gas", "value": 8 },
+  { "name": "Propane-butane gas", "value": 9 }
+]

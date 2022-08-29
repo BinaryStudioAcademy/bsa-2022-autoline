@@ -1,10 +1,10 @@
 import { ReactElement, useState, ChangeEvent } from 'react';
 
+import { PageContainer } from '@components/common/page-container/page-container';
 import { InputField } from '@components/common/input-field/input-field';
 import { Title } from '@components/common/title/title';
 import { Header } from '@components/header/header';
 import { useDebounce } from '@hooks/common/hook';
-import Container from '@mui/material/Container';
 
 import { UsersListContainer } from './users/users-list-container';
 
@@ -21,7 +21,7 @@ export const Administration = (): ReactElement => {
   return (
     <>
       <Header />
-      <Container>
+      <PageContainer>
         <Title element="h3">Admin panel</Title>
         <h2>Users</h2>
         <InputField
@@ -32,7 +32,7 @@ export const Administration = (): ReactElement => {
           onChange={handleChangeSearchByName}
         />
         <UsersListContainer searchName={debouncedSearchName} />
-      </Container>
+      </PageContainer>
     </>
   );
 };

@@ -90,12 +90,12 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
         >
           <HeartIcon />
         </button>
-        <img
-          className={styles.button}
-          src={compare}
-          alt="compare button"
+        <button
+          className={clsx(styles.button, styles.iconButton)}
           onClick={handleCompare}
-        />
+        >
+          <img src={compare} alt="compare button" />
+        </button>
       </div>
       <img src={photoUrls[0]} alt="car image" className={styles.carImage} />
       <div className={styles.cardFooter}>
@@ -105,7 +105,8 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
         <hr className={styles.verticalLine} />
         <div className={styles.priceBox}>
           <span className={styles.price}>
-            {minPrice} - {maxPrice}
+            {minPrice} -<br />
+            {maxPrice}
           </span>
         </div>
       </div>

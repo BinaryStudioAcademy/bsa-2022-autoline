@@ -9,17 +9,17 @@ import { RangeValueType } from '@common/types/cars/range-item.type';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
 import { SelectField } from '@components/common/select-field/select-field';
-import { filtersToQuery } from '@helpers/filters-to-query';
 import { getValueById } from '@helpers/get-value-by-id';
+import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import { Button, Zoom } from '@mui/material';
 import { setValue } from '@store/car-filter/slice';
 import { API } from '@store/queries/api-routes';
 import {
   useGetBrandsQuery,
-  useGetFilteredCarsQuery,
   useGetModelsOfBrandQuery,
   useGetUsedOptionsQuery,
+  useLazyGetFilteredCarsQuery,
 } from '@store/queries/cars';
 
 import styles from './styles.module.scss';
@@ -42,12 +42,10 @@ const SimpleAutoFilter: FC = () => {
   });
 
   useEffect(() => {
-    setQueryParams(filtersToQuery(filters));
+    setQueryParams(objectToQueryString(filters));
   }, [filters]);
 
-  const { data: filteredCars } = useGetFilteredCarsQuery(queryParams, {
-    skip: !queryParams,
-  });
+  const [search, filteredCars] = useLazyGetFilteredCarsQuery();
 
   // eslint-disable-next-line no-console
   console.log(filteredCars);
@@ -94,7 +92,10 @@ const SimpleAutoFilter: FC = () => {
     Object.values(filters).some((filter) => filter.length >= 1),
   );
 
-  const navigateToSearch = (): void => navigate(API.SEARCH);
+  const doSearch = (): void => {
+    search(queryParams);
+    navigate(API.SEARCH);
+  };
 
   if (isLoading || isOptionsLoading) return <h1>Loading...</h1>;
   return (
@@ -106,7 +107,7 @@ const SimpleAutoFilter: FC = () => {
           label="Regions"
           onChange={handleRegionChange}
           value={getValueById(options.regions, filters.regionId)}
-          options={options?.regions?.map((item: AutoRiaOption) => ({
+          options={options.regions.map((item: AutoRiaOption) => ({
             label: item.name,
             id: item.id,
           }))}
@@ -180,7 +181,7 @@ const SimpleAutoFilter: FC = () => {
       <div className={styles.buttonWrapper}>
         <Zoom in={isButtonVisible}>
           <Button
-            onClick={navigateToSearch}
+            onClick={doSearch}
             disabled={!isButtonVisible}
             className={styles.searchButton}
             variant="contained"

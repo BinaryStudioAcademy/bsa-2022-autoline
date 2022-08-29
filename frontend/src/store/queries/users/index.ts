@@ -9,6 +9,13 @@ export const userApi = api.injectEndpoints({
       query: () => API.USERS,
       providesTags: ['User'],
     }),
+    getUsersByName: builder.query<User[], string>({
+      query: (name) => ({
+        url: `${API.USERS}`,
+        params: { name },
+      }),
+      providesTags: ['User'],
+    }),
     updateUser: builder.mutation<void, Pick<User, 'id'> & Partial<User>>({
       query: ({ id, ...patch }) => ({
         url: `${API.USERS}/${id}`,
@@ -21,4 +28,8 @@ export const userApi = api.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetUsersQuery, useUpdateUserMutation } = userApi;
+export const {
+  useGetUsersQuery,
+  useGetUsersByNameQuery,
+  useUpdateUserMutation,
+} = userApi;

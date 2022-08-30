@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import CrossIcon from '@assets/images/edit-profile/cross.svg';
 import DefaultAvatar from '@assets/images/edit-profile/default-avatar.png';
 import PencilIcon from '@assets/images/edit-profile/pencil.svg';
 import TrashIcon from '@assets/images/edit-profile/trash.svg';
 import { updateUserSchema } from '@autoline/shared';
-import { AppRoute } from '@common/enums/enums';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
@@ -22,6 +20,7 @@ import {
   useUpdateUserProfileMutation,
   useGetUserQuery,
 } from '@store/queries/user/update-user';
+import { logOut } from '@store/root-reducer';
 
 import { SelectFieldForm } from './select-field-form/select-field-form';
 import styles from './styles.module.scss';
@@ -33,7 +32,6 @@ interface EditProfileProps {
 export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
   const { data: user } = useGetUserQuery();
 
-  const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
   const [
     updateUserProfile,
@@ -73,7 +71,10 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
 
   useEffect(() => {
     if (deleteIsSuccess) {
-      navigate(AppRoute.ROOT);
+      logOut();
+      //A temporary solution until logout is implemented
+      localStorage.removeItem('token');
+      location.reload();
     }
   }, [deleteIsSuccess]);
 

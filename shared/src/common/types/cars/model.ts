@@ -31,4 +31,21 @@ type ModelDetailsType = {
   priceEnd: number;
 };
 
-export type { ModelType, ModelDetailsType };
+type CarPreviewType = {
+  id: string;
+  wishlistId: string;
+  modelName: string;
+  pricesRanges: {
+    price_start: number;
+    price_end: number;
+  }[];
+  brand: {
+    name: string;
+    logoUrl: string;
+  };
+  complectationName?: string;
+  photoUrls: string[] | [];
+  description: string;
+};
+
+export type { ModelType, ModelDetailsType, CarPreviewType };

@@ -1,7 +1,4 @@
-import {
-  ComplectationResponseDto,
-  ModelResponseDto,
-} from '@autoline/shared/common/types/types';
+import { CarPreviewType } from '@autoline/shared/common/types/types';
 
 interface CarDataType {
   photo_url: string;
@@ -19,8 +16,7 @@ interface CarDataListPropsType {
 
 interface ExtendedCarCardPropsType {
   type: 'model' | 'complectation';
-  car: ComplectationResponseDto | ModelResponseDto;
-  isLiked?: boolean;
+  car: CarPreviewType;
 }
 
 export type {

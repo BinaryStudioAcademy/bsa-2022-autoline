@@ -32,7 +32,7 @@ export const carsData = [
         'complectations': [
           {
             'name': 'TOURING',
-            'engine': 'Skyactiv-G-2,0 165 к.с. 6AТ',
+            'engine': 'Skyactiv-G-2,0 165 h.p. 6AТ',
             'engine_displacement': 2.0,
             'engine_power': 165,
             'autoria_drivetrain_id': 2,

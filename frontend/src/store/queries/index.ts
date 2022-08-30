@@ -5,7 +5,6 @@ import {
   fetchBaseQuery,
   BaseQueryFn,
   FetchArgs,
-  FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
 import { setCredentials, logOut } from '@store/root-reducer';
 import { Mutex } from 'async-mutex';
@@ -32,7 +31,7 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,
   unknown,
-  FetchBaseQueryError
+  ErrorType
 > = async (args, api, extraOptions) => {
   await mutex.waitForUnlock();
   let result = await baseQuery(args, api, extraOptions);

@@ -6,7 +6,6 @@ export const brands = [
     'eng': 'mazda',
     'marka_id': 47,
     'name': 'Mazda',
-    'slang': 'Мазда',
     'value': 47,
     'logo_url': 'https://www.pngall.com/wp-content/uploads/2/Mazda-PNG-Pic.png',
     'models': [
@@ -18,7 +17,6 @@ export const brands = [
         'model_id': 393,
         'name': '6',
         'parent_id': 0,
-        'slang': '6',
         'value': 393,
         'autoria_body_type_id': 3,
         'year_start': 2002,
@@ -29,7 +27,7 @@ export const brands = [
         ],
         'complectations': [
           {
-            'name': 'TOURING',
+            'name': 'Touring',
             'engine': 'Skyactiv-G-2,0',
             'engine_displacement': 2.0,
             'engine_power': 165,

@@ -1,26 +1,37 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState, ChangeEvent } from 'react';
 
-import { User } from '@autoline/shared/common/types/types';
+import { InputField } from '@components/common/input-field/input-field';
 import { PageContainer } from '@components/common/page-container/page-container';
 import { Title } from '@components/common/title/title';
 import { Header } from '@components/header/header';
-import LinearProgress from '@mui/material/LinearProgress';
-import { useGetUsersQuery } from '@store/queries/users';
+import { useDebounce } from '@hooks/common/hook';
 
-import { UsersList } from './users/users-list';
+import { UsersListContainer } from './users/users-list-container';
 
 export const Administration = (): ReactElement => {
-  const { data: users, isLoading, isSuccess } = useGetUsersQuery();
+  const [searchName, setSearchName] = useState('');
+  const debouncedSearchName = useDebounce(searchName, 500);
+
+  const handleChangeSearchByName = (
+    event: ChangeEvent<HTMLTextAreaElement>,
+  ): void => {
+    setSearchName(event.target.value);
+  };
 
   return (
     <>
       <Header />
       <PageContainer>
         <Title element="h3">Admin panel</Title>
-        {isLoading && <LinearProgress />}
-        {isSuccess && users && <UsersList users={users as User[]} />}
-        {isSuccess && !users && 'There are no users'}
-        {!isLoading && !isSuccess && 'Error getting data from server'}
+        <h2>Users</h2>
+        <InputField
+          name="searchByName"
+          type="text"
+          inputLabel="Search users by name"
+          value={searchName}
+          onChange={handleChangeSearchByName}
+        />
+        <UsersListContainer searchName={debouncedSearchName} />
       </PageContainer>
     </>
   );

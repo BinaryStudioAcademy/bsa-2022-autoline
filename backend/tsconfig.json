@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["src", "api-autoria"],
+  "include": ["src", "api-autoria", "prisma"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "moduleResolution": "node",

@@ -17,6 +17,7 @@ import { BrandDetails } from '@components/advanced-auto-filter/brand-details/bra
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
+import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
 import { getValueById } from '@helpers/get-value-by-id';
 import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
@@ -51,6 +52,10 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
 
   useEffect(() => {
     setQueryParams(objectToQueryString(filters));
+
+    if (isFiltersEmpty(filters)) {
+      search([], true);
+    }
   }, [filters]);
 
   const [search, filteredCars] = useLazyGetFilteredCarsQuery();

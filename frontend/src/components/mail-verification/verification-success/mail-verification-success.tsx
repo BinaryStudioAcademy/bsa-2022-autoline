@@ -1,8 +1,9 @@
 import { FC } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 
 import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app';
+import { StorageKey } from '@common/enums/enums';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import Container from '@mui/material/Container';
 
@@ -14,6 +15,13 @@ const MailVerificationSuccess: FC = (): React.ReactElement => {
   const onClickHandler = (): void => {
     navigate(AppRoute.SIGN_IN);
   };
+  const isLinkSent = localStorage.getItem(StorageKey.VERIFICATION_LINK);
+
+  if (isLinkSent !== 'sent') {
+    return (
+      <Navigate to={AppRoute.SIGN_IN} replace state={{ from: location }} />
+    );
+  }
 
   return (
     <div className={styles.bgImage}>

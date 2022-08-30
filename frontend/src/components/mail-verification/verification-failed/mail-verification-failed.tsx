@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate, useLocation } from 'react-router-dom';
 
 import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app';
@@ -15,15 +15,10 @@ import styles from './styles.module.scss';
 import { emailSchema } from './validation-schema';
 
 const MailVerificationFailed: FC = (): React.ReactElement => {
-  const [getLink] = useRequestLinkMutation();
+  const [getLink, { isSuccess }] = useRequestLinkMutation();
   const navigate = useNavigate();
-
   const isLinkSent = localStorage.getItem(StorageKey.VERIFICATION_LINK);
-  if (isLinkSent !== 'sent') {
-    navigate(AppRoute.NOT_FOUND);
-  } else {
-    localStorage.removeItem(StorageKey.VERIFICATION_LINK);
-  }
+
   const { control, errors, handleSubmit } = useAppForm<EmailRequestData>({
     defaultValues: { email: '' },
     validationSchema: emailSchema,
@@ -31,8 +26,18 @@ const MailVerificationFailed: FC = (): React.ReactElement => {
 
   const handleGetLink = async ({ email }: EmailRequestData): Promise<void> => {
     await getLink(email);
+    if (isSuccess) {
+      localStorage.setItem(StorageKey.VERIFICATION_LINK, 'sent');
+    }
     navigate(AppRoute.SIGN_IN);
   };
+  const location = useLocation();
+
+  if (isLinkSent !== 'sent') {
+    return (
+      <Navigate to={AppRoute.SIGN_IN} replace state={{ from: location }} />
+    );
+  }
 
   return (
     <div className={styles.bgImage}>
@@ -42,7 +47,7 @@ const MailVerificationFailed: FC = (): React.ReactElement => {
             <Link to={AppRoute.ROOT}>
               <img className={styles.logo} src={Logo} alt="Autoline" />
             </Link>
-            <h3 className={styles.red}> Verification is failed.</h3>
+            <h3 className={styles.red}> Verification is failed</h3>
             <p className={styles.message}>
               To request the new verification link, please enter your email and
               click the button below

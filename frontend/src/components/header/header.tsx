@@ -35,13 +35,24 @@ export const Header = (): React.ReactElement => {
     setWishlistCount(wishlist.models.length + wishlist.complectations.length);
   }, [wishlist]);
 
-  const { data } = useGetUserQuery();
+  const { data: user } = useGetUserQuery();
 
-  const user = {
-    favorites: wishlistCount,
-    comparisons: 5,
-    notifications: 7,
-    ...data,
+  const reminders = {
+    favorites: {
+      label: 'Favorites',
+      linkTo: AppRoute.PERSONAL,
+      count: wishlistCount,
+    },
+    notifications: {
+      label: 'Notifications',
+      linkTo: '#',
+      count: 7,
+    },
+    comparisons: {
+      label: 'Comparisons',
+      linkTo: '#',
+      count: 5,
+    },
   };
 
   const userMenu = [
@@ -72,7 +83,10 @@ export const Header = (): React.ReactElement => {
             <img className={styles.logo} src={Logo} alt="Autoline" />
           </Link>
           {isMatchSm ? (
-            <DrawerComponent userMenu={userToken ? userMenu : undefined} />
+            <DrawerComponent
+              userMenu={userToken ? userMenu : undefined}
+              reminders={userToken ? reminders : undefined}
+            />
           ) : (
             <>
               <Tabs
@@ -84,12 +98,10 @@ export const Header = (): React.ReactElement => {
                 <Tab label="New Cars" className={styles.navLink} />
                 <Tab label="About us" className={styles.navLink} />
               </Tabs>
-              {userToken ? (
+              {userToken && user ? (
                 <PrivateElements
                   avatar={user.photoUrl}
-                  notifications={user.notifications}
-                  comparisons={user.comparisons}
-                  favorites={user.favorites}
+                  reminders={reminders}
                   setOpenSettings={setOpenSettings}
                 />
               ) : (

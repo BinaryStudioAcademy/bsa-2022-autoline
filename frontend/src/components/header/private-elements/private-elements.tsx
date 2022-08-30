@@ -16,9 +16,7 @@ interface PrivateComponentProps extends RemindersProps {
 }
 
 export const PrivateElements: React.FC<PrivateComponentProps> = ({
-  favorites,
-  notifications,
-  comparisons,
+  reminders,
   avatar,
   setOpenSettings,
 }) => {
@@ -34,11 +32,7 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
 
   return (
     <div className={styles.information}>
-      <Reminders
-        favorites={favorites}
-        comparisons={comparisons}
-        notifications={notifications}
-      />
+      <Reminders reminders={reminders} />
       <IconButton
         id="basic-button"
         className={styles.avatarCover}
@@ -51,7 +45,7 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
           className={styles.avatar}
           src={avatar || DefaultAvatar}
           alt="avatar"
-          sx={{ width: 35, height: 35, ml: 2 }}
+          sx={{ width: 35, height: 35 }}
         />
         {open ? (
           <ArrowDropUpIcon color="primary" />

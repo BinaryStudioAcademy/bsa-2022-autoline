@@ -98,3 +98,10 @@
 .MuiAlert-message {
   font-size: 1.2rem;
 }
+
+.MuiList-root {
+  .MuiListItemButton-root {
+    display: flex;
+    justify-content: center;
+  }
+}

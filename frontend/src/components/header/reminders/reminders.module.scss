@@ -1,5 +1,8 @@
-.reminder {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
+.row {
+  display: flex;
+  flex-direction: row;
+
+  a {
+    width: 40px;
+  }
 }

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+import {
+  Reminders,
+  RemindersProps,
+} from '@components/header/reminders/reminders';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   Divider,
@@ -11,7 +15,7 @@ import {
   ListItemText,
 } from '@mui/material';
 
-interface DrawerComponentProps {
+interface DrawerComponentProps extends RemindersProps {
   userMenu?: Array<MenuItem>;
 }
 
@@ -24,6 +28,7 @@ const pages = ['Used Cars', 'New Cars', 'About Us'];
 
 export const DrawerComponent: React.FC<DrawerComponentProps> = ({
   userMenu,
+  reminders,
 }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -51,6 +56,8 @@ export const DrawerComponent: React.FC<DrawerComponentProps> = ({
               </ListItemIcon>
             </ListItemButton>
           ))}
+          <Divider />
+          {reminders && <Reminders reminders={reminders} needRow={false} />}
           <Divider />
           {userMenu &&
             userMenu.map((menuItem, index) => (

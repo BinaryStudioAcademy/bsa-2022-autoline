@@ -6,7 +6,6 @@ export const carsData = [
     'eng': 'mazda',
     'marka_id': 47,
     'name': 'Mazda',
-    'slang': 'Мазда',
     'value': 47,
     'logo_url': 'https://www.pngall.com/wp-content/uploads/2/Mazda-PNG-Pic.png',
     'models': [
@@ -20,7 +19,6 @@ export const carsData = [
         'description':
           'The Mazda 6 is a good midsize car. It boasts adept handling, responsive steering, and two peppy four-cylinder engine options. It also has an upscale cabin and comes with an abundance of safety tech and infotainment features.',
         'parent_id': 0,
-        'slang': '6',
         'value': 393,
         'autoria_body_type_id': 3,
         'year_start': 2002,
@@ -76,7 +74,6 @@ export const carsData = [
     'eng': 'nissan',
     'marka_id': 55,
     'name': 'Nissan',
-    'slang': 'Ниссан',
     'value': 55,
     'logo_url':
       'https://upload.wikimedia.org/wikipedia/commons/8/8c/Nissan_logo.png',
@@ -91,7 +88,6 @@ export const carsData = [
         'description':
           'The Nissan X-Trail is a compact crossover SUV (C-segment) produced by the Japanese automaker Nissan since 2000. It was one of Nissans first crossover SUVs and was released about the same time as several other companies car-based crossovers.',
         'parent_id': 0,
-        'slang': 'Х-Трейл',
         'value': 507,
         'autoria_body_type_id': 5,
         'year_start': 2001,
@@ -144,7 +140,6 @@ export const carsData = [
     'eng': 'BMW',
     'marka_id': 55,
     'name': 'BMW',
-    'slang': 'X3',
     'value': 55,
     'logo_url': 'https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg',
     'models': [
@@ -158,7 +153,6 @@ export const carsData = [
         'description':
           'The BMW iX3 is a battery electric compact luxury crossover SUV manufactured by BMW. It was presented at the 2018 Beijing Motor Show in April as the battery electric version of the BMW X3 (G01). Built on the same platform as the conventional X3 with only subtle changes, it is the third car of the electric-focused BMW i family and the first battery electric BMW SUV.',
         'parent_id': 0,
-        'slang': 'iX3',
         'value': 507,
         'autoria_body_type_id': 5,
         'year_start': 2018,
@@ -209,7 +203,6 @@ export const carsData = [
     'eng': 'mazda',
     'marka_id': 47,
     'name': 'Mazda',
-    'slang': 'Мазда',
     'value': 47,
     'logo_url': 'https://www.pngall.com/wp-content/uploads/2/Mazda-PNG-Pic.png',
     'models': [
@@ -223,7 +216,6 @@ export const carsData = [
         'description':
           'The Mazda3 (known as the Mazda Axela in Japan (first three generations), a combination of "accelerate" and "excellent") is a compact car manufactured by Mazda. It was first introduced in 2003 as a 2004 model, replacing the Familia/323/Protegé in the C-segment.',
         'parent_id': 0,
-        'slang': '3',
         'value': 393,
         'autoria_body_type_id': 3,
         'year_start': 2002,

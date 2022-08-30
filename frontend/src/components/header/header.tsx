@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app-route.enum';
+import { EditProfile } from '@components/edit-profile/edit-profile';
 import { UnauthorisedElements } from '@components/header/unauthorised-elements/unauthorised-elements';
 import { useAppSelector } from '@hooks/hooks';
 import {
@@ -27,7 +28,7 @@ export const Header = (): React.ReactElement => {
   const { data: wishlist = { models: [], complectations: [] } } =
     useGetWishlistsQuery();
   const [wishlistCount, setWishlistCount] = useState(0);
-
+  const [openSettings, setOpenSettings] = useState(false);
   const userToken = useAppSelector((state) => state.auth.token);
 
   useEffect(() => {
@@ -43,6 +44,21 @@ export const Header = (): React.ReactElement => {
     ...data,
   };
 
+  const userMenu = [
+    {
+      label: 'Account',
+    },
+    {
+      label: 'Setting',
+      onClick: (): void => {
+        setOpenSettings(true);
+      },
+    },
+    {
+      label: 'Logout',
+    },
+  ];
+
   return (
     <>
       <AppBar
@@ -56,13 +72,13 @@ export const Header = (): React.ReactElement => {
             <img className={styles.logo} src={Logo} alt="Autoline" />
           </Link>
           {isMatchSm ? (
-            <DrawerComponent />
+            <DrawerComponent userMenu={userToken ? userMenu : undefined} />
           ) : (
             <>
               <Tabs
                 onChange={(e, value): void => setValue(value)}
                 value={value}
-                className={styles.nav}
+                className={styles.navigation}
               >
                 <Tab label="Used Cars" className={styles.navLink} />
                 <Tab label="New Cars" className={styles.navLink} />
@@ -74,11 +90,15 @@ export const Header = (): React.ReactElement => {
                   notifications={user.notifications}
                   comparisons={user.comparisons}
                   favorites={user.favorites}
+                  setOpenSettings={setOpenSettings}
                 />
               ) : (
                 <UnauthorisedElements />
               )}
             </>
+          )}
+          {openSettings && (
+            <EditProfile onClose={(): void => setOpenSettings(false)} />
           )}
         </Toolbar>
       </AppBar>

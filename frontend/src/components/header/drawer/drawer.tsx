@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import {
+  Divider,
   Drawer,
   IconButton,
   List,
@@ -10,9 +11,20 @@ import {
   ListItemText,
 } from '@mui/material';
 
+interface DrawerComponentProps {
+  userMenu?: Array<MenuItem>;
+}
+
+interface MenuItem {
+  label: string;
+  onClick?: () => void;
+}
+
 const pages = ['Used Cars', 'New Cars', 'About Us'];
 
-export const DrawerComponent = (): React.ReactElement => {
+export const DrawerComponent: React.FC<DrawerComponentProps> = ({
+  userMenu,
+}) => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
   return (
@@ -39,6 +51,24 @@ export const DrawerComponent = (): React.ReactElement => {
               </ListItemIcon>
             </ListItemButton>
           ))}
+          <Divider />
+          {userMenu &&
+            userMenu.map((menuItem, index) => (
+              <ListItemButton key={index} onClick={menuItem.onClick}>
+                <ListItemIcon>
+                  <ListItemText
+                    sx={{
+                      color: 'black',
+                      fontWeight: 900,
+                      fontSize: '18px',
+                      textTransform: 'none',
+                    }}
+                  >
+                    {menuItem.label}
+                  </ListItemText>
+                </ListItemIcon>
+              </ListItemButton>
+            ))}
         </List>
       </Drawer>
       <IconButton

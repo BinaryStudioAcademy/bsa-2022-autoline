@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import DefaultAvatar from '@assets/images/header/default-avatar.png';
 import { AppRoute } from '@common/enums/enums';
-import { EditProfile } from '@components/edit-profile/edit-profile';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
@@ -13,6 +12,7 @@ import styles from './private-elements.module.scss';
 
 interface PrivateComponentProps extends RemindersProps {
   avatar: string | undefined | null;
+  setOpenSettings: (state: boolean) => void;
 }
 
 export const PrivateElements: React.FC<PrivateComponentProps> = ({
@@ -20,11 +20,11 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
   notifications,
   comparisons,
   avatar,
+  setOpenSettings,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const [openSettings, setOpenSettings] = useState(false);
 
+  const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
   };
@@ -86,9 +86,6 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
           Logout
         </MenuItem>
       </Menu>
-      {openSettings && (
-        <EditProfile onClose={(): void => setOpenSettings(false)} />
-      )}
     </div>
   );
 };

@@ -1,50 +1,87 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import { PageContainer } from '@components/common/page-container/page-container';
+import Logo from '@assets/images/logo.svg';
+import { AppRoute } from '@common/enums/app/app-route.enum';
+import { UnauthorisedElements } from '@components/header/unauthorised-elements/unauthorised-elements';
+import { useAppSelector } from '@hooks/hooks';
+import {
+  AppBar,
+  Tab,
+  Tabs,
+  Toolbar,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
+import { useGetUserQuery } from '@store/queries/user/update-user';
 
-import styles from './header.module.scss';
-import { Logo } from './logo/logo';
-import { Navigate } from './navigate/navigate';
+import { DrawerComponent } from '../landing-page/components/drawer/drawer';
 import { PrivateElements } from './private-elements/private-elements';
-import { PublicElements } from './public-elements/public-elements';
+import styles from './styles.module.scss';
 
-export const Header: React.FC = () => {
+export const Header = (): React.ReactElement => {
+  const [value, setValue] = useState(0);
+  const theme = useTheme();
+  const isMatchSm = useMediaQuery(theme.breakpoints.down('sm'));
   const { data: wishlist = { models: [], complectations: [] } } =
     useGetWishlistsQuery();
   const [wishlistCount, setWishlistCount] = useState(0);
+
+  const userToken = useAppSelector((state) => state.auth.token);
 
   useEffect(() => {
     setWishlistCount(wishlist.models.length + wishlist.complectations.length);
   }, [wishlist]);
 
+  const { data } = useGetUserQuery();
+
   const user = {
     favorites: wishlistCount,
     comparisons: 5,
     notifications: 7,
-    avatar: undefined,
+    ...data,
   };
 
   return (
-    <div className={styles.header}>
-      <PageContainer>
-        <div className={styles.headerInner}>
-          <div className={styles.container}>
-            <Logo />
-            <Navigate />
-          </div>
-          {user ? (
-            <PrivateElements
-              avatar={user.avatar}
-              notifications={user.notifications}
-              comparisons={user.comparisons}
-              favorites={user.favorites}
-            />
+    <>
+      <AppBar
+        sx={{
+          background: '#ffffff',
+          boxShadow: 0,
+        }}
+      >
+        <Toolbar>
+          <Link to={AppRoute.ROOT}>
+            <img className={styles.logo} src={Logo} alt="Autoline" />
+          </Link>
+          {isMatchSm ? (
+            <DrawerComponent />
           ) : (
-            <PublicElements />
+            <>
+              <Tabs
+                onChange={(e, value): void => setValue(value)}
+                value={value}
+                className={styles.nav}
+              >
+                <Tab label="Used Cars" className={styles.navLink} />
+                <Tab label="New Cars" className={styles.navLink} />
+                <Tab label="About us" className={styles.navLink} />
+              </Tabs>
+              {userToken ? (
+                <PrivateElements
+                  avatar={user.photoUrl}
+                  notifications={user.notifications}
+                  comparisons={user.comparisons}
+                  favorites={user.favorites}
+                />
+              ) : (
+                <UnauthorisedElements />
+              )}
+            </>
           )}
-        </div>
-      </PageContainer>
-    </div>
+        </Toolbar>
+      </AppBar>
+    </>
   );
 };

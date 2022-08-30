@@ -19,12 +19,12 @@ interface UserUpdateInput {
 }
 
 const getUsers = async (
-  req: TypedRequestQuery<Record<string, never>>,
+  req: TypedRequestQuery<{ name: string } | Record<string, never>>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const usersData = await usersService.getUsers();
+    const usersData = await usersService.getUsers(req.query.name || '');
 
     res.json(usersData).status(httpStatus.OK);
   } catch (error) {

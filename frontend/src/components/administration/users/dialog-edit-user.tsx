@@ -66,80 +66,82 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
   };
 
   return (
-    <Dialog open={!!user} onClose={handleClose} fullWidth>
-      <DialogTitle>Edit user</DialogTitle>
-      <DialogContent>
-        <Container>
-          {role && (
-            <FormControl sx={{ m: 1, minWidth: 200 }}>
-              <InputField
-                name="name"
-                type="text"
-                inputLabel="Full name"
-                value={name}
-                onChange={handleChangeName}
-              />
-              <InputField
-                name="email"
-                type="email"
-                inputLabel="e-mail"
-                value={email}
-                onChange={handleChangeEmail}
-              />
-              <InputField
-                name="phone"
-                type="phone"
-                inputLabel="Phone"
-                value={phone}
-                onChange={handleChangePhone}
-              />
-              <InputField
-                name="location"
-                type="text"
-                inputLabel="Location"
-                value={location}
-                onChange={handleChangeLocation}
-              />
-              <SelectField
-                name="Sex"
-                value={String(sex)}
-                required={false}
-                onChange={handleChangeSex}
-              >
-                <MenuItem value="male">male</MenuItem>not_known
-                <MenuItem value="female">female</MenuItem>
-                <MenuItem value="not_known">not known</MenuItem>
-                <MenuItem value="not_appliable">not appliable</MenuItem>
-              </SelectField>
-              <SelectField
-                name="Role"
-                value={String(role)}
-                required={true}
-                onChange={handleChangeRole}
-              >
-                <MenuItem value="admin">admin</MenuItem>
-                <MenuItem value="user">user</MenuItem>
-              </SelectField>
-            </FormControl>
-          )}
-        </Container>
-      </DialogContent>
-      <DialogActions>
-        <ButtonOutline text="Cancel" onClick={handleClose} />
-        <ButtonFill
-          text="Save"
-          onClick={(): void => {
-            handleSubmit(user as User, {
-              name,
-              email,
-              phone,
-              location,
-              sex,
-              role,
-            });
-          }}
-        />
-      </DialogActions>
+    <Dialog open={!!user} onClose={handleClose}>
+      <Container sx={{ 'padding-bottom': 16 }}>
+        <DialogTitle>EDIT USER</DialogTitle>
+        <DialogContent>
+          <Container>
+            {role && (
+              <FormControl sx={{ width: 300 }}>
+                <InputField
+                  name="name"
+                  type="text"
+                  inputLabel="Full name"
+                  value={name}
+                  onChange={handleChangeName}
+                />
+                <InputField
+                  name="email"
+                  type="email"
+                  inputLabel="E-mail"
+                  value={email}
+                  onChange={handleChangeEmail}
+                />
+                <InputField
+                  name="phone"
+                  type="phone"
+                  inputLabel="Phone"
+                  value={phone}
+                  onChange={handleChangePhone}
+                />
+                <InputField
+                  name="location"
+                  type="text"
+                  inputLabel="Location"
+                  value={location}
+                  onChange={handleChangeLocation}
+                />
+                <SelectField
+                  name="Sex"
+                  value={String(sex)}
+                  required={false}
+                  onChange={handleChangeSex}
+                >
+                  <MenuItem value="male">Male</MenuItem>
+                  <MenuItem value="female">Female</MenuItem>
+                  <MenuItem value="not_known">Not known</MenuItem>
+                  <MenuItem value="not_appliable">Not appliable</MenuItem>
+                </SelectField>
+                <SelectField
+                  name="Role"
+                  value={String(role)}
+                  required={true}
+                  onChange={handleChangeRole}
+                >
+                  <MenuItem value="admin">Admin</MenuItem>
+                  <MenuItem value="user">User</MenuItem>
+                </SelectField>
+              </FormControl>
+            )}
+          </Container>
+        </DialogContent>
+        <DialogActions>
+          <ButtonOutline text="Cancel" onClick={handleClose} />
+          <ButtonFill
+            text="Save"
+            onClick={(): void => {
+              handleSubmit(user as User, {
+                name,
+                email,
+                phone,
+                location,
+                sex,
+                role,
+              });
+            }}
+          />
+        </DialogActions>
+      </Container>
     </Dialog>
   );
 };

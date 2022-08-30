@@ -14,9 +14,17 @@ import {
 import { optionsTypes } from '../api-autoria/cars/options-types';
 import { City } from '../api-autoria/city-type';
 import { OptionType } from '../api-autoria/option-type.enum';
-import { AutoriaPlainDataDto } from '../src/dtos/cars/autoria-plain-data.dto';
 import { users } from './seeds/users';
 import { users_security } from './seeds/users-security';
+
+class AutoriaPlainDataDto {
+  name: string;
+  autoria_code: number;
+  constructor(data: { name: string; value: number }) {
+    this.name = data.name;
+    this.autoria_code = data.value;
+  }
+}
 
 const prisma = new PrismaClient();
 

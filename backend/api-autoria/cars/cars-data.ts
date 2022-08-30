@@ -159,9 +159,7 @@ export const carsData = [
         'year_end': null,
         'price_start': 37000,
         'price_end': 43570,
-        'photo_urls': [
-          'https://motor.ru/imgs/2022/03/20/12/5313126/62c12b1ca772092990d810337f5897ac99e44c7b.jpg',
-        ],
+        'photo_urls': ['https://i.infocar.ua/i/12/6275/700x350.jpg'],
         'complectations': [
           {
             'name': 'Origin',

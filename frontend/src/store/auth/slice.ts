@@ -20,7 +20,7 @@ const { reducer, actions } = createSlice({
     setCredentials: (state, action) => {
       const { accessToken, refreshToken } = action.payload;
       state.token = accessToken;
-      state.refresh = refreshToken;
+      if (refreshToken) state.refresh = refreshToken;
     },
     logOut: (state) => {
       state.token = null;

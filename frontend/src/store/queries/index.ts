@@ -1,4 +1,4 @@
-import { ENV } from '@common/enums/app/env.enum';
+import { ENV, StorageKey } from '@common/enums/enums';
 import { RootState } from '@common/types/types';
 import {
   createApi,
@@ -38,14 +38,15 @@ const baseQueryWithReauth: BaseQueryFn<
       {
         url: '/auth/refreshToken',
         method: 'POST',
-        body: { refreshToken: localStorage.getItem('refresh') },
+        body: { refreshToken: (api.getState() as RootState).auth.refresh },
       },
       api,
       extraOptions,
     );
     if (refreshResult.data) {
-      api.dispatch(setCredentials(refreshResult.data));
-      localStorage.setItem('token', refreshResult.data as string);
+      api.dispatch(setCredentials({ accessToken: refreshResult.data }));
+      localStorage.setItem(StorageKey.TOKEN, refreshResult.data as string);
+
       result = await baseQuery(args, api, extraOptions);
     } else {
       api.dispatch(logOut());

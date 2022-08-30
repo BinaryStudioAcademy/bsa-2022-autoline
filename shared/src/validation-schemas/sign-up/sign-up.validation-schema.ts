@@ -5,7 +5,10 @@ const signUpSchema = Yup.object().shape({
   name: Yup.string()
     .required('Full name is required')
     .max(150, 'Full name must not exceed 150 characters')
-    .matches(/^[A-Za-z\s]+$/, 'Full name must contain only latin characters'),
+    .matches(
+      /^([a-zA-Z]+\s)*[a-zA-Z]+$/,
+      'Full name must contain only latin characters',
+    ),
   email: Yup.string()
     .required(UserValidationMessage.EMAIL_REQUIRED)
     .email(UserValidationMessage.INVALID_EMAIL)

@@ -36,11 +36,18 @@ const CompleteSetTableCollapsed: React.FC<CompleteSetPropsType> = (props) => {
     <>
       {rowsHidden > 0 ? (
         <>
-          <Collapse in={open} timeout="auto" collapsedSize="290px">
+          <Collapse in={open} timeout="auto" collapsedSize="215px">
             <CompleteSetTable data={carsDisplayed} className={className} />
           </Collapse>
           <button className={styles.collapseButton} onClick={handleClick}>
-            + {rowsHidden} {open ? <ExpandLess /> : <ExpandMore />}
+            {open ? (
+              <ExpandLess />
+            ) : (
+              <>
+                <span>+ {rowsHidden}</span>
+                <ExpandMore />
+              </>
+            )}
           </button>
         </>
       ) : (

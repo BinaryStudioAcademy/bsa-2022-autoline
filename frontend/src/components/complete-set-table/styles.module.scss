@@ -1,5 +1,4 @@
 .tableRow {
-  min-width: 6rem;
   border-bottom: 0;
 
   &:hover {
@@ -13,13 +12,16 @@
     border-radius: 10px;
 
     .tableRow {
+      height: 35px;
       padding: 0.3rem 0.9rem;
       font-family: var(--primary-font);
+      line-height: 14px;
       border-bottom: 0;
     }
   }
 
   th {
+    height: 35px;
     font-family: var(--primary-font);
   }
 }
@@ -42,7 +44,19 @@
 }
 
 .price {
-  width: 6.25rem;
+  min-width: 6.25rem;
+}
+
+.engineRow {
+  min-width: 150px;
+}
+
+.enginePowerRow {
+  min-width: 70px;
+}
+
+.optionsRow {
+  min-width: 100px;
 }
 
 .pillButton {
@@ -69,6 +83,31 @@
   }
 
   svg {
+    height: 14px;
     font-size: 17px;
+  }
+}
+
+.collapseButton {
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  display: flex;
+  align-items: center;
+  height: 2.2rem;
+  color: var(--blue100);
+  font-weight: 700;
+  font-size: 1rem;
+  font-family: var(--primary-font);
+  background-color: var(--white);
+  border: 1px solid var(--gray100);
+  border-radius: 5px;
+  cursor: pointer;
+  transform: translateY(50%);
+  transition: all 300ms;
+
+  &:hover {
+    border-color: var(--blue100);
+    transition: all 300ms;
   }
 }

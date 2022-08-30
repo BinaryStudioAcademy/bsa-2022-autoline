@@ -22,7 +22,7 @@ interface ViewedCarPrismaDto {
 }
 
 interface ViewedCarResponseDto {
-  id: string;
+  id?: string;
   brand: string;
   model: string;
   complectation: string;

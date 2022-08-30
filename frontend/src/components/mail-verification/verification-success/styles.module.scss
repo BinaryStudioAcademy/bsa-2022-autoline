@@ -6,10 +6,20 @@
 }
 
 .message {
-  // text-align: center;
   color: var(--green);
 }
 
 .mgtop {
   margin-top: 50px;
+}
+
+.logoButton {
+  margin: 0;
+  padding: 0;
+  background-color: var(--white);
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

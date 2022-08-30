@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -59,9 +59,11 @@ export const SignUpForm = (): React.ReactElement => {
     navigate('../sign-in');
   };
 
-  if (isSuccess) {
-    localStorage.setItem(StorageKey.VERIFICATION_LINK, 'sent');
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      localStorage.setItem(StorageKey.VERIFICATION_LINK, 'sent');
+    }
+  }, [isSuccess]);
 
   return (
     <>

@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Link, useNavigate, Navigate, useLocation } from 'react-router-dom';
 
 import Logo from '@assets/images/logo.svg';
+import { emailSchema } from '@autoline/shared/validation-schemas/validation-schemas';
 import { AppRoute } from '@common/enums/app/app';
 import { StorageKey } from '@common/enums/enums';
 import { EmailRequestData } from '@common/types/types';
@@ -12,7 +13,6 @@ import Container from '@mui/material/Container';
 import { useRequestLinkMutation } from '@store/queries/verification-link';
 
 import styles from './styles.module.scss';
-import { emailSchema } from './validation-schema';
 
 const MailVerificationFailed: FC = (): React.ReactElement => {
   const [getLink, { isSuccess }] = useRequestLinkMutation();

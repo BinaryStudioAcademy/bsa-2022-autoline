@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 
 import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app';
@@ -11,10 +11,13 @@ import styles from './styles.module.scss';
 
 const MailVerificationSuccess: FC = (): React.ReactElement => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onClickHandler = (): void => {
     navigate(AppRoute.SIGN_IN);
+    localStorage.removeItem(StorageKey.VERIFICATION_LINK);
   };
+
   const isLinkSent = localStorage.getItem(StorageKey.VERIFICATION_LINK);
 
   if (isLinkSent !== 'sent') {
@@ -28,9 +31,9 @@ const MailVerificationSuccess: FC = (): React.ReactElement => {
       <Container className={styles.wrapper}>
         <div className={styles.wrapperInner}>
           <div className={styles.content}>
-            <Link to={AppRoute.ROOT}>
+            <button className={styles.logoButton} onClick={onClickHandler}>
               <img className={styles.logo} src={Logo} alt="Autoline" />
-            </Link>
+            </button>
             <h3 className={styles.message}>Verification is successful</h3>
             <div className={`${styles.center} ${styles.mgtop}`}>
               <ButtonFill text="Sign in" onClick={onClickHandler} />

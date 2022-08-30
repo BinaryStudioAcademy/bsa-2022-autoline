@@ -73,20 +73,24 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
                   style={{ backgroundColor: car.colorName }}
                 />
               </TableCell>
-              <TableCell className={styles.tableRow}>
+              <TableCell className={clsx(styles.tableRow, styles.motorRow)}>
                 {car.fuelTypeName} {car.engineDisplacement} l.
               </TableCell>
               <TableCell className={styles.tableRow}>
                 {car.transmissionTypeName}
               </TableCell>
-              <TableCell className={styles.tableRow}>{car.engine}</TableCell>
-              <TableCell className={styles.tableRow}>
+              <TableCell className={clsx(styles.tableRow, styles.engineRow)}>
+                {car.engine}
+              </TableCell>
+              <TableCell
+                className={clsx(styles.tableRow, styles.enginePowerRow)}
+              >
                 {car.enginePower} h.p.
               </TableCell>
               <TableCell className={clsx(styles.tableRow, styles.price)}>
                 {formatPrice(car.priceStart)} - {formatPrice(car.priceEnd)}
               </TableCell>
-              <TableCell className={styles.tableRow}>
+              <TableCell className={clsx(styles.tableRow, styles.optionsRow)}>
                 <button className={styles.pillButton}>
                   <OptionsIcon /> <span>{car.optionsCount} options</span>
                 </button>

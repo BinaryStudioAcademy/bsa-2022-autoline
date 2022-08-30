@@ -3,18 +3,18 @@ import { api } from '../index';
 
 interface UserFields {
   sex: string;
-  birthYear: string;
-  location: string;
+  birthYear: string | null;
+  location: string | null;
   name: string;
-  phone: string;
-  email: string;
-  photoUrl: string;
+  phone: string | null;
+  email: string | null;
+  photoUrl: string | null;
 }
 
 export interface ProfileFieldsRequestData extends UserFields {
-  password: string;
-  newPassword: string;
-  repeatNewPassword: string;
+  password: string | null;
+  newPassword: string | null;
+  repeatNewPassword: string | null;
 }
 
 export interface ProfileFieldsResponseData extends UserFields {}

@@ -63,6 +63,9 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
             name: user.name,
             phone: user.phone,
             email: user.email,
+            password: null,
+            newPassword: null,
+            repeatNewPassword: null,
           }
         : {},
       validationSchema: updateUserSchema,
@@ -74,8 +77,16 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
     }
   }, [deleteIsSuccess]);
 
-  const onSubmit: SubmitHandler<ProfileFieldsRequestData> = async (data) =>
-    await updateUserProfile(data);
+  const formattedRequest = (value: string | null): string | null =>
+    value === 'not_appliable' ? null : value;
+
+  const onSubmit: SubmitHandler<ProfileFieldsRequestData> = async (data) => {
+    await updateUserProfile({
+      ...data,
+      birthYear: formattedRequest(data.birthYear),
+      location: formattedRequest(data.location),
+    });
+  };
 
   const handleClickOpenDialog = (): void => {
     setOpenDialog(true);

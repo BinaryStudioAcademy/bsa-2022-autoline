@@ -1,5 +1,6 @@
 @import "./mixins";
 
+
 .MuiInputLabel-root.MuiInputLabel-shrink.Mui-focused,
 .MuiInputLabel-root.MuiInputLabel-shrink.MuiFormLabel-filled {
   color: var(--gray300);
@@ -86,6 +87,10 @@
       font-size: 1.2rem;
       font-family: var(--primary-font);
       text-transform: none;
+
+      @media (max-width: $global-md) {
+        margin: 0;
+      }
     }
   }
 }

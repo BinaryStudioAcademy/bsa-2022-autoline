@@ -4,6 +4,7 @@ import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { SelectField } from '@components/common/select-field/select-field';
+import { Spinner } from '@components/common/spinner/spinner';
 import { getValueById } from '@helpers/get-value-by-id';
 import {
   useGetBrandsQuery,
@@ -47,7 +48,7 @@ const BrandDetails: FC<Props> = ({
     });
   };
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
 
   return (
     <div>

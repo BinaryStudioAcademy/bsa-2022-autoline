@@ -13,7 +13,7 @@ enum FiltersNames {
 enum CheckListsNames {
   COLOR_ID = 'colorId',
   TRANSMISSION_TYPE_ID = 'transmissionTypeId',
-  FUEL_TYPE_ID = 'fueltypeId',
+  FUEL_TYPE_ID = 'fuelTypeId',
   DRIVETRAIN_ID = 'drivetrainId',
   BODY_TYPE_ID = 'bodyTypeId',
 }

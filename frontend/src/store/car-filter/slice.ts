@@ -21,7 +21,7 @@ const initialState: CarFiltersType = {
     bodyTypeId: [],
     colorId: [],
     transmissionTypeId: [],
-    fueltypeId: [],
+    fuelTypeId: [],
     drivetrainId: [],
   },
   brandDetails: [

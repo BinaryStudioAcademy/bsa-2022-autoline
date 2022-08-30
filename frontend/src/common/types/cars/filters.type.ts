@@ -16,7 +16,7 @@ type CheckListsType = {
   bodyTypeId: string[];
   colorId: string[];
   transmissionTypeId: string[];
-  fueltypeId: string[];
+  fuelTypeId: string[];
   drivetrainId: string[];
 };
 

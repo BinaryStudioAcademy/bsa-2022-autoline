@@ -20,6 +20,7 @@ import { BrandDetails } from '@components/advanced-auto-filter/brand-details/bra
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
+import { Spinner } from '@components/common/spinner/spinner';
 import { getValueById } from '@helpers/get-value-by-id';
 import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
@@ -111,7 +112,7 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
 
   const years = useMemo(() => yearsRange(30), []);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
 
   return (
     <div className={styles.container}>
@@ -233,7 +234,7 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
           <CheckboxList
             title="Fuel"
             list={options && options.fuelTypes}
-            checkedList={checkLists.fueltypeId}
+            checkedList={checkLists.fuelTypeId}
             onListCheck={handleCheckboxListChange}
             filterName={CheckListsNames.FUEL_TYPE_ID}
           />

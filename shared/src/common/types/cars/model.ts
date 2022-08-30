@@ -31,7 +31,7 @@ type ModelDetailsType = {
   priceEnd: number;
 };
 
-type CarPreviewType = {
+type CarPreview = {
   id: string;
   wishlistId: string;
   modelName: string;
@@ -48,4 +48,4 @@ type CarPreviewType = {
   description: string;
 };
 
-export type { ModelType, ModelDetailsType, CarPreviewType };
+export type { ModelType, ModelDetailsType, CarPreview };

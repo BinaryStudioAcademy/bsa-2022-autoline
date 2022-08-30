@@ -1,4 +1,4 @@
-import { CarPreviewType } from '../types';
+import { CarPreview } from '../types';
 
 interface WishlistResponseDto {
   wishlistId: string;
@@ -7,8 +7,8 @@ interface WishlistResponseDto {
 }
 
 interface WishlistsResponseDto {
-  models: CarPreviewType[] | [];
-  complectations: CarPreviewType[] | [];
+  models: CarPreview[] | [];
+  complectations: CarPreview[] | [];
 }
 
 type WishlistInput = {

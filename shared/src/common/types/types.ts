@@ -49,7 +49,7 @@ export type {
   SearchResult,
   ModelDetailsType,
   ComplectationDetailsType,
-  CarPreviewType,
+  CarPreview,
 } from './cars/cars';
 
 export {

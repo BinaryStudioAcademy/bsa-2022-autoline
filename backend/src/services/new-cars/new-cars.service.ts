@@ -1,8 +1,8 @@
 import { prisma } from '@data/prisma-client';
 
-import type { CarPreviewType } from '@autoline/shared/common/types/types';
+import type { CarPreview } from '@autoline/shared/common/types/types';
 
-const getNewCars = async (limit: number): Promise<CarPreviewType[]> => {
+const getNewCars = async (limit: number): Promise<CarPreview[]> => {
   const newCars = await prisma.model.findMany({
     take: limit,
     orderBy: [
@@ -37,7 +37,7 @@ const getNewCars = async (limit: number): Promise<CarPreviewType[]> => {
       },
     },
   });
-  const cars: CarPreviewType[] = [];
+  const cars: CarPreview[] = [];
   newCars.map((car) => {
     const data = {
       id: car.id,
@@ -53,7 +53,7 @@ const getNewCars = async (limit: number): Promise<CarPreviewType[]> => {
       },
       pricesRanges: car.prices_ranges,
       description: car.description,
-    } as CarPreviewType;
+    } as CarPreview;
     cars.push(data);
   });
 

@@ -1,7 +1,7 @@
 import { prisma } from '@data/prisma-client';
 
 import type {
-  CarPreviewType,
+  CarPreview,
   WishlistResponseDto,
   WishlistsResponseDto,
 } from '@autoline/shared/common/types/types';
@@ -123,7 +123,7 @@ const getWishlistByUserId = async (
       },
       pricesRanges: wishlist.model?.prices_ranges,
       description: wishlist.model?.description,
-    } as CarPreviewType;
+    } as CarPreview;
 
     return data;
   });
@@ -189,7 +189,7 @@ const getWishlistByUserId = async (
           logoUrl: modelData?.brand.logo_url,
         },
         description: modelData?.description,
-      } as CarPreviewType;
+      } as CarPreview;
 
       return data;
     },

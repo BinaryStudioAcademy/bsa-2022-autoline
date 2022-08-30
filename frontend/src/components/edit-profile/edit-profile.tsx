@@ -134,7 +134,6 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
             <form
               name="editForm"
               onSubmit={handleSubmit(onSubmit)}
-              // onSubmit={() => handleSubmit(onSubmit)}
               className={styles.form}
             >
               <fieldset

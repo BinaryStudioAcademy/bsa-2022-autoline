@@ -53,6 +53,12 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
 
   const { data: options, isLoading } = useGetUsedOptionsQuery();
 
+  const [search, filteredCars] = useLazyGetFilteredCarsQuery();
+
+  const doSearch = (): void => {
+    search(queryParams);
+  };
+
   useEffect(() => {
     setQueryParams(
       objectToQueryString({
@@ -67,12 +73,6 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
       search([], true);
     }
   }, [filters, checkLists, brandDetails]);
-
-  const [search, filteredCars] = useLazyGetFilteredCarsQuery();
-
-  const doSearch = (): void => {
-    search(queryParams);
-  };
 
   useEffect(() => {
     if (filteredCars.data) {

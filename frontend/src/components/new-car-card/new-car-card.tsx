@@ -37,7 +37,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
     },
   } = props;
 
-  const [isLiked, setIsLiked] = useState(wishlistId);
+  const [isLiked, setIsLiked] = useState(Boolean(wishlistId));
 
   const minPrices = pricesRanges.map(
     (price: { price_start: number; price_end: number }) => price.price_start,

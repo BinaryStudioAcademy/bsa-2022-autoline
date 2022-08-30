@@ -8,6 +8,7 @@ import {
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
 import { setCredentials, logOut } from '@store/root-reducer';
+import { Mutex } from 'async-mutex';
 
 export type ErrorType = {
   data: {
@@ -16,6 +17,7 @@ export type ErrorType = {
   status: number;
 };
 
+const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
   baseUrl: ENV.API_PATH,
   prepareHeaders: (headers, { getState }) => {
@@ -32,24 +34,37 @@ const baseQueryWithReauth: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
+  await mutex.waitForUnlock();
   let result = await baseQuery(args, api, extraOptions);
-  if (result.error && result.error.status === 401) {
-    const refreshResult = await baseQuery(
-      {
-        url: '/auth/refreshToken',
-        method: 'POST',
-        body: { refreshToken: (api.getState() as RootState).auth.refresh },
-      },
-      api,
-      extraOptions,
-    );
-    if (refreshResult.data) {
-      api.dispatch(setCredentials({ accessToken: refreshResult.data }));
-      localStorage.setItem(StorageKey.TOKEN, refreshResult.data as string);
 
-      result = await baseQuery(args, api, extraOptions);
+  if (result.error && result.error.status === 401) {
+    if (!mutex.isLocked()) {
+      const release = await mutex.acquire();
+      try {
+        const refreshResult = await baseQuery(
+          {
+            url: '/auth/refreshToken',
+            method: 'POST',
+            body: { refreshToken: (api.getState() as RootState).auth.refresh },
+          },
+          api,
+          extraOptions,
+        );
+
+        if (refreshResult.data) {
+          api.dispatch(setCredentials({ accessToken: refreshResult.data }));
+          localStorage.setItem(StorageKey.TOKEN, refreshResult.data as string);
+
+          result = await baseQuery(args, api, extraOptions);
+        } else {
+          api.dispatch(logOut());
+        }
+      } finally {
+        release();
+      }
     } else {
-      api.dispatch(logOut());
+      await mutex.waitForUnlock();
+      result = await baseQuery(args, api, extraOptions);
     }
   }
   return result;

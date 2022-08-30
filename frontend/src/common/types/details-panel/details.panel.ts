@@ -1,6 +1,6 @@
 type DetailsCarPanelPropsType = {
-  complectationId: string;
-  modelId: string;
+  complectationId: string | undefined;
+  modelId: string | undefined;
 };
 
 export type { DetailsCarPanelPropsType };

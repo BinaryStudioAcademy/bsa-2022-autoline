@@ -3,14 +3,16 @@ import {
   ModelReturnedData,
   ComplectationReturnedData,
 } from '@autoline/shared/common/types/types';
-import { ENV } from '@common/enums/app/env.enum';
 import { DetailsCarPanelPropsType } from '@common/types/types';
 
 import { api } from './index';
 
+const EXCHANGE_RATE_API =
+  'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5';
+
 export const detailsPanelApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getComplectations: builder.query<
+    getComplectationsForPanel: builder.query<
       ModelReturnedData | ComplectationReturnedData,
       DetailsCarPanelPropsType
     >({
@@ -22,8 +24,7 @@ export const detailsPanelApi = api.injectEndpoints({
     }),
     getRate: builder.query<string, void>({
       async queryFn() {
-        const response = await fetch(ENV.EXCHANGE_RATE_URL);
-        console.log(ENV.EXCHANGE_RATE_URL);
+        const response = await fetch(EXCHANGE_RATE_API);
         const data = await response.json();
         return { data: data[0].sale };
       },
@@ -31,4 +32,5 @@ export const detailsPanelApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetComplectationsQuery, useGetRateQuery } = detailsPanelApi;
+export const { useGetComplectationsForPanelQuery, useGetRateQuery } =
+  detailsPanelApi;

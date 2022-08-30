@@ -16,8 +16,8 @@ type ComplectationReturnedData = {
   drivetrains: Array<string | undefined>;
   fuelTypes: Array<string | undefined>;
   transmissionTypes: Array<string | undefined>;
-  priceStart: number | undefined;
-  priceEnd: number | undefined;
+  maxPrice: number;
+  minPrice: number;
   wishlist: {
     id: string;
   }[];
@@ -31,8 +31,8 @@ type ModelReturnedData = {
   drivetrains: string[];
   fuelTypes: string[];
   transmissionTypes: string[];
-  priceStart: number | undefined;
-  priceEnd: number | undefined;
+  maxPrice: number;
+  minPrice: number;
   wishlist: {
     id: string;
   }[];

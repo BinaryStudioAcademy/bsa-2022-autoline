@@ -8,7 +8,7 @@ import { DetailsCarPanelPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
 import { convertPrice } from '@helpers/utils/convertPrice';
 import {
-  useGetComplectationsQuery,
+  useGetComplectationsForPanelQuery,
   useGetRateQuery,
 } from '@store/queries/details-panel';
 import {
@@ -21,15 +21,13 @@ import styles from './styles.module.scss';
 
 const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
   complectationId = '',
-  modelId = '2cc33399-effa-4fb8-96da-69e9c02b55c3',
+  modelId = '',
 }) => {
-  const { data, isLoading } = useGetComplectationsQuery({
+  const { data, isLoading } = useGetComplectationsForPanelQuery({
     complectationId,
     modelId,
   });
   const { data: rate } = useGetRateQuery();
-
-  console.log(rate);
   const [createWishlist] = useCreateWishlistMutation();
   const [deleteWishlist] = useDeleteWishlistMutation();
 
@@ -53,16 +51,18 @@ const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
       ? handleDeleteWishlist()
       : handleCreateWishlist();
   };
+
   if (isLoading) return null;
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.price}>{`$ ${data?.priceStart}
-          - ${data?.priceEnd}
+        <div className={styles.price}>{`$ ${data?.minPrice}
+          - ${data?.maxPrice}
           `}</div>
         <div className={styles.priceUah}>
-          {`UAH ${convertPrice(rate as string, data?.priceStart as number)}
-          - ${convertPrice(rate as string, data?.priceEnd as number)}
+          {`UAH ${convertPrice(rate as string, data?.minPrice as number)}
+          - ${convertPrice(rate as string, data?.maxPrice as number)}
           `}
         </div>
         <div className={styles.icons}>

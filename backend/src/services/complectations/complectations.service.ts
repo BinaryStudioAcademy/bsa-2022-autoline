@@ -72,6 +72,13 @@ const getComplectationsById = async (
     return options;
   }, {});
 
+  const complectationMaxPrices = data?.prices_ranges.map(
+    (price: { price_start: number; price_end: number }) => price.price_end,
+  );
+  const complectationMinPrices = data?.prices_ranges.map(
+    (price: { price_start: number; price_end: number }) => price.price_start,
+  );
+
   const complectationData = {
     enginePowers: [data?.engine_power],
     colors: [data?.color.name],
@@ -80,9 +87,15 @@ const getComplectationsById = async (
     fuelTypes: [data?.fuel_type.name],
     transmissionTypes: [data?.transmission_type.name],
     options: { ...options, ...optionsList },
-    priceStart: data?.prices_ranges[0].price_start,
-    priceEnd: data?.prices_ranges[0].price_end,
     wishlist: data?.users_wishlists,
+    maxPrice:
+      complectationMaxPrices !== undefined
+        ? Math.max(...complectationMaxPrices)
+        : 0,
+    minPrice:
+      complectationMinPrices !== undefined
+        ? Math.max(...complectationMinPrices)
+        : 0,
   } as ComplectationReturnedData;
 
   const model = await prisma.model.findUnique({
@@ -147,31 +160,31 @@ const getComplectationsById = async (
         }
       }),
     );
-    options.important = Array.from(importantOptionsList);
+    options.important = [...importantOptionsList];
     switch (optionName) {
       case 'security':
-        options.security = Array.from(optionsList);
+        options.security = [...optionsList];
         break;
       case 'optics':
-        options.optics = Array.from(optionsList);
+        options.optics = [...optionsList];
         break;
       case 'multimedia':
-        options.multimedia = Array.from(optionsList);
+        options.multimedia = [...optionsList];
         break;
       case 'upholstery':
-        options.upholstery = Array.from(optionsList);
+        options.upholstery = [...optionsList];
         break;
       case 'sound':
-        options.sound = Array.from(optionsList);
+        options.sound = [...optionsList];
         break;
       case 'design':
-        options.design = Array.from(optionsList);
+        options.design = [...optionsList];
         break;
       case 'comfort':
-        options.comfort = Array.from(optionsList);
+        options.comfort = [...optionsList];
         break;
       case 'auxiliary':
-        options.auxiliary = Array.from(optionsList);
+        options.auxiliary = [...optionsList];
         break;
       default:
         break;
@@ -194,17 +207,23 @@ const getComplectationsById = async (
     colors.add(complectattion.color.name);
   });
 
+  const modelMaxPrices = model?.prices_ranges.map(
+    (price: { price_start: number; price_end: number }) => price.price_end,
+  );
+  const modelMinPrices = model?.prices_ranges.map(
+    (price: { price_start: number; price_end: number }) => price.price_start,
+  );
   const modelData = {
-    enginePowers: Array.from(enginePowers),
-    colors: Array.from(colors),
-    engineDisplacements: Array.from(engineDisplacements),
-    drivetrains: Array.from(drivetrains),
-    fuelTypes: Array.from(fuelTypes),
-    transmissionTypes: Array.from(transmissionTypes),
+    enginePowers: [...enginePowers],
+    colors: [...colors],
+    engineDisplacements: [...engineDisplacements],
+    drivetrains: [...drivetrains],
+    fuelTypes: [...fuelTypes],
+    transmissionTypes: [...transmissionTypes],
     options: options,
-    priceStart: model?.prices_ranges[0].price_start,
-    priceEnd: model?.prices_ranges[0].price_end,
     wishlist: model?.users_wishlists,
+    maxPrice: modelMaxPrices !== undefined ? Math.max(...modelMaxPrices) : 0,
+    minPrice: modelMinPrices !== undefined ? Math.min(...modelMinPrices) : 0,
   } as ModelReturnedData;
   const result = modelId === '' ? complectationData : modelData;
   return result;

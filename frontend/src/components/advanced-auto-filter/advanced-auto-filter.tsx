@@ -110,8 +110,7 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
   };
 
   const isButtonVisible = Boolean(
-    Object.values(filters).some((filter) => filter.length >= 1) ||
-      isFiltersEmpty(checkLists) ||
+    !isFiltersEmpty({ ...filters, ...checkLists }) ||
       brandDetails.some((detail) => detail.brandId !== ''),
   );
 

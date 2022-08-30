@@ -1,8 +1,8 @@
 import { prisma } from '@data/prisma-client';
 
-import type { ModelResponseDto } from '@autoline/shared/common/types/types';
+import type { CarPreviewType } from '@autoline/shared/common/types/types';
 
-const getNewCars = async (limit: number): Promise<ModelResponseDto[]> => {
+const getNewCars = async (limit: number): Promise<CarPreviewType[]> => {
   const newCars = await prisma.model.findMany({
     take: limit,
     orderBy: [
@@ -23,25 +23,10 @@ const getNewCars = async (limit: number): Promise<ModelResponseDto[]> => {
           logo_url: true,
         },
       },
-      body_type: {
-        select: {
-          name: true,
-        },
-      },
-      manufacture_country: {
-        select: {
-          name: true,
-        },
-      },
       users_wishlists: {
         select: {
           id: true,
           created_at: true,
-        },
-      },
-      complectations: {
-        select: {
-          name: true,
         },
       },
       prices_ranges: {
@@ -52,13 +37,13 @@ const getNewCars = async (limit: number): Promise<ModelResponseDto[]> => {
       },
     },
   });
-  const cars: ModelResponseDto[] = [];
+  const cars: CarPreviewType[] = [];
   newCars.map((car) => {
     const data = {
       id: car.id,
       createdAt: car.users_wishlists[0]?.created_at,
       wishlistId: car.users_wishlists[0]?.id,
-      name: car.name,
+      modelName: car.name,
       yearStart: car.year_start,
       yearEnd: car.year_end,
       photoUrls: car.photo_urls,
@@ -66,11 +51,9 @@ const getNewCars = async (limit: number): Promise<ModelResponseDto[]> => {
         name: car.brand.name,
         logoUrl: car.brand.logo_url,
       },
-      bodyType: car.body_type.name,
-      manufactureCountry: car.manufacture_country.name,
       pricesRanges: car.prices_ranges,
       description: car.description,
-    } as ModelResponseDto;
+    } as CarPreviewType;
     cars.push(data);
   });
 

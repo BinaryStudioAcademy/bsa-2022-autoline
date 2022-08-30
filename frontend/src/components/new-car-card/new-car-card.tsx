@@ -25,11 +25,10 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
 
   const {
     type,
-    isLiked = false,
     car: {
       id: carId,
       wishlistId,
-      name: carName,
+      modelName: carName,
       pricesRanges,
       brand: { name: brandName, logoUrl: brandLogoUrl },
       complectationName,
@@ -37,6 +36,8 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
       description,
     },
   } = props;
+
+  const [isLiked, setIsLiked] = useState<boolean>(wishlistId ? true : false);
 
   const minPrices = pricesRanges.map(
     (price: { price_start: number; price_end: number }) => price.price_start,
@@ -65,6 +66,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
   const handleLikeClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
     isLiked ? handleDeleteWishlist() : handleCreateWishlist();
+    setIsLiked(!isLiked);
   };
 
   let name = `${brandName} ${carName}`;

@@ -12,7 +12,7 @@ const ViewedCars: FC = () => {
   const [params, setParams] = useState({
     userId: '0cdfe5ca-256f-49e4-855f-f438a4fac3c9',
     skip: '0',
-    take: '6',
+    take: '4',
   });
 
   const { data, isLoading } = useGetHistoryOfViwedCarsQuery(params);
@@ -20,7 +20,8 @@ const ViewedCars: FC = () => {
   const getMoreCars = async (): Promise<void> => {
     setParams((state) => ({
       ...state,
-      take: String(+state.take + 30),
+      skip: String(+state.skip + +state.take),
+      take: '30',
     }));
   };
 
@@ -28,7 +29,7 @@ const ViewedCars: FC = () => {
 
   return (
     <article className={styles.ViewedСars}>
-      <h4 className={styles.ViewedСarsTitle}>revised</h4>
+      <h4 className={styles.ViewedСarsTitle}>history of viewed cars</h4>
       {isLoading || data?.count === 0 ? null : (
         <>
           <ViewedCarsGrid carDataList={data as GetViewedCarsResponse} />

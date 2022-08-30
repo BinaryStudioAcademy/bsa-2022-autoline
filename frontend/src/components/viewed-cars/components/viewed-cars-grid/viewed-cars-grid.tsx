@@ -8,8 +8,8 @@ import styles from './style.module.scss';
 const ViewedCarsGrid: FC<ViewedCarDataList> = ({ carDataList }) => {
   return (
     <div className={styles.carGrid}>
-      {carDataList.list.map((item, index) => (
-        <ShortCarCard carData={item} key={index} />
+      {carDataList.list.map((item) => (
+        <ShortCarCard carData={item} key={item.id} />
       ))}
     </div>
   );

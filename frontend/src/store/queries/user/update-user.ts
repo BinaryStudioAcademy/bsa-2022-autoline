@@ -9,6 +9,7 @@ interface UserFields {
   phone: string | null;
   email: string | null;
   photoUrl: string | null;
+  role: string;
 }
 
 export interface ProfileFieldsRequestData extends UserFields {

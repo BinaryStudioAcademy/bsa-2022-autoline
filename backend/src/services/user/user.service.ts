@@ -101,6 +101,7 @@ const getUser = async (id: string): Promise<Partial<UpdateUserReq> | null> => {
     email: user.email,
     location: user.location,
     photoUrl: user.photo_url,
+    role: user.role,
   };
 };
 

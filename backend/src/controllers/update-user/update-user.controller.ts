@@ -19,6 +19,7 @@ export interface UpdateUserReq {
   email: string;
   location?: string | null;
   photoUrl?: string | null;
+  role: string;
 }
 
 const updateUser = async (

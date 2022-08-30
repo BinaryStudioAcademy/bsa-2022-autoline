@@ -21,26 +21,28 @@ const CarsCategories: FC = () => {
 
   return (
     <div className={styles.container}>
-      <Swiper
-        className={styles.swiperWrapper}
-        {...swiperParams}
-        slidesPerView={isMatchMd ? 8 : isMatchSm ? 3 : 5}
-      >
-        <SliderNavButton direction="prev" />
-        <SliderNavButton direction="next" />
+      <div className={styles.arrowWrapper}>
+        <Swiper
+          className={styles.swiperWrapper}
+          {...swiperParams}
+          slidesPerView={isMatchMd ? 8 : isMatchSm ? 3 : 5}
+        >
+          <SliderNavButton direction="prev" />
+          <SliderNavButton direction="next" />
 
-        {brands.map((brand) => (
-          <SwiperSlide key={brand.id}>
-            <Link to="#" className={styles.navLink}>
-              <img
-                className={styles.logo}
-                src={brand.logo_url}
-                alt={brand.name}
-              />
-            </Link>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+          {brands.map((brand) => (
+            <SwiperSlide key={brand.id}>
+              <Link to="#" className={styles.navLink}>
+                <img
+                  className={styles.logo}
+                  src={brand.logo_url}
+                  alt={brand.name}
+                />
+              </Link>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </div>
   );
 };

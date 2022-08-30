@@ -1,8 +1,17 @@
 import { prisma } from '@data/prisma-client';
 import { User } from '@prisma/client';
 
-const getUsers = async (): Promise<User[]> => {
-  return await prisma.user.findMany();
+const getUsers = async (username: string): Promise<User[]> => {
+  if (username) {
+    return prisma.user.findMany({
+      where: {
+        name: {
+          contains: username,
+        },
+      },
+    });
+  }
+  return prisma.user.findMany();
 };
 
 const updateUser = async (

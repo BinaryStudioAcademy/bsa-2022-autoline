@@ -26,7 +26,8 @@
     "db:migrate:prod": "yarn prisma migrate deploy",
     "seed:soft": "prisma db seed",
     "postinstall": "prisma generate",
-    "prestart": "yarn run db:migrate:prod && yarn run seed:soft"
+    "prestart": "yarn run db:migrate:prod && yarn run seed:soft",
+    "seed": "dotenv -e ../.env/backend.env -- yarn run seed:soft"
   },
   "dependencies": {
     "@autoline/shared": "link:../shared/build",

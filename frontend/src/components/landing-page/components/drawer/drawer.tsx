@@ -18,7 +18,7 @@ export const DrawerComp = (): React.ReactElement => {
   return (
     <>
       <Drawer
-        anchor="left"
+        anchor="right"
         open={openDrawer}
         onClose={(): void => setOpenDrawer(false)}
       >

@@ -12,6 +12,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useUpdateUserMutation } from '@store/queries/users';
+import { upperFirst, replace } from 'lodash';
 
 import { DialogEditUser } from './dialog-edit-user';
 
@@ -55,9 +56,11 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
     await updateUser(newUser);
   };
 
+  const getPrettified = (str: string): string =>
+    upperFirst(replace(str, '_', ' '));
+
   return (
     <>
-      <h2>Users</h2>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -85,8 +88,8 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.phone}</TableCell>
                 <TableCell>{user.location}</TableCell>
-                <TableCell>{user.sex}</TableCell>
-                <TableCell>{user.role}</TableCell>
+                <TableCell>{getPrettified(String(user.sex))}</TableCell>
+                <TableCell>{getPrettified(String(user.role))}</TableCell>
                 <TableCell>
                   <Button
                     variant="outlined"

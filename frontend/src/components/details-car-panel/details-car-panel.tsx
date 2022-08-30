@@ -6,7 +6,7 @@ import {
 } from '@autoline/shared/common/types/types';
 import { DetailsCarPanelPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
-import { convertPrice } from '@helpers/utils/convertPrice';
+import { convertPrice } from '@helpers/utils/convert-price';
 import {
   useGetComplectationsForPanelQuery,
   useGetRateQuery,

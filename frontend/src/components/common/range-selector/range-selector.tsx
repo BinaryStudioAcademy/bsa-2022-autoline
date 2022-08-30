@@ -34,14 +34,17 @@ const RangeSelector: FC<Props> = (props) => {
   }, [props.selectedMin, props.selectedMax]);
 
   useEffect(() => {
+    let min = minValue;
+    let max = maxValue;
+
     if (+minValue && +maxValue && +minValue > +maxValue) {
-      setMinValue(maxValue);
-      setMaxValue(minValue);
+      min = maxValue;
+      max = minValue;
     }
 
     props.onChange([
-      { filterName: props.minFilterName, value: minValue },
-      { filterName: props.maxFilterName, value: maxValue },
+      { filterName: props.minFilterName, value: min },
+      { filterName: props.maxFilterName, value: max },
     ]);
   }, [minValue, maxValue]);
 

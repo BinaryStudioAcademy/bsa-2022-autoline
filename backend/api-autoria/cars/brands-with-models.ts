@@ -27,7 +27,7 @@ export const brands = [
         ],
         'complectations': [
           {
-            'name': 'TOURING',
+            'name': 'Touring',
             'engine': 'Skyactiv-G-2,0',
             'engine_displacement': 2.0,
             'engine_power': 165,

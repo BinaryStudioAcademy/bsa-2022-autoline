@@ -1,5 +1,5 @@
 import { api } from '..';
-import { API } from '../api_routes';
+import { API } from '../api-routes';
 
 import type {
   GetViewedCarsRequestDto,

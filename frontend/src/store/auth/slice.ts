@@ -2,12 +2,10 @@ import { StorageKey } from '@common/enums/enums';
 import { createSlice } from '@reduxjs/toolkit';
 
 type AuthState = {
-  user: null;
   token: string | null;
 };
 
 const initialState: AuthState = {
-  user: null,
   token: localStorage.getItem(StorageKey.TOKEN) || null,
 };
 

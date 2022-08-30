@@ -31,7 +31,7 @@ export const carsData = [
         ],
         'complectations': [
           {
-            'name': 'TOURING',
+            'name': 'Touring',
             'engine': 'Skyactiv-G-2,0 165 h.p. 6AТ',
             'engine_displacement': 2.0,
             'engine_power': 165,
@@ -47,7 +47,7 @@ export const carsData = [
             ],
           },
           {
-            'name': 'PREMIUM',
+            'name': 'Premium',
             'engine': 'Skyactiv-G-2,5 194 h.p. 6AТ',
             'engine_displacement': 2.5,
             'engine_power': 194,
@@ -101,7 +101,7 @@ export const carsData = [
         ],
         'complectations': [
           {
-            'name': 'VISIA',
+            'name': 'Visia',
             'engine': '2.0l 144 X-Tronic CVT 4WD',
             'engine_displacement': 2.0,
             'engine_power': 144,
@@ -114,7 +114,7 @@ export const carsData = [
             'options': [217, 459, 621, 137, 441, 604, 611, 579, 605, 560, 539],
           },
           {
-            'name': 'ACENTA',
+            'name': 'Acenta',
             'engine': '1.6l dCi 130 X-Tronic CVT 2WD',
             'engine_displacement': 1.6,
             'engine_power': 130,
@@ -164,7 +164,7 @@ export const carsData = [
         ],
         'complectations': [
           {
-            'name': 'ORIGIN',
+            'name': 'Origin',
             'engine': 'Electro 210kW',
             'engine_displacement': 2.0,
             'engine_power': 286,
@@ -177,7 +177,7 @@ export const carsData = [
             'options': [217, 459, 621, 137, 441, 604, 611, 579, 605, 560, 539],
           },
           {
-            'name': 'TURBO',
+            'name': 'Turbo',
             'engine': 'Electro 210kW',
             'engine_displacement': 2.0,
             'engine_power': 286,
@@ -227,7 +227,7 @@ export const carsData = [
         ],
         'complectations': [
           {
-            'name': 'TOURING',
+            'name': 'Touring',
             'engine': '1.5 SKYACTIV-G 115',
             'engine_displacement': 1.5,
             'engine_power': 115,

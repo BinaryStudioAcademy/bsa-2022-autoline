@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 
-import { FiltersNames } from '@common/enums/cars/filters-names.enum';
+import { FiltersNames } from '@common/enums/car/car-filters-names.enum';
 import { RangeValueType } from '@common/types/cars/range-item.type';
 import { SelectField } from '@components/common/select-field/select-field';
 import { MenuItem, SelectChangeEvent } from '@mui/material';

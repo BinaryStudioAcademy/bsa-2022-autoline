@@ -48,7 +48,7 @@ export const carsData = [
           },
           {
             'name': 'PREMIUM',
-            'engine': 'Skyactiv-G-2,5 194 к.с. 6AТ',
+            'engine': 'Skyactiv-G-2,5 194 h.p. 6AТ',
             'engine_displacement': 2.5,
             'engine_power': 194,
             'autoria_drivetrain_id': 2,

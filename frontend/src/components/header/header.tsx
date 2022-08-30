@@ -16,7 +16,7 @@ import {
 import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 import { useGetUserQuery } from '@store/queries/user/update-user';
 
-import { DrawerComponent } from '../landing-page/components/drawer/drawer';
+import { DrawerComponent } from './drawer/drawer';
 import { PrivateElements } from './private-elements/private-elements';
 import styles from './styles.module.scss';
 

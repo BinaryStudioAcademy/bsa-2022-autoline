@@ -8,13 +8,14 @@ enum FiltersNames {
   ENGINE_POWER_END = 'enginePowerEnd',
   ENGINE_DISPLACEMENT_START = 'engineDisplacementStart',
   ENGINE_DISPLACEMENT_END = 'engineDisplacementEnd',
-  BODY_TYPE_ID = 'bodytypeId',
-  BRAND_ID = 'brandId',
-  MODEL_ID = 'modelId',
+}
+
+enum CheckListsNames {
   COLOR_ID = 'colorId',
   TRANSMISSION_TYPE_ID = 'transmissionTypeId',
   FUEL_TYPE_ID = 'fueltypeId',
   DRIVETRAIN_ID = 'drivetrainId',
+  BODY_TYPE_ID = 'bodyTypeId',
 }
 
-export { FiltersNames };
+export { FiltersNames, CheckListsNames };

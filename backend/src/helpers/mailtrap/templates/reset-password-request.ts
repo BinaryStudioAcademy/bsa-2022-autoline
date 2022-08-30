@@ -19,7 +19,7 @@ export const getMessage = (payload: NodemailerPayload): string => {
 
       <body style="background-color: #ffffff; font-size: 16px;">
         <center>
-          <table align="center" border="0" cellpadding="0" cellspacing="0" style="height:100%; width:600px;">
+          <table align="center" border="0" cellpadding="0" cellspacing="0" style="height:100%; max-width: 600px;">
               <tr>
                 <td align="center" bgcolor="#ffffff" style="padding:30px">
                   <p>

@@ -9,21 +9,22 @@ import styles from './styles.module.scss';
 import type { GetViewedCarsResponse } from '@autoline/shared';
 
 const ViewedCars: FC = () => {
-  const [takeCars, setTakeCars] = useState(6);
-
-  const params = {
+  const [params, setParams] = useState({
     userId: '0cdfe5ca-256f-49e4-855f-f438a4fac3c9',
     skip: '0',
-    take: String(takeCars),
-  };
+    take: '6',
+  });
 
   const { data, isLoading } = useGetHistoryOfViwedCarsQuery(params);
 
   const getMoreCars = async (): Promise<void> => {
-    setTakeCars(takeCars + 30);
+    setParams((state) => ({
+      ...state,
+      take: String(+state.take + 30),
+    }));
   };
 
-  const isAllData = takeCars >= Number(data?.count);
+  const isAllData = +params.skip + +params.take >= Number(data?.count);
 
   return (
     <article className={styles.ViewedСars}>
@@ -33,7 +34,7 @@ const ViewedCars: FC = () => {
           <ViewedCarsGrid carDataList={data as GetViewedCarsResponse} />
           <ButtonFill
             onClick={getMoreCars}
-            text="load more"
+            text="LOAD MORE"
             className={
               isAllData ? styles.VisibilityHidden : styles.ViewedСarsBtn
             }

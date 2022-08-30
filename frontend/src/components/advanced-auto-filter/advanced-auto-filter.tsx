@@ -21,9 +21,10 @@ import { getValueById } from '@helpers/get-value-by-id';
 import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import UTurnRightIcon from '@mui/icons-material/UTurnRight';
+import { Button, Zoom } from '@mui/material';
 import { resetAllFilters, setValue } from '@store/car-filter/slice';
 import {
-  useGetFilteredCarsQuery,
+  useLazyGetFilteredCarsQuery,
   useGetUsedOptionsQuery,
 } from '@store/queries/cars';
 
@@ -52,13 +53,15 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
     setQueryParams(objectToQueryString(filters));
   }, [filters]);
 
-  const { data: filteredCars } = useGetFilteredCarsQuery(queryParams, {
-    skip: !queryParams,
-  });
+  const [search, filteredCars] = useLazyGetFilteredCarsQuery();
+
+  const doSearch = (): void => {
+    search(queryParams);
+  };
 
   useEffect(() => {
-    if (filteredCars) {
-      showFilteredCars(filteredCars);
+    if (filteredCars.data) {
+      showFilteredCars(filteredCars.data);
     }
   }, [filteredCars]);
 
@@ -124,6 +127,10 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
     setBrandDetailsList([initialBrandDetails]);
   };
 
+  const isButtonVisible = Boolean(
+    Object.values(filters).some((filter) => filter.length >= 1),
+  );
+
   const years = useMemo(() => yearsRange(30), []);
 
   if (isLoading) return <h1>Loading...</h1>;
@@ -139,7 +146,7 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
               label="Regions"
               onChange={handleRegionChange}
               value={getValueById(options.regions, filters.regionId)}
-              options={options?.regions?.map((item: AutoRiaOption) => ({
+              options={options.regions.map((item: AutoRiaOption) => ({
                 label: item.name,
                 id: item.id,
               }))}
@@ -259,6 +266,17 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
         <UTurnRightIcon className={styles.resetIcon} />
         Reset All Filters
       </h6>
+      <Zoom in={isButtonVisible} unmountOnExit={true}>
+        <div className={styles.searchButtonWrapper}>
+          <Button
+            onClick={doSearch}
+            className={styles.searchButton}
+            variant="contained"
+          >
+            SEARCH
+          </Button>
+        </div>
+      </Zoom>
     </div>
   );
 };

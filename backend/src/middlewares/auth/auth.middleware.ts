@@ -1,5 +1,5 @@
 import { prisma } from '@data/prisma-client';
-import { initializeStrategies } from '@middlewares/auth/strategies/strageties';
+import { initializeStrategies } from '@middlewares/auth/strategies/strategies';
 import { Prisma, User } from '@prisma/client';
 import { signUpSchema } from '@validation-schemas/validation-schemas';
 import httpStatus from 'http-status-codes';
@@ -86,4 +86,34 @@ const googleMiddleware = async (
   })(req, res, next);
 };
 
-export { localAuth, signUpMiddleware, googleAuth, googleMiddleware };
+const facebookAuth = async (
+  req: TypedRequestQuery<{ token?: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  passport.authenticate('facebook', {
+    session: false,
+    failureRedirect: '/',
+    state: req.query.token?.toString(),
+  })(req, res, next);
+};
+
+const facebookMiddleware = async (
+  req: TypedRequestBody<User>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  passport.authenticate('facebook', {
+    session: false,
+    failureRedirect: '/',
+  })(req, res, next);
+};
+
+export {
+  localAuth,
+  signUpMiddleware,
+  googleAuth,
+  googleMiddleware,
+  facebookAuth,
+  facebookMiddleware,
+};

@@ -99,7 +99,7 @@ const resetPassword = async (
   }
 };
 
-const signGoogle = async (
+const signOAuthProvider = async (
   req: TypedRequestBody<User>,
   res: Response,
   next: NextFunction,
@@ -122,5 +122,5 @@ export {
   resetPasswordRequest,
   resetPasswordCheckToken,
   resetPassword,
-  signGoogle,
+  signOAuthProvider,
 };

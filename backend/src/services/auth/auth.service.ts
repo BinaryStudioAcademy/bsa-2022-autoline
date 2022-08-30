@@ -80,7 +80,7 @@ const requestPasswordReset = async (email: string): Promise<string> => {
     {
       sub: user.id,
     },
-    ENV.JWT.SECRET,
+    ENV.JWT.SECRET as string,
     { expiresIn: '1h' },
   );
 
@@ -98,13 +98,13 @@ const requestPasswordReset = async (email: string): Promise<string> => {
       name: user.name,
       link: link,
     },
-    './templates/reset-password-request.ts',
+    '@helpers/mailtrap/templates/reset-password-request.ts',
   );
   return link;
 };
 
 const resetPasswordCheckToken = async (token: string): Promise<string> => {
-  const payload = jwt.verify(token, ENV.JWT.SECRET) as jwt.JwtPayload;
+  const payload = jwt.verify(token, ENV.JWT.SECRET as string) as jwt.JwtPayload;
   if (!payload.sub) {
     throw new Error('Payload token is invalid');
   }
@@ -164,7 +164,7 @@ const resetPassword = async (id: string, password: string): Promise<void> => {
     {
       name: user.name,
     },
-    './templates/reset-password-confirm.ts',
+    '@helpers/mailtrap/templates/reset-password-confirm.ts',
   );
 };
 

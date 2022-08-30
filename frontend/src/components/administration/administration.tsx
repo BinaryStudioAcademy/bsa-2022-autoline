@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 
 import { User } from '@autoline/shared/common/types/types';
+import { PageContainer } from '@components/common/page-container/page-container';
 import { Title } from '@components/common/title/title';
 import { Header } from '@components/header/header';
-import Container from '@mui/material/Container';
 import LinearProgress from '@mui/material/LinearProgress';
 import { useGetUsersQuery } from '@store/queries/users';
 
@@ -15,13 +15,13 @@ export const Administration = (): ReactElement => {
   return (
     <>
       <Header />
-      <Container>
+      <PageContainer>
         <Title element="h3">Admin panel</Title>
         {isLoading && <LinearProgress />}
         {isSuccess && users && <UsersList users={users as User[]} />}
         {isSuccess && !users && 'There are no users'}
         {!isLoading && !isSuccess && 'Error getting data from server'}
-      </Container>
+      </PageContainer>
     </>
   );
 };

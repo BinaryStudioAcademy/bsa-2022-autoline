@@ -1,0 +1,59 @@
+.popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40rem;
+  padding: 2.5rem;
+  background: var(--white);
+  border-top: 5px solid var(--blue100);
+  transform: translate(-50%, -50%);
+
+  .cross {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    cursor: pointer;
+  }
+
+  .mainTitle {
+    margin: 0 0 2.5rem;
+    font-weight: 800;
+    font-size: 1.5rem;
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 16px;
+  }
+}
+
+.profile {
+  display: flex;
+}
+
+.btnWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 3rem;
+}
+
+.cancel {
+  border: none;
+}
+
+.fieldset {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+
+  button {
+    width: 100%;
+  }
+}
+
+.selectsWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}

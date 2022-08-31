@@ -2,12 +2,9 @@ import { ENV } from '@common/enums/app/app';
 import nodemailer from 'nodemailer';
 
 import { MailActivate } from './constants';
+import * as templateService from './templates/email-template';
 
 const sendLink = async (email: string, token: string): Promise<void> => {
-  const templatePath =
-    '@services/mail-verification/send-activation-link/templates/email-template.ts';
-
-  const templateService = await import(templatePath);
   const transporter = nodemailer.createTransport({
     host: ENV.MAILTRAP.EMAIL_HOST,
     port: Number(ENV.MAIL.PORT_MAIL_SEND_SERVICE),

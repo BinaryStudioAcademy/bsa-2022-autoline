@@ -6,6 +6,7 @@ import {
   WishlistInput,
   DeleteWishlistInput,
 } from '@autoline/shared/common/types/types';
+import { AppRoute } from '@common/enums/enums';
 import { ExtendedCarCardPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
 import { CompareToast } from '@components/compare-toast/compare-toast';
@@ -72,7 +73,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
     event.stopPropagation();
 
     if (!authToken) {
-      navigate('../sign-in');
+      navigate(AppRoute.SIGN_IN);
       return;
     }
 

@@ -10,4 +10,3 @@ export { viewedCarsRouter } from './viewed-cars/viewed.router';
 export { carsRouter } from './cars/cars.router';
 export { locationRouter } from './location/location.router';
 export { newCarsRouter } from './new-cars/new-cars.router';
-export { whereBuyRouter } from './where-buy//where-buy.router';

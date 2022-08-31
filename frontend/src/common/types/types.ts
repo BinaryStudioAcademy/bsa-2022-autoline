@@ -19,7 +19,11 @@ export type {
   CarDataListPropsType,
   ExtendedCarCardPropsType,
 } from './card/card';
+
+export type { DetailsCarPanelPropsType } from './details-panel/details.panel';
+
 export type { CompleteSetPropsType } from './complete-set/complete-set';
+
 export type { TopCarsMockData } from './top-cars-mock/top-cars';
 export type { EmailRequestData } from './mail-verification/email-verification';
 export type {

@@ -1,4 +1,4 @@
-import { ENV, StorageKey } from '@common/enums/enums';
+import { ApiPath, ENV, StorageKey } from '@common/enums/enums';
 import { RootState } from '@common/types/types';
 import {
   createApi,
@@ -42,7 +42,7 @@ const baseQueryWithReauth: BaseQueryFn<
       try {
         const refreshResult = await baseQuery(
           {
-            url: '/auth/refreshToken',
+            url: `${ApiPath.AUTH}/refreshToken`,
             method: 'POST',
             body: { refreshToken: (api.getState() as RootState).auth.refresh },
           },

@@ -28,8 +28,7 @@
     "db:migrate:prod": "cd backend && yarn db:migrate:prod"
   },
   "dependencies": {
-    "@sentry/node": "^7.9.0",
-    "typescript": "^4.8.2"
+    "@sentry/node": "^7.9.0"
   },
   "devDependencies": {
     "@ls-lint/ls-lint": "1.11.2",

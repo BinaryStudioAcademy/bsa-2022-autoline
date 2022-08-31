@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ButtonOutline } from '@components/common/button-outline/button-outline';
+import { ConnectOauth } from '@components/edit-profile/sign-in/oauth/connect-oauth';
 
 import style from './styles.module.scss';
 
@@ -9,8 +9,8 @@ export const SignIn: React.FC = () => {
     <>
       <h2 className={style.title}>Sign In with</h2>
       <div className={style.btnWrapper}>
-        <ButtonOutline text="Sign Up with Google" />
-        <ButtonOutline text="Sign Up with Facebook" />
+        <ConnectOauth title="Google" />
+        <ConnectOauth title="Facebook" />
       </div>
     </>
   );

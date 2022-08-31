@@ -1,18 +1,29 @@
+import { BrandDetailsType } from '@common/types/cars/brand-details.type';
+
 type FiltersType = {
   regionId: string;
   yearStart: string;
   yearEnd: string;
   priceStart: string;
   priceEnd: string;
-  raceStart: string;
-  raceEnd: string;
-  bodytypeId: string[];
-  brandId: string[];
-  modelId: string[];
+  enginePowerStart: string;
+  enginePowerEnd: string;
+  engineDisplacementStart: string;
+  engineDisplacementEnd: string;
+};
+
+type CheckListsType = {
+  bodyTypeId: string[];
   colorId: string[];
   transmissionTypeId: string[];
-  fueltypeId: string[];
+  fuelTypeId: string[];
   drivetrainId: string[];
 };
 
-export type { FiltersType };
+type CarFiltersType = {
+  filters: FiltersType;
+  checkLists: CheckListsType;
+  brandDetails: BrandDetailsType[];
+};
+
+export type { CarFiltersType };

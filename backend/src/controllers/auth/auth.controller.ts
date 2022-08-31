@@ -99,7 +99,7 @@ const resetPassword = async (
   }
 };
 
-const signGoogle = async (
+const signOAuthProvider = async (
   req: TypedRequestBody<User>,
   res: Response,
   next: NextFunction,
@@ -116,11 +116,25 @@ const signGoogle = async (
   }
 };
 
+const refreshToken = async (
+  req: TypedRequestBody<{ refreshToken: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const accessToken = await authService.refreshToken(req.body.refreshToken);
+    res.json(accessToken);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   signupLocal,
   signinLocal,
   resetPasswordRequest,
   resetPasswordCheckToken,
   resetPassword,
-  signGoogle,
+  signOAuthProvider,
+  refreshToken,
 };

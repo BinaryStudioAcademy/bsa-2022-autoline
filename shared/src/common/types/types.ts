@@ -25,15 +25,27 @@ export type {
 export type {
   WishlistResponseDto,
   WishlistsResponseDto,
-  ModelResponseDto,
-  ComplectationResponseDto,
   WishlistInput,
   DeleteWishlistInput,
 } from './preferences/preferences';
 
-export type { User, UserRole, UserSex } from './user';
+export type {
+  User,
+  UserRole,
+  UserSex,
+  UserFields,
+  ProfileFieldsRequestData,
+  ProfileFieldsResponseData,
+} from './user';
 
 export type { ValidationSchema } from './validation/validation';
+
+export type {
+  ModelReturnedData,
+  ComplectationReturnedData,
+  OptionType,
+  ComplectationsInput,
+} from './complectations/complectations';
 
 export type {
   BrandType,
@@ -44,9 +56,13 @@ export type {
   SearchResult,
   ModelDetailsType,
   ComplectationDetailsType,
+  CarPreview,
 } from './cars/cars';
 
-export {
-  type setViewedCarRequest,
-  type setViewedCarResponse,
+export type {
+  SetViewedCarRequestDto,
+  ViewedCarPrismaDto,
+  ViewedCarResponseDto,
+  GetViewedCarsResponse,
+  GetViewedCarsRequestDto,
 } from './viewed-cars/viewed-cars';

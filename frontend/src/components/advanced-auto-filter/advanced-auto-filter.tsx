@@ -1,97 +1,91 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 
 import { AutoRiaOption } from '@autoline/shared/common/types/types';
-import { FiltersNames } from '@common/enums/cars/filters-names.enum';
-import { pricesRange, raceRange, yearsRange } from '@common/enums/cars/ranges';
+import {
+  CheckListsNames,
+  FiltersNames,
+} from '@common/enums/car/car-filters-names.enum';
+import {
+  engineDisplacementRange,
+  enginePowerRange,
+  pricesRange,
+  yearsRange,
+} from '@common/enums/car/ranges';
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { CheckboxListDataType } from '@common/types/cars/checkbox-list-data.type';
 import { RangeValueType } from '@common/types/cars/range-item.type';
+import { AdvancedAutoFilterProps } from '@common/types/types';
 import { BrandDetails } from '@components/advanced-auto-filter/brand-details/brand-details';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
-import { filtersToQuery } from '@helpers/filters-to-query';
+import { Spinner } from '@components/common/spinner/spinner';
+import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
 import { getValueById } from '@helpers/get-value-by-id';
+import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import UTurnRightIcon from '@mui/icons-material/UTurnRight';
-import { resetAllFilters, setValue } from '@store/car-filter/slice';
+import { Button, Zoom } from '@mui/material';
 import {
-  useGetFilteredCarsQuery,
+  addNewBrandDetails,
+  resetAllFilters,
+  setBrandDetailsValue,
+  setCheckListValue,
+  setValue,
+} from '@store/car-filter/slice';
+import {
+  useLazyGetFilteredCarsQuery,
   useGetUsedOptionsQuery,
 } from '@store/queries/cars';
 
 import styles from './styles.module.scss';
 
-const AdvancedAutoFilter: FC = () => {
+const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
+  const { showFilteredCars } = props;
   const dispatch = useAppDispatch();
 
-  const filters = useAppSelector((state) => state.carFilter);
+  const { filters, checkLists, brandDetails } = useAppSelector(
+    (state) => state.carFilter,
+  );
 
   const [queryParams, setQueryParams] = useState<string[][]>();
 
-  const initialBrandDetails = {
-    id: Date.now().toString(),
-    brandId: '',
-    modelId: '',
-  };
-  const [brandDetailsList, setBrandDetailsList] = useState<BrandDetailsType[]>([
-    initialBrandDetails,
-  ]);
-
   const { data: options, isLoading } = useGetUsedOptionsQuery();
 
-  useEffect(() => {
-    setQueryParams(filtersToQuery(filters));
-  }, [filters]);
+  const [search, filteredCars] = useLazyGetFilteredCarsQuery();
 
-  const { data: filteredCars } = useGetFilteredCarsQuery(queryParams, {
-    skip: !queryParams,
-  });
-
-  // eslint-disable-next-line no-console
-  console.log(filteredCars);
-
-  const handleAddNewDetails = (): void => {
-    setBrandDetailsList([
-      ...brandDetailsList,
-      {
-        id: Date.now().toString(),
-        brandId: '',
-        modelId: '',
-      },
-    ]);
+  const doSearch = (): void => {
+    search(queryParams);
   };
 
-  const handleBrandDetailsChange = (data: {
-    id: string;
-    brandId: string;
-    modelId: string;
-  }): void => {
-    const { brandId, modelId } = data;
-    setBrandDetailsList([
-      ...brandDetailsList.filter((item) => item.id !== data.id),
-      {
-        id: data.id,
-        brandId,
-        modelId,
-      },
-    ]);
-    if (!filters.brandId.includes(brandId) && brandId !== '') {
-      dispatch(
-        setValue({
-          filterName: FiltersNames.BRAND_ID,
-          value: [...filters.brandId, data.brandId],
-        }),
-      );
+  useEffect(() => {
+    setQueryParams(
+      objectToQueryString({
+        ...filters,
+        ...checkLists,
+        brandId: brandDetails.map((item) => item.brandId),
+        modelId: brandDetails.map((item) => item.modelId),
+      }),
+    );
+
+    if (isFiltersEmpty(filters)) {
+      search([], true);
     }
-    if (!filters.modelId.includes(modelId) && modelId !== '')
-      dispatch(
-        setValue({
-          filterName: FiltersNames.MODEL_ID,
-          value: [...filters.modelId, data.modelId],
-        }),
-      );
+  }, [filters, checkLists, brandDetails]);
+
+  useEffect(() => {
+    if (filteredCars.data) {
+      showFilteredCars(filteredCars.data);
+    }
+  }, [filteredCars]);
+
+  const handleAddNewDetails = (): void => {
+    dispatch(addNewBrandDetails());
+  };
+
+  const handleBrandDetailsChange = (data: BrandDetailsType): void => {
+    dispatch(setBrandDetailsValue(data));
   };
 
   const handleRegionChange = (data: AutocompleteValueType): void => {
@@ -100,7 +94,9 @@ const AdvancedAutoFilter: FC = () => {
   };
 
   const handleCheckboxListChange = (data: CheckboxListDataType): void => {
-    dispatch(setValue({ filterName: data.filterName, value: data.data }));
+    dispatch(
+      setCheckListValue({ filterName: data.filterName, value: data.data }),
+    );
   };
 
   const handleRangeChange = (range: RangeValueType[]): void => {
@@ -111,12 +107,16 @@ const AdvancedAutoFilter: FC = () => {
 
   const resetFilters = (): void => {
     dispatch(resetAllFilters());
-    setBrandDetailsList([initialBrandDetails]);
   };
+
+  const isButtonVisible = Boolean(
+    !isFiltersEmpty({ ...filters, ...checkLists }) ||
+      brandDetails.some((detail) => detail.brandId !== ''),
+  );
 
   const years = useMemo(() => yearsRange(30), []);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
 
   return (
     <div className={styles.container}>
@@ -129,7 +129,7 @@ const AdvancedAutoFilter: FC = () => {
               label="Regions"
               onChange={handleRegionChange}
               value={getValueById(options.regions, filters.regionId)}
-              options={options?.regions?.map((item: AutoRiaOption) => ({
+              options={options.regions.map((item: AutoRiaOption) => ({
                 label: item.name,
                 id: item.id,
               }))}
@@ -138,10 +138,10 @@ const AdvancedAutoFilter: FC = () => {
           <CheckboxList
             title="Body Type"
             list={options && options.bodyTypes}
-            checkedList={filters.bodytypeId}
+            checkedList={checkLists.bodyTypeId}
             listLimit={4}
             onListCheck={handleCheckboxListChange}
-            filterName={FiltersNames.BODY_TYPE_ID}
+            filterName={CheckListsNames.BODY_TYPE_ID}
           />
 
           <div className={styles.row}>
@@ -150,15 +150,15 @@ const AdvancedAutoFilter: FC = () => {
               + Add
             </h6>
           </div>
-          {brandDetailsList
-            .sort((a, b) => parseInt(a.id) - parseInt(b.id))
-            .map((brandDetail) => (
-              <BrandDetails
-                key={brandDetail.id}
-                id={brandDetail.id}
-                onBrandDetailsChange={handleBrandDetailsChange}
-              />
-            ))}
+          {brandDetails.map((brandDetail) => (
+            <BrandDetails
+              key={brandDetail.id}
+              id={brandDetail.id}
+              onBrandDetailsChange={handleBrandDetailsChange}
+              selectedBrandId={brandDetail.brandId}
+              selectedModelId={brandDetail.modelId}
+            />
+          ))}
 
           <h5 className={styles.blockTitle}>Year</h5>
           <div className={styles.row}>
@@ -188,46 +188,59 @@ const AdvancedAutoFilter: FC = () => {
             />
           </div>
 
-          <h5 className={styles.blockTitle}>Race</h5>
+          <h5 className={styles.blockTitle}>Engine Power</h5>
           <div className={styles.row}>
             <RangeSelector
-              list={raceRange.map((item: number) => item.toString())}
-              minTitle="Km Min"
-              maxTitle="Km Max"
-              minFilterName={FiltersNames.RACE_START}
-              maxFilterName={FiltersNames.RACE_END}
-              selectedMin={filters.raceStart}
-              selectedMax={filters.raceEnd}
+              list={enginePowerRange.map((item: number) => item.toString())}
+              minTitle="hP Min"
+              maxTitle="hP Max"
+              minFilterName={FiltersNames.ENGINE_POWER_START}
+              maxFilterName={FiltersNames.ENGINE_POWER_END}
+              selectedMin={filters.enginePowerStart}
+              selectedMax={filters.enginePowerEnd}
+              onChange={handleRangeChange}
+            />
+          </div>
+          <h5 className={styles.blockTitle}>Engine Displacement</h5>
+          <div className={styles.row}>
+            <RangeSelector
+              list={engineDisplacementRange}
+              minTitle="L Min"
+              maxTitle="L Max"
+              minFilterName={FiltersNames.ENGINE_DISPLACEMENT_START}
+              maxFilterName={FiltersNames.ENGINE_DISPLACEMENT_END}
+              selectedMin={filters.engineDisplacementStart}
+              selectedMax={filters.engineDisplacementEnd}
               onChange={handleRangeChange}
             />
           </div>
           <CheckboxList
             title="Color"
             list={options && options.colors}
-            checkedList={filters.colorId}
+            checkedList={checkLists.colorId}
             onListCheck={handleCheckboxListChange}
-            filterName={FiltersNames.COLOR_ID}
+            filterName={CheckListsNames.COLOR_ID}
           />
           <CheckboxList
             title="Transmission"
             list={options && options.transmissionTypes}
-            checkedList={filters.transmissionTypeId}
+            checkedList={checkLists.transmissionTypeId}
             onListCheck={handleCheckboxListChange}
-            filterName={FiltersNames.TRANSMISSION_TYPE_ID}
+            filterName={CheckListsNames.TRANSMISSION_TYPE_ID}
           />
           <CheckboxList
             title="Drivetrain"
             list={options && options.drivetrains}
-            checkedList={filters.drivetrainId}
+            checkedList={checkLists.drivetrainId}
             onListCheck={handleCheckboxListChange}
-            filterName={FiltersNames.DRIVETRAIN_ID}
+            filterName={CheckListsNames.DRIVETRAIN_ID}
           />
           <CheckboxList
             title="Fuel"
             list={options && options.fuelTypes}
-            checkedList={filters.fueltypeId}
+            checkedList={checkLists.fuelTypeId}
             onListCheck={handleCheckboxListChange}
-            filterName={FiltersNames.FUEL_TYPE_ID}
+            filterName={CheckListsNames.FUEL_TYPE_ID}
           />
         </div>
       </div>
@@ -236,6 +249,17 @@ const AdvancedAutoFilter: FC = () => {
         <UTurnRightIcon className={styles.resetIcon} />
         Reset All Filters
       </h6>
+      <Zoom in={isButtonVisible} unmountOnExit={true}>
+        <div className={styles.searchButtonWrapper}>
+          <Button
+            onClick={doSearch}
+            className={styles.searchButton}
+            variant="contained"
+          >
+            SEARCH
+          </Button>
+        </div>
+      </Zoom>
     </div>
   );
 };

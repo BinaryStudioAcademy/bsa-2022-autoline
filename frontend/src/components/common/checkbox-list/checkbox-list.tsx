@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 
 import { AutoRiaOption } from '@autoline/shared/common/types/cars/options';
-import { FiltersNames } from '@common/enums/cars/filters-names.enum';
+import { CheckListsNames } from '@common/enums/car/car-filters-names.enum';
 import { CheckboxListDataType } from '@common/types/cars/checkbox-list-data.type';
 import { CustomCheckbox, CustomChecked } from '@components/common/icons/icons';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -15,7 +15,7 @@ type Props = {
   checkedList: string[];
   listLimit?: number;
   onListCheck: (data: CheckboxListDataType) => void;
-  filterName: FiltersNames;
+  filterName: CheckListsNames;
 };
 
 const CheckboxList: FC<Props> = ({
@@ -32,7 +32,6 @@ const CheckboxList: FC<Props> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value;
-
     const data = checkedList.includes(value)
       ? checkedList.filter((item) => item !== value)
       : [...checkedList, value];

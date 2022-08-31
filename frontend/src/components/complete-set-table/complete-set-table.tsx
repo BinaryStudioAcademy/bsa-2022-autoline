@@ -1,8 +1,7 @@
-import { useState } from 'react';
-
 import { CarSetOptions } from '@common/enums/enums';
-import { CompleteSetPropsType, CompleteSetDataType } from '@common/types/types';
+import { CompleteSetPropsType } from '@common/types/types';
 import { OptionsIcon } from '@components/common/icons/icons';
+import { formatPrice } from '@helpers/helpers';
 import {
   TableContainer,
   Paper,
@@ -14,12 +13,10 @@ import {
 } from '@mui/material';
 import { clsx } from 'clsx';
 
-import { mockCars } from './mock-cars';
 import styles from './styles.module.scss';
 
 const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
-  const [cars] = useState<CompleteSetDataType[]>(mockCars);
-  const { className, data = cars } = props;
+  const { className, data } = props;
 
   return (
     <TableContainer
@@ -50,7 +47,10 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
               {CarSetOptions.WheelDrive}
             </TableCell>
             <TableCell className={styles.tableTitle}>
-              {CarSetOptions.Race}
+              {CarSetOptions.Engine}
+            </TableCell>
+            <TableCell className={styles.tableTitle}>
+              {CarSetOptions.EnginePower}
             </TableCell>
             <TableCell className={styles.tableTitle}>
               {CarSetOptions.Price}
@@ -66,26 +66,33 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
               <TableCell className={clsx(styles.tableRow, styles.model)}>
                 {car.brand} {car.model}
               </TableCell>
-              <TableCell className={styles.tableRow}>
-                {car.complectation}
-              </TableCell>
+              <TableCell className={styles.tableRow}>{car.name}</TableCell>
               <TableCell className={styles.tableRow}>
                 <div
                   className={styles.colorBox}
-                  style={{ backgroundColor: car.color }}
+                  style={{ backgroundColor: car.colorName }}
                 />
               </TableCell>
-              <TableCell className={styles.tableRow}>{car.motor}</TableCell>
-              <TableCell className={styles.tableRow}>
-                {car.wheelDrive}
+              <TableCell className={clsx(styles.tableRow, styles.motorRow)}>
+                {car.fuelTypeName} {car.engineDisplacement} l.
               </TableCell>
-              <TableCell className={styles.tableRow}>{car.race}</TableCell>
+              <TableCell className={styles.tableRow}>
+                {car.transmissionTypeName}
+              </TableCell>
+              <TableCell className={clsx(styles.tableRow, styles.engineRow)}>
+                {car.engine}
+              </TableCell>
+              <TableCell
+                className={clsx(styles.tableRow, styles.enginePowerRow)}
+              >
+                {car.enginePower} h.p.
+              </TableCell>
               <TableCell className={clsx(styles.tableRow, styles.price)}>
-                {car.price}
+                {formatPrice(car.priceStart)} - {formatPrice(car.priceEnd)}
               </TableCell>
-              <TableCell className={styles.tableRow}>
+              <TableCell className={clsx(styles.tableRow, styles.optionsRow)}>
                 <button className={styles.pillButton}>
-                  <OptionsIcon /> <span>{car.options}</span>
+                  <OptionsIcon /> <span>{car.optionsCount} options</span>
                 </button>
               </TableCell>
             </TableRow>

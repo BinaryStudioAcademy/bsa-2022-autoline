@@ -161,11 +161,23 @@ const getComplectationsDetails = async (
           important: true,
         },
       },
+      model: {
+        select: {
+          name: true,
+          brand: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
     },
   });
   return complectations.map((complectation) => ({
     id: complectation.id,
     name: complectation.name,
+    model: complectation.model.name,
+    brand: complectation.model.brand.name,
     engine: complectation.engine,
     engineDisplacement: complectation.engine_displacement.toNumber(),
     enginePower: complectation.engine_power,

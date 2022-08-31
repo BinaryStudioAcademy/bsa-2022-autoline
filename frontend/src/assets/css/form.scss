@@ -70,6 +70,10 @@
   }
 }
 
+.MuiAlert-standard {
+  margin-bottom: 10px;
+}
+
 .MuiTabs-root {
   .MuiTabs-scroller {
     @include landing-page-margin;
@@ -80,7 +84,12 @@
       padding: 0;
       color: black;
       font-size: 1.2rem;
+      font-family: var(--primary-font);
       text-transform: none;
     }
   }
+}
+
+.MuiAlert-message {
+  font-size: 1.2rem;
 }

@@ -55,9 +55,11 @@ export const LandingPage = (): React.ReactElement => {
                 </Link>
               </div>
             )}
-            <div className={styles.searchWrapper}>
-              {isAuth && <SimpleAutoFilter />}
-            </div>
+            {isAuth && (
+              <div className={styles.searchWrapper}>
+                <SimpleAutoFilter />
+              </div>
+            )}
           </div>
           <div className={styles.firstContainerRight}>
             <img src={Car} className={styles.car}></img>

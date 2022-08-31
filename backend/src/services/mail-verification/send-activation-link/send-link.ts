@@ -1,10 +1,12 @@
+import path from 'path';
+
 import { ENV } from '@common/enums/app/app';
 import nodemailer from 'nodemailer';
 import hbs from 'nodemailer-express-handlebars';
 
 import { MailActivate } from './constants';
 const sendLink = async (email: string, token: string): Promise<void> => {
-  const templatePath = `${__dirname}/templates`;
+  const templatePath = path.join(__dirname, 'templates');
   const transporter = nodemailer.createTransport({
     host: ENV.MAILTRAP.EMAIL_HOST,
     port: Number(ENV.MAIL.PORT_MAIL_SEND_SERVICE),
@@ -17,8 +19,7 @@ const sendLink = async (email: string, token: string): Promise<void> => {
   const handlebarOptions: hbs.NodemailerExpressHandlebarsOptions = {
     viewEngine: {
       extname: '.hbs',
-      layoutsDir: templatePath,
-      defaultLayout: 'email',
+      defaultLayout: false,
       partialsDir: templatePath,
     },
     viewPath: templatePath,

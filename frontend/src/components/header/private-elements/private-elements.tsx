@@ -80,6 +80,9 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
           Settings
         </MenuItem>
         <MenuItem onClick={handleClose} className={styles.userNavLink}>
+          <Link to={AppRoute.ADMINISTRATION}>Administration</Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose} className={styles.userNavLink}>
           Logout
         </MenuItem>
       </Menu>

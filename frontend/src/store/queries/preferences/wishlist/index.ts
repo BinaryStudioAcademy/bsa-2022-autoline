@@ -19,7 +19,7 @@ const wishlistApi = api.injectEndpoints({
         method: 'POST',
         params,
       }),
-      invalidatesTags: ['WishlistCars'],
+      invalidatesTags: ['WishlistCars', 'DetailsPanel'],
     }),
     deleteWishlist: build.mutation<WishlistsResponseDto, DeleteWishlistInput>({
       query: (params) => ({
@@ -27,7 +27,7 @@ const wishlistApi = api.injectEndpoints({
         method: 'DELETE',
         params,
       }),
-      invalidatesTags: ['WishlistCars'],
+      invalidatesTags: ['WishlistCars', 'DetailsPanel'],
     }),
   }),
   overrideExisting: false,

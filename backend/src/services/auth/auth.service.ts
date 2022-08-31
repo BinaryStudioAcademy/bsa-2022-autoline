@@ -7,7 +7,8 @@ import {
   verifyToken,
 } from '@helpers/helpers';
 import { User } from '@prisma/client';
-import { mailSend } from '@services/mail-verification/send.service';
+import { sendLink } from '@services/mail-verification/send-activation-link/send-link';
+import { generateMailToken } from '@services/mail-verification/token.service';
 import { updateMailToken } from '@services/mail-verification/user-data.service/user-security';
 import bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
@@ -21,7 +22,7 @@ const signupLocal = async (
   const { password, ...userData } = user;
   const hashedPassword = await bcryptHash(password);
 
-  const { id: newUserId, email: newUserEmail } = await prisma.user.create({
+  const { id, email } = await prisma.user.create({
     data: {
       ...userData,
       User_Security: {
@@ -36,8 +37,12 @@ const signupLocal = async (
     },
   });
 
-  const token = mailSend(newUserEmail);
-  updateMailToken(newUserId, token);
+  const token = generateMailToken({
+    email,
+    isActivated: false,
+  });
+  sendLink(email, token);
+  await updateMailToken(id, token);
 
   return {
     message: 'User created',

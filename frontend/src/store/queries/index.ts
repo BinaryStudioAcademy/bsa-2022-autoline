@@ -71,6 +71,6 @@ const baseQueryWithReauth: BaseQueryFn<
 
 export const api = createApi({
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['WishlistCars', 'User', 'Cars'],
+  tagTypes: ['WishlistCars', 'User', 'Cars', 'ViewedCars', 'DetailsPanel'],
   endpoints: () => ({}),
 });

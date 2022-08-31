@@ -4,4 +4,5 @@ export const API = {
   WISHLIST: '/wishlist',
   CARS: '/cars',
   SEARCH: '/search',
+  VIEWED_CARS: '/viewed',
 };

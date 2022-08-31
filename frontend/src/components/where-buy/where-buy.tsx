@@ -28,6 +28,12 @@ const WhereToBuy: React.FC = () => {
         <Divider className={styles.divider} />
       </div>
       <WhereToBuyComponent />
+      <div className={styles.dividerDiv}>
+        <Divider className={styles.divider} />
+      </div>
+      <div className={styles.seeAll}>
+        <button className={styles.moreButton}>See All 10</button>
+      </div>
     </div>
   );
 };

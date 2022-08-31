@@ -12,7 +12,9 @@ const WhereToBuyComponent: React.FC = () => {
         </div>
         <div className={styles.description}>
           <span className={styles.carName}>bmw x5 m packet 40d 2015</span>
-          <span className={styles.sellerLink}>auto.ria.com</span>
+          <div className={styles.sellerLink}>
+            <a>auto.ria.com</a>
+          </div>
           <div className={styles.trigger}>
             <div>Auto.ria has been verified by insurance databases</div>
             <div>Auto.ria checked against 15 databases</div>

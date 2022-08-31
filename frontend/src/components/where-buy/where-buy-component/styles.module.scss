@@ -35,9 +35,14 @@
     }
 
     .sellerLink {
+      flex: 1;
       margin-bottom: 5px;
       color: var(--blue100);
       font-size: 14px;
+
+      a {
+        cursor: pointer;
+      }
     }
 
     .trigger {
@@ -125,11 +130,32 @@
     }
 
     .panel {
-      width: 200px;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      width: 93px;
+
+      .rectangle {
+        display: none;
+      }
+
+      .price {
+        font-size: 14px;
+      }
+
+      .buyButton {
+        margin: 0;
+      }
     }
 
     .trigger {
       display: none;
+
+      div {
+        &:nth-child(2) {
+          display: none;
+        }
+      }
     }
   }
 }

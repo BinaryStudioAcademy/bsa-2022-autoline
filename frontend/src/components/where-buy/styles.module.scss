@@ -36,3 +36,22 @@
   border-color: var(--gray300);
   border-radius: 4px;
 }
+
+.seeAll {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.moreButton {
+  color: var(--blue100);
+  font-weight: 700;
+  font-size: 16px;
+  background-color: var(--white);
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -12,12 +12,9 @@ const PersonalPage = (): JSX.Element => {
       <PageContainer>
         <Title element="h3">Personal page</Title>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={9}>
+          <Grid item xs={12}>
             <Wishlist />
             <ViewedCars />
-          </Grid>
-          <Grid item xs={12} md={3}>
-            {/* TODO: Profile info */}
           </Grid>
         </Grid>
       </PageContainer>

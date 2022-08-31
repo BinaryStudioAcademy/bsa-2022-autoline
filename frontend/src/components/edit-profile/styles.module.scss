@@ -4,19 +4,27 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 50rem;
+  width: $global-md;
   padding: 28px 32px 52px;
+  overflow: auto;
   background: var(--white);
   border-top: 5px solid var(--blue100);
   transform: translate(-50%, -50%);
+
+  @media (max-width: $global-md) {
+    top: 2rem;
+    right: 2rem;
+    bottom: 2rem;
+    left: 2rem;
+    width: auto;
+    transform: none;
+  }
 
   @media (max-width: $global-sm) {
     top: 0;
     right: 0;
     left: 0;
-    width: auto;
-    height: auto;
-    transform: none;
+    height: 100%;
 
     .selectsWrapper {
       grid-template-columns: 1fr;

@@ -1,12 +1,13 @@
-import path from 'path';
-
 import { ENV } from '@common/enums/app/app';
 import nodemailer from 'nodemailer';
-import hbs from 'nodemailer-express-handlebars';
 
 import { MailActivate } from './constants';
+
 const sendLink = async (email: string, token: string): Promise<void> => {
-  const templatePath = path.join(__dirname, 'templates');
+  const templatePath =
+    '@services/mail-verification/send-activation-link/templates/email-template.ts';
+
+  const templateService = await import(templatePath);
   const transporter = nodemailer.createTransport({
     host: ENV.MAILTRAP.EMAIL_HOST,
     port: Number(ENV.MAIL.PORT_MAIL_SEND_SERVICE),
@@ -16,23 +17,12 @@ const sendLink = async (email: string, token: string): Promise<void> => {
     },
   });
 
-  const handlebarOptions: hbs.NodemailerExpressHandlebarsOptions = {
-    viewEngine: {
-      extname: '.hbs',
-      defaultLayout: false,
-      partialsDir: templatePath,
-    },
-    viewPath: templatePath,
-    extName: '.hbs',
-  };
-
-  transporter.use('compile', hbs(handlebarOptions));
-
   const options = {
     from: ENV.MAIL.FROM_EMAIL_VALIDATE,
     to: email,
     subject: MailActivate.SUBJECT,
     template: 'email',
+    html: templateService.getMessage(`${MailActivate.ACTIVATE_URL}${token}`),
     context: {
       link: `${MailActivate.ACTIVATE_URL}${token}`,
     },

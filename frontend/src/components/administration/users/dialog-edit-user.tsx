@@ -16,16 +16,16 @@ import styles from './styles.module.scss';
 
 interface DialogEditUserProps {
   user?: User;
-  onClose: () => void;
   onSave: (user: User, newUserData: Partial<Omit<User, 'id'>>) => void;
+  onClose: () => void;
 }
 
 type EditUserRequestData = Partial<User>;
 
 const DialogEditUser: FC<DialogEditUserProps> = (props) => {
-  const { user, onClose, onSave } = props;
+  const { user, onSave, onClose } = props;
 
-  const { control, errors, handleSubmit, setValue, clearErrors } =
+  const { control, errors, handleSubmit, clearErrors, reset } =
     useAppForm<EditUserRequestData>({
       defaultValues: {
         sex: user?.sex || 'not_appliable',
@@ -44,12 +44,7 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
 
   useEffect(() => {
     if (!user) return;
-    setValue('name', user.name);
-    setValue('email', user.email);
-    setValue('phone', user.phone);
-    setValue('location', user.location);
-    setValue('sex', user.sex);
-    setValue('role', user.role);
+    if (reset) reset(user);
   }, [user]);
 
   const onSubmit: SubmitHandler<EditUserRequestData> = (newUserData) => {

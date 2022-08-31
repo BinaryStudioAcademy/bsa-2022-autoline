@@ -14,15 +14,13 @@ import { RedirectAfterSign } from '@components/sign/components/redirect-after-si
 import { Sign } from '@components/sign/sign';
 import { useAppSelector } from '@hooks/hooks';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
-import jwt_decode from 'jwt-decode';
+import { useGetUserQuery } from '@store/queries/user/update-user';
 
 const Routing: FC = () => {
+  const { data: authData } = useGetUserQuery();
+  const isAdmin = authData?.role === 'admin';
+
   const userToken = useAppSelector((state) => state.auth.token);
-  let isAdmin;
-  if (userToken) {
-    const user = jwt_decode(userToken) as { role: string };
-    isAdmin = user?.role === 'admin';
-  }
 
   return (
     <BrowserRouter>
@@ -59,7 +57,7 @@ const Routing: FC = () => {
         <Route element={<ProtectedRoute isAllowed={!!userToken} />}>
           <Route path={AppRoute.ROOT} element={<LandingPage />} />
         </Route>
-        <Route element={<ProtectedRoute isAllowed={!!isAdmin} />}>
+        <Route element={<ProtectedRoute isAllowed={isAdmin} />}>
           <Route path={AppRoute.ADMINISTRATION} element={<Administration />} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!userToken} />}>

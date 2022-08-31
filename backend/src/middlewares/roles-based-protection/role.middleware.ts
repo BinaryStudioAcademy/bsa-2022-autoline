@@ -6,8 +6,13 @@ import { Role } from '@prisma/client';
 import { Response, NextFunction } from 'express';
 import httpStatus from 'http-status-codes';
 
+const guestAccess = {
+  ALLOWED: true,
+  DISALLOWED: false,
+};
+
 const availableFor =
-  (roles: Role[]) =>
+  (roles: Role[], guestIsAllowed: boolean) =>
   (
     req: TypedRequestBody<{ tokenPayload: TokenPayload }>,
     res: Response,
@@ -26,12 +31,24 @@ const availableFor =
         return next();
       }
     }
-    res.status(httpStatus.FORBIDDEN).json({
-      message: ExceptionMessage.NOT_ENOUGH_PERMISSIONS,
-    });
+    if (guestIsAllowed === guestAccess.ALLOWED) {
+      return next();
+    }
+    if (guestIsAllowed === guestAccess.DISALLOWED) {
+      res.status(httpStatus.FORBIDDEN).json({
+        message: ExceptionMessage.NOT_ENOUGH_PERMISSIONS,
+      });
+    }
   };
 
-const userAuthMiddleware = availableFor([Role.user, Role.admin]);
-const adminAuthMiddleware = availableFor([Role.admin]);
+const guestAuthMiddleware = availableFor(
+  [Role.user, Role.admin],
+  guestAccess.ALLOWED,
+);
+const userAuthMiddleware = availableFor(
+  [Role.user, Role.admin],
+  guestAccess.DISALLOWED,
+);
+const adminAuthMiddleware = availableFor([Role.admin], guestAccess.DISALLOWED);
 
-export { userAuthMiddleware, adminAuthMiddleware };
+export { guestAuthMiddleware, userAuthMiddleware, adminAuthMiddleware };

@@ -12,7 +12,7 @@ const ViewedCars: FC = () => {
   const [params, setParams] = useState({
     userId: '0cdfe5ca-256f-49e4-855f-f438a4fac3c9',
     skip: '0',
-    take: '4',
+    take: '8',
   });
 
   const { data, isLoading } = useGetHistoryOfViwedCarsQuery(params);
@@ -21,7 +21,7 @@ const ViewedCars: FC = () => {
     setParams((state) => ({
       ...state,
       skip: String(+state.skip + +state.take),
-      take: '30',
+      take: String(+state.take + 30),
     }));
   };
 

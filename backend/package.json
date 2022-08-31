@@ -15,7 +15,7 @@
     "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
     "start:dev:local": "dotenv -e ../.env/backend.env -- yarn start:dev",
     "start:prod": "node ./build/src/server.js",
-    "build": "tsc && tsc-alias -p tsconfig.json",
+    "build": "tsc && tsc-alias -p tsconfig.json && yarn copy-files",
     "db:generate": "yarn prisma generate",
     "db:generate:local": "dotenv -e ../.env/backend.env -- yarn db:generate",
     "db:push": "dotenv -e ../.env/backend.env -- yarn prisma db push",
@@ -27,7 +27,8 @@
     "seed:soft": "prisma db seed",
     "postinstall": "prisma generate",
     "prestart": "yarn run db:migrate:prod && yarn run seed:soft",
-    "seed": "dotenv -e ../.env/backend.env -- yarn run seed:soft"
+    "seed": "dotenv -e ../.env/backend.env -- yarn run seed:soft",
+    "copy-files": "copyfiles -u 1 ./src/services/mail-verification/send-activation-link/templates/email.hbs ./build/src/services/mail-verification/send-activation-link/templates"
   },
   "dependencies": {
     "@autoline/shared": "link:../shared/build",

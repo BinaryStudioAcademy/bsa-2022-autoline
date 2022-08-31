@@ -31,3 +31,7 @@ export type {
   AdvancedAutoFilterProps,
 } from './advanced-auto-filter/advanced-auto-filter';
 export type { CarListItemProps } from './car-list-item/car-list-item';
+export type {
+  ViewedCarDataList,
+  ViewedCarData,
+} from './history-of-viewed-cars/history-of-viewed-cars';

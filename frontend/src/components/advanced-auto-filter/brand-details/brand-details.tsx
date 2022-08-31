@@ -1,54 +1,66 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
-import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
-import { SelectField } from '@components/common/select-field/select-field';
-import { Spinner } from '@components/common/spinner/spinner';
-import { getValueById } from '@helpers/get-value-by-id';
 import {
   useGetBrandsQuery,
   useGetModelsOfBrandQuery,
 } from '@store/queries/cars';
 
 type Props = {
-  onBrandDetailsChange: (data: BrandDetailsType) => void;
+  onBrandDetailsChange: (data: {
+    id: string;
+    brandId: string;
+    modelId: string;
+  }) => void;
   id: string;
-  selectedBrandId: string;
-  selectedModelId: string;
 };
 
-const BrandDetails: FC<Props> = ({
-  onBrandDetailsChange,
-  id,
-  selectedBrandId,
-  selectedModelId,
-}) => {
+const BrandDetails: FC<Props> = ({ onBrandDetailsChange, id }) => {
+  const [selectedModelId, setSelectedModelId] = useState('');
+  const [selectedBrandId, setSelectedBrandId] = useState('');
+
   const { data: brands, isLoading } = useGetBrandsQuery();
   const { data: models } = useGetModelsOfBrandQuery(selectedBrandId, {
     skip: !selectedBrandId,
   });
 
-  const selectedBrandName = getValueById(brands || [], selectedBrandId);
-  const selectedModelName = getValueById(models || [], selectedModelId);
-
   const handleSelectBrand = (data: AutocompleteValueType): void => {
-    onBrandDetailsChange({
-      id,
-      brandId: data?.id || '',
-      modelId: '',
-    });
+    setSelectedBrandId(data?.id || '');
+    setSelectedModelId('');
   };
 
   const handleSelectModel = (data: AutocompleteValueType): void => {
+    setSelectedModelId(data?.id || '');
+  };
+
+  useEffect(() => {
     onBrandDetailsChange({
       id,
       brandId: selectedBrandId,
-      modelId: data?.id || '',
+      modelId: selectedModelId,
     });
+  }, [selectedModelId, selectedBrandId]);
+
+  if (isLoading) return <h1>Loading...</h1>;
+
+  const selectedBrandName = (): AutocompleteValueType => {
+    const brand = brands?.find((brand) => brand.id === selectedBrandId);
+
+    return {
+      label: brand?.name || '',
+      id: brand?.id || '',
+    };
   };
 
-  if (isLoading) return <Spinner />;
+  const selectedModelName = (): AutocompleteValueType => {
+    const model = models?.find((model) => model.id === selectedModelId);
+
+    return {
+      label: model?.name || '',
+      id: model?.id || '',
+    };
+  };
 
   return (
     <div>
@@ -56,33 +68,23 @@ const BrandDetails: FC<Props> = ({
         <AutocompleteInput
           label="Brand"
           onChange={handleSelectBrand}
-          value={selectedBrandName}
+          value={selectedBrandName()}
           options={brands.map((item) => ({
             label: item.name,
             id: item.id,
           }))}
         />
       )}
-      {models ? (
+      {models && (
         <AutocompleteInput
           label="Model"
           onChange={handleSelectModel}
-          value={selectedModelName}
+          value={selectedModelName()}
           options={models.map((item) => ({
             label: item.name,
             id: item.id,
           }))}
         />
-      ) : (
-        <SelectField
-          id="disabled"
-          name="Model"
-          value=""
-          disabled={true}
-          required={false}
-        >
-          disabled
-        </SelectField>
       )}
     </div>
   );

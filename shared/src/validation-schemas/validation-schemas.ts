@@ -4,4 +4,3 @@ export {
   forgotPassword,
   resetPassword,
 } from './forgot-password/forgot-password.validation-schema.js';
-export { emailSchema } from './email/email-validation-schema';

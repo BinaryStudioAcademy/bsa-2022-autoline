@@ -25,6 +25,8 @@ export type {
 export type {
   WishlistResponseDto,
   WishlistsResponseDto,
+  ModelResponseDto,
+  ComplectationResponseDto,
   WishlistInput,
   DeleteWishlistInput,
 } from './preferences/preferences';
@@ -49,7 +51,6 @@ export type {
   SearchResult,
   ModelDetailsType,
   ComplectationDetailsType,
-  CarPreview,
 } from './cars/cars';
 
 export {

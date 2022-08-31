@@ -1,5 +1,3 @@
-import { BrandDetailsType } from '@common/types/cars/brand-details.type';
-
 type FiltersType = {
   regionId: string;
   yearStart: string;
@@ -10,20 +8,13 @@ type FiltersType = {
   enginePowerEnd: string;
   engineDisplacementStart: string;
   engineDisplacementEnd: string;
-};
-
-type CheckListsType = {
-  bodyTypeId: string[];
+  bodytypeId: string[];
+  brandId: string[];
+  modelId: string[];
   colorId: string[];
   transmissionTypeId: string[];
-  fuelTypeId: string[];
+  fueltypeId: string[];
   drivetrainId: string[];
 };
 
-type CarFiltersType = {
-  filters: FiltersType;
-  checkLists: CheckListsType;
-  brandDetails: BrandDetailsType[];
-};
-
-export type { CarFiltersType };
+export type { FiltersType };

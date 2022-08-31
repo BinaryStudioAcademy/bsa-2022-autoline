@@ -1,6 +1,6 @@
-import { CheckListsNames } from '@common/enums/car/car-filters-names.enum';
+import { FiltersNames } from '../../enums/cars/filters-names.enum';
 
 export type CheckboxListDataType = {
-  filterName: CheckListsNames;
+  filterName: FiltersNames;
   data: string[];
 };

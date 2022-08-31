@@ -6,6 +6,7 @@ export const carsData = [
     'eng': 'mazda',
     'marka_id': 47,
     'name': 'Mazda',
+    'slang': 'Мазда',
     'value': 47,
     'logo_url': 'https://www.pngall.com/wp-content/uploads/2/Mazda-PNG-Pic.png',
     'models': [
@@ -19,6 +20,7 @@ export const carsData = [
         'description':
           'The Mazda 6 is a good midsize car. It boasts adept handling, responsive steering, and two peppy four-cylinder engine options. It also has an upscale cabin and comes with an abundance of safety tech and infotainment features.',
         'parent_id': 0,
+        'slang': '6',
         'value': 393,
         'autoria_body_type_id': 3,
         'year_start': 2002,
@@ -31,8 +33,8 @@ export const carsData = [
         ],
         'complectations': [
           {
-            'name': 'Touring',
-            'engine': 'Skyactiv-G-2,0 165 h.p. 6AТ',
+            'name': 'TOURING',
+            'engine': 'Skyactiv-G-2,0 165 к.с. 6AТ',
             'engine_displacement': 2.0,
             'engine_power': 165,
             'autoria_drivetrain_id': 2,
@@ -47,8 +49,8 @@ export const carsData = [
             ],
           },
           {
-            'name': 'Premium',
-            'engine': 'Skyactiv-G-2,5 194 h.p. 6AТ',
+            'name': 'PREMIUM',
+            'engine': 'Skyactiv-G-2,5 194 к.с. 6AТ',
             'engine_displacement': 2.5,
             'engine_power': 194,
             'autoria_drivetrain_id': 2,
@@ -56,74 +58,6 @@ export const carsData = [
             'autoria_color_id': 1,
             'autoria_transmission_type_id': 2,
             'price_start': 39476,
-            'price_end': null,
-            'options': [
-              527, 531, 528, 441, 579, 555, 524, 610, 443, 574, 539, 540, 255,
-              605, 602, 598, 192, 217, 608, 620, 609, 572, 580, 563, 188, 355,
-              616,
-            ],
-          },
-          {
-            'name': 'Style',
-            'engine': 'Skyactiv-G-2,5 194 h.p. 6AТ',
-            'engine_displacement': 2.5,
-            'engine_power': 194,
-            'autoria_drivetrain_id': 2,
-            'autoria_fuel_type_id': 1,
-            'autoria_color_id': 13,
-            'autoria_transmission_type_id': 2,
-            'price_start': 41280,
-            'price_end': null,
-            'options': [
-              527, 531, 528, 441, 579, 555, 524, 610, 443, 574, 539, 540, 255,
-              605, 602, 598, 192, 217, 608, 620, 609, 572, 580, 563, 188, 355,
-              616,
-            ],
-          },
-          {
-            'name': 'Top',
-            'engine': 'Skyactiv-G-2,5 194 h.p. 6AТ',
-            'engine_displacement': 2.5,
-            'engine_power': 194,
-            'autoria_drivetrain_id': 2,
-            'autoria_fuel_type_id': 1,
-            'autoria_color_id': 13,
-            'autoria_transmission_type_id': 2,
-            'price_start': 50846,
-            'price_end': null,
-            'options': [
-              527, 531, 528, 441, 579, 555, 524, 610, 443, 574, 539, 540, 255,
-              605, 602, 598, 192, 217, 608, 620, 609, 572, 580, 563, 188, 355,
-              616,
-            ],
-          },
-          {
-            'name': 'Top +',
-            'engine': 'Skyactiv-G-2,5 Turbo 231 h.p. 6AТ',
-            'engine_displacement': 2.5,
-            'engine_power': 231,
-            'autoria_drivetrain_id': 2,
-            'autoria_fuel_type_id': 1,
-            'autoria_color_id': 13,
-            'autoria_transmission_type_id': 2,
-            'price_start': 54700,
-            'price_end': null,
-            'options': [
-              527, 531, 528, 441, 579, 555, 524, 610, 443, 574, 539, 540, 255,
-              605, 602, 598, 192, 217, 608, 620, 609, 572, 580, 563, 188, 355,
-              616,
-            ],
-          },
-          {
-            'name': 'Black Edition',
-            'engine': 'Skyactiv-G-2,5 Turbo 231 h.p. 6AТ',
-            'engine_displacement': 2.5,
-            'engine_power': 231,
-            'autoria_drivetrain_id': 2,
-            'autoria_fuel_type_id': 1,
-            'autoria_color_id': 2,
-            'autoria_transmission_type_id': 2,
-            'price_start': 50830,
             'price_end': null,
             'options': [
               527, 531, 528, 441, 579, 555, 524, 610, 443, 574, 539, 540, 255,
@@ -142,6 +76,7 @@ export const carsData = [
     'eng': 'nissan',
     'marka_id': 55,
     'name': 'Nissan',
+    'slang': 'Ниссан',
     'value': 55,
     'logo_url':
       'https://upload.wikimedia.org/wikipedia/commons/8/8c/Nissan_logo.png',
@@ -156,6 +91,7 @@ export const carsData = [
         'description':
           'The Nissan X-Trail is a compact crossover SUV (C-segment) produced by the Japanese automaker Nissan since 2000. It was one of Nissans first crossover SUVs and was released about the same time as several other companies car-based crossovers.',
         'parent_id': 0,
+        'slang': 'Х-Трейл',
         'value': 507,
         'autoria_body_type_id': 5,
         'year_start': 2001,
@@ -169,7 +105,7 @@ export const carsData = [
         ],
         'complectations': [
           {
-            'name': 'Visia',
+            'name': 'VISIA',
             'engine': '2.0l 144 X-Tronic CVT 4WD',
             'engine_displacement': 2.0,
             'engine_power': 144,
@@ -182,7 +118,7 @@ export const carsData = [
             'options': [217, 459, 621, 137, 441, 604, 611, 579, 605, 560, 539],
           },
           {
-            'name': 'Acenta',
+            'name': 'ACENTA',
             'engine': '1.6l dCi 130 X-Tronic CVT 2WD',
             'engine_displacement': 1.6,
             'engine_power': 130,
@@ -208,6 +144,7 @@ export const carsData = [
     'eng': 'BMW',
     'marka_id': 55,
     'name': 'BMW',
+    'slang': 'X3',
     'value': 55,
     'logo_url': 'https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg',
     'models': [
@@ -221,16 +158,19 @@ export const carsData = [
         'description':
           'The BMW iX3 is a battery electric compact luxury crossover SUV manufactured by BMW. It was presented at the 2018 Beijing Motor Show in April as the battery electric version of the BMW X3 (G01). Built on the same platform as the conventional X3 with only subtle changes, it is the third car of the electric-focused BMW i family and the first battery electric BMW SUV.',
         'parent_id': 0,
+        'slang': 'iX3',
         'value': 507,
         'autoria_body_type_id': 5,
         'year_start': 2018,
         'year_end': null,
         'price_start': 37000,
         'price_end': 43570,
-        'photo_urls': ['https://i.infocar.ua/i/12/6275/700x350.jpg'],
+        'photo_urls': [
+          'https://motor.ru/imgs/2022/03/20/12/5313126/62c12b1ca772092990d810337f5897ac99e44c7b.jpg',
+        ],
         'complectations': [
           {
-            'name': 'Origin',
+            'name': 'ORIGIN',
             'engine': 'Electro 210kW',
             'engine_displacement': 2.0,
             'engine_power': 286,
@@ -243,7 +183,7 @@ export const carsData = [
             'options': [217, 459, 621, 137, 441, 604, 611, 579, 605, 560, 539],
           },
           {
-            'name': 'Turbo',
+            'name': 'TURBO',
             'engine': 'Electro 210kW',
             'engine_displacement': 2.0,
             'engine_power': 286,
@@ -269,6 +209,7 @@ export const carsData = [
     'eng': 'mazda',
     'marka_id': 47,
     'name': 'Mazda',
+    'slang': 'Мазда',
     'value': 47,
     'logo_url': 'https://www.pngall.com/wp-content/uploads/2/Mazda-PNG-Pic.png',
     'models': [
@@ -282,6 +223,7 @@ export const carsData = [
         'description':
           'The Mazda3 (known as the Mazda Axela in Japan (first three generations), a combination of "accelerate" and "excellent") is a compact car manufactured by Mazda. It was first introduced in 2003 as a 2004 model, replacing the Familia/323/Protegé in the C-segment.',
         'parent_id': 0,
+        'slang': '3',
         'value': 393,
         'autoria_body_type_id': 3,
         'year_start': 2002,
@@ -293,7 +235,7 @@ export const carsData = [
         ],
         'complectations': [
           {
-            'name': 'Touring',
+            'name': 'TOURING',
             'engine': '1.5 SKYACTIV-G 115',
             'engine_displacement': 1.5,
             'engine_power': 115,

@@ -8,7 +8,7 @@ const facebookStrategy = new FacebookStrategy(
   {
     clientID: ENV.FACEBOOK.APP_ID as string,
     clientSecret: ENV.FACEBOOK.SECRET_KEY as string,
-    callbackURL: `${ENV.APP.FRONTEND_URL}/${ENV.API.V1_PREFIX}/auth/facebook/redirect`,
+    callbackURL: `${ENV.API.V1_PREFIX}/auth/facebook/redirect`,
     profileFields: [
       'email',
       'gender',

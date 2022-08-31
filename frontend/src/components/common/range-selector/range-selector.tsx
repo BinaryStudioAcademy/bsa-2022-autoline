@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 
-import { FiltersNames } from '@common/enums/car/car-filters-names.enum';
+import { FiltersNames } from '@common/enums/cars/filters-names.enum';
 import { RangeValueType } from '@common/types/cars/range-item.type';
 import { SelectField } from '@components/common/select-field/select-field';
 import { MenuItem, SelectChangeEvent } from '@mui/material';
@@ -34,17 +34,14 @@ const RangeSelector: FC<Props> = (props) => {
   }, [props.selectedMin, props.selectedMax]);
 
   useEffect(() => {
-    let min = minValue;
-    let max = maxValue;
-
     if (+minValue && +maxValue && +minValue > +maxValue) {
-      min = maxValue;
-      max = minValue;
+      setMinValue(maxValue);
+      setMaxValue(minValue);
     }
 
     props.onChange([
-      { filterName: props.minFilterName, value: min },
-      { filterName: props.maxFilterName, value: max },
+      { filterName: props.minFilterName, value: minValue },
+      { filterName: props.maxFilterName, value: maxValue },
     ]);
   }, [minValue, maxValue]);
 

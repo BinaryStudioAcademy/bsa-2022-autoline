@@ -1,7 +1,8 @@
 import { prisma } from '@data/prisma-client';
 
 import type {
-  CarPreview,
+  ComplectationResponseDto,
+  ModelResponseDto,
   WishlistResponseDto,
   WishlistsResponseDto,
 } from '@autoline/shared/common/types/types';
@@ -90,6 +91,16 @@ const getWishlistByUserId = async (
               logo_url: true,
             },
           },
+          body_type: {
+            select: {
+              name: true,
+            },
+          },
+          manufacture_country: {
+            select: {
+              name: true,
+            },
+          },
           prices_ranges: {
             select: {
               price_start: true,
@@ -113,7 +124,7 @@ const getWishlistByUserId = async (
       id: wishlist.model?.id,
       createdAt: wishlist.created_at,
       wishlistId: wishlist.id,
-      modelName: wishlist.model?.name,
+      name: wishlist.model?.name,
       yearStart: wishlist.model?.year_start,
       yearEnd: wishlist.model?.year_end,
       photoUrls: wishlist.model?.photo_urls,
@@ -121,9 +132,11 @@ const getWishlistByUserId = async (
         name: wishlist.model?.brand.name,
         logoUrl: wishlist.model?.brand.logo_url,
       },
+      bodyType: wishlist.model?.body_type.name,
+      manufactureCountry: wishlist.model?.manufacture_country.name,
       pricesRanges: wishlist.model?.prices_ranges,
       description: wishlist.model?.description,
-    } as CarPreview;
+    } as ModelResponseDto;
 
     return data;
   });
@@ -144,6 +157,29 @@ const getWishlistByUserId = async (
         select: {
           id: true,
           name: true,
+          engine: true,
+          engine_displacement: true,
+          engine_power: true,
+          color: {
+            select: {
+              name: true,
+            },
+          },
+          drivetrain: {
+            select: {
+              name: true,
+            },
+          },
+          fuel_type: {
+            select: {
+              name: true,
+            },
+          },
+          transmission_type: {
+            select: {
+              name: true,
+            },
+          },
           prices_ranges: {
             select: {
               price_start: true,
@@ -160,6 +196,16 @@ const getWishlistByUserId = async (
                 select: {
                   name: true,
                   logo_url: true,
+                },
+              },
+              body_type: {
+                select: {
+                  name: true,
+                },
+              },
+              manufacture_country: {
+                select: {
+                  name: true,
                 },
               },
               description: true,
@@ -179,8 +225,18 @@ const getWishlistByUserId = async (
         createdAt: wishlist.created_at,
         wishlistId: wishlist.id,
         complectationName: wishlist.complectation?.name,
+        engine: wishlist.complectation?.engine,
+        engineDisplacement:
+          wishlist.complectation?.engine_displacement.toNumber(),
+        enginePower: wishlist.complectation?.engine_power,
+        color: {
+          name: wishlist.complectation?.color.name,
+        },
+        drivetrain: wishlist.complectation?.drivetrain.name,
+        fuelType: wishlist.complectation?.fuel_type.name,
+        transmissionType: wishlist.complectation?.transmission_type.name,
         pricesRanges: wishlist.complectation?.prices_ranges,
-        modelName: modelData?.name,
+        name: modelData?.name,
         yearStart: modelData?.year_start,
         yearEnd: modelData?.year_end,
         photoUrls: modelData?.photo_urls,
@@ -188,8 +244,10 @@ const getWishlistByUserId = async (
           name: modelData?.brand.name,
           logoUrl: modelData?.brand.logo_url,
         },
+        bodyType: modelData?.body_type.name,
+        manufactureCountry: modelData?.manufacture_country.name,
         description: modelData?.description,
-      } as CarPreview;
+      } as ComplectationResponseDto;
 
       return data;
     },

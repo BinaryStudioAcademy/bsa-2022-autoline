@@ -1,16 +1,13 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 
 import { AutoRiaOption } from '@autoline/shared/common/types/types';
-import {
-  CheckListsNames,
-  FiltersNames,
-} from '@common/enums/car/car-filters-names.enum';
+import { FiltersNames } from '@common/enums/cars/filters-names.enum';
 import {
   engineDisplacementRange,
   enginePowerRange,
   pricesRange,
   yearsRange,
-} from '@common/enums/car/ranges';
+} from '@common/enums/cars/ranges';
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { CheckboxListDataType } from '@common/types/cars/checkbox-list-data.type';
@@ -20,20 +17,12 @@ import { BrandDetails } from '@components/advanced-auto-filter/brand-details/bra
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
-import { Spinner } from '@components/common/spinner/spinner';
-import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
 import { getValueById } from '@helpers/get-value-by-id';
 import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import UTurnRightIcon from '@mui/icons-material/UTurnRight';
 import { Button, Zoom } from '@mui/material';
-import {
-  addNewBrandDetails,
-  resetAllFilters,
-  setBrandDetailsValue,
-  setCheckListValue,
-  setValue,
-} from '@store/car-filter/slice';
+import { resetAllFilters, setValue } from '@store/car-filter/slice';
 import {
   useLazyGetFilteredCarsQuery,
   useGetUsedOptionsQuery,
@@ -45,13 +34,24 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
   const { showFilteredCars } = props;
   const dispatch = useAppDispatch();
 
-  const { filters, checkLists, brandDetails } = useAppSelector(
-    (state) => state.carFilter,
-  );
+  const filters = useAppSelector((state) => state.carFilter);
 
   const [queryParams, setQueryParams] = useState<string[][]>();
 
+  const initialBrandDetails = {
+    id: Date.now().toString(),
+    brandId: '',
+    modelId: '',
+  };
+  const [brandDetailsList, setBrandDetailsList] = useState<BrandDetailsType[]>([
+    initialBrandDetails,
+  ]);
+
   const { data: options, isLoading } = useGetUsedOptionsQuery();
+
+  useEffect(() => {
+    setQueryParams(objectToQueryString(filters));
+  }, [filters]);
 
   const [search, filteredCars] = useLazyGetFilteredCarsQuery();
 
@@ -60,32 +60,51 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
   };
 
   useEffect(() => {
-    setQueryParams(
-      objectToQueryString({
-        ...filters,
-        ...checkLists,
-        brandId: brandDetails.map((item) => item.brandId),
-        modelId: brandDetails.map((item) => item.modelId),
-      }),
-    );
-
-    if (isFiltersEmpty(filters)) {
-      search([], true);
-    }
-  }, [filters, checkLists, brandDetails]);
-
-  useEffect(() => {
     if (filteredCars.data) {
       showFilteredCars(filteredCars.data);
     }
   }, [filteredCars]);
 
   const handleAddNewDetails = (): void => {
-    dispatch(addNewBrandDetails());
+    setBrandDetailsList([
+      ...brandDetailsList,
+      {
+        id: Date.now().toString(),
+        brandId: '',
+        modelId: '',
+      },
+    ]);
   };
 
-  const handleBrandDetailsChange = (data: BrandDetailsType): void => {
-    dispatch(setBrandDetailsValue(data));
+  const handleBrandDetailsChange = (data: {
+    id: string;
+    brandId: string;
+    modelId: string;
+  }): void => {
+    const { brandId, modelId } = data;
+    setBrandDetailsList([
+      ...brandDetailsList.filter((item) => item.id !== data.id),
+      {
+        id: data.id,
+        brandId,
+        modelId,
+      },
+    ]);
+    if (!filters.brandId.includes(brandId) && brandId !== '') {
+      dispatch(
+        setValue({
+          filterName: FiltersNames.BRAND_ID,
+          value: [...filters.brandId, data.brandId],
+        }),
+      );
+    }
+    if (!filters.modelId.includes(modelId) && modelId !== '')
+      dispatch(
+        setValue({
+          filterName: FiltersNames.MODEL_ID,
+          value: [...filters.modelId, data.modelId],
+        }),
+      );
   };
 
   const handleRegionChange = (data: AutocompleteValueType): void => {
@@ -94,9 +113,7 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
   };
 
   const handleCheckboxListChange = (data: CheckboxListDataType): void => {
-    dispatch(
-      setCheckListValue({ filterName: data.filterName, value: data.data }),
-    );
+    dispatch(setValue({ filterName: data.filterName, value: data.data }));
   };
 
   const handleRangeChange = (range: RangeValueType[]): void => {
@@ -107,16 +124,16 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
 
   const resetFilters = (): void => {
     dispatch(resetAllFilters());
+    setBrandDetailsList([initialBrandDetails]);
   };
 
   const isButtonVisible = Boolean(
-    !isFiltersEmpty({ ...filters, ...checkLists }) ||
-      brandDetails.some((detail) => detail.brandId !== ''),
+    Object.values(filters).some((filter) => filter.length >= 1),
   );
 
   const years = useMemo(() => yearsRange(30), []);
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <h1>Loading...</h1>;
 
   return (
     <div className={styles.container}>
@@ -138,10 +155,10 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
           <CheckboxList
             title="Body Type"
             list={options && options.bodyTypes}
-            checkedList={checkLists.bodyTypeId}
+            checkedList={filters.bodytypeId}
             listLimit={4}
             onListCheck={handleCheckboxListChange}
-            filterName={CheckListsNames.BODY_TYPE_ID}
+            filterName={FiltersNames.BODY_TYPE_ID}
           />
 
           <div className={styles.row}>
@@ -150,15 +167,15 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
               + Add
             </h6>
           </div>
-          {brandDetails.map((brandDetail) => (
-            <BrandDetails
-              key={brandDetail.id}
-              id={brandDetail.id}
-              onBrandDetailsChange={handleBrandDetailsChange}
-              selectedBrandId={brandDetail.brandId}
-              selectedModelId={brandDetail.modelId}
-            />
-          ))}
+          {brandDetailsList
+            .sort((a, b) => parseInt(a.id) - parseInt(b.id))
+            .map((brandDetail) => (
+              <BrandDetails
+                key={brandDetail.id}
+                id={brandDetail.id}
+                onBrandDetailsChange={handleBrandDetailsChange}
+              />
+            ))}
 
           <h5 className={styles.blockTitle}>Year</h5>
           <div className={styles.row}>
@@ -217,30 +234,30 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
           <CheckboxList
             title="Color"
             list={options && options.colors}
-            checkedList={checkLists.colorId}
+            checkedList={filters.colorId}
             onListCheck={handleCheckboxListChange}
-            filterName={CheckListsNames.COLOR_ID}
+            filterName={FiltersNames.COLOR_ID}
           />
           <CheckboxList
             title="Transmission"
             list={options && options.transmissionTypes}
-            checkedList={checkLists.transmissionTypeId}
+            checkedList={filters.transmissionTypeId}
             onListCheck={handleCheckboxListChange}
-            filterName={CheckListsNames.TRANSMISSION_TYPE_ID}
+            filterName={FiltersNames.TRANSMISSION_TYPE_ID}
           />
           <CheckboxList
             title="Drivetrain"
             list={options && options.drivetrains}
-            checkedList={checkLists.drivetrainId}
+            checkedList={filters.drivetrainId}
             onListCheck={handleCheckboxListChange}
-            filterName={CheckListsNames.DRIVETRAIN_ID}
+            filterName={FiltersNames.DRIVETRAIN_ID}
           />
           <CheckboxList
             title="Fuel"
             list={options && options.fuelTypes}
-            checkedList={checkLists.fuelTypeId}
+            checkedList={filters.fueltypeId}
             onListCheck={handleCheckboxListChange}
-            filterName={CheckListsNames.FUEL_TYPE_ID}
+            filterName={FiltersNames.FUEL_TYPE_ID}
           />
         </div>
       </div>

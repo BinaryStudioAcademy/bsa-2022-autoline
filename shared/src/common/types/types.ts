@@ -41,6 +41,13 @@ export type {
 export type { ValidationSchema } from './validation/validation';
 
 export type {
+  ModelReturnedData,
+  ComplectationReturnedData,
+  OptionType,
+  ComplectationsInput,
+} from './complectations/complectations';
+
+export type {
   BrandType,
   OptionsType,
   ModelType,

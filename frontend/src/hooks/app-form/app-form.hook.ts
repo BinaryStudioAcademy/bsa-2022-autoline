@@ -7,7 +7,10 @@ import {
 } from 'react-hook-form';
 
 import { getFormValidationResolver } from '@helpers/helpers';
-import { UseFormSetValue } from 'react-hook-form/dist/types/form';
+import {
+  UseFormClearErrors,
+  UseFormSetValue,
+} from 'react-hook-form/dist/types/form';
 import { type SchemaOf as ValidationSchema } from 'yup';
 
 type UseAppFormArgs = {
@@ -20,6 +23,7 @@ type UseAppFormResult<T extends FieldValues = FieldValues> = {
   errors: FieldErrors;
   handleSubmit: UseFormHandleSubmit<T>;
   setValue: UseFormSetValue<FieldValues>;
+  clearErrors?: UseFormClearErrors<FieldErrors>;
 };
 
 const useAppForm = <T extends FieldValues = FieldValues>({
@@ -31,6 +35,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
     handleSubmit,
     formState: { errors },
     setValue,
+    clearErrors,
   } = useForm<FieldValues>({
     defaultValues,
     resolver: validationSchema
@@ -43,6 +48,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
     control,
     errors,
     setValue,
+    clearErrors,
   };
 };
 

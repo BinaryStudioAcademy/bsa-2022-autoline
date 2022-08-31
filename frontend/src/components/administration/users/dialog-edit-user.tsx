@@ -1,148 +1,155 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
+import { SubmitHandler } from 'react-hook-form';
 
-import { User, UserRole, UserSex } from '@autoline/shared/common/types/types';
+import CrossIcon from '@assets/images/edit-profile/cross.svg';
+import { User } from '@autoline/shared/common/types/types';
+import { editUserSchema } from '@autoline/shared/validation-schemas';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
-import { SelectField } from '@components/common/select-field/select-field';
-import Container from '@mui/material/Container';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import FormControl from '@mui/material/FormControl';
+import { SelectFieldForm } from '@components/edit-profile/select-field-form/select-field-form';
+import { useAppForm } from '@hooks/hooks';
 import MenuItem from '@mui/material/MenuItem';
-import { SelectChangeEvent } from '@mui/material/Select';
+import Modal from '@mui/material/Modal';
 
-type DialogEditUserProps = {
+import styles from './styles.module.scss';
+
+interface DialogEditUserProps {
   user?: User;
-  handleClose: () => void;
-  handleSubmit: (user: User, newUserData: Partial<Omit<User, 'id'>>) => void;
-};
+  onClose: () => void;
+  onSave: (user: User, newUserData: Partial<Omit<User, 'id'>>) => void;
+}
+
+type EditUserRequestData = Partial<User>;
 
 const DialogEditUser: FC<DialogEditUserProps> = (props) => {
-  const { user, handleClose, handleSubmit } = props;
-  const [role, setRole] = useState<UserRole | undefined>(user?.role);
-  const [name, setName] = useState<string | undefined>(user?.name);
-  const [email, setEmail] = useState<string | undefined>(user?.email);
-  const [phone, setPhone] = useState<string | undefined>(user?.phone);
-  const [location, setLocation] = useState<string | undefined>(user?.location);
-  const [sex, setSex] = useState<UserSex | undefined>(user?.sex);
+  const { user, onClose, onSave } = props;
+
+  const { control, errors, handleSubmit, setValue, clearErrors } =
+    useAppForm<EditUserRequestData>({
+      defaultValues: {
+        sex: user?.sex || 'not_appliable',
+        location: user?.location,
+        name: user?.name,
+        phone: user?.phone,
+        email: user?.email,
+      },
+      validationSchema: editUserSchema,
+    });
+
+  const handleClose = (): void => {
+    if (clearErrors) clearErrors();
+    onClose();
+  };
 
   useEffect(() => {
     if (!user) return;
-    setName(user.name);
-    setEmail(user.email);
-    setPhone(user.phone);
-    setLocation(user.location);
-    setSex(user.sex);
-    setRole(user.role);
+    setValue('name', user.name);
+    setValue('email', user.email);
+    setValue('phone', user.phone);
+    setValue('location', user.location);
+    setValue('sex', user.sex);
+    setValue('role', user.role);
   }, [user]);
 
-  const handleChangeName = (event: ChangeEvent<HTMLTextAreaElement>): void => {
-    setName(event.target.value);
-  };
-
-  const handleChangeEmail = (event: ChangeEvent<HTMLTextAreaElement>): void => {
-    setEmail(event.target.value);
-  };
-
-  const handleChangePhone = (event: ChangeEvent<HTMLTextAreaElement>): void => {
-    setPhone(event.target.value);
-  };
-
-  const handleChangeLocation = (
-    event: ChangeEvent<HTMLTextAreaElement>,
-  ): void => {
-    setLocation(event.target.value);
-  };
-
-  const handleChangeSex = (event: SelectChangeEvent<string>): void => {
-    setSex(event.target.value as unknown as UserSex);
-  };
-
-  const handleChangeRole = (event: SelectChangeEvent<string>): void => {
-    setRole(event.target.value as unknown as UserRole);
+  const onSubmit: SubmitHandler<EditUserRequestData> = (newUserData) => {
+    if (user) {
+      onSave(user, newUserData);
+    }
   };
 
   return (
-    <Dialog open={!!user} onClose={handleClose}>
-      <Container sx={{ 'padding-bottom': 16 }}>
-        <DialogTitle>EDIT USER</DialogTitle>
-        <DialogContent>
-          <Container>
-            {role && (
-              <FormControl sx={{ width: 300 }}>
+    <Modal
+      open={!!user}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <div className={styles.popup}>
+        <span className={styles.cross}>
+          <img src={CrossIcon} alt="cross" onClick={handleClose} />
+        </span>
+        <h2 className={styles.mainTitle}>EDIT USER</h2>
+        <div className={styles.profile}>
+          <div className={styles.editWrapper}>
+            <form
+              name="editForm"
+              onSubmit={handleSubmit(onSubmit)}
+              className={styles.form}
+            >
+              <fieldset className={styles.fieldset}>
                 <InputField
                   name="name"
                   type="text"
+                  required={true}
+                  errors={errors}
+                  control={control}
                   inputLabel="Full name"
-                  value={name}
-                  onChange={handleChangeName}
-                />
-                <InputField
-                  name="email"
-                  type="email"
-                  inputLabel="E-mail"
-                  value={email}
-                  onChange={handleChangeEmail}
                 />
                 <InputField
                   name="phone"
-                  type="phone"
+                  type="text"
+                  required={false}
+                  errors={errors}
+                  control={control}
                   inputLabel="Phone"
-                  value={phone}
-                  onChange={handleChangePhone}
+                />
+                <InputField
+                  name="email"
+                  type="text"
+                  required={true}
+                  errors={errors}
+                  control={control}
+                  inputLabel="E-mail"
                 />
                 <InputField
                   name="location"
                   type="text"
-                  inputLabel="Location"
-                  value={location}
-                  onChange={handleChangeLocation}
-                />
-                <SelectField
-                  name="Sex"
-                  value={String(sex)}
                   required={false}
-                  onChange={handleChangeSex}
-                >
-                  <MenuItem value="male">Male</MenuItem>
-                  <MenuItem value="female">Female</MenuItem>
-                  <MenuItem value="not_known">Not known</MenuItem>
-                  <MenuItem value="not_appliable">Not appliable</MenuItem>
-                </SelectField>
-                <SelectField
-                  name="Role"
-                  value={String(role)}
-                  required={true}
-                  onChange={handleChangeRole}
-                >
-                  <MenuItem value="admin">Admin</MenuItem>
-                  <MenuItem value="user">User</MenuItem>
-                </SelectField>
-              </FormControl>
-            )}
-          </Container>
-        </DialogContent>
-        <DialogActions>
-          <ButtonOutline text="Cancel" onClick={handleClose} />
-          <ButtonFill
-            text="Save"
-            onClick={(): void => {
-              handleSubmit(user as User, {
-                name,
-                email,
-                phone,
-                location,
-                sex,
-                role,
-              });
-            }}
-          />
-        </DialogActions>
-      </Container>
-    </Dialog>
+                  errors={errors}
+                  control={control}
+                  inputLabel="Location"
+                />
+                <div className={styles.selectsWrapper}>
+                  <SelectFieldForm
+                    id="sex"
+                    name="sex"
+                    required={false}
+                    control={control}
+                    label="Sex"
+                    defaultValue="not_appliable"
+                  >
+                    <MenuItem value="male">Male</MenuItem>
+                    <MenuItem value="female">Female</MenuItem>
+                    <MenuItem value="not_known">Not known</MenuItem>
+                    <MenuItem value="not_appliable">Not appliable</MenuItem>
+                  </SelectFieldForm>
+                  <SelectFieldForm
+                    id="role"
+                    name="role"
+                    required={true}
+                    control={control}
+                    label="Role"
+                    defaultValue="not_appliable"
+                  >
+                    <MenuItem value="user">User</MenuItem>
+                    <MenuItem value="admin">Admin</MenuItem>
+                  </SelectFieldForm>
+                </div>
+                <div className={styles.btnWrapper}>
+                  <ButtonOutline
+                    text="Cancel"
+                    className={styles.cancel}
+                    onClick={handleClose}
+                  />
+                  <ButtonFill text="Save" type="submit" />
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </Modal>
   );
 };
 

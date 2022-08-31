@@ -42,7 +42,7 @@ const baseQueryWithReauth: BaseQueryFn<
       try {
         const refreshResult = await baseQuery(
           {
-            url: `${ApiPath.AUTH}/refreshToken`,
+            url: `${ApiPath.AUTH}${ApiPath.REFRESH_TOKEN}`,
             method: 'POST',
             body: { refreshToken: (api.getState() as RootState).auth.refresh },
           },

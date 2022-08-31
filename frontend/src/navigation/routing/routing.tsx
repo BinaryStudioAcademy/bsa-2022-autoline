@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app';
 import { Administration } from '@components/administration';
+import { Spinner } from '@components/common/spinner/spinner';
 import { ForgotPassword } from '@components/forgot-password/forgot-password';
 import { LandingPage } from '@components/landing-page/landing-page';
 import { MailVerificationFailed } from '@components/mail-verification/verification-failed/mail-verification-failed';
@@ -17,10 +18,12 @@ import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 import { useGetUserQuery } from '@store/queries/user/update-user';
 
 const Routing: FC = () => {
-  const { data: authData } = useGetUserQuery();
+  const { data: authData, isLoading } = useGetUserQuery();
   const isAdmin = authData?.role === 'admin';
 
   const userToken = useAppSelector((state) => state.auth.token);
+
+  if (isLoading) return <Spinner />;
 
   return (
     <BrowserRouter>

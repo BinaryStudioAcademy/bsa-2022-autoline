@@ -33,19 +33,26 @@ export const Reminders: React.FC<RemindersProps> = ({
     return null;
   }
 
+  const iconsSx = {
+    fontSize: needRow ? 20 : 24,
+  };
+
   const { favorites, notifications, comparisons } = reminders;
 
   return (
     <ThemeProvider theme={theme}>
-      <List disablePadding className={clsx({ [styles.row]: needRow })}>
+      <List
+        disablePadding
+        className={clsx(styles.list, { [styles.row]: needRow })}
+      >
         <Link to={favorites.linkTo}>
-          <ListItemButton className={styles.link}>
+          <ListItemButton>
             <Badge
               badgeContent={favorites.count}
               color="primary"
               invisible={favorites.count < 1}
             >
-              <FavoriteBorderIcon color="primary" />
+              <FavoriteBorderIcon color="primary" sx={iconsSx} />
             </Badge>
           </ListItemButton>
         </Link>
@@ -56,7 +63,7 @@ export const Reminders: React.FC<RemindersProps> = ({
               color="primary"
               invisible={notifications.count < 1}
             >
-              <NotificationsNoneIcon color="primary" />
+              <NotificationsNoneIcon color="primary" sx={iconsSx} />
             </Badge>
           </ListItemButton>
         </Link>
@@ -67,7 +74,7 @@ export const Reminders: React.FC<RemindersProps> = ({
               color="primary"
               invisible={comparisons.count < 1}
             >
-              <BalanceIcon color="primary" />
+              <BalanceIcon color="primary" sx={iconsSx} />
             </Badge>
           </ListItemButton>
         </Link>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app-route.enum';
@@ -30,6 +30,7 @@ export const Header = (): React.ReactElement => {
   const [wishlistCount, setWishlistCount] = useState(0);
   const [openSettings, setOpenSettings] = useState(false);
   const userToken = useAppSelector((state) => state.auth.token);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setWishlistCount(wishlist.models.length + wishlist.complectations.length);
@@ -55,20 +56,31 @@ export const Header = (): React.ReactElement => {
     },
   };
 
-  const userMenu = [
-    {
+  const commonMenu = {
+    search: {
+      label: 'Search',
+      onClick: () => navigate(AppRoute.SEARCH),
+    },
+    aboutUs: {
+      label: 'About Us',
+      onClick: () => navigate('#'),
+    },
+  };
+
+  const userMenu = {
+    account: {
       label: 'Account',
     },
-    {
+    settings: {
       label: 'Setting',
       onClick: (): void => {
         setOpenSettings(true);
       },
     },
-    {
+    logout: {
       label: 'Logout',
     },
-  ];
+  };
 
   return (
     <>
@@ -86,6 +98,7 @@ export const Header = (): React.ReactElement => {
             <DrawerComponent
               userMenu={userToken ? userMenu : undefined}
               reminders={userToken ? reminders : undefined}
+              commonMenu={commonMenu}
             />
           ) : (
             <>
@@ -94,9 +107,16 @@ export const Header = (): React.ReactElement => {
                 value={value}
                 className={styles.navigation}
               >
-                <Tab label="Used Cars" className={styles.navLink} />
-                <Tab label="New Cars" className={styles.navLink} />
-                <Tab label="About us" className={styles.navLink} />
+                <Tab
+                  label={commonMenu.search.label}
+                  className={styles.navLink}
+                  onClick={commonMenu.search.onClick}
+                />
+                <Tab
+                  label={commonMenu.aboutUs.label}
+                  className={styles.navLink}
+                  onClick={commonMenu.aboutUs.onClick}
+                />
               </Tabs>
               {userToken && user ? (
                 <PrivateElements

@@ -32,8 +32,9 @@ const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
   const [deleteWishlist] = useDeleteWishlistMutation();
 
   const handleCreateWishlist = async (): Promise<void> => {
-    const data: WishlistInput =
-      complectationId === '' ? { modelId } : { complectationId };
+    const data: WishlistInput = complectationId
+      ? { modelId }
+      : { complectationId };
 
     await createWishlist(data);
   };

@@ -1,6 +1,6 @@
 enum ApiPath {
   AUTH = '/auth',
-  REFRESH_TOKEN = '/refreshToken',
+  REFRESH_TOKEN = '/auth/refreshToken',
 }
 
 export { ApiPath };

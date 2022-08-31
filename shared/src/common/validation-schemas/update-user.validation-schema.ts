@@ -9,7 +9,10 @@ const updateUserSchema = Yup.object().shape({
     .required('Full name is required')
     .max(150, 'Full name must not exceed 100 characters'),
   email: Yup.string().required('Email is required').email('Email is invalid'),
-  phone: Yup.string().matches(phoneReg, 'Phone is invalid').nullable(),
+  phone: Yup.string()
+    .transform((value) => (value === '' ? null : value))
+    .matches(phoneReg, 'Phone is invalid')
+    .nullable(),
   location: Yup.string()
     .oneOf(['kyiv', 'kharkiv', 'odesa', 'not_appliable', null])
     .nullable(),
@@ -24,14 +27,17 @@ const updateUserSchema = Yup.object().shape({
       .nullable();
   }),
   password: Yup.string()
+    .transform((value) => (value === '' ? null : value))
     .min(8, 'Password must be at least 8 characters')
     .max(20, 'Password must not exceed 20 characters')
     .nullable(),
   newPassword: Yup.string()
+    .transform((value) => (value === '' ? null : value))
     .min(8, 'Password must be at least 8 characters')
     .max(20, 'Password must not exceed 20 characters')
     .nullable(),
   repeatNewPassword: Yup.string()
+    .transform((value) => (value === '' ? null : value))
     .min(8, 'Password must be at least 8 characters')
     .max(20, 'Password must not exceed 20 characters')
     .nullable(),

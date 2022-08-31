@@ -13,17 +13,7 @@ import { DialogDeleteAccount } from '@components/edit-profile/dialog-delete-acco
 import { SelectYearRange } from '@components/edit-profile/select-year-range/select-year-range';
 import { SignIn } from '@components/edit-profile/sign-in/sign-in';
 import { useAppForm } from '@hooks/app-form/app-form.hook';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Alert,
-  MenuItem,
-  Modal,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Alert, MenuItem, Modal, Stack } from '@mui/material';
 import {
   ProfileFieldsRequestData,
   useDeleteUserProfileMutation,
@@ -69,11 +59,11 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
             birthYear: user.birthYear || 'not_appliable',
             location: user.location || 'not_appliable',
             name: user.name,
-            phone: user.phone,
+            phone: user.phone || '',
             email: user.email,
-            password: null,
-            newPassword: null,
-            repeatNewPassword: null,
+            password: '',
+            newPassword: '',
+            repeatNewPassword: '',
           }
         : {},
       validationSchema: updateUserSchema,
@@ -87,13 +77,6 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
       location.reload();
     }
   }, [deleteIsSuccess]);
-
-  const [expanded, setExpanded] = React.useState<string | false>(false);
-
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
 
   const formattedRequest = (value: string | null): string | null =>
     value === 'not_appliable' ? null : value;
@@ -158,127 +141,93 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                 disabled={updateIsLoading || deleteIsLoading}
                 className={styles.fieldset}
               >
-                <Accordion
-                  expanded={expanded === 'user-details'}
-                  onChange={handleChange('user-details')}
-                >
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
+                <h2 className={styles.title}>User Details</h2>
+                <InputField
+                  name="name"
+                  type="text"
+                  required={true}
+                  errors={errors}
+                  control={control}
+                  inputLabel="Full name"
+                />
+                <div className={styles.selectsWrapper}>
+                  <SelectFieldForm
+                    id="sex"
+                    name="sex"
+                    required={false}
+                    control={control}
+                    label="sex"
+                    defaultValue="not_appliable"
                   >
-                    <Typography className={styles.title}>
-                      User Details
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    {/*<h2 className={styles.title}>User Details</h2>*/}
-                    <InputField
-                      name="name"
-                      type="text"
-                      required={true}
-                      errors={errors}
-                      control={control}
-                      inputLabel="Full name"
-                    />
-                    <div className={styles.selectsWrapper}>
-                      <SelectFieldForm
-                        id="sex"
-                        name="sex"
-                        required={false}
-                        control={control}
-                        label="sex"
-                        defaultValue="not_appliable"
-                      >
-                        <MenuItem value="male">Male</MenuItem>
-                        <MenuItem value="female">Female</MenuItem>
-                        <MenuItem value="not_known">Other</MenuItem>
-                        <MenuItem value="not_appliable">
-                          Rather not say
-                        </MenuItem>
-                      </SelectFieldForm>
-                      <SelectYearRange
-                        start={1960}
-                        end={new Date().getFullYear()}
-                        name="birthYear"
-                        required={false}
-                        control={control}
-                        label="birthday"
-                        defaultValue="not_appliable"
-                      />
-                    </div>
-                    <InputField
-                      name="phone"
-                      type="text"
-                      required={false}
-                      errors={errors}
-                      control={control}
-                      inputLabel="Phone"
-                    />
-                    <InputField
-                      name="email"
-                      type="text"
-                      required={true}
-                      errors={errors}
-                      control={control}
-                      inputLabel="Email"
-                    />
-                    <SelectFieldForm
-                      id="location"
-                      name="location"
-                      required={false}
-                      control={control}
-                      label="location"
-                      defaultValue="not_appliable"
-                    >
-                      <MenuItem value="not_appliable">Rather not say</MenuItem>
-                      <MenuItem value="kyiv">Kyiv</MenuItem>
-                      <MenuItem value="kharkiv">Kharkiv</MenuItem>
-                      <MenuItem value="odesa">Odesa</MenuItem>
-                    </SelectFieldForm>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion
-                  expanded={expanded === 'change-password'}
-                  onChange={handleChange('change-password')}
+                    <MenuItem value="male">Male</MenuItem>
+                    <MenuItem value="female">Female</MenuItem>
+                    <MenuItem value="not_known">Other</MenuItem>
+                    <MenuItem value="not_appliable">Rather not say</MenuItem>
+                  </SelectFieldForm>
+                  <SelectYearRange
+                    start={1960}
+                    end={new Date().getFullYear()}
+                    name="birthYear"
+                    required={false}
+                    control={control}
+                    label="birthday"
+                    defaultValue="not_appliable"
+                  />
+                </div>
+                <InputField
+                  name="phone"
+                  type="text"
+                  required={false}
+                  errors={errors}
+                  control={control}
+                  inputLabel="Phone"
+                />
+                <InputField
+                  name="email"
+                  type="text"
+                  required={true}
+                  errors={errors}
+                  control={control}
+                  inputLabel="Email"
+                />
+                <SelectFieldForm
+                  id="location"
+                  name="location"
+                  required={false}
+                  control={control}
+                  label="location"
+                  defaultValue="not_appliable"
                 >
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography className={styles.title}>
-                      Change Password
-                    </Typography>
-                  </AccordionSummary>
-                  {/*<h2 className={styles.title}>Change Password</h2>*/}
-                  <AccordionDetails>
-                    <InputField
-                      name="password"
-                      type="password"
-                      required={false}
-                      errors={errors}
-                      control={control}
-                      inputLabel="Current Password"
-                    />
-                    <InputField
-                      name="newPassword"
-                      type="password"
-                      required={false}
-                      errors={errors}
-                      control={control}
-                      inputLabel="New Password"
-                    />
-                    <InputField
-                      name="repeatNewPassword"
-                      type="password"
-                      required={false}
-                      errors={errors}
-                      control={control}
-                      inputLabel="Repeat New Password"
-                    />
-                  </AccordionDetails>
-                </Accordion>
+                  <MenuItem value="not_appliable">Rather not say</MenuItem>
+                  <MenuItem value="kyiv">Kyiv</MenuItem>
+                  <MenuItem value="kharkiv">Kharkiv</MenuItem>
+                  <MenuItem value="odesa">Odesa</MenuItem>
+                </SelectFieldForm>
+                <h2 className={styles.title}>Change Password</h2>
+                <InputField
+                  name="password"
+                  type="password"
+                  required={false}
+                  errors={errors}
+                  control={control}
+                  inputLabel="Current Password"
+                />
+                <InputField
+                  name="newPassword"
+                  type="password"
+                  required={false}
+                  errors={errors}
+                  control={control}
+                  inputLabel="New Password"
+                />
+                <InputField
+                  name="repeatNewPassword"
+                  type="password"
+                  required={false}
+                  errors={errors}
+                  control={control}
+                  inputLabel="Repeat New Password"
+                />
                 <SignIn />
                 <div className={styles.btnWrapper}>
                   <ButtonOutline

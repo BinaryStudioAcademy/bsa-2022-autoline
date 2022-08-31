@@ -38,12 +38,8 @@ const sendLink = async (email: string, token: string): Promise<void> => {
     },
   };
 
-  transporter.sendMail(options, function (error, info) {
-    if (error) {
-      alert(error);
-    } else {
-      alert('Email sent: ' + info.response);
-    }
+  transporter.sendMail(options).catch((err) => {
+    throw err;
   });
 };
 

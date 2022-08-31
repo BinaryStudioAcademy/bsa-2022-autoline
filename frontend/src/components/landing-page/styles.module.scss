@@ -50,6 +50,10 @@ body {
   margin: var(--header-height) 0;
   overflow-x: hidden;
 
+  .searchWrapper {
+    margin-top: 60px;
+  }
+
   .firstContainer {
     display: flex;
     justify-content: space-between;

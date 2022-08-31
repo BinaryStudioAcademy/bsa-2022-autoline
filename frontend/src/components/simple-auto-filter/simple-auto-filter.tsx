@@ -68,7 +68,9 @@ const SimpleAutoFilter: FC = () => {
   };
 
   const isButtonVisible = Boolean(
-    Object.values(filters).some((filter) => filter.length >= 1),
+    Object.values(filters).some((filter) => filter.length >= 1) ||
+      brandDetails[0].brandId != '' ||
+      brandDetails[0].modelId != '',
   );
 
   const doSearch = (): void => {

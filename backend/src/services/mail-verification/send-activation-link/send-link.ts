@@ -20,9 +20,6 @@ const sendLink = async (email: string, token: string): Promise<void> => {
     subject: MailActivate.SUBJECT,
     template: 'email',
     html: templateService.getMessage(`${MailActivate.ACTIVATE_URL}${token}`),
-    context: {
-      link: `${MailActivate.ACTIVATE_URL}${token}`,
-    },
   };
 
   transporter.sendMail(options, function (error, info) {

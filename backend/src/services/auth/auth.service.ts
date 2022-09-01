@@ -6,6 +6,8 @@ import {
   sendEmail,
   verifyToken,
 } from '@helpers/helpers';
+import { getMessage as getResetConfirmMessage } from '@helpers/mailtrap/templates/reset-password-confirm';
+import { getMessage as getResetRequestMessage } from '@helpers/mailtrap/templates/reset-password-request';
 import { User } from '@prisma/client';
 import { sendLink } from '@services/mail-verification/send-activation-link/send-link';
 import { generateMailToken } from '@services/mail-verification/token.service';
@@ -101,15 +103,11 @@ const requestPasswordReset = async (email: string): Promise<string> => {
 
   const link = `${ENV.APP.SERVER_HOST}:${ENV.APP.SERVER_PORT}${ENV.API.V1_PREFIX}/auth/local/reset-password-check-token?token=${resetToken}`;
 
-  sendEmail(
-    user.email,
-    'Password Reset Request',
-    {
-      name: user.name,
-      link: link,
-    },
-    '@helpers/mailtrap/templates/reset-password-request.ts',
-  );
+  const template = getResetRequestMessage({
+    name: user.name,
+    link: link,
+  });
+  sendEmail(user.email, 'Password Reset Request', template);
   return link;
 };
 
@@ -168,14 +166,8 @@ const resetPassword = async (id: string, password: string): Promise<void> => {
     data: { password: hash },
   });
 
-  sendEmail(
-    user.email,
-    'Password Reset Successfully',
-    {
-      name: user.name,
-    },
-    '@helpers/mailtrap/templates/reset-password-confirm.ts',
-  );
+  const template = getResetConfirmMessage({ name: user.name });
+  sendEmail(user.email, 'Password Reset Successfully', template);
 };
 
 const refreshToken = async (token: string): Promise<string> => {

@@ -26,7 +26,6 @@ export type {
   WishlistResponseDto,
   WishlistsResponseDto,
   WishlistInput,
-  DeleteWishlistInput,
 } from './preferences/preferences';
 
 export type {

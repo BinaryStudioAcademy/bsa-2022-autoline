@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import compare from '@assets/images/compare.svg';
-import {
-  WishlistInput,
-  DeleteWishlistInput,
-} from '@autoline/shared/common/types/types';
+import { WishlistInput } from '@autoline/shared/common/types/types';
 import { ExtendedCarCardPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
 import { CompareToast } from '@components/compare-toast/compare-toast';
@@ -37,7 +34,6 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
     },
   } = props;
 
-  const [newWishlistId, setNewWishlistId] = useState(wishlistId);
   const [isLiked, setIsLiked] = useState(Boolean(wishlistId));
 
   const minPrices = pricesRanges.map(
@@ -49,30 +45,22 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
   );
   const maxPrice = formatPrice(Math.max(...maxPrices));
 
-  const [createWishlist, { data: newWishlist }] = useCreateWishlistMutation();
+  const [createWishlist] = useCreateWishlistMutation();
   const [deleteWishlist] = useDeleteWishlistMutation();
 
-  useEffect(() => {
-    if (newWishlist) {
-      setNewWishlistId(newWishlist.wishlistId);
-    }
-  }, [newWishlist]);
-
-  const handleCreateWishlist = async (): Promise<void> => {
-    const data: WishlistInput =
-      type === 'model' ? { modelId: carId } : { complectationId: carId };
-
+  const handleCreateWishlist = async (data: WishlistInput): Promise<void> => {
     await createWishlist(data);
   };
 
-  const handleDeleteWishlist = async (): Promise<void> => {
-    const data: DeleteWishlistInput = { wishlistId: newWishlistId as string };
+  const handleDeleteWishlist = async (data: WishlistInput): Promise<void> => {
     await deleteWishlist(data);
   };
 
   const handleLikeClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
-    isLiked ? handleDeleteWishlist() : handleCreateWishlist();
+    const data: WishlistInput =
+      type === 'model' ? { modelId: carId } : { complectationId: carId };
+    isLiked ? handleDeleteWishlist(data) : handleCreateWishlist(data);
     setIsLiked(!isLiked);
   };
 

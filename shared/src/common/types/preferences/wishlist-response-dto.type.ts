@@ -16,13 +16,8 @@ type WishlistInput = {
   complectationId?: string;
 };
 
-type DeleteWishlistInput = {
-  wishlistId: string;
-};
-
 export {
   type WishlistResponseDto,
   type WishlistsResponseDto,
   type WishlistInput,
-  type DeleteWishlistInput,
 };

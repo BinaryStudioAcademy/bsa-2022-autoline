@@ -1,5 +1,4 @@
 import {
-  DeleteWishlistInput,
   WishlistInput,
   WishlistResponseDto,
   WishlistsResponseDto,
@@ -22,7 +21,7 @@ const wishlistApi = api.injectEndpoints({
       }),
       invalidatesTags: ['WishlistCars'],
     }),
-    deleteWishlist: build.mutation<WishlistsResponseDto, DeleteWishlistInput>({
+    deleteWishlist: build.mutation<WishlistsResponseDto, WishlistInput>({
       query: (params) => ({
         url: `${API.WISHLIST}`,
         method: 'DELETE',

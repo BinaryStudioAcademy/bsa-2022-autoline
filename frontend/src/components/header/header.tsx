@@ -70,15 +70,19 @@ export const Header = (): React.ReactElement => {
   const userMenu = {
     account: {
       label: 'Account',
+      onClick: () => navigate('#'),
+    },
+    administration: {
+      label: 'Administration',
+      onClick: (): void => navigate(AppRoute.ADMINISTRATION),
     },
     settings: {
       label: 'Setting',
-      onClick: (): void => {
-        setOpenSettings(true);
-      },
+      onClick: (): void => setOpenSettings(true),
     },
     logout: {
       label: 'Logout',
+      onClick: () => navigate('#'),
     },
   };
 
@@ -123,6 +127,7 @@ export const Header = (): React.ReactElement => {
                   avatar={user.photoUrl}
                   reminders={reminders}
                   setOpenSettings={setOpenSettings}
+                  userMenu={userMenu}
                 />
               ) : (
                 <UnauthorisedElements />

@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 
 import { DrawerItem } from '@components/header/drawer-item/drawer-item';
 import {
+  CommonMenu,
+  UserMenu,
+} from '@components/header/menu-interfaces/menu-interfaces';
+import {
   Reminders,
   RemindersProps,
 } from '@components/header/reminders/reminders';
@@ -11,20 +15,8 @@ import { Divider, Drawer, IconButton, List } from '@mui/material';
 import styles from './styles.module.scss';
 
 interface DrawerComponentProps extends RemindersProps {
-  userMenu?: {
-    account: MenuItem;
-    settings: MenuItem;
-    logout: MenuItem;
-  };
-  commonMenu: {
-    search: MenuItem;
-    aboutUs: MenuItem;
-  };
-}
-
-export interface MenuItem {
-  label: string;
-  onClick?: () => void;
+  userMenu?: UserMenu;
+  commonMenu: CommonMenu;
 }
 
 export const DrawerComponent: React.FC<DrawerComponentProps> = ({
@@ -59,6 +51,12 @@ export const DrawerComponent: React.FC<DrawerComponentProps> = ({
             <DrawerItem
               label={userMenu.settings.label}
               onClick={userMenu.settings.onClick}
+            />
+          )}
+          {userMenu && (
+            <DrawerItem
+              label={userMenu.administration.label}
+              onClick={userMenu.administration.onClick}
             />
           )}
           <DrawerItem

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import DefaultAvatar from '@assets/images/header/default-avatar.png';
-import { AppRoute } from '@common/enums/enums';
+import { UserMenu } from '@components/header/menu-interfaces/menu-interfaces';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
@@ -13,12 +12,13 @@ import styles from './private-elements.module.scss';
 interface PrivateComponentProps extends RemindersProps {
   avatar: string | undefined | null;
   setOpenSettings: (state: boolean) => void;
+  userMenu: UserMenu;
 }
 
 export const PrivateElements: React.FC<PrivateComponentProps> = ({
   reminders,
   avatar,
-  setOpenSettings,
+  userMenu,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -62,22 +62,38 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose} className={styles.userNavLink}>
-          <Link to={AppRoute.PERSONAL}>Account</Link>
+        <MenuItem
+          onClick={(): void => {
+            handleClose();
+            userMenu.account.onClick();
+          }}
+          className={styles.userNavLink}
+        >
+          {userMenu.account.label}
         </MenuItem>
         <MenuItem
           onClick={(): void => {
             handleClose();
-            setOpenSettings(true);
+            userMenu.settings.onClick();
           }}
         >
-          Settings
+          {userMenu.settings.label}
         </MenuItem>
-        <MenuItem onClick={handleClose} className={styles.userNavLink}>
-          <Link to={AppRoute.ADMINISTRATION}>Administration</Link>
+        <MenuItem
+          onClick={(): void => {
+            handleClose();
+            userMenu.administration.onClick();
+          }}
+        >
+          {userMenu.administration.label}
         </MenuItem>
-        <MenuItem onClick={handleClose} className={styles.userNavLink}>
-          Logout
+        <MenuItem
+          onClick={(): void => {
+            handleClose();
+            userMenu.logout.onClick();
+          }}
+        >
+          {userMenu.logout.label}
         </MenuItem>
       </Menu>
     </div>

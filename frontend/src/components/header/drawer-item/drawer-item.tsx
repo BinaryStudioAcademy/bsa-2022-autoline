@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MenuItem } from '@components/header/drawer/drawer';
+import { MenuItem } from '@components/header/menu-interfaces/menu-interfaces';
 import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
 interface DrawerItemProps extends MenuItem {

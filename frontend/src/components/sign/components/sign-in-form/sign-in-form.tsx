@@ -37,9 +37,10 @@ export const SignInForm = (): React.ReactElement => {
     };
     signIn(user)
       .unwrap()
-      .then(({ accessToken }: SignInResponseData) => {
+      .then(({ accessToken, refreshToken }: SignInResponseData) => {
         localStorage.setItem(StorageKey.TOKEN, accessToken);
-        dispatch(setCredentials({ accessToken }));
+        localStorage.setItem(StorageKey.REFRESH, refreshToken);
+        dispatch(setCredentials({ accessToken, refreshToken }));
         navigate(AppRoute.ROOT);
       });
   };

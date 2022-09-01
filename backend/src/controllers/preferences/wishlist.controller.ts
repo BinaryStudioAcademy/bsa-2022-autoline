@@ -1,10 +1,7 @@
 import * as wishlistService from '@services/preferences/wishlist.service';
 import httpStatus from 'http-status-codes';
 
-import type {
-  DeleteWishlistInput,
-  WishlistResponseDto,
-} from '@autoline/shared/common/types/types';
+import type { WishlistResponseDto } from '@autoline/shared/common/types/types';
 import type { TypedRequestQuery } from '@common/types/controller/controller';
 import type { WishlistInput } from '@common/types/types';
 import type { NextFunction, Response } from 'express';
@@ -35,14 +32,21 @@ const setWishlist = async (
 };
 
 const deleteWishlist = async (
-  req: TypedRequestQuery<DeleteWishlistInput>,
+  req: TypedRequestQuery<WishlistInput>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const { wishlistId } = req.query;
+    const userId = req.body.tokenPayload.sub;
+    const { modelId, complectationId } = req.query;
 
-    await wishlistService.deleteWishlist(wishlistId);
+    const wishlist: WishlistInput = {
+      userId,
+      modelId,
+      complectationId,
+    };
+
+    await wishlistService.deleteWishlist(wishlist);
     res.json('Wishlist deleted successfully').status(httpStatus.CREATED);
   } catch (error) {
     if (error instanceof Error) {

@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import compare from '@assets/images/compare.svg';
-import {
-  WishlistInput,
-  DeleteWishlistInput,
-} from '@autoline/shared/common/types/types';
+import { WishlistInput } from '@autoline/shared/common/types/types';
 import { AppRoute } from '@common/enums/enums';
 import { ExtendedCarCardPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
@@ -57,27 +54,26 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
   const [createWishlist] = useCreateWishlistMutation();
   const [deleteWishlist] = useDeleteWishlistMutation();
 
-  const handleCreateWishlist = async (): Promise<void> => {
-    const data: WishlistInput =
-      type === 'model' ? { modelId: carId } : { complectationId: carId };
-
+  const handleCreateWishlist = async (data: WishlistInput): Promise<void> => {
     await createWishlist(data);
   };
 
-  const handleDeleteWishlist = async (): Promise<void> => {
-    const data: DeleteWishlistInput = { wishlistId: wishlistId as string };
+  const handleDeleteWishlist = async (data: WishlistInput): Promise<void> => {
     await deleteWishlist(data);
   };
 
   const handleLikeClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
+    const data: WishlistInput =
+      type === 'model' ? { modelId: carId } : { complectationId: carId };
 
     if (!authToken) {
       navigate(AppRoute.SIGN_IN);
       return;
     }
 
-    isLiked ? handleDeleteWishlist() : handleCreateWishlist();
+    isLiked ? handleDeleteWishlist(data) : handleCreateWishlist(data);
+
     setIsLiked(!isLiked);
   };
 

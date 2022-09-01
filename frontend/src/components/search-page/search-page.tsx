@@ -10,7 +10,7 @@ import { topCars } from '@components/landing-page/mock-top-cars';
 import { TopCarCard } from '@components/top-car-card/top-car-card';
 import SearchIcon from '@mui/icons-material/Search';
 import { Container, Grid } from '@mui/material';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 

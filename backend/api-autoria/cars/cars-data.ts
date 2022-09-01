@@ -26,8 +26,8 @@ export const carsData = [
         'price_start': 30221,
         'price_end': 42939,
         'photo_urls': [
-          'https://i.gyazo.com/94d09ce40e3e99e5eb4c0947bd70e93f.jpg',
-          'https://i.gyazo.com/316b369f25230007232a1bf1ff7b922e.jpg',
+          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/94d09ce40e3e99e5eb4c0947bd70e93f.jpg',
+          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/316b369f25230007232a1bf1ff7b922e.jpg',
         ],
         'complectations': [
           {
@@ -163,9 +163,9 @@ export const carsData = [
         'price_start': 23435,
         'price_end': 26695,
         'photo_urls': [
-          'https://i.gyazo.com/d9e28350716c9f6e0e52e864575f7bd3.jpg',
-          'https://i.gyazo.com/3481b2d5715f1fe102ebbc5842cf0c8e.jpg',
-          'https://i.gyazo.com/d9e28350716c9f6e0e52e864575f7bd3.jpg',
+          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/a20d96a28db1b027a482bf123969b07b.jpg',
+          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/3481b2d5715f1fe102ebbc5842cf0c8e.jpg',
+          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/d9e28350716c9f6e0e52e864575f7bd3.jpg',
         ],
         'complectations': [
           {
@@ -228,9 +228,9 @@ export const carsData = [
         'price_start': 37000,
         'price_end': 43570,
         'photo_urls': [
-          'https://i.gyazo.com/ad57bb5dc07ed7325595b00a5beea2be.jpg',
-          'https://i.gyazo.com/d6e3bded8cd65344c57a10684fbaef0c.jpg',
-          'https://i.gyazo.com/9dc12c43b72b18d7ba8fa69c8b10b9ac.jpg',
+          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/ad57bb5dc07ed7325595b00a5beea2be.jpg',
+          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/d6e3bded8cd65344c57a10684fbaef0c.jpg',
+          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/9dc12c43b72b18d7ba8fa69c8b10b9ac.jpg',
         ],
         'complectations': [
           {
@@ -293,8 +293,8 @@ export const carsData = [
         'price_start': 33160,
         'price_end': 35239,
         'photo_urls': [
-          'https://i.gyazo.com/a20792b9328e84a904099f066d231dfa.jpg',
-          'https://i.gyazo.com/2bf43ff720f4077289002834c41fa072.jpg',
+          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/a20792b9328e84a904099f066d231dfa.jpg',
+          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/2bf43ff720f4077289002834c41fa072.jpg',
         ],
         'complectations': [
           {

@@ -6,7 +6,7 @@ import { MenuItem } from '@mui/material';
 import { SelectFieldForm } from '../select-field-form/select-field-form';
 import styles from './styles.module.scss';
 
-interface RangeYearsProps {
+interface RangeYearProps {
   start: number;
   end: number;
   required: boolean;
@@ -17,7 +17,7 @@ interface RangeYearsProps {
   defaultValue: string;
 }
 
-export const SelectYearRange: React.FC<RangeYearsProps> = ({
+export const SelectYearRange: React.FC<RangeYearProps> = ({
   start,
   end,
   required,

@@ -12,6 +12,7 @@ class UpdateUserDto {
     public readonly location?: string | null,
     public readonly photo_url?: string | null,
     public readonly newPassword?: string,
+    public readonly password?: string,
     public readonly birth_year?: number | null,
   ) {}
 
@@ -27,6 +28,7 @@ class UpdateUserDto {
       location,
       photoUrl,
       newPassword,
+      password,
       birthYear,
     } = req.body;
 
@@ -39,6 +41,7 @@ class UpdateUserDto {
       location,
       photoUrl,
       newPassword,
+      password,
       birthYear,
     );
   }

@@ -69,7 +69,10 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
       }),
     );
 
-    if (isFiltersEmpty(filters)) {
+    if (
+      isFiltersEmpty({ ...filters, ...checkLists }) &&
+      brandDetails.every((detail) => detail.brandId === '')
+    ) {
       search([], true);
     }
   }, [filters, checkLists, brandDetails]);

@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { SignUpRequestData } from '@autoline/shared/common/types/types';
 import { signUpSchema as baseSchema } from '@autoline/shared/validation-schemas';
 import { AppRoute } from '@common/enums/app/app-route.enum';
+import { StorageKey } from '@common/enums/enums';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
-import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
-import { SignWithGoogle } from '@components/sign/components/sign-with-google/sign-with-google';
+import { SignWithOAuth } from '@components/sign/components/sign-with-oauth/sign-with-oauth';
 import { useAppForm } from '@hooks/hooks';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -56,14 +56,20 @@ export const SignUpForm = (): React.ReactElement => {
   };
 
   const navigateToSignIn = (): void => {
-    navigate('../sign-in');
+    navigate(AppRoute.SIGN_IN);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      localStorage.setItem(StorageKey.VERIFICATION_LINK, 'sent');
+    }
+  }, [isSuccess]);
 
   return (
     <>
       <h1 className={styles.title}>Sign Up</h1>
       <p className={styles.subtitle}>
-        <span>Have an account? </span>
+        <span>Already have an account? </span>
         <Link className={styles.link} to={AppRoute.SIGN_IN}>
           Sign In
         </Link>
@@ -144,8 +150,8 @@ export const SignUpForm = (): React.ReactElement => {
       <div className={styles.formBottom}>
         <Divider className={styles.divider}>or</Divider>
         <div className={styles.buttonsGroup}>
-          <SignWithGoogle title={'Sign Up'} />
-          <ButtonOutline text="Sign Up with Facebook" />
+          <SignWithOAuth title={'Google'} />
+          <SignWithOAuth title={'Facebook'} />
         </div>
       </div>
     </>

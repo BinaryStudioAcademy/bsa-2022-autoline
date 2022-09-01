@@ -1,8 +1,7 @@
 import { prisma } from '@data/prisma-client';
 
 import type {
-  ComplectationResponseDto,
-  ModelResponseDto,
+  CarPreview,
   WishlistResponseDto,
   WishlistsResponseDto,
 } from '@autoline/shared/common/types/types';
@@ -43,10 +42,14 @@ const setWishlist = async (
   };
 };
 
-const deleteWishlist = async (wishlistId: string): Promise<void> => {
-  const wishlist = await prisma.user_Wishlist.findUnique({
+const deleteWishlist = async (input: WishlistInput): Promise<void> => {
+  const { userId, modelId, complectationId } = input;
+
+  const wishlist = await prisma.user_Wishlist.findFirst({
     where: {
-      id: wishlistId,
+      user_id: userId,
+      model_id: modelId,
+      complectation_id: complectationId,
     },
   });
 
@@ -91,16 +94,6 @@ const getWishlistByUserId = async (
               logo_url: true,
             },
           },
-          body_type: {
-            select: {
-              name: true,
-            },
-          },
-          manufacture_country: {
-            select: {
-              name: true,
-            },
-          },
           prices_ranges: {
             select: {
               price_start: true,
@@ -124,7 +117,7 @@ const getWishlistByUserId = async (
       id: wishlist.model?.id,
       createdAt: wishlist.created_at,
       wishlistId: wishlist.id,
-      name: wishlist.model?.name,
+      modelName: wishlist.model?.name,
       yearStart: wishlist.model?.year_start,
       yearEnd: wishlist.model?.year_end,
       photoUrls: wishlist.model?.photo_urls,
@@ -132,11 +125,9 @@ const getWishlistByUserId = async (
         name: wishlist.model?.brand.name,
         logoUrl: wishlist.model?.brand.logo_url,
       },
-      bodyType: wishlist.model?.body_type.name,
-      manufactureCountry: wishlist.model?.manufacture_country.name,
       pricesRanges: wishlist.model?.prices_ranges,
       description: wishlist.model?.description,
-    } as ModelResponseDto;
+    } as CarPreview;
 
     return data;
   });
@@ -157,29 +148,6 @@ const getWishlistByUserId = async (
         select: {
           id: true,
           name: true,
-          engine: true,
-          engine_displacement: true,
-          engine_power: true,
-          color: {
-            select: {
-              name: true,
-            },
-          },
-          drivetrain: {
-            select: {
-              name: true,
-            },
-          },
-          fuel_type: {
-            select: {
-              name: true,
-            },
-          },
-          transmission_type: {
-            select: {
-              name: true,
-            },
-          },
           prices_ranges: {
             select: {
               price_start: true,
@@ -196,16 +164,6 @@ const getWishlistByUserId = async (
                 select: {
                   name: true,
                   logo_url: true,
-                },
-              },
-              body_type: {
-                select: {
-                  name: true,
-                },
-              },
-              manufacture_country: {
-                select: {
-                  name: true,
                 },
               },
               description: true,
@@ -225,18 +183,8 @@ const getWishlistByUserId = async (
         createdAt: wishlist.created_at,
         wishlistId: wishlist.id,
         complectationName: wishlist.complectation?.name,
-        engine: wishlist.complectation?.engine,
-        engineDisplacement:
-          wishlist.complectation?.engine_displacement.toNumber(),
-        enginePower: wishlist.complectation?.engine_power,
-        color: {
-          name: wishlist.complectation?.color.name,
-        },
-        drivetrain: wishlist.complectation?.drivetrain.name,
-        fuelType: wishlist.complectation?.fuel_type.name,
-        transmissionType: wishlist.complectation?.transmission_type.name,
         pricesRanges: wishlist.complectation?.prices_ranges,
-        name: modelData?.name,
+        modelName: modelData?.name,
         yearStart: modelData?.year_start,
         yearEnd: modelData?.year_end,
         photoUrls: modelData?.photo_urls,
@@ -244,10 +192,8 @@ const getWishlistByUserId = async (
           name: modelData?.brand.name,
           logoUrl: modelData?.brand.logo_url,
         },
-        bodyType: modelData?.body_type.name,
-        manufactureCountry: modelData?.manufacture_country.name,
         description: modelData?.description,
-      } as ComplectationResponseDto;
+      } as CarPreview;
 
       return data;
     },

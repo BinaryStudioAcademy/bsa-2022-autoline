@@ -14,9 +14,11 @@ const getNewCars = async (
 ): Promise<void> => {
   try {
     const limit = +req.query.limit;
-    const newCars = await newCarsService.getNewCars(limit);
+    const userId = req.body.tokenPayload ? req.body.tokenPayload.sub : '';
+    const newCars = await newCarsService.getNewCars(limit, userId);
     res.status(httpStatus.OK).json(newCars);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     next(error);
   }

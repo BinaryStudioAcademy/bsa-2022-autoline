@@ -1,8 +1,14 @@
 import { ENV } from '@common/enums/app/app';
 import { prisma } from '@data/prisma-client';
-import { bcryptHash, sendEmail, createToken } from '@helpers/helpers';
+import {
+  bcryptHash,
+  createToken,
+  sendEmail,
+  verifyToken,
+} from '@helpers/helpers';
 import { User } from '@prisma/client';
-import { mailSend } from '@services/mail-verification/send.service';
+import { sendLink } from '@services/mail-verification/send-activation-link/send-link';
+import { generateMailToken } from '@services/mail-verification/token.service';
 import { updateMailToken } from '@services/mail-verification/user-data.service/user-security';
 import bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
@@ -16,7 +22,7 @@ const signupLocal = async (
   const { password, ...userData } = user;
   const hashedPassword = await bcryptHash(password);
 
-  const { id: newUserId, email: newUserEmail } = await prisma.user.create({
+  const { id, email } = await prisma.user.create({
     data: {
       ...userData,
       User_Security: {
@@ -31,8 +37,12 @@ const signupLocal = async (
     },
   });
 
-  const token = mailSend(newUserEmail);
-  updateMailToken(newUserId, token);
+  const token = generateMailToken({
+    email,
+    isActivated: false,
+  });
+  sendLink(email, token);
+  await updateMailToken(id, token);
 
   return {
     message: 'User created',
@@ -80,7 +90,7 @@ const requestPasswordReset = async (email: string): Promise<string> => {
     {
       sub: user.id,
     },
-    ENV.JWT.SECRET,
+    ENV.JWT.SECRET as string,
     { expiresIn: '1h' },
   );
 
@@ -98,13 +108,13 @@ const requestPasswordReset = async (email: string): Promise<string> => {
       name: user.name,
       link: link,
     },
-    './templates/reset-password-request.ts',
+    '@helpers/mailtrap/templates/reset-password-request.ts',
   );
   return link;
 };
 
 const resetPasswordCheckToken = async (token: string): Promise<string> => {
-  const payload = jwt.verify(token, ENV.JWT.SECRET) as jwt.JwtPayload;
+  const payload = jwt.verify(token, ENV.JWT.SECRET as string) as jwt.JwtPayload;
   if (!payload.sub) {
     throw new Error('Payload token is invalid');
   }
@@ -164,8 +174,27 @@ const resetPassword = async (id: string, password: string): Promise<void> => {
     {
       name: user.name,
     },
-    './templates/reset-password-confirm.ts',
+    '@helpers/mailtrap/templates/reset-password-confirm.ts',
   );
+};
+
+const refreshToken = async (token: string): Promise<string> => {
+  const tokenPayload = verifyToken(token);
+
+  const user = await prisma.user.findFirstOrThrow({
+    where: {
+      id: tokenPayload.sub as string,
+      User_Security: {
+        refresh_token: token,
+      },
+    },
+  });
+
+  return createToken({
+    email: user.email,
+    sub: user.id,
+    role: user.role,
+  });
 };
 
 export {
@@ -174,4 +203,5 @@ export {
   requestPasswordReset,
   resetPasswordCheckToken,
   resetPassword,
+  refreshToken,
 };

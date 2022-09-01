@@ -13,6 +13,8 @@
 .carImage {
   grid-column: span 2;
   width: 100%;
+  height: 180px;
+  object-fit: cover;
   margin: 1rem 0;
   border-radius: 5px;
 }
@@ -81,7 +83,12 @@
 }
 
 .carDescription {
+  /* stylelint-disable-next-line value-no-vendor-prefix */
+  display: -webkit-box;
   margin: 0;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   color: var(--gray400);
   font-weight: 400;
   font-size: 0.9rem;

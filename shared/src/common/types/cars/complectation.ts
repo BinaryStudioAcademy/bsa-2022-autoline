@@ -1,6 +1,8 @@
 type ComplectationDetailsType = {
   id: string;
   name: string;
+  model: string;
+  brand: string;
   engine: string;
   engineDisplacement: number;
   enginePower: number;

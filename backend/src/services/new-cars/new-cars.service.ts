@@ -29,6 +29,12 @@ const getNewCars = async (limit: number): Promise<CarPreview[]> => {
           created_at: true,
         },
       },
+      complectations: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
       prices_ranges: {
         select: {
           price_start: true,

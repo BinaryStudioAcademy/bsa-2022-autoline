@@ -73,6 +73,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
     }
 
     isLiked ? handleDeleteWishlist(data) : handleCreateWishlist(data);
+
     setIsLiked(!isLiked);
   };
 

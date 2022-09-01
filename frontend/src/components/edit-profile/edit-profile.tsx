@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import CrossIcon from '@assets/images/edit-profile/cross.svg';
 import DefaultAvatar from '@assets/images/edit-profile/default-avatar.png';
 import PencilIcon from '@assets/images/edit-profile/pencil.svg';
 import TrashIcon from '@assets/images/edit-profile/trash.svg';
 import { updateUserSchema } from '@autoline/shared';
-import { AppRoute } from '@common/enums/enums';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
 import { DialogDeleteAccount } from '@components/edit-profile/dialog-delete-account/dialog-delete-account';
-import { SelectYearRange } from '@components/edit-profile/select-years-range/select-year-range';
+import { SelectYearRange } from '@components/edit-profile/select-year-range/select-year-range';
 import { SignIn } from '@components/edit-profile/sign-in/sign-in';
 import { useAppForm } from '@hooks/app-form/app-form.hook';
 import { Alert, MenuItem, Modal, Stack } from '@mui/material';
@@ -20,7 +18,9 @@ import {
   ProfileFieldsRequestData,
   useDeleteUserProfileMutation,
   useUpdateUserProfileMutation,
+  useGetUserQuery,
 } from '@store/queries/user/update-user';
+import { logOut } from '@store/root-reducer';
 
 import { SelectFieldForm } from './select-field-form/select-field-form';
 import styles from './styles.module.scss';
@@ -30,15 +30,8 @@ interface EditProfileProps {
 }
 
 export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
-  const user = {
-    sex: null,
-    birthYear: '1996',
-    location: 'kyiv',
-    name: 'stepan shevchenko',
-    phone: '+380938889922',
-    email: 'stepan1909@gmail.com',
-  };
-  const navigate = useNavigate();
+  const { data: user } = useGetUserQuery();
+
   const [openDialog, setOpenDialog] = useState(false);
   const [
     updateUserProfile,
@@ -58,35 +51,42 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
     },
   ] = useDeleteUserProfileMutation();
 
-  const { control, errors, handleSubmit, setValue } =
+  const { control, errors, handleSubmit } =
     useAppForm<ProfileFieldsRequestData>({
-      defaultValues: {
-        sex: user.sex || 'not_appliable',
-        birthYear: user.birthYear || 'not_appliable',
-        location: user.location || 'not_appliable',
-        name: user.name,
-        phone: user.phone,
-        email: user.email,
-      },
+      defaultValues: user
+        ? {
+            sex: user.sex || 'not_appliable',
+            birthYear: user.birthYear || 'not_appliable',
+            location: user.location || 'not_appliable',
+            name: user.name,
+            phone: user.phone || '',
+            email: user.email,
+            password: '',
+            newPassword: '',
+            repeatNewPassword: '',
+          }
+        : {},
       validationSchema: updateUserSchema,
     });
 
   useEffect(() => {
     if (deleteIsSuccess) {
-      navigate(AppRoute.ROOT);
+      logOut();
+      //A temporary solution until logout is implemented
+      localStorage.removeItem('token');
+      location.reload();
     }
   }, [deleteIsSuccess]);
 
+  const formattedRequest = (value: string | null): string | null =>
+    value === 'not_appliable' ? null : value;
+
   const onSubmit: SubmitHandler<ProfileFieldsRequestData> = async (data) => {
-    const updatedUser = await updateUserProfile(data);
-
-    if ('data' in updatedUser) {
-      const { data } = updatedUser;
-
-      for (const [key, value] of Object.entries(data)) {
-        setValue(key, value);
-      }
-    }
+    await updateUserProfile({
+      ...data,
+      birthYear: formattedRequest(data.birthYear),
+      location: formattedRequest(data.location),
+    });
   };
 
   const handleClickOpenDialog = (): void => {

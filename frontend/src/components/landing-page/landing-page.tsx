@@ -5,6 +5,7 @@ import { AppRoute } from '@common/enums/app/app-route.enum';
 import { CarsCategories } from '@components/cars-categories/cars-categories';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
+import { Header } from '@components/header/header';
 import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { SimpleAutoFilter } from '@components/simple-auto-filter/simple-auto-filter';
 import { TopCarsAutoria } from '@components/top-cars-autoria/top-cars-autoria';

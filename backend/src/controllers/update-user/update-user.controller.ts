@@ -1,8 +1,9 @@
 import { TokenPayload } from '@autoline/shared';
+import { ExceptionMessage } from '@common/enums/exception/exception-message.enum';
 import { TypedRequestBody } from '@common/types/controller/controller';
 import { UpdateUserDto } from '@dtos/user/update-user.dto';
 import { Sex } from '@prisma/client';
-import * as updateUserService from '@services/update-user/update-user.service';
+import * as userService from '@services/user/user.service';
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
 
@@ -27,7 +28,7 @@ const updateUser = async (
 ): Promise<void> => {
   try {
     const user = UpdateUserDto.createFromRequest(req);
-    const result = await updateUserService.updateUser(user);
+    const result = await userService.updateUser(user);
     res.status(httpStatus.OK).json(result);
   } catch (error) {
     next(error);
@@ -40,11 +41,28 @@ const deleteUser = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    await updateUserService.deleteUser(req.body.tokenPayload.sub);
+    await userService.deleteUser(req.body.tokenPayload.sub);
     res.status(httpStatus.OK).json();
   } catch (error) {
     next(error);
   }
 };
 
-export { updateUser, deleteUser };
+const getUser = async (
+  req: TypedRequestBody<{ tokenPayload: TokenPayload }>,
+  res: Response<Partial<UpdateUserReq>>,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const user = await userService.getUser(req.body.tokenPayload.sub);
+    if (user) {
+      res.status(httpStatus.OK).json(user);
+    } else {
+      throw new Error(ExceptionMessage.UNAUTHORIZED_USER);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { updateUser, deleteUser, getUser };

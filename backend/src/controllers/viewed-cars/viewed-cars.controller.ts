@@ -15,12 +15,12 @@ const getViewedCarsList = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const { userId } = req.params;
+    const userId = req.body.tokenPayload.sub;
     const { skip, take } = req.query;
     const requestDataDto = {
       userId,
-      skip: +skip,
-      take: +take,
+      skip: +(skip || 0),
+      take: +(take || 0),
     };
     const result = await viewedCarsService.getViewedCarsList(requestDataDto);
     res.json(result).status(httpStatus.OK);
@@ -38,7 +38,7 @@ const addCarToViewed = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const { userId } = req.params;
+    const userId = req.body.tokenPayload.sub;
     const { modelId, complectationId } = req.query;
 
     const viewedCar = {

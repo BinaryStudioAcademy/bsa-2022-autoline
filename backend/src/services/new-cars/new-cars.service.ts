@@ -35,6 +35,12 @@ const getNewCars = async (
           created_at: true,
         },
       },
+      complectations: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
       prices_ranges: {
         select: {
           price_start: true,

@@ -19,8 +19,8 @@ const getViewedCarsList = async (
     const { skip, take } = req.query;
     const requestDataDto = {
       userId,
-      skip: skip ? +skip : 0,
-      take: take ? +take : 0,
+      skip: +(skip || 0),
+      take: +(take || 0),
     };
     const result = await viewedCarsService.getViewedCarsList(requestDataDto);
     res.json(result).status(httpStatus.OK);

@@ -1,12 +1,9 @@
 import { ENV } from '@common/enums/app/app';
 import nodemailer from 'nodemailer';
 
-import { NodemailerPayload } from './interfaces/nodemailer-payload';
-
 const sendEmail = async (
   email: string,
   subject: string,
-  payload: NodemailerPayload,
   template: string,
 ): Promise<void> => {
   const transporter = nodemailer.createTransport({
@@ -18,12 +15,11 @@ const sendEmail = async (
     },
   });
 
-  const templateService = await import(template);
   const options = {
     from: ENV.MAILTRAP.FROM_EMAIL,
     to: email,
     subject: subject,
-    html: templateService.getMessage(payload),
+    html: template,
   };
 
   transporter.sendMail(options).catch((err) => {

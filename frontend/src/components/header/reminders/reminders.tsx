@@ -79,39 +79,6 @@ export const Reminders: React.FC<RemindersProps> = ({
           </ListItemButton>
         </Link>
       </List>
-      {/*<Box*/}
-      {/*  className={clsx(styles.reminder, {*/}
-      {/*    [styles.row]: needRow,*/}
-      {/*  })}*/}
-      {/*>*/}
-      {/*  <Link to={favorites.linkTo} className={styles.link}>*/}
-      {/*    <Badge*/}
-      {/*      badgeContent={favorites.count}*/}
-      {/*      color="primary"*/}
-      {/*      invisible={favorites.count < 1}*/}
-      {/*    >*/}
-      {/*      <FavoriteBorderIcon color="primary" />*/}
-      {/*    </Badge>*/}
-      {/*  </Link>*/}
-      {/*  <Link to={notifications.linkTo} className={styles.link}>*/}
-      {/*    <Badge*/}
-      {/*      badgeContent={notifications.count}*/}
-      {/*      color="primary"*/}
-      {/*      invisible={notifications.count < 1}*/}
-      {/*    >*/}
-      {/*      <NotificationsNoneIcon color="primary" />*/}
-      {/*    </Badge>*/}
-      {/*  </Link>*/}
-      {/*  <Link to={comparisons.linkTo} className={styles.link}>*/}
-      {/*    <Badge*/}
-      {/*      badgeContent={comparisons.count}*/}
-      {/*      color="primary"*/}
-      {/*      invisible={comparisons.count < 1}*/}
-      {/*    >*/}
-      {/*      <BalanceIcon color="primary" />*/}
-      {/*    </Badge>*/}
-      {/*  </Link>*/}
-      {/*</Box>*/}
     </ThemeProvider>
   );
 };

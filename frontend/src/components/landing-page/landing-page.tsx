@@ -14,7 +14,6 @@ import { Container } from '@mui/material';
 import { useGetNewCarsQuery } from '@store/queries/new-cars';
 import { clsx } from 'clsx';
 
-import { Header } from './components/components';
 import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {

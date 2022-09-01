@@ -99,6 +99,10 @@
   font-size: 1.2rem;
 }
 
+.MuiMenu-list {
+  max-height: 350px;
+}
+
 .MuiList-root {
   .MuiListItemButton-root {
     display: flex;

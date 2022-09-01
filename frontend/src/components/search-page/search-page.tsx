@@ -6,8 +6,7 @@ import { CarListItem } from '@components/car-list-item/car-list-item';
 import { PageContainer } from '@components/common/page-container/page-container';
 import { Title } from '@components/common/title/title';
 import { Header } from '@components/header/header';
-import { topCars } from '@components/landing-page/mock-top-cars';
-import { TopCarCard } from '@components/top-car-card/top-car-card';
+import { TopCarsAutoria } from '@components/top-cars-autoria/top-cars-autoria';
 import SearchIcon from '@mui/icons-material/Search';
 import { Container, Grid } from '@mui/material';
 import { clsx } from 'clsx';
@@ -35,16 +34,7 @@ const SearchPage: React.FC = () => {
                   />
                   <h3 className={styles.noCarsTitle}>No cars found</h3>
                 </Container>
-                <Container className={styles.topAutoriaContainer}>
-                  <div>
-                    <div className={styles.topAutoriaHeader}>Top Autoria</div>
-                    <div className={styles.topAutoriaCards}>
-                      {topCars.map((car) => (
-                        <TopCarCard car={car} key={car.id} />
-                      ))}
-                    </div>
-                  </div>
-                </Container>
+                <TopCarsAutoria />
               </>
             )}
             {cars.map((car) => (

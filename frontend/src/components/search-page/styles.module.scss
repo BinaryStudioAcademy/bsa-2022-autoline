@@ -6,21 +6,3 @@
   margin: 0;
   padding-left: 0.5rem;
 }
-
-.topAutoriaContainer {
-  margin-top: 4rem;
-}
-
-.topAutoriaHeader {
-  margin-bottom: 1.25rem;
-  font-weight: 900;
-  font-size: 1.6rem;
-  text-transform: uppercase;
-}
-
-.topAutoriaCards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-  justify-items: center;
-  gap: 1.5rem;
-}

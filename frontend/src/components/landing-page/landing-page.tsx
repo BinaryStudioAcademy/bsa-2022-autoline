@@ -7,14 +7,13 @@ import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { SimpleAutoFilter } from '@components/simple-auto-filter/simple-auto-filter';
-import { TopCarCard } from '@components/top-car-card/top-car-card';
+import { TopCarsAutoria } from '@components/top-cars-autoria/top-cars-autoria';
 import { useAppSelector } from '@hooks/hooks';
 import { Container } from '@mui/material';
 import { useGetNewCarsQuery } from '@store/queries/new-cars';
 import { clsx } from 'clsx';
 
 import { Header } from './components/components';
-import { topCars } from './mock-top-cars';
 import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {
@@ -78,12 +77,7 @@ export const LandingPage = (): React.ReactElement => {
           <CarsCategories />
         </div>
         <div className={styles.fourthContainer}>
-          <div className={styles.fourthContainerHeader}>Top Autoria</div>
-          <div className={styles.fourthContainerCards}>
-            {topCars.map((car) => (
-              <TopCarCard car={car} key={car.id} />
-            ))}
-          </div>
+          <TopCarsAutoria />
         </div>
       </Container>
     </>

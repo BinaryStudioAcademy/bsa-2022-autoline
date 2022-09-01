@@ -126,18 +126,6 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
       <h4>FILTER</h4>
       <div className={styles.row}>
         <div className={styles.column}>
-          <h5 className={styles.blockTitle}>Region</h5>
-          {options && (
-            <AutocompleteInput
-              label="Regions"
-              onChange={handleRegionChange}
-              value={getValueById(options.regions, filters.regionId)}
-              options={options.regions.map((item: AutoRiaOption) => ({
-                label: item.name,
-                id: item.id,
-              }))}
-            />
-          )}
           <CheckboxList
             title="Body Type"
             list={options && options.bodyTypes}
@@ -163,20 +151,6 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
             />
           ))}
 
-          <h5 className={styles.blockTitle}>Year</h5>
-          <div className={styles.row}>
-            <RangeSelector
-              list={years}
-              minTitle="Year Min"
-              maxTitle="Year Max"
-              selectedMin={filters.yearStart}
-              selectedMax={filters.yearEnd}
-              onChange={handleRangeChange}
-              minFilterName={FiltersNames.YEAR_START}
-              maxFilterName={FiltersNames.YEAR_END}
-            />
-          </div>
-
           <h5 className={styles.blockTitle}>Price</h5>
           <div className={styles.row}>
             <RangeSelector
@@ -191,6 +165,19 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
             />
           </div>
 
+          <h5 className={styles.blockTitle}>Year</h5>
+          <div className={styles.row}>
+            <RangeSelector
+              list={years}
+              minTitle="Year Min"
+              maxTitle="Year Max"
+              selectedMin={filters.yearStart}
+              selectedMax={filters.yearEnd}
+              onChange={handleRangeChange}
+              minFilterName={FiltersNames.YEAR_START}
+              maxFilterName={FiltersNames.YEAR_END}
+            />
+          </div>
           <h5 className={styles.blockTitle}>Engine Power</h5>
           <div className={styles.row}>
             <RangeSelector
@@ -217,6 +204,18 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
               onChange={handleRangeChange}
             />
           </div>
+          <h5 className={styles.blockTitle}>Region</h5>
+          {options && (
+            <AutocompleteInput
+              label="Regions"
+              onChange={handleRegionChange}
+              value={getValueById(options.regions, filters.regionId)}
+              options={options.regions.map((item: AutoRiaOption) => ({
+                label: item.name,
+                id: item.id,
+              }))}
+            />
+          )}
           <CheckboxList
             title="Color"
             list={options && options.colors}

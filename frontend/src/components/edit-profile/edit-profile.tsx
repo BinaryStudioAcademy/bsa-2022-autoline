@@ -228,7 +228,10 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   control={control}
                   inputLabel="Repeat New Password"
                 />
-                <SignIn />
+                <SignIn
+                  google={user?.isGoogleConnected as boolean}
+                  facebook={user?.isFacebookConnected as boolean}
+                />
                 <div className={styles.btnWrapper}>
                   <ButtonOutline
                     text="Cancel"

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { StorageKey } from '@common/enums/enums';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
@@ -6,11 +6,14 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import { openOAuthPage } from '@helpers/sign/open-oauth';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import { setCredentials } from '@store/auth/slice';
+import { useGetUserQuery } from '@store/queries/user/update-user';
 
-const ConnectOauth: React.FC<{ title: string }> = ({ title }) => {
-  const [connected, setConnected] = useState(false);
+const ConnectOauth: React.FC<{ title: string; isConnected: boolean }> = ({
+  title,
+  isConnected,
+}) => {
   const token = useAppSelector((state) => state.auth.token);
-  // const user = useAppSelector((state) => state.auth.user);
+  const { refetch } = useGetUserQuery();
 
   const onStorageEvent = useCallback(
     (e: StorageEvent): void => {
@@ -18,7 +21,7 @@ const ConnectOauth: React.FC<{ title: string }> = ({ title }) => {
         const accessToken = localStorage.getItem(StorageKey.TOKEN);
         const refreshToken = localStorage.getItem(StorageKey.REFRESH);
         dispatch(setCredentials({ accessToken, refreshToken }));
-        setConnected(true);
+        refetch();
       }
     },
     [title],
@@ -26,7 +29,8 @@ const ConnectOauth: React.FC<{ title: string }> = ({ title }) => {
 
   const dispatch = useAppDispatch();
 
-  const connectOauth = (): void => {
+  const connectOauth = (e: React.MouseEvent): void => {
+    e.preventDefault();
     openOAuthPage(title, token);
   };
 
@@ -38,7 +42,7 @@ const ConnectOauth: React.FC<{ title: string }> = ({ title }) => {
     };
   }, [onStorageEvent]);
 
-  if (connected) {
+  if (isConnected) {
     return (
       <ButtonFill
         text={title + ' is connected'}

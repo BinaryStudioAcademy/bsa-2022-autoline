@@ -4,13 +4,16 @@ import { ConnectOauth } from '@components/edit-profile/sign-in/oauth/connect-oau
 
 import style from './styles.module.scss';
 
-export const SignIn: React.FC = () => {
+export const SignIn: React.FC<{ google: boolean; facebook: boolean }> = ({
+  google,
+  facebook,
+}) => {
   return (
     <>
       <h2 className={style.title}>Sign In with</h2>
       <div className={style.btnWrapper}>
-        <ConnectOauth title="Google" />
-        <ConnectOauth title="Facebook" />
+        <ConnectOauth title="Google" isConnected={google} />
+        <ConnectOauth title="Facebook" isConnected={facebook} />
       </div>
     </>
   );

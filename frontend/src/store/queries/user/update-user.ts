@@ -9,6 +9,8 @@ interface UserFields {
   phone: string | null;
   email: string | null;
   photoUrl: string | null;
+  isGoogleConnected: boolean;
+  isFacebookConnected: boolean;
 }
 
 export interface ProfileFieldsRequestData extends UserFields {

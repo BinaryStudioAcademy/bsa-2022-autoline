@@ -64,4 +64,6 @@ export type {
   ViewedCarResponseDto,
   GetViewedCarsResponse,
   GetViewedCarsRequestDto,
+  GetViwedCarsPayload,
+  SetViewedCarPayload,
 } from './viewed-cars/viewed-cars';

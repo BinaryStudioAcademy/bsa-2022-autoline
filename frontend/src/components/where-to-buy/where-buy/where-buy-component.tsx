@@ -1,9 +1,10 @@
 import logo from '@assets/images/logo-autoria.png';
+import { WhereBuyItemProps } from '@common/types/where-to-buy/where-to-buy';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 
 import styles from './styles.module.scss';
 
-const WhereToBuyComponent: React.FC = () => {
+const WhereBuyItem: React.FC<WhereBuyItemProps> = () => {
   return (
     <>
       <div className={styles.container}>
@@ -33,4 +34,4 @@ const WhereToBuyComponent: React.FC = () => {
   );
 };
 
-export { WhereToBuyComponent };
+export { WhereBuyItem };

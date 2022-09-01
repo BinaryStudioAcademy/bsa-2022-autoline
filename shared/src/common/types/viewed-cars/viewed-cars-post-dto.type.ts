@@ -1,3 +1,8 @@
+type SetViewedCarPayload = {
+  modelId: string;
+  complectationId: string;
+};
+
 type SetViewedCarRequestDto = {
   userId: string;
   modelId: string;
@@ -36,10 +41,15 @@ interface GetViewedCarsResponse {
   count: number;
 }
 
+type GetViwedCarsPayload<T> = {
+  skip?: T;
+  take?: T;
+};
+
 type GetViewedCarsRequestDto<T> = {
   userId: string;
-  skip: T;
-  take: T;
+  skip?: T;
+  take?: T;
 };
 
 export type {
@@ -48,4 +58,6 @@ export type {
   ViewedCarResponseDto,
   GetViewedCarsResponse,
   GetViewedCarsRequestDto,
+  GetViwedCarsPayload,
+  SetViewedCarPayload,
 };

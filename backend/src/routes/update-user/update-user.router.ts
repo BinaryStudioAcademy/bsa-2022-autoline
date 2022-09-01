@@ -5,7 +5,11 @@ import { Router } from 'express';
 const PATH = '/user';
 
 const updateUserRouter = Router();
-
+updateUserRouter.get(
+  `${PATH}`,
+  middlewares.userAuthMiddleware,
+  userUpdateController.getUser,
+);
 updateUserRouter.put(
   `${PATH}`,
   middlewares.userAuthMiddleware,

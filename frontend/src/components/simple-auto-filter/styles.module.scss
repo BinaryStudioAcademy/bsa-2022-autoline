@@ -86,6 +86,12 @@
   border-radius: 50px;
 }
 
+.addButton {
+  color: var(--blue100);
+  font-weight: 700;
+  cursor: pointer;
+}
+
 @media (max-width: 650px) {
   .container {
     min-width: fit-content;

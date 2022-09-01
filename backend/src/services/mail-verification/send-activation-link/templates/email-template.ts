@@ -37,7 +37,7 @@ export const getMessage = (link: string): string => {
           <p>
             <a target="_blank"
               style="text-decoration:none; background-color: #3765FF; border: #3765FF 1px solid; border-radius: 30px; color: #fff; padding:10px 10px; display:block;"
-              href=http://${link}>
+              href=${link}>
               <strong>Verify Email</strong></a>
           </p>
           <p style="text-align:left">

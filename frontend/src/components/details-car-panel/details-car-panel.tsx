@@ -1,9 +1,6 @@
 import { FC } from 'react';
 
-import {
-  WishlistInput,
-  DeleteWishlistInput,
-} from '@autoline/shared/common/types/types';
+import { WishlistInput } from '@autoline/shared/common/types/types';
 import { DetailsCarPanelPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
 import { convertPrice } from '@helpers/utils/convert-price';
@@ -40,10 +37,10 @@ const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
   };
 
   const handleDeleteWishlist = async (): Promise<void> => {
-    const inputData: DeleteWishlistInput = {
-      wishlistId: data?.wishlist[0].id as string,
-    };
-    await deleteWishlist(inputData);
+    const data: WishlistInput = complectationId
+      ? { modelId }
+      : { complectationId };
+    await deleteWishlist(data);
   };
 
   const handleLikeClick = (event: React.MouseEvent): void => {
@@ -80,7 +77,7 @@ const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
         </div>
       </div>
       <div className={styles.lables}>
-        {data?.options.important.map((option) => (
+        {data?.options.important.map((option: string) => (
           <div key={option} className={styles.label}>
             {option}
           </div>

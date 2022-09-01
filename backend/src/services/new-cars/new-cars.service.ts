@@ -2,7 +2,10 @@ import { prisma } from '@data/prisma-client';
 
 import type { CarPreview } from '@autoline/shared/common/types/types';
 
-const getNewCars = async (limit: number): Promise<CarPreview[]> => {
+const getNewCars = async (
+  limit: number,
+  userId: string,
+): Promise<CarPreview[]> => {
   const newCars = await prisma.model.findMany({
     take: limit,
     orderBy: [
@@ -24,6 +27,9 @@ const getNewCars = async (limit: number): Promise<CarPreview[]> => {
         },
       },
       users_wishlists: {
+        where: {
+          user_id: userId,
+        },
         select: {
           id: true,
           created_at: true,

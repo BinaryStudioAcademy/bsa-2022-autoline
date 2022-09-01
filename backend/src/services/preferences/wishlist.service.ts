@@ -42,10 +42,14 @@ const setWishlist = async (
   };
 };
 
-const deleteWishlist = async (wishlistId: string): Promise<void> => {
-  const wishlist = await prisma.user_Wishlist.findUnique({
+const deleteWishlist = async (input: WishlistInput): Promise<void> => {
+  const { userId, modelId, complectationId } = input;
+
+  const wishlist = await prisma.user_Wishlist.findFirst({
     where: {
-      id: wishlistId,
+      user_id: userId,
+      model_id: modelId,
+      complectation_id: complectationId,
     },
   });
 

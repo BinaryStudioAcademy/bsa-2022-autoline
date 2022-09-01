@@ -2,34 +2,28 @@ import { api } from '..';
 import { API } from '../api-routes';
 
 import type {
-  GetViewedCarsRequestDto,
+  GetViwedCarsPayload,
   GetViewedCarsResponse,
-  SetViewedCarRequestDto,
+  SetViewedCarPayload,
 } from '@autoline/shared';
 
 const historyViewedCarsApi = api.injectEndpoints({
   endpoints: (build) => ({
     getHistoryOfViwedCars: build.query<
       GetViewedCarsResponse,
-      GetViewedCarsRequestDto<string>
+      GetViwedCarsPayload<string>
     >({
-      query: ({ userId, skip, take }) => ({
-        url: `${API.VIEWED_CARS}/${userId}`,
-        params: {
-          skip,
-          take,
-        },
+      query: (params) => ({
+        url: `${API.VIEWED_CARS}`,
+        params,
       }),
       providesTags: ['ViewedCars'],
     }),
-    addViewedCar: build.mutation<void, SetViewedCarRequestDto>({
-      query: ({ userId, modelId, complectationId }) => ({
-        url: `${API.VIEWED_CARS}/${userId}`,
+    addViewedCar: build.mutation<void, SetViewedCarPayload>({
+      query: (params) => ({
+        url: `${API.VIEWED_CARS}`,
         method: 'POST',
-        params: {
-          modelId,
-          complectationId,
-        },
+        params,
       }),
       invalidatesTags: ['ViewedCars'],
     }),

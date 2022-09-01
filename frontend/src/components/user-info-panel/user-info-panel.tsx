@@ -16,7 +16,7 @@ const UserInfoPanel: FC = () => {
     <ul className={styles.UserPanel}>
       <li className={styles.UserPanelItem}>
         <img className={styles.UserPanelIcon} src={heartIcon} alt="liked it" />
-        <a className={styles.UserPanelLink} href="#">
+        <a className={styles.UserPanelLink} href="#liked">
           Liked it
         </a>
         <span className={styles.UserPanelBadgeInfo}>{likedItCount}</span>
@@ -27,21 +27,21 @@ const UserInfoPanel: FC = () => {
           src={balanceIcon}
           alt="liked it"
         />
-        <a className={styles.UserPanelLink} href="#">
+        <a className={styles.UserPanelLink} href="#comparison">
           Comparison
         </a>
         <span className={styles.UserPanelBadgeInfo}>{comparisonCount}</span>
       </li>
       <li className={styles.UserPanelItem}>
         <img className={styles.UserPanelIcon} src={arrowIcon} alt="liked it" />
-        <a className={styles.UserPanelLink} href="#">
+        <a className={styles.UserPanelLink} href="#compared">
           Compared
         </a>
         <span className={styles.UserPanelBadgeInfo}>{comparedCount}</span>
       </li>
       <li className={styles.UserPanelItem}>
         <img className={styles.UserPanelIcon} src={eyeIcon} alt="liked it" />
-        <a className={styles.UserPanelLink} href="#">
+        <a className={styles.UserPanelLink} href="#viewed">
           History of viewed cars
         </a>
         <span className={styles.UserPanelBadgeInfo}>{viewedCout}</span>

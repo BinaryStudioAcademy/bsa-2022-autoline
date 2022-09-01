@@ -29,7 +29,9 @@ const ViewedCars: FC = () => {
 
   return (
     <article className={styles.ViewedСars}>
-      <h4 className={styles.ViewedСarsTitle}>history of viewed cars</h4>
+      <h4 id="viewed" className={styles.ViewedСarsTitle}>
+        history of viewed cars
+      </h4>
       {isLoading || data?.count === 0 ? null : (
         <>
           <ViewedCarsGrid carDataList={data as GetViewedCarsResponse} />

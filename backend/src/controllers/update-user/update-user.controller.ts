@@ -19,6 +19,8 @@ export interface UpdateUserReq {
   email: string;
   location?: string | null;
   photoUrl?: string | null;
+  isGoogleConnected: boolean;
+  isFacebookConnected: boolean;
 }
 
 const updateUser = async (

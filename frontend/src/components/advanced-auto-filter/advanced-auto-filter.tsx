@@ -21,6 +21,7 @@ import { AutocompleteInput } from '@components/common/autocomplete-input/autocom
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
 import { Spinner } from '@components/common/spinner/spinner';
+import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
 import { getValueById } from '@helpers/get-value-by-id';
 import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
@@ -52,6 +53,12 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
 
   const { data: options, isLoading } = useGetUsedOptionsQuery();
 
+  const [search, filteredCars] = useLazyGetFilteredCarsQuery();
+
+  const doSearch = (): void => {
+    search(queryParams);
+  };
+
   useEffect(() => {
     setQueryParams(
       objectToQueryString({
@@ -61,13 +68,11 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
         modelId: brandDetails.map((item) => item.modelId),
       }),
     );
+
+    if (isFiltersEmpty(filters)) {
+      search([], true);
+    }
   }, [filters, checkLists, brandDetails]);
-
-  const [search, filteredCars] = useLazyGetFilteredCarsQuery();
-
-  const doSearch = (): void => {
-    search(queryParams);
-  };
 
   useEffect(() => {
     if (filteredCars.data) {
@@ -105,8 +110,7 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
   };
 
   const isButtonVisible = Boolean(
-    Object.values(filters).some((filter) => filter.length >= 1) ||
-      Object.values(checkLists).some((list) => list.length >= 1) ||
+    !isFiltersEmpty({ ...filters, ...checkLists }) ||
       brandDetails.some((detail) => detail.brandId !== ''),
   );
 

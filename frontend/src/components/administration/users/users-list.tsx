@@ -110,8 +110,8 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
 
       <DialogEditUser
         user={selectedUser}
-        handleClose={handleClose}
-        handleSubmit={handleSubmit}
+        onSave={handleSubmit}
+        onClose={handleClose}
       />
     </>
   );

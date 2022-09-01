@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import compare from '@assets/images/compare.svg';
 import {
   WishlistInput,
   DeleteWishlistInput,
 } from '@autoline/shared/common/types/types';
+import { AppRoute } from '@common/enums/enums';
 import { ExtendedCarCardPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
 import { CompareToast } from '@components/compare-toast/compare-toast';
 import { formatPrice } from '@helpers/helpers';
+import { useAppSelector } from '@hooks/hooks';
 import {
   useCreateWishlistMutation,
   useDeleteWishlistMutation,
@@ -18,6 +21,9 @@ import { clsx } from 'clsx';
 import styles from './styles.module.scss';
 
 const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
+  const authToken = useAppSelector((state) => state.auth.token);
+  const navigate = useNavigate();
+
   const [isHidden, setIsHidden] = useState<boolean>(true);
   const handleCompare = (): void => {
     setIsHidden(false);
@@ -65,6 +71,12 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
 
   const handleLikeClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
+
+    if (!authToken) {
+      navigate(AppRoute.SIGN_IN);
+      return;
+    }
+
     isLiked ? handleDeleteWishlist() : handleCreateWishlist();
     setIsLiked(!isLiked);
   };

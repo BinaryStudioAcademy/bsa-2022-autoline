@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { StorageKey } from '@common/enums/enums';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { openOAuthPage } from '@helpers/sign/open-oauth';
@@ -14,8 +15,9 @@ const ConnectOauth: React.FC<{ title: string }> = ({ title }) => {
   const onStorageEvent = useCallback(
     (e: StorageEvent): void => {
       if (e.key === 'token') {
-        const accessToken = localStorage.getItem('token');
-        dispatch(setCredentials({ accessToken }));
+        const accessToken = localStorage.getItem(StorageKey.TOKEN);
+        const refreshToken = localStorage.getItem(StorageKey.REFRESH);
+        dispatch(setCredentials({ accessToken, refreshToken }));
         setConnected(true);
       }
     },
@@ -37,7 +39,14 @@ const ConnectOauth: React.FC<{ title: string }> = ({ title }) => {
   }, [onStorageEvent]);
 
   if (connected) {
-    return <ButtonFill text={title + ' connected'} />;
+    return (
+      <ButtonFill
+        text={title + ' is connected'}
+        onClick={(e: React.MouseEvent): void => {
+          e.preventDefault();
+        }}
+      />
+    );
   }
   return <ButtonOutline text={'Connect ' + title} onClick={connectOauth} />;
 };

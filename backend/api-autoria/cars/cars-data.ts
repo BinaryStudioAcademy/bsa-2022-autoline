@@ -26,8 +26,8 @@ export const carsData = [
         'price_start': 30221,
         'price_end': 42939,
         'photo_urls': [
-          'https://www.autocentre.ua/wp-content/uploads/2017/11/2019-Mazda6-23.jpg',
-          'https://img.automoto.ua/overview/mazda-6-2020-463-huge-1632.jpg',
+          'https://i.gyazo.com/94d09ce40e3e99e5eb4c0947bd70e93f.jpg',
+          'https://i.gyazo.com/316b369f25230007232a1bf1ff7b922e.jpg',
         ],
         'complectations': [
           {
@@ -163,9 +163,9 @@ export const carsData = [
         'price_start': 23435,
         'price_end': 26695,
         'photo_urls': [
-          'https://www-europe.nissan-cdn.net/content/dam/Nissan/nissan_europe/vehicles/x-trail/2020Update/A-IVI/LHD/2020-nissan-xtrail-Snow-Road-20tdieulhdpace101.jpg.ximg.l_full_m.smart.jpg',
-          'https://www-europe.nissan-cdn.net/content/dam/Nissan/nissan_europe/vehicles/x-trail/2_minor_change/eulhd/DESIGN/17tdieulhd-xtrailhelios090.jpg.ximg.l_full_m.smart.jpg',
-          'https://www-europe.nissan-cdn.net/content/dam/Nissan/nissan_europe/vehicles/x-trail/2_minor_change/eulhd/DESIGN/17tdieulhd-xtrailhelios013.jpg.ximg.l_full_m.smart.jpg',
+          'https://i.gyazo.com/d9e28350716c9f6e0e52e864575f7bd3.jpg',
+          'https://i.gyazo.com/3481b2d5715f1fe102ebbc5842cf0c8e.jpg',
+          'https://i.gyazo.com/d9e28350716c9f6e0e52e864575f7bd3.jpg',
         ],
         'complectations': [
           {
@@ -227,7 +227,11 @@ export const carsData = [
         'year_end': null,
         'price_start': 37000,
         'price_end': 43570,
-        'photo_urls': ['https://i.infocar.ua/i/12/6275/700x350.jpg'],
+        'photo_urls': [
+          'https://i.gyazo.com/ad57bb5dc07ed7325595b00a5beea2be.jpg',
+          'https://i.gyazo.com/d6e3bded8cd65344c57a10684fbaef0c.jpg',
+          'https://i.gyazo.com/9dc12c43b72b18d7ba8fa69c8b10b9ac.jpg',
+        ],
         'complectations': [
           {
             'name': 'Origin',
@@ -289,7 +293,8 @@ export const carsData = [
         'price_start': 33160,
         'price_end': 35239,
         'photo_urls': [
-          'https://www.allcarz.ru/wp-content/uploads/2018/11/foto-mazda-3-iv_12.jpg',
+          'https://i.gyazo.com/a20792b9328e84a904099f066d231dfa.jpg',
+          'https://i.gyazo.com/2bf43ff720f4077289002834c41fa072.jpg',
         ],
         'complectations': [
           {

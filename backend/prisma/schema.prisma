@@ -21,6 +21,7 @@ model User {
   User_Security    User_Security?
   user_wishlist User_Wishlist[]
   viewed_cars      Users_Viewed_Cars[]
+  user_comparisons Comparison[]
 }
 
 model User_Security {
@@ -140,25 +141,26 @@ model Option {
 }
 
 model Complectation {
-  id                   String                    @id @default(uuid())
-  name                 String                    @db.VarChar(70)
-  model_id             String
-  model                Model                     @relation(fields: [model_id], references: [id])
-  engine               String                    @db.VarChar(300)
-  engine_displacement  Decimal
-  engine_power         Int
-  color_id             String
-  color                Color                     @relation(fields: [color_id], references: [id])
-  drivetrain_id        String
-  drivetrain           Drivetrain                @relation(fields: [drivetrain_id], references: [id])
-  fuel_type_id         String
-  fuel_type            Fuel_Type                 @relation(fields: [fuel_type_id], references: [id])
-  transmission_type_id String
-  transmission_type    Transmission_Type         @relation(fields: [transmission_type_id], references: [id])
-  options              ComplectationsOnOptions[]
-  prices_ranges        Prices_Range[]
-  users_wishlists      User_Wishlist[]
-  users_viewed_cars    Users_Viewed_Cars[]
+  id                          String                        @id @default(uuid())
+  name                        String                        @db.VarChar(70)
+  model_id                    String
+  model                       Model                         @relation(fields: [model_id], references: [id])
+  engine                      String                        @db.VarChar(300)
+  engine_displacement         Decimal
+  engine_power                Int
+  color_id                    String
+  color                       Color                         @relation(fields: [color_id], references: [id])
+  drivetrain_id               String
+  drivetrain                  Drivetrain                    @relation(fields: [drivetrain_id], references: [id])
+  fuel_type_id                String
+  fuel_type                   Fuel_Type                     @relation(fields: [fuel_type_id], references: [id])
+  transmission_type_id        String
+  transmission_type           Transmission_Type             @relation(fields: [transmission_type_id], references: [id])
+  options                     ComplectationsOnOptions[]
+  prices_ranges               Prices_Range[]
+  users_wishlists             User_Wishlist[]
+  users_viewed_cars           Users_Viewed_Cars[]
+  comparisons_complectations  Comparisons_Complectations[]
 }
 
 model ComplectationsOnOptions {
@@ -197,6 +199,28 @@ model Region {
   cities       City[]
 }
 
+model Comparison {
+  id                          String                        @id @default(uuid())
+  active                      Boolean
+  type                        ComparisonType                @default(all)
+  created_at                  DateTime                      @default(now())
+  updated_at                  DateTime
+  user_id                     String
+  user                        User                          @relation(fields: [user_id], references: [id])
+  comparisons_complectations  Comparisons_Complectations[]
+}
+
+model Comparisons_Complectations {
+  id                String           @id @default(uuid())
+  comparison_id     String
+  complectation_id  String
+  position          Int
+  comparison        Comparison       @relation(fields: [comparison_id], references: [id])
+  complectation     Complectation    @relation(fields: [complectation_id], references: [id])
+
+  @@unique([comparison_id, complectation_id])
+}
+
 enum Role {
   user
   admin
@@ -218,4 +242,9 @@ enum Type {
   design
   comfort
   auxiliary
+}
+
+enum ComparisonType {
+  all
+  difference
 }

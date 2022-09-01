@@ -3,17 +3,18 @@ import { api } from '../index';
 
 interface UserFields {
   sex: string;
-  birthYear: string;
-  location: string;
+  birthYear: string | null;
+  location: string | null;
   name: string;
-  phone: string;
-  email: string;
+  phone: string | null;
+  email: string | null;
+  photoUrl: string | null;
 }
 
 export interface ProfileFieldsRequestData extends UserFields {
-  password: string;
-  newPassword: string;
-  repeatNewPassword: string;
+  password: string | null;
+  newPassword: string | null;
+  repeatNewPassword: string | null;
 }
 
 export interface ProfileFieldsResponseData extends UserFields {}
@@ -29,6 +30,7 @@ export const updateUserApi = api.injectEndpoints({
         method: 'PUT',
         body: put,
       }),
+      invalidatesTags: ['User'],
     }),
     deleteUserProfile: builder.mutation<void, void>({
       query: () => ({
@@ -36,9 +38,16 @@ export const updateUserApi = api.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    getUser: builder.query<ProfileFieldsResponseData, void>({
+      query: () => API.USER,
+      providesTags: ['User'],
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useUpdateUserProfileMutation, useDeleteUserProfileMutation } =
-  updateUserApi;
+export const {
+  useUpdateUserProfileMutation,
+  useDeleteUserProfileMutation,
+  useGetUserQuery,
+} = updateUserApi;

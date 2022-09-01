@@ -26,7 +26,6 @@ export type {
   WishlistResponseDto,
   WishlistsResponseDto,
   WishlistInput,
-  DeleteWishlistInput,
 } from './preferences/preferences';
 
 export type {
@@ -41,6 +40,13 @@ export type {
 export type { ValidationSchema } from './validation/validation';
 
 export type {
+  ModelReturnedData,
+  ComplectationReturnedData,
+  OptionType,
+  ComplectationsInput,
+} from './complectations/complectations';
+
+export type {
   BrandType,
   OptionsType,
   ModelType,
@@ -52,7 +58,12 @@ export type {
   CarPreview,
 } from './cars/cars';
 
-export {
-  type setViewedCarRequest,
-  type setViewedCarResponse,
+export type {
+  SetViewedCarRequestDto,
+  ViewedCarPrismaDto,
+  ViewedCarResponseDto,
+  GetViewedCarsResponse,
+  GetViewedCarsRequestDto,
+  GetViwedCarsPayload,
+  SetViewedCarPayload,
 } from './viewed-cars/viewed-cars';

@@ -69,9 +69,8 @@ const AdvancedAutoFilter: FC = () => {
     );
 
     if (
-      isFiltersEmpty(filters) &&
-      brandDetails[0].brandId == '' &&
-      brandDetails[0].modelId == ''
+      isFiltersEmpty({ ...filters, ...checkLists }) &&
+      brandDetails.every((detail) => detail.brandId === '')
     ) {
       search([], true);
     }

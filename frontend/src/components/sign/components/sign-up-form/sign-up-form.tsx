@@ -56,7 +56,7 @@ export const SignUpForm = (): React.ReactElement => {
   };
 
   const navigateToSignIn = (): void => {
-    navigate('../sign-in');
+    navigate(AppRoute.SIGN_IN);
   };
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { authMiddleware } from '@store/auth/middlewares';
 import { api } from '@store/queries';
 import { combineReducers } from 'redux';
 
@@ -14,7 +15,9 @@ const rootReducer = combineReducers({
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware),
+    getDefaultMiddleware()
+      .prepend(authMiddleware.middleware)
+      .concat(api.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

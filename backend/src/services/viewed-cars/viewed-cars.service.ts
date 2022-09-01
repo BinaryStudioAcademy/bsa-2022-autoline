@@ -1,15 +1,21 @@
 import { prisma } from '@data/prisma-client';
+import { formatDtoForResponse } from '@helpers/helpers';
 
 import type {
-  setViewedCarRequest,
-  setViewedCarResponse,
+  SetViewedCarRequestDto,
+  GetViewedCarsRequestDto,
+  GetViewedCarsResponse,
+  ViewedCarPrismaDto,
 } from '@autoline/shared';
-import type { GetViewedCarsListResponse } from '@common/types/types';
 
-const getViewedCarsList = async (
-  userId: string,
-): Promise<(GetViewedCarsListResponse | null | undefined)[]> => {
+const getViewedCarsList = async ({
+  userId,
+  skip,
+  take,
+}: GetViewedCarsRequestDto<number>): Promise<GetViewedCarsResponse> => {
   const viewedСarsList = await prisma.users_Viewed_Cars.findMany({
+    skip,
+    take,
     where: {
       user_id: userId,
     },
@@ -17,16 +23,23 @@ const getViewedCarsList = async (
       created_at: 'desc',
     },
     select: {
+      id: true,
       model_id: true,
       complectation_id: true,
     },
   });
 
-  const detailedListOfviewedCars = await Promise.all(
-    viewedСarsList.map(async ({ model_id, complectation_id }) => {
-      return prisma.model.findFirst({
+  const countViewedCars = await prisma.users_Viewed_Cars.count({
+    where: {
+      user_id: userId,
+    },
+  });
+
+  const detailedListOfViewedCars = await Promise.all(
+    viewedСarsList.map(async ({ id, model_id, complectation_id }) => {
+      const viewedCar = await prisma.model.findFirst({
         where: {
-          id: model_id as string,
+          id: model_id,
         },
         select: {
           name: true,
@@ -40,39 +53,50 @@ const getViewedCarsList = async (
           },
           complectations: {
             where: {
-              id: complectation_id as string,
+              id: complectation_id,
             },
             select: {
               name: true,
             },
           },
+          prices_ranges: {
+            where: {
+              OR: [
+                {
+                  model_id: model_id,
+                },
+                {
+                  complectation_id: complectation_id,
+                },
+              ],
+            },
+            select: {
+              price_start: true,
+              price_end: true,
+            },
+          },
         },
       });
+
+      const result = formatDtoForResponse(viewedCar as ViewedCarPrismaDto);
+
+      return { id, ...result };
     }),
   );
 
-  return detailedListOfviewedCars;
+  return {
+    list: detailedListOfViewedCars,
+    count: countViewedCars,
+  };
 };
 
 const addCarToViewed = async ({
   userId,
   modelId,
   complectationId,
-}: setViewedCarRequest): Promise<setViewedCarResponse> => {
-  const viewedCarList = await prisma.users_Viewed_Cars.findFirst({
+}: SetViewedCarRequestDto): Promise<void> => {
+  const viewedCar = await prisma.users_Viewed_Cars.findFirst({
     where: {
-      user_id: userId,
-      model_id: modelId,
-      complectation_id: complectationId,
-    },
-  });
-
-  if (viewedCarList) {
-    throw new Error('Viewed list of cars already exists');
-  }
-
-  const { id: viewedListId } = await prisma.users_Viewed_Cars.create({
-    data: {
       user_id: userId,
       model_id: modelId,
       complectation_id: complectationId,
@@ -82,11 +106,28 @@ const addCarToViewed = async ({
     },
   });
 
-  return {
-    viewedListId,
-    modelId,
-    complectationId,
-  };
+  if (viewedCar) {
+    await prisma.users_Viewed_Cars.update({
+      where: {
+        id: viewedCar.id,
+      },
+      data: {
+        created_at: new Date(),
+      },
+    });
+    return;
+  }
+
+  await prisma.users_Viewed_Cars.create({
+    data: {
+      user_id: userId,
+      model_id: modelId,
+      complectation_id: complectationId,
+    },
+    select: {
+      id: true,
+    },
+  });
 };
 
 export { getViewedCarsList, addCarToViewed };

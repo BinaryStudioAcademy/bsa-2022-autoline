@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 
 import DefaultAvatar from '@assets/images/header/default-avatar.png';
-import { AppRoute } from '@common/enums/enums';
-import { EditProfile } from '@components/edit-profile/edit-profile';
+import { UserMenu } from '@components/header/menu-interfaces/menu-interfaces';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
@@ -13,18 +11,18 @@ import styles from './private-elements.module.scss';
 
 interface PrivateComponentProps extends RemindersProps {
   avatar: string | undefined | null;
+  setOpenSettings: (state: boolean) => void;
+  userMenu: UserMenu;
 }
 
 export const PrivateElements: React.FC<PrivateComponentProps> = ({
-  favorites,
-  notifications,
-  comparisons,
+  reminders,
   avatar,
+  userMenu,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const [openSettings, setOpenSettings] = useState(false);
 
+  const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
   };
@@ -34,11 +32,7 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
 
   return (
     <div className={styles.information}>
-      <Reminders
-        favorites={favorites}
-        comparisons={comparisons}
-        notifications={notifications}
-      />
+      <Reminders reminders={reminders} />
       <IconButton
         id="basic-button"
         className={styles.avatarCover}
@@ -51,7 +45,7 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
           className={styles.avatar}
           src={avatar || DefaultAvatar}
           alt="avatar"
-          sx={{ width: 35, height: 35, ml: 2 }}
+          sx={{ width: 35, height: 35 }}
         />
         {open ? (
           <ArrowDropUpIcon color="primary" />
@@ -68,27 +62,40 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose} className={styles.userNavLink}>
-          <Link to={AppRoute.PERSONAL}>Account</Link>
+        <MenuItem
+          onClick={(): void => {
+            handleClose();
+            userMenu.account.onClick();
+          }}
+          className={styles.userNavLink}
+        >
+          {userMenu.account.label}
         </MenuItem>
         <MenuItem
           onClick={(): void => {
             handleClose();
-            setOpenSettings(true);
+            userMenu.settings.onClick();
           }}
         >
-          Settings
+          {userMenu.settings.label}
         </MenuItem>
-        <MenuItem onClick={handleClose} className={styles.userNavLink}>
-          <Link to={AppRoute.ADMINISTRATION}>Administration</Link>
+        <MenuItem
+          onClick={(): void => {
+            handleClose();
+            userMenu.administration.onClick();
+          }}
+        >
+          {userMenu.administration.label}
         </MenuItem>
-        <MenuItem onClick={handleClose} className={styles.userNavLink}>
-          Logout
+        <MenuItem
+          onClick={(): void => {
+            handleClose();
+            userMenu.logout.onClick();
+          }}
+        >
+          {userMenu.logout.label}
         </MenuItem>
       </Menu>
-      {openSettings && (
-        <EditProfile onClose={(): void => setOpenSettings(false)} />
-      )}
     </div>
   );
 };

@@ -1,6 +1,17 @@
+@import "@assets/css/styles";
+
 .information {
   display: flex;
   align-items: center;
+  margin-left: auto;
+
+  @media (min-width: $global-md) {
+    margin-right: var(--land-page-margin-md);
+  }
+
+  @media (max-width: $global-md) {
+    margin-right: var(--land-page-margin-sm);
+  }
 }
 
 .userNavLink {

@@ -116,6 +116,19 @@ const signOAuthProvider = async (
   }
 };
 
+const refreshToken = async (
+  req: TypedRequestBody<{ refreshToken: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const accessToken = await authService.refreshToken(req.body.refreshToken);
+    res.json(accessToken);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   signupLocal,
   signinLocal,
@@ -123,4 +136,5 @@ export {
   resetPasswordCheckToken,
   resetPassword,
   signOAuthProvider,
+  refreshToken,
 };

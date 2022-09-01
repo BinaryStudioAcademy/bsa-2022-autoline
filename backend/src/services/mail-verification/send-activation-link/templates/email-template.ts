@@ -1,4 +1,5 @@
-<!DOCTYPE html
+export const getMessage = (link: string): string => {
+  return `<!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -36,7 +37,7 @@
           <p>
             <a target="_blank"
               style="text-decoration:none; background-color: #3765FF; border: #3765FF 1px solid; border-radius: 30px; color: #fff; padding:10px 10px; display:block;"
-              href=http://{{link}}>
+              href=http://${link}>
               <strong>Verify Email</strong></a>
           </p>
           <p style="text-align:left">
@@ -49,3 +50,6 @@
   </center>
 </body>
 </html>
+
+  `;
+};

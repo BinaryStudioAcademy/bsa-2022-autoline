@@ -4,6 +4,7 @@ import { ComplectationDetailsType } from '@autoline/shared/common/types/types';
 import { CarListItemProps } from '@common/types/types';
 import { SliderNavButton } from '@components/car-list-item/slider-nav-button/slider-nav-button';
 import { swiperParams } from '@components/car-list-item/swiper-params';
+import { Spinner } from '@components/common/spinner/spinner';
 import { CompleteSetTableCollapsed } from '@components/complete-set-table/complete-set-table-collapsed';
 import { formatPrice } from '@helpers/helpers';
 import { objectToQueryString } from '@helpers/object-to-query';
@@ -23,8 +24,10 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
 
   const idParams = objectToQueryString({ 'id': complectations_id });
 
-  const { data: complectations = [] } = useGetComplectationsQuery(idParams);
-  const { data: model } = useGetModelDetailsQuery(model_id);
+  const { data: complectations = [], isLoading: isComplectationsLoading } =
+    useGetComplectationsQuery(idParams);
+  const { data: model, isLoading: isModelLoading } =
+    useGetModelDetailsQuery(model_id);
 
   const modelName = `${model?.brandName} ${model?.modelName}`;
   const [modelPrice, setModelPrice] = useState<string>();
@@ -83,6 +86,8 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
     setModelFuelType(fuelTypes);
     setModelTransmission(transmissions);
   }, [complectations]);
+
+  if (isComplectationsLoading || isModelLoading) return <Spinner />;
 
   return (
     <div className={styles.listCard}>

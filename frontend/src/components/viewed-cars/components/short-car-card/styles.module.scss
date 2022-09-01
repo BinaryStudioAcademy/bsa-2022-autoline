@@ -16,12 +16,14 @@
 
 .carPicture {
   width: 195px;
-  margin-bottom: 10px;
+  height: 140px;
+  margin-bottom: 15px;
 
   & img {
     max-width: 100%;
+    height: 100%;
     border-radius: 5px;
-    object-fit: contain;
+    object-fit: cover;
   }
 }
 
@@ -29,7 +31,7 @@
   margin-top: 0;
   margin-bottom: 5px;
   font-weight: 800;
-  font-size: 18px;
+  font-size: 1.125rem;
   text-transform: uppercase;
 }
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { StorageKey } from '@common/enums/enums';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { openOAuthPage } from '@helpers/helpers';
 import { useAppDispatch } from '@hooks/hooks';
@@ -13,8 +14,9 @@ const SignWithOAuth = ({ title }: { title: string }): React.ReactElement => {
   const onStorageEvent = useCallback(
     (e: StorageEvent): void => {
       if (e.key === 'token') {
-        const accessToken = localStorage.getItem('token');
-        dispatch(setCredentials({ accessToken }));
+        const accessToken = localStorage.getItem(StorageKey.TOKEN);
+        const refreshToken = localStorage.getItem(StorageKey.REFRESH);
+        dispatch(setCredentials({ accessToken, refreshToken }));
         navigate('/', { replace: true });
       }
     },

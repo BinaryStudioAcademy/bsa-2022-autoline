@@ -1,6 +1,11 @@
 import { ENV } from '@common/enums/app/app';
 import { prisma } from '@data/prisma-client';
-import { bcryptHash, sendEmail, createToken } from '@helpers/helpers';
+import {
+  bcryptHash,
+  createToken,
+  sendEmail,
+  verifyToken,
+} from '@helpers/helpers';
 import { User } from '@prisma/client';
 import { sendLink } from '@services/mail-verification/send-activation-link/send-link';
 import { generateMailToken } from '@services/mail-verification/token.service';
@@ -173,10 +178,30 @@ const resetPassword = async (id: string, password: string): Promise<void> => {
   );
 };
 
+const refreshToken = async (token: string): Promise<string> => {
+  const tokenPayload = verifyToken(token);
+
+  const user = await prisma.user.findFirstOrThrow({
+    where: {
+      id: tokenPayload.sub as string,
+      User_Security: {
+        refresh_token: token,
+      },
+    },
+  });
+
+  return createToken({
+    email: user.email,
+    sub: user.id,
+    role: user.role,
+  });
+};
+
 export {
   signupLocal,
   signinLocal,
   requestPasswordReset,
   resetPasswordCheckToken,
   resetPassword,
+  refreshToken,
 };

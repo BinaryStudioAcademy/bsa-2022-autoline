@@ -1,0 +1,161 @@
+@import "@assets/css/variables";
+
+.container {
+  display: flex;
+  flex-direction: row;
+  padding: 15px 25px;
+  background-color: var(--white);
+  border: solid 1px var(--white);
+  border-radius: 5px;
+
+  .logoDiv {
+    display: flex;
+    align-items: center;
+    width: 93px;
+    margin-right: 15px;
+    padding: 0 3px 0 0;
+
+    .logo {
+      width: 90px;
+      margin: 0;
+    }
+  }
+
+  .description {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: auto;
+
+    .carName {
+      margin-bottom: 5px;
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .sellerLink {
+      flex: 1;
+      margin-bottom: 5px;
+      color: var(--blue100);
+      font-size: 14px;
+
+      a {
+        cursor: pointer;
+      }
+    }
+
+    .trigger {
+      display: flex;
+      padding: 0;
+
+      div {
+        display: inline;
+        max-width: 200px;
+        max-height: 40px;
+        padding: 0 10px;
+        overflow: hidden;
+      }
+
+      div::before {
+        content: "\2022";
+        display: inline-block;
+        width: 10px;
+        margin-left: -10px;
+        color: var(--blue100);
+        font-weight: bold;
+      }
+    }
+  }
+
+  .panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+
+    .rectangle {
+      width: 20px;
+      height: 20px;
+      background-color: var(--black);
+      border-radius: 2px;
+    }
+
+    .price {
+      margin: 0;
+      padding: 0;
+      color: var(--blue100);
+      font-weight: 900;
+      font-size: 18px;
+      font-family: var(--primary-font);
+    }
+
+    .buyButton {
+      width: 90px;
+      height: 35px;
+      padding: 6px;
+      font-weight: 700;
+    }
+  }
+}
+
+@media (max-width: $global-md) {
+  .container {
+    .logoDiv {
+      width: 73px;
+
+      .logo {
+        width: 70px;
+      }
+    }
+
+    .panel {
+      width: 200px;
+    }
+
+    .trigger {
+      div {
+        &:last-child {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $global-sm) {
+  .container {
+    .logoDiv {
+      display: none;
+    }
+
+    .panel {
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      width: 93px;
+
+      .rectangle {
+        display: none;
+      }
+
+      .price {
+        font-size: 14px;
+      }
+
+      .buyButton {
+        margin: 0;
+      }
+    }
+
+    .trigger {
+      display: none;
+
+      div {
+        &:nth-child(2) {
+          display: none;
+        }
+      }
+    }
+  }
+}

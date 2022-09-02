@@ -1,5 +1,5 @@
 // import { getCarsAutoRia } from '@helpers/cars/api-autoria.helper';
-import { carsSearchAutoria } from '@services/cars/cars-search.service';
+// import { carsSearchAutoria } from '@services/cars/cars-search.service';
 import httpStatus from 'http-status-codes';
 
 import type { TypedRequestQuery } from '@common/types/controller/controller';
@@ -15,9 +15,9 @@ const whereBuy = async (
 ): Promise<void> => {
   try {
     console.log('Hi');
-    const carsS = await carsSearchAutoria({ category_id: 1 });
+    // const carsS = await carsSearchAutoria({ category_id: 1 });
     // const cars = await getCarsAutoRia({ category_id: 1 });
-    console.log(carsS);
+    // console.log(carsS);
     res.status(httpStatus.OK).json('Hi');
   } catch (error) {
     console.error(error);

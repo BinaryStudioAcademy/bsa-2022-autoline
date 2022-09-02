@@ -92,6 +92,7 @@ export const Header = (): React.ReactElement => {
         sx={{
           background: '#ffffff',
           boxShadow: 0,
+          position: 'static',
         }}
       >
         <Toolbar>

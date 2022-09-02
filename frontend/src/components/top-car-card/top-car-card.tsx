@@ -1,8 +1,6 @@
 import { FC } from 'react';
 
-import compare from '@assets/images/compare.svg';
 import fuel from '@assets/images/fuel.svg';
-import heart from '@assets/images/heart.svg';
 import mapPin from '@assets/images/map-pin.svg';
 import speedometr from '@assets/images/speedometr.svg';
 import transmission from '@assets/images/transmission.svg';
@@ -33,10 +31,6 @@ const TopCarCard: FC<TopCarProps> = ({ car }) => {
         <div className={styles.carInfo}>
           <img className={styles.carLogo} src={brand.logoUrl} alt="car logo" />
           <span className={styles.carName}>{fullName}</span>
-        </div>
-        <div className={styles.iconGroup}>
-          <img className={styles.icon} src={heart} alt="like" />
-          <img className={styles.icon} src={compare} alt="compare" />
         </div>
       </div>
       <img src={photoUrls[0]} className={styles.carPicture} alt="car picture" />

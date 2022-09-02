@@ -8,7 +8,7 @@
   "scripts": {
     "lint:js": "npx eslint \"src/**/*.ts\"",
     "lint": "yarn lint:js",
-    "start:dev": "rimraf build && concurrently \"tsc -w\" \"tsc-alias -w\"",
+    "start:dev": "rimraf build && tsc && (concurrently \"tsc -w\" \"tsc-alias -w\")",
     "build:ts": "rimraf build && tsc && tsc-alias",
     "build:ts:be": "rimraf build && tsc --module commonjs && tsc-alias",
     "build": "yarn build:ts",

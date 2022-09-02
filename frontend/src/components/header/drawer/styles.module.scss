@@ -1,0 +1,17 @@
+.list {
+  height: 100%;
+
+  span {
+    display: flex;
+    justify-content: center;
+  }
+
+  .logout {
+    position: absolute;
+    bottom: 0;
+
+    span {
+      color: var(--red);
+    }
+  }
+}

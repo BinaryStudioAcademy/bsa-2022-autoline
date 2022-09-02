@@ -9,20 +9,38 @@ const updateUserSchema = Yup.object().shape({
     .required('Full name is required')
     .max(150, 'Full name must not exceed 100 characters'),
   email: Yup.string().required('Email is required').email('Email is invalid'),
-  phone: Yup.string().matches(phoneReg, 'Phone is invalid'),
-  location: Yup.string().oneOf(['kyiv', 'kharkiv', 'odesa']),
-  birthYear: Yup.number()
-    .min(new Date().getFullYear() - 110)
-    .max(new Date().getFullYear()),
+  phone: Yup.string()
+    .transform((value) => (value === '' ? null : value))
+    .matches(phoneReg, 'Phone is invalid')
+    .nullable(),
+  location: Yup.string()
+    .oneOf(['kyiv', 'kharkiv', 'odesa', 'not_appliable', null])
+    .nullable(),
+  birthYear: Yup.lazy((value) => {
+    if (value == 'not_appliable') {
+      return Yup.string();
+    }
+
+    return Yup.number()
+      .min(new Date().getFullYear() - 110)
+      .max(new Date().getFullYear())
+      .nullable();
+  }),
   password: Yup.string()
+    .transform((value) => (value === '' ? null : value))
     .min(8, 'Password must be at least 8 characters')
-    .max(20, 'Password must not exceed 20 characters'),
+    .max(20, 'Password must not exceed 20 characters')
+    .nullable(),
   newPassword: Yup.string()
+    .transform((value) => (value === '' ? null : value))
     .min(8, 'Password must be at least 8 characters')
-    .max(20, 'Password must not exceed 20 characters'),
+    .max(20, 'Password must not exceed 20 characters')
+    .nullable(),
   repeatNewPassword: Yup.string()
+    .transform((value) => (value === '' ? null : value))
     .min(8, 'Password must be at least 8 characters')
-    .max(20, 'Password must not exceed 20 characters'),
+    .max(20, 'Password must not exceed 20 characters')
+    .nullable(),
   photoUrl: Yup.string().matches(urlReg, 'Photo url should be a valid URL'),
   sex: Yup.string().oneOf(['male', 'female', 'not_known', 'not_appliable']),
 });

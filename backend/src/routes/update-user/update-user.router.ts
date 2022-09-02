@@ -21,5 +21,10 @@ updateUserRouter.delete(
   middlewares.userAuthMiddleware,
   userUpdateController.deleteUser,
 );
+updateUserRouter.patch(
+  `${PATH}/oauth`,
+  middlewares.userAuthMiddleware,
+  userUpdateController.deleteOauthConnections,
+);
 
 export { updateUserRouter };

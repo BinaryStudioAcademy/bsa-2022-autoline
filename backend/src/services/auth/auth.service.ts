@@ -69,17 +69,32 @@ const signinLocal = async (user: User): Promise<SignInResponseData> => {
   const accessToken = createToken(accessTokenPayload);
   const refreshToken = createToken(refreshTokenPayload, false);
 
-  await prisma.user.update({
-    where: { id },
-    data: {
-      User_Security: {
-        update: {
-          refresh_token: refreshToken,
-        },
-      },
-    },
+  const { refresh_token } = await prisma.user_Security.findUniqueOrThrow({
+    where: { user_id: id },
+    select: { refresh_token: true },
   });
-  return { accessToken, refreshToken };
+
+  try {
+    if (refresh_token) verifyToken(refresh_token);
+  } catch {
+    await updateRefreshToken(id, refreshToken);
+  }
+
+  if (!refresh_token) {
+    await updateRefreshToken(id, refreshToken);
+  }
+
+  return { accessToken, refreshToken: refresh_token || refreshToken };
+};
+
+const updateRefreshToken = async (
+  id: string,
+  refreshToken: string,
+): Promise<void> => {
+  await prisma.user_Security.update({
+    where: { user_id: id },
+    data: { refresh_token: refreshToken },
+  });
 };
 
 const requestPasswordReset = async (email: string): Promise<string> => {
@@ -101,7 +116,7 @@ const requestPasswordReset = async (email: string): Promise<string> => {
     data: { password_change_token: resetToken },
   });
 
-  const link = `${ENV.APP.SERVER_HOST}:${ENV.APP.SERVER_PORT}${ENV.API.V1_PREFIX}/auth/local/reset-password-check-token?token=${resetToken}`;
+  const link = `${ENV.APP.SERVER_DOMAIN}${ENV.API.V1_PREFIX}/auth/local/reset-password-check-token?token=${resetToken}`;
 
   const template = getResetRequestMessage({
     name: user.name,

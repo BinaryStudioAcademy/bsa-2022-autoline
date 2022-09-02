@@ -1,5 +1,8 @@
 .container {
   &.pageContainer {
-    max-width: 1700px;
+    max-width: 100%;
+    margin-top: calc(var(--header-height) + 30px);
+    padding-right: 7.6rem;
+    padding-left: 7.6rem;
   }
 }

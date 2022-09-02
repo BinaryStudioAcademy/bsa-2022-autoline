@@ -6,6 +6,7 @@ import { AutocompleteInput } from '@components/common/autocomplete-input/autocom
 import { SelectField } from '@components/common/select-field/select-field';
 import { Spinner } from '@components/common/spinner/spinner';
 import { getValueById } from '@helpers/get-value-by-id';
+import { useAppSelector } from '@hooks/store/store.hooks';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { Box, IconButton } from '@mui/material';
 import {
@@ -35,6 +36,8 @@ const BrandDetails: FC<Props> = ({
     skip: !selectedBrandId,
   });
 
+  const { brandDetails } = useAppSelector((state) => state.carFilter);
+
   const selectedBrandName = getValueById(brands || [], selectedBrandId);
   const selectedModelName = getValueById(models || [], selectedModelId);
 
@@ -58,15 +61,17 @@ const BrandDetails: FC<Props> = ({
 
   return (
     <div>
-      <Box display="flex" justifyContent="right">
-        <IconButton
-          onClick={onBrandDetailsRemove}
-          className={styles.deleteButton}
-          aria-label="delete"
-        >
-          <CloseOutlinedIcon className={styles.deleteIcon} />
-        </IconButton>
-      </Box>
+      {brandDetails.length > 1 && (
+        <Box display="flex" justifyContent="right">
+          <IconButton
+            onClick={onBrandDetailsRemove}
+            className={styles.deleteButton}
+            aria-label="delete"
+          >
+            <CloseOutlinedIcon className={styles.deleteIcon} />
+          </IconButton>
+        </Box>
+      )}
       {brands && (
         <AutocompleteInput
           label="Brand"

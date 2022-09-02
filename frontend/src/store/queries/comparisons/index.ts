@@ -1,38 +1,47 @@
+import { ComparisonTypeEnum } from '@common/enums/enums';
+import { Comparison } from '@common/types/types';
 import { API } from '@store/queries/api-routes';
 
 import { api } from '..';
 
-// TODO: Change void type
+interface ComparisonsRequest {
+  complectationId: string;
+}
+
 export const comparisonsApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    addCarToComparison: builder.mutation<void, void>({
+    addCarToComparison: builder.mutation<Comparison, ComparisonsRequest>({
       query: (newComparison) => ({
         url: `${API.COMPARISONS}`,
         method: 'POST',
         body: newComparison,
       }),
     }),
-    changeComparisonType: builder.mutation<void, void>({
+    changeComparisonType: builder.mutation<
+      Comparison,
+      { type: ComparisonTypeEnum }
+    >({
       query: (changeComparison) => ({
         url: `${API.COMPARISONS}`,
-        method: 'PUT',
+        method: 'PATCH',
         body: changeComparison,
       }),
     }),
-    clearComparison: builder.mutation<void, void>({
+    clearComparison: builder.mutation<Comparison, void>({
       query: (userId) => ({
-        url: `${API.COMPARISONS}`,
-        method: 'PUT',
+        url: `${API.COMPARISONS}/clear`,
+        method: 'PATCH',
         body: { userId },
       }),
     }),
-    deleteCarFromComparison: builder.mutation<void, void>({
+    deleteCarFromComparison: builder.mutation<Comparison, ComparisonsRequest>({
       query: (deleteCar) => ({
         url: `${API.COMPARISONS}`,
         method: 'DELETE',
         body: deleteCar,
       }),
     }),
+    // TODO: change void type
     getActiveComparisonCars: builder.query<void, void>({
       query: (userId) => ({
         url: `${API.COMPARISONS}/${userId}`,

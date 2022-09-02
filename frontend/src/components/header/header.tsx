@@ -52,7 +52,7 @@ export const Header = (): React.ReactElement => {
     comparisons: {
       label: 'Comparisons',
       linkTo: '#',
-      count: 5,
+      count: 0,
     },
   };
 

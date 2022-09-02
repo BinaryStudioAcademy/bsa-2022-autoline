@@ -12,7 +12,7 @@ import { ResetPassword } from '@components/reset-password/reset-password';
 import { SearchPage } from '@components/search-page/search-page';
 import { RedirectAfterSign } from '@components/sign/components/redirect-after-sign/redirect-after-sign';
 import { Sign } from '@components/sign/sign';
-import { WhereToBuy } from '@components/where-buy/where-buy';
+import { WhereToBuy } from '@components/where-to-buy/where-buy';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 
 const Routing: FC = () => {

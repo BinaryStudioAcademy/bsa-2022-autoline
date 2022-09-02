@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
-import { animateScroll as scroll } from 'react-scroll';
 
 import { AutoRiaOption } from '@autoline/shared/common/types/types';
 import {
@@ -58,7 +57,6 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
 
   const doSearch = (): void => {
     search(queryParams);
-    scroll.scrollToTop({ duration: 700 });
   };
 
   useEffect(() => {

@@ -13,6 +13,7 @@ import { DialogDeleteAccount } from '@components/edit-profile/dialog-delete-acco
 import { SelectYearRange } from '@components/edit-profile/select-year-range/select-year-range';
 import { SignIn } from '@components/edit-profile/sign-in/sign-in';
 import { useAppForm } from '@hooks/app-form/app-form.hook';
+import { useAppDispatch } from '@hooks/hooks';
 import { Alert, MenuItem, Modal, Stack } from '@mui/material';
 import {
   ProfileFieldsRequestData,
@@ -31,6 +32,7 @@ interface EditProfileProps {
 
 export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
   const { data: user } = useGetUserQuery();
+  const dispatch = useAppDispatch();
 
   const [openDialog, setOpenDialog] = useState(false);
   const [
@@ -71,10 +73,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
 
   useEffect(() => {
     if (deleteIsSuccess) {
-      logOut();
-      //A temporary solution until logout is implemented
-      localStorage.removeItem('token');
-      location.reload();
+      dispatch(logOut());
     }
   }, [deleteIsSuccess]);
 

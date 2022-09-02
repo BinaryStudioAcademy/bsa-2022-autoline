@@ -5,7 +5,7 @@ import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app-route.enum';
 import { EditProfile } from '@components/edit-profile/edit-profile';
 import { UnauthorisedElements } from '@components/header/unauthorised-elements/unauthorised-elements';
-import { useAppSelector } from '@hooks/hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import {
   AppBar,
   Tab,
@@ -32,7 +32,7 @@ export const Header = (): React.ReactElement => {
   const [openSettings, setOpenSettings] = useState(false);
   const userToken = useAppSelector((state) => state.auth.token);
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     setWishlistCount(wishlist.models.length + wishlist.complectations.length);
   }, [wishlist]);
@@ -83,12 +83,7 @@ export const Header = (): React.ReactElement => {
     },
     logout: {
       label: 'Logout',
-      onClick: (): void => {
-        logOut();
-        //A temporary solution until logout is implemented
-        localStorage.removeItem('token');
-        location.reload();
-      },
+      onClick: () => dispatch(logOut()),
     },
   };
 

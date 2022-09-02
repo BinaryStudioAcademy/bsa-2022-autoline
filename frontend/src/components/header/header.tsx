@@ -14,6 +14,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { logOut } from '@store/auth/slice';
 import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 import { useGetUserQuery } from '@store/queries/user/update-user';
 
@@ -82,7 +83,12 @@ export const Header = (): React.ReactElement => {
     },
     logout: {
       label: 'Logout',
-      onClick: () => navigate('#'),
+      onClick: (): void => {
+        logOut();
+        //A temporary solution until logout is implemented
+        localStorage.removeItem('token');
+        location.reload();
+      },
     },
   };
 

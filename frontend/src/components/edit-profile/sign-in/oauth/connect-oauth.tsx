@@ -16,6 +16,7 @@ const ConnectOauth: React.FC<{ title: string; isConnected: boolean }> = ({
   isConnected,
 }) => {
   const token = useAppSelector((state) => state.auth.token);
+  const dispatch = useAppDispatch();
   const { refetch } = useGetUserQuery();
   const [deleteOauth] = useDeleteOauthMutation();
 
@@ -30,8 +31,6 @@ const ConnectOauth: React.FC<{ title: string; isConnected: boolean }> = ({
     },
     [title],
   );
-
-  const dispatch = useAppDispatch();
 
   const connectOauth = (e: React.MouseEvent): void => {
     e.preventDefault();

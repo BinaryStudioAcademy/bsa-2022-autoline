@@ -63,7 +63,9 @@ There is also a block "Where to buy?" with a list of online stores, prices, and 
 
 To store that data we use the **`MariaDB`**, community-developed, commercially supported fork of the **`MySQL`**.
 
-Diagram - https://dbdiagram.io/d/62e95fbbf31da965e865f0c9
+**Diagram:**
+
+[![Diagram](https://autoline-images.s3.eu-west-1.amazonaws.com/autoline_database_schema.png)](https://dbdiagram.io/d/62e95fbbf31da965e865f0c9)
 
 1. Data is stored in a few schemas - `public`, `cars`, and `locations`.
 2. Tables are named in the **snake_case** and the **plural** form.

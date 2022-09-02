@@ -6,23 +6,29 @@ import { AutocompleteInput } from '@components/common/autocomplete-input/autocom
 import { SelectField } from '@components/common/select-field/select-field';
 import { Spinner } from '@components/common/spinner/spinner';
 import { getValueById } from '@helpers/get-value-by-id';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import { Box, IconButton } from '@mui/material';
 import {
   useGetBrandsQuery,
   useGetModelsOfBrandQuery,
 } from '@store/queries/cars';
 
+import styles from './styles.module.scss';
+
 type Props = {
-  onBrandDetailsChange: (data: BrandDetailsType) => void;
   id: string;
   selectedBrandId: string;
   selectedModelId: string;
+  onBrandDetailsChange: (data: BrandDetailsType) => void;
+  onBrandDetailsRemove: () => void;
 };
 
 const BrandDetails: FC<Props> = ({
-  onBrandDetailsChange,
   id,
   selectedBrandId,
   selectedModelId,
+  onBrandDetailsChange,
+  onBrandDetailsRemove,
 }) => {
   const { data: brands, isLoading } = useGetBrandsQuery();
   const { data: models } = useGetModelsOfBrandQuery(selectedBrandId, {
@@ -52,6 +58,15 @@ const BrandDetails: FC<Props> = ({
 
   return (
     <div>
+      <Box display="flex" justifyContent="right">
+        <IconButton
+          onClick={onBrandDetailsRemove}
+          className={styles.deleteButton}
+          aria-label="delete"
+        >
+          <CloseOutlinedIcon className={styles.deleteIcon} />
+        </IconButton>
+      </Box>
       {brands && (
         <AutocompleteInput
           label="Brand"

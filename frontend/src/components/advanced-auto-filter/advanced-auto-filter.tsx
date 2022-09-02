@@ -29,6 +29,7 @@ import UTurnRightIcon from '@mui/icons-material/UTurnRight';
 import { Button, Zoom } from '@mui/material';
 import {
   addNewBrandDetails,
+  removeBrandDetails,
   resetAllFilters,
   setBrandDetailsValue,
   setCheckListValue,
@@ -91,6 +92,10 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
     dispatch(setBrandDetailsValue(data));
   };
 
+  const handleBrandDetailsRemove = (id: string): void => {
+    dispatch(removeBrandDetails(id));
+  };
+
   const handleRegionChange = (data: AutocompleteValueType): void => {
     const value = data?.id || '';
     dispatch(setValue({ filterName: FiltersNames.REGION_ID, value }));
@@ -145,9 +150,12 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
             <BrandDetails
               key={brandDetail.id}
               id={brandDetail.id}
-              onBrandDetailsChange={handleBrandDetailsChange}
               selectedBrandId={brandDetail.brandId}
               selectedModelId={brandDetail.modelId}
+              onBrandDetailsChange={handleBrandDetailsChange}
+              onBrandDetailsRemove={(): void =>
+                handleBrandDetailsRemove(brandDetail.id)
+              }
             />
           ))}
 

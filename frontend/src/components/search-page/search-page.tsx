@@ -23,7 +23,9 @@ const SearchPage: React.FC = () => {
     <>
       <Header />
       <PageContainer>
-        <Title element="h3">Search</Title>
+        <Title id="searchTitle" element="h3">
+          Search
+        </Title>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
             {cars.length === 0 && (

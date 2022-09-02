@@ -87,6 +87,14 @@ const getUser = async (id: string): Promise<Partial<UpdateUserReq> | null> => {
     where: {
       id,
     },
+    include: {
+      User_Security: {
+        select: {
+          google_acc_id: true,
+          facebook_acc_id: true,
+        },
+      },
+    },
   });
 
   if (!user) {
@@ -101,6 +109,8 @@ const getUser = async (id: string): Promise<Partial<UpdateUserReq> | null> => {
     email: user.email,
     location: user.location,
     photoUrl: user.photo_url,
+    isGoogleConnected: !!user.User_Security?.google_acc_id,
+    isFacebookConnected: !!user.User_Security?.facebook_acc_id,
   };
 };
 
@@ -140,4 +150,24 @@ const passwordCheck = async (id: string, password: string): Promise<void> => {
   }
 };
 
-export { updateUser, deleteUser, getUser };
+const deleteOauthConnections = async (
+  userId: string,
+  provider: string,
+): Promise<void> => {
+  const providerName =
+    provider === 'Google' ? 'google_acc_id' : 'facebook_acc_id';
+
+  await prisma.user_Security.updateMany({
+    where: {
+      user_id: userId,
+      password: {
+        not: null,
+      },
+    },
+    data: {
+      [providerName]: null,
+    },
+  });
+};
+
+export { updateUser, deleteUser, getUser, deleteOauthConnections };

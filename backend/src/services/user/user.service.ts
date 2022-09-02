@@ -150,4 +150,24 @@ const passwordCheck = async (id: string, password: string): Promise<void> => {
   }
 };
 
-export { updateUser, deleteUser, getUser };
+const deleteOauthConnections = async (
+  userId: string,
+  provider: string,
+): Promise<void> => {
+  const providerName =
+    provider === 'Google' ? 'google_acc_id' : 'facebook_acc_id';
+
+  await prisma.user_Security.updateMany({
+    where: {
+      user_id: userId,
+      password: {
+        not: null,
+      },
+    },
+    data: {
+      [providerName]: null,
+    },
+  });
+};
+
+export { updateUser, deleteUser, getUser, deleteOauthConnections };

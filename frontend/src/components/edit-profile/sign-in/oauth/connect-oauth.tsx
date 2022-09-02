@@ -6,7 +6,10 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import { openOAuthPage } from '@helpers/sign/open-oauth';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import { setCredentials } from '@store/auth/slice';
-import { useGetUserQuery } from '@store/queries/user/update-user';
+import {
+  useGetUserQuery,
+  useDeleteOauthMutation,
+} from '@store/queries/user/update-user';
 
 const ConnectOauth: React.FC<{ title: string; isConnected: boolean }> = ({
   title,
@@ -14,6 +17,7 @@ const ConnectOauth: React.FC<{ title: string; isConnected: boolean }> = ({
 }) => {
   const token = useAppSelector((state) => state.auth.token);
   const { refetch } = useGetUserQuery();
+  const [deleteOauth] = useDeleteOauthMutation();
 
   const onStorageEvent = useCallback(
     (e: StorageEvent): void => {
@@ -34,6 +38,11 @@ const ConnectOauth: React.FC<{ title: string; isConnected: boolean }> = ({
     openOAuthPage(title, token);
   };
 
+  const disconnectOauth = async (e: React.MouseEvent): Promise<void> => {
+    e.preventDefault();
+    await deleteOauth({ provider: title });
+  };
+
   useEffect(() => {
     window.addEventListener('storage', onStorageEvent, false);
 
@@ -44,12 +53,7 @@ const ConnectOauth: React.FC<{ title: string; isConnected: boolean }> = ({
 
   if (isConnected) {
     return (
-      <ButtonFill
-        text={title + ' is connected'}
-        onClick={(e: React.MouseEvent): void => {
-          e.preventDefault();
-        }}
-      />
+      <ButtonFill text={title + ' is connected'} onClick={disconnectOauth} />
     );
   }
   return <ButtonOutline text={'Connect ' + title} onClick={connectOauth} />;

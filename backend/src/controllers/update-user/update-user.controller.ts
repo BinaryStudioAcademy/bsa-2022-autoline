@@ -67,4 +67,20 @@ const getUser = async (
   }
 };
 
-export { updateUser, deleteUser, getUser };
+const deleteOauthConnections = async (
+  req: TypedRequestBody<{ tokenPayload: TokenPayload; provider: string }>,
+  res: Response<Partial<UpdateUserReq>>,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    await userService.deleteOauthConnections(
+      req.body.tokenPayload.sub,
+      req.body.provider,
+    );
+    res.status(httpStatus.OK).json();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { updateUser, deleteUser, getUser, deleteOauthConnections };

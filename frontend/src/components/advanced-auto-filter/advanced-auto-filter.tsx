@@ -57,6 +57,10 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
 
   const doSearch = (): void => {
     search(queryParams);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   useEffect(() => {

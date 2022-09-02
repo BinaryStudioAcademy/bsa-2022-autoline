@@ -20,7 +20,7 @@ type Props = {
   selectedBrandId: string;
   selectedModelId: string;
   onBrandDetailsChange: (data: BrandDetailsType) => void;
-  onBrandDetailsRemove: () => void;
+  onBrandDetailsRemove?: () => void;
 };
 
 const BrandDetails: FC<Props> = ({

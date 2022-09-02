@@ -5,7 +5,7 @@ import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app-route.enum';
 import { EditProfile } from '@components/edit-profile/edit-profile';
 import { UnauthorisedElements } from '@components/header/unauthorised-elements/unauthorised-elements';
-import { useAppSelector } from '@hooks/hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import {
   AppBar,
   Tab,
@@ -14,6 +14,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { logOut } from '@store/auth/slice';
 import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 import { useGetUserQuery } from '@store/queries/user/update-user';
 
@@ -31,7 +32,7 @@ export const Header = (): React.ReactElement => {
   const [openSettings, setOpenSettings] = useState(false);
   const userToken = useAppSelector((state) => state.auth.token);
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     setWishlistCount(wishlist.models.length + wishlist.complectations.length);
   }, [wishlist]);
@@ -82,7 +83,7 @@ export const Header = (): React.ReactElement => {
     },
     logout: {
       label: 'Logout',
-      onClick: () => navigate('#'),
+      onClick: () => dispatch(logOut()),
     },
   };
 

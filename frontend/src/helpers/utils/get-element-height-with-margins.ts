@@ -1,4 +1,6 @@
-export const getElementHeight = (element: Element | null): number => {
+export const getElementHeightWithMargins = (
+  element: Element | null,
+): number => {
   if (!element) return 0;
 
   let elementHeight = element?.clientHeight || 0;

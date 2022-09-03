@@ -30,7 +30,7 @@ import { Spinner } from '@components/common/spinner/spinner';
 import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
 import { getValueById } from '@helpers/get-value-by-id';
 import { objectToQueryString } from '@helpers/object-to-query';
-import { getElementHeight } from '@helpers/utils/get-element-height';
+import { getElementHeightWithMargins } from '@helpers/utils/get-element-height-with-margins';
 import { getHeightByPosition } from '@helpers/utils/get-height-by-position';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import UTurnRightIcon from '@mui/icons-material/UTurnRight';
@@ -72,7 +72,8 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
     });
   };
 
-  const [filterContainer, setRef] = useState<HTMLDivElement | null>(null);
+  const [filterContainer, setFilterContainerRef] =
+    useState<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
     if (!filterContainer) return;
@@ -80,7 +81,7 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
     const headerHeight =
       document.querySelector('#mainHeader')?.clientHeight || 0;
 
-    const searchTitleHeight = getElementHeight(
+    const searchTitleHeight = getElementHeightWithMargins(
       document.querySelector('#searchTitle'),
     );
 
@@ -164,7 +165,7 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
   if (isLoading) return <Spinner />;
 
   return (
-    <div ref={setRef} className={styles.container}>
+    <div ref={setFilterContainerRef} className={styles.container}>
       <h4>FILTER</h4>
       <div className={styles.column}>
         <CheckboxList

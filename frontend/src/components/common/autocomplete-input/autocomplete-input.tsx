@@ -1,15 +1,13 @@
 import React, { FC } from 'react';
 
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
-import styles from '@components/simple-auto-filter/styles.module.scss';
 import { Autocomplete, SvgIcon, TextField } from '@mui/material';
+
+import styles from './styles.module.scss';
 
 interface Props {
   label: string;
-  options: {
-    label: string;
-    id: string;
-  }[];
+  options: AutocompleteValueType[];
   value: AutocompleteValueType;
   onChange: (data: AutocompleteValueType) => void;
 }
@@ -22,7 +20,6 @@ const AutocompleteInput: FC<Props> = (props): JSX.Element => {
   return (
     <Autocomplete
       {...props}
-      options={props.options}
       className={styles.autocompleteField}
       onChange={(event, value): void =>
         handleSelectChange(value || { label: '', id: '' })

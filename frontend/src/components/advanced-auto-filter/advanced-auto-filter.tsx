@@ -25,6 +25,7 @@ import { AdvancedAutoFilterProps } from '@common/types/types';
 import { BrandDetails } from '@components/advanced-auto-filter/brand-details/brand-details';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
+import { MultiselectInput } from '@components/common/multiselect-input/multiselect-input';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
 import { Spinner } from '@components/common/spinner/spinner';
 import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
@@ -104,7 +105,7 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
         ...filters,
         ...checkLists,
         brandId: brandDetails.map((item) => item.brandId),
-        modelId: brandDetails.map((item) => item.modelId),
+        modelId: brandDetails.flatMap((item) => item.modelIds),
       }),
     );
 
@@ -140,9 +141,8 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
   };
 
   const handleCheckboxListChange = (data: CheckboxListDataType): void => {
-    dispatch(
-      setCheckListValue({ filterName: data.filterName, value: data.data }),
-    );
+    const filterName = data.filterName as CheckListsNames;
+    dispatch(setCheckListValue({ filterName, value: data.data }));
   };
 
   const handleRangeChange = (range: RangeValueType[]): void => {
@@ -168,14 +168,24 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
     <div ref={setFilterContainerRef} className={styles.container}>
       <h4>FILTER</h4>
       <div className={styles.column}>
-        <CheckboxList
-          title="Body Type"
-          list={options && options.bodyTypes}
-          checkedList={checkLists.bodyTypeId}
-          listLimit={4}
-          onListCheck={handleCheckboxListChange}
-          filterName={CheckListsNames.BODY_TYPE_ID}
-        />
+        <h5 className={styles.blockTitle}>Body Type</h5>
+        {options?.bodyTypes && (
+          <MultiselectInput
+            label="Body Type"
+            filterName={CheckListsNames.BODY_TYPE_ID}
+            options={
+              options &&
+              options?.bodyTypes.map((item: AutoRiaOption) => ({
+                label: item.name,
+                id: item.id,
+              }))
+            }
+            value={checkLists.bodyTypeId.map((id) =>
+              getValueById(options.bodyTypes, id),
+            )}
+            onChange={handleCheckboxListChange}
+          />
+        )}
 
         <div className={styles.row}>
           <h5 className={styles.blockTitle}>Brand Details</h5>
@@ -187,8 +197,6 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
           <BrandDetails
             key={brandDetail.id}
             id={brandDetail.id}
-            selectedBrandId={brandDetail.brandId}
-            selectedModelId={brandDetail.modelId}
             onBrandDetailsChange={handleBrandDetailsChange}
             onBrandDetailsRemove={(): void =>
               handleBrandDetailsRemove(brandDetail.id)

@@ -10,12 +10,18 @@ import * as carsService from '@services/cars/cars.service';
 import { NextFunction, Request, Response } from 'express';
 
 const carsSearchAutoria = async (
-  req: TypedRequestQuery<CarsSearchParams>,
+  req: TypedRequestQuery<{
+    complectationId: string[];
+    page: string;
+  }>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const carsData = await carsSearchService.carsSearchAutoria(req.query);
+    const carsData = await carsSearchService.carsSearchAutoria(
+      req.query.complectationId,
+      req.query.page,
+    );
     const autoRiaCarsData = await getCarsAutoRia(carsData);
 
     res.json(autoRiaCarsData);

@@ -90,6 +90,7 @@ export const Header = (): React.ReactElement => {
   return (
     <>
       <AppBar
+        id="mainHeader"
         sx={{
           background: '#ffffff',
           boxShadow: 0,

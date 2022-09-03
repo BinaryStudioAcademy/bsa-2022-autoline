@@ -34,6 +34,7 @@ import { objectToQueryString } from '@helpers/object-to-query';
 import { getElementHeightWithMargins } from '@helpers/utils/get-element-height-with-margins';
 import { getHeightByPosition } from '@helpers/utils/get-height-by-position';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import UTurnRightIcon from '@mui/icons-material/UTurnRight';
 import { Button, Zoom } from '@mui/material';
 import {
@@ -189,9 +190,17 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
 
         <div className={styles.row}>
           <h5 className={styles.blockTitle}>Brand Details</h5>
-          <h6 className={styles.addButton} onClick={handleAddNewDetails}>
-            + Add
-          </h6>
+          <Button
+            onClick={handleAddNewDetails}
+            className={styles.addButton}
+            aria-label="Add"
+          >
+            <AddOutlinedIcon />
+            Add
+          </Button>
+          {/*<h6 className={styles.addButton} onClick={handleAddNewDetails}>*/}
+          {/*  + Add*/}
+          {/*</h6>*/}
         </div>
         {brandDetails.map((brandDetail) => (
           <BrandDetails

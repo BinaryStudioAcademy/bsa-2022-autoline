@@ -289,25 +289,27 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
           filterName={CheckListsNames.FUEL_TYPE_ID}
         />
       </div>
-      {isFiltersApplied && (
+      <Zoom in={isFiltersApplied} unmountOnExit={true}>
         <div className={styles.bottomControls}>
-          <h6 onClick={resetFilters} className={styles.reset}>
+          <Button
+            onClick={resetFilters}
+            className={styles.reset}
+            aria-label="delete"
+          >
             <UTurnRightIcon className={styles.resetIcon} />
             Reset All Filters
-          </h6>
-          <Zoom in={isFiltersApplied} unmountOnExit={true}>
-            <div className={styles.searchButtonWrapper}>
-              <Button
-                onClick={doSearch}
-                className={styles.searchButton}
-                variant="contained"
-              >
-                SEARCH
-              </Button>
-            </div>
-          </Zoom>
+          </Button>
+          <div className={styles.searchButtonWrapper}>
+            <Button
+              onClick={doSearch}
+              className={styles.searchButton}
+              variant="contained"
+            >
+              SEARCH
+            </Button>
+          </div>
         </div>
-      )}
+      </Zoom>
     </div>
   );
 };

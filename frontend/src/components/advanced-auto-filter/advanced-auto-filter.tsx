@@ -49,6 +49,7 @@ import {
   useGetUsedOptionsQuery,
   useLazyGetFilteredCarsQuery,
 } from '@store/queries/cars';
+import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
@@ -168,7 +169,8 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
   return (
     <div ref={setFilterContainerRef} className={styles.container}>
       <h4>FILTER</h4>
-      <div className={styles.column}>
+      {/*<div className={styles.column}>*/}
+      <div className={clsx(styles.column, 'styledScrollbar')}>
         <h5 className={styles.blockTitle}>Body Type</h5>
         {options?.bodyTypes && (
           <MultiselectInput
@@ -198,9 +200,6 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
             <AddOutlinedIcon />
             Add
           </Button>
-          {/*<h6 className={styles.addButton} onClick={handleAddNewDetails}>*/}
-          {/*  + Add*/}
-          {/*</h6>*/}
         </div>
         {brandDetails.map((brandDetail) => (
           <BrandDetails

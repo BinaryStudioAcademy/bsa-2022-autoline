@@ -66,6 +66,19 @@ const deleteWishlist = async (input: WishlistInput): Promise<void> => {
   return;
 };
 
+const getWishlistLike = async (input: WishlistInput): Promise<boolean> => {
+  const { userId, modelId, complectationId } = input;
+  const wishlist = await prisma.user_Wishlist.findFirst({
+    where: {
+      user_id: userId,
+      model_id: modelId,
+      complectation_id: complectationId,
+    },
+  });
+  const result = Boolean(wishlist?.model_id || wishlist?.complectation_id);
+  return result;
+};
+
 const getWishlistByUserId = async (
   userId: string,
 ): Promise<WishlistsResponseDto> => {
@@ -207,4 +220,4 @@ const getWishlistByUserId = async (
   return wishlists;
 };
 
-export { setWishlist, deleteWishlist, getWishlistByUserId };
+export { setWishlist, deleteWishlist, getWishlistByUserId, getWishlistLike };

@@ -1,3 +1,4 @@
+import { UserValidationMessage } from '@common/enums/validation/user-validation-message.enum';
 import * as Yup from 'yup';
 
 const urlReg =
@@ -8,7 +9,13 @@ const updateUserSchema = Yup.object().shape({
   name: Yup.string()
     .required('Full name is required')
     .max(150, 'Full name must not exceed 100 characters'),
-  email: Yup.string().required('Email is required').email('Email is invalid'),
+  email: Yup.string()
+    .required(UserValidationMessage.EMAIL_REQUIRED)
+    .email(UserValidationMessage.INVALID_EMAIL)
+    .matches(/^[A-Za-z0-9.\-_]*@/, UserValidationMessage.INVALID_EMAIL)
+    .matches(/@[A-Za-z0-9.\-_]*$/, UserValidationMessage.INVALID_EMAIL)
+    .matches(/^[\S]{1,35}@/, UserValidationMessage.INVALID_EMAIL_LENGTH)
+    .matches(/@.{3,35}?\./, UserValidationMessage.INVALID_EMAIL_LENGTH),
   phone: Yup.string()
     .transform((value) => (value === '' ? null : value))
     .matches(phoneReg, 'Phone is invalid')

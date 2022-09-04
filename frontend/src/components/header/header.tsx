@@ -78,7 +78,7 @@ export const Header = (): React.ReactElement => {
       onClick: (): void => navigate(AppRoute.ADMINISTRATION),
     },
     settings: {
-      label: 'Setting',
+      label: 'Settings',
       onClick: (): void => setOpenSettings(true),
     },
     logout: {

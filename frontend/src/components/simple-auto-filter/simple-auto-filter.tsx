@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import { Button, Zoom } from '@mui/material';
 import {
   addNewBrandDetails,
+  removeBrandDetails,
   setBrandDetailsValue,
   setValue,
 } from '@store/car-filter/slice';
@@ -61,6 +62,10 @@ const SimpleAutoFilter: FC = () => {
     dispatch(setBrandDetailsValue(data));
   };
 
+  const handleBrandDetailsRemove = (id: string): void => {
+    dispatch(removeBrandDetails(id));
+  };
+
   const handleRangeChange = (range: RangeValueType[]): void => {
     range.forEach(({ filterName, value }) => {
       dispatch(setValue({ filterName, value }));
@@ -70,7 +75,7 @@ const SimpleAutoFilter: FC = () => {
   const isButtonVisible = Boolean(
     Object.values(filters).some((filter) => filter.length >= 1) ||
       brandDetails[0].brandId != '' ||
-      brandDetails[0].modelId != '',
+      brandDetails[0].modelIds.length,
   );
 
   const doSearch = (): void => {
@@ -108,8 +113,9 @@ const SimpleAutoFilter: FC = () => {
               key={brandDetail.id}
               id={brandDetail.id}
               onBrandDetailsChange={handleBrandDetailsChange}
-              selectedBrandId={brandDetail.brandId}
-              selectedModelId={brandDetail.modelId}
+              onBrandDetailsRemove={(): void =>
+                handleBrandDetailsRemove(brandDetail.id)
+              }
             />
           ))}
         </div>

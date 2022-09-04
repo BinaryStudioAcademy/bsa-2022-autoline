@@ -13,6 +13,13 @@ const wishlistApi = api.injectEndpoints({
       query: () => API.WISHLIST,
       providesTags: ['WishlistCars'],
     }),
+    getWishlistsLikedItem: build.query<boolean, WishlistInput>({
+      query: ({ complectationId, modelId }) => ({
+        url: `${API.WISHLIST}/like?complectationId=${complectationId}&modelId=${modelId}`,
+        method: 'GET',
+      }),
+      providesTags: ['WishlistCars'],
+    }),
     createWishlist: build.mutation<WishlistResponseDto, WishlistInput>({
       query: (params) => ({
         url: `${API.WISHLIST}`,
@@ -35,6 +42,7 @@ const wishlistApi = api.injectEndpoints({
 
 export const {
   useGetWishlistsQuery,
+  useGetWishlistsLikedItemQuery,
   useCreateWishlistMutation,
   useDeleteWishlistMutation,
 } = wishlistApi;

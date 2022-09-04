@@ -108,3 +108,37 @@
     margin: 0;
   }
 }
+
+.button {
+  height: 1.2rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.iconButton {
+  padding: 0;
+  background: transparent;
+  border: none;
+
+  path {
+    transition: all 300ms;
+  }
+
+  &.isLiked,
+  &:hover {
+    path {
+      transition: all 300ms;
+      fill: var(--blue100);
+    }
+  }
+}
+
+.titleWrapper {
+  display: flex;
+}
+
+.buttonsWrapper {
+  margin-left: auto;
+}

@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { ComplectationDetailsType } from '@autoline/shared/common/types/types';
+import {
+  ComplectationDetailsType,
+  WishlistInput,
+} from '@autoline/shared/common/types/types';
+import { AppRoute } from '@common/enums/enums';
 import { CarListItemProps } from '@common/types/types';
 import { SliderNavButton } from '@components/car-list-item/slider-nav-button/slider-nav-button';
 import { swiperParams } from '@components/car-list-item/swiper-params';
+import { HeartIcon } from '@components/common/icons/icons';
 import { Spinner } from '@components/common/spinner/spinner';
 import { CompleteSetTableCollapsed } from '@components/complete-set-table/complete-set-table-collapsed';
 import { formatPrice } from '@helpers/helpers';
 import { objectToQueryString } from '@helpers/object-to-query';
+import { useAppSelector } from '@hooks/hooks';
 import { Grid } from '@mui/material';
 import { uuid4 } from '@sentry/utils';
 import {
   useGetComplectationsQuery,
   useGetModelDetailsQuery,
 } from '@store/queries/cars';
+import {
+  useGetWishlistsLikedItemQuery,
+  useCreateWishlistMutation,
+  useDeleteWishlistMutation,
+} from '@store/queries/preferences/wishlist';
 import { clsx } from 'clsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -21,6 +33,8 @@ import styles from './styles.module.scss';
 
 const CarListItem: React.FC<CarListItemProps> = (props) => {
   const { model_id, complectations_id } = props;
+  const authToken = useAppSelector((state) => state.auth.token);
+  const navigate = useNavigate();
 
   const idParams = objectToQueryString({ 'id': complectations_id });
 
@@ -28,7 +42,9 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
     useGetComplectationsQuery(idParams);
   const { data: model, isLoading: isModelLoading } =
     useGetModelDetailsQuery(model_id);
-
+  const { data: isLikedModel } = useGetWishlistsLikedItemQuery({
+    modelId: model_id,
+  });
   const modelName = `${model?.brandName} ${model?.modelName}`;
   const [modelPrice, setModelPrice] = useState<string>();
   const [modelOptions, setModelOptions] = useState<{ name: string }[]>();
@@ -36,6 +52,28 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
   const [modelEnginePower, setModelEnginePower] = useState<string>();
   const [modelFuelType, setModelFuelType] = useState<string>();
   const [modelTransmission, setModelTransmission] = useState<string>();
+  const [createWishlist] = useCreateWishlistMutation();
+  const [deleteWishlist] = useDeleteWishlistMutation();
+
+  const handleCreateWishlist = async (data: WishlistInput): Promise<void> => {
+    await createWishlist(data);
+  };
+
+  const handleDeleteWishlist = async (data: WishlistInput): Promise<void> => {
+    await deleteWishlist(data);
+  };
+
+  const handleLikeClick = (event: React.MouseEvent): void => {
+    event.stopPropagation();
+    const data: WishlistInput = { modelId: model_id };
+
+    if (!authToken) {
+      navigate(AppRoute.SIGN_IN);
+      return;
+    }
+
+    isLikedModel ? handleDeleteWishlist(data) : handleCreateWishlist(data);
+  };
 
   useEffect(() => {
     if (model?.priceStart && model?.priceEnd) {
@@ -127,7 +165,21 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
           </div>
         </Grid>
         <Grid item sm={8}>
-          <h4 className={styles.carTitle}>{modelName}</h4>
+          <div className={styles.titleWrapper}>
+            <h4 className={styles.carTitle}>{modelName}</h4>
+            <div className={styles.buttonsWrapper}>
+              <button
+                className={clsx(
+                  styles.button,
+                  styles.iconButton,
+                  isLikedModel && styles.isLiked,
+                )}
+                onClick={handleLikeClick}
+              >
+                <HeartIcon />
+              </button>
+            </div>
+          </div>
           <div className={styles.priceBlock}>
             <h4 className={styles.primaryPrice}>{modelPrice}</h4>
             {/* TODO: USD-UAH convertation

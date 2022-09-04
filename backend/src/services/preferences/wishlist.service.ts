@@ -71,8 +71,14 @@ const getWishlistLike = async (input: WishlistInput): Promise<boolean> => {
   const wishlist = await prisma.user_Wishlist.findFirst({
     where: {
       user_id: userId,
-      model_id: modelId,
-      complectation_id: complectationId,
+      OR: [
+        {
+          model_id: modelId,
+        },
+        {
+          complectation_id: complectationId,
+        },
+      ],
     },
   });
   const result = Boolean(wishlist?.model_id || wishlist?.complectation_id);

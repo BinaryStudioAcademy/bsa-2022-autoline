@@ -189,7 +189,6 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
             onChange={handleCheckboxListChange}
           />
         )}
-
         <div className={styles.row}>
           <h5 className={styles.blockTitle}>Brand Details</h5>
           <Button
@@ -277,13 +276,45 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
             }))}
           />
         )}
-        <CheckboxList
-          title="Color"
-          list={options && options.colors}
-          checkedList={checkLists.colorId}
-          onListCheck={handleCheckboxListChange}
-          filterName={CheckListsNames.COLOR_ID}
-        />
+
+        <h5 className={styles.blockTitle}>Color</h5>
+        {options?.colors && (
+          <MultiselectInput
+            label="Color"
+            filterName={CheckListsNames.COLOR_ID}
+            options={
+              options &&
+              options?.colors.map((item: AutoRiaOption) => ({
+                label: item.name,
+                id: item.id,
+              }))
+            }
+            value={checkLists.colorId.map((id) =>
+              getValueById(options.colors, id),
+            )}
+            onChange={handleCheckboxListChange}
+          />
+        )}
+
+        <h5 className={styles.blockTitle}>Fuel</h5>
+        {options?.fuelTypes && (
+          <MultiselectInput
+            label="Fuel"
+            filterName={CheckListsNames.FUEL_TYPE_ID}
+            options={
+              options &&
+              options?.fuelTypes.map((item: AutoRiaOption) => ({
+                label: item.name,
+                id: item.id,
+              }))
+            }
+            value={checkLists.fuelTypeId.map((id) =>
+              getValueById(options.fuelTypes, id),
+            )}
+            onChange={handleCheckboxListChange}
+          />
+        )}
+
         <CheckboxList
           title="Transmission"
           list={options && options.transmissionTypes}
@@ -297,13 +328,6 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
           checkedList={checkLists.drivetrainId}
           onListCheck={handleCheckboxListChange}
           filterName={CheckListsNames.DRIVETRAIN_ID}
-        />
-        <CheckboxList
-          title="Fuel"
-          list={options && options.fuelTypes}
-          checkedList={checkLists.fuelTypeId}
-          onListCheck={handleCheckboxListChange}
-          filterName={CheckListsNames.FUEL_TYPE_ID}
         />
       </div>
       <Zoom in={isFiltersApplied} unmountOnExit={true}>

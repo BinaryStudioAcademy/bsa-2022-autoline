@@ -65,9 +65,9 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell></TableCell>
+              <TableCell>Photo</TableCell>
               <TableCell>Full name</TableCell>
-              <TableCell>e-mail</TableCell>
+              <TableCell>E-mail</TableCell>
               <TableCell>Phone</TableCell>
               <TableCell>Location</TableCell>
               <TableCell>Sex</TableCell>

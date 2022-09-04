@@ -14,6 +14,9 @@ const editUserMiddleware = async (
     await editUserSchema.validate(req.body);
     const existedUser = await prisma.user.findFirst({
       where: {
+        id: {
+          not: req.params.id,
+        },
         email: req.body.email,
       },
     });

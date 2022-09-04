@@ -76,7 +76,7 @@ const getWishlistByUserId = async (
   }
 };
 
-const getWishlistStatus = async (
+const getWishlistEntries = async (
   req: TypedRequestQuery<{ user_id: string }>,
   res: Response,
   next: NextFunction,
@@ -84,7 +84,7 @@ const getWishlistStatus = async (
   try {
     const userId = req.body.tokenPayload.sub;
 
-    const wishlists = await wishlistService.getWishlistStatus(userId);
+    const wishlists = await wishlistService.getWishlistEntries(userId);
     res.json(wishlists).status(httpStatus.OK);
   } catch (error) {
     if (error instanceof Error) {
@@ -94,4 +94,4 @@ const getWishlistStatus = async (
   }
 };
 
-export { setWishlist, deleteWishlist, getWishlistByUserId, getWishlistStatus };
+export { setWishlist, deleteWishlist, getWishlistByUserId, getWishlistEntries };

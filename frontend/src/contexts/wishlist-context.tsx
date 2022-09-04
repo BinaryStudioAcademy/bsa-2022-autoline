@@ -6,25 +6,25 @@ import { Notification } from '@components/common/notification/notification';
 import {
   useCreateWishlistMutation,
   useDeleteWishlistMutation,
-  useGetWishlistStatusQuery,
+  useGetWishlistEntriesQuery,
 } from '@store/queries/preferences/wishlist';
 
 type WishlistContextType = {
-  likedCars: string[] | undefined;
-  likeClick: (data: WishlistInput) => void;
+  likedCars?: string[];
+  handleLikeClick: (data: WishlistInput) => void;
 };
 
 const WishlistContext = createContext<WishlistContextType>({
   likedCars: undefined,
-  likeClick: () => undefined,
+  handleLikeClick: () => undefined,
 });
 
 const WishlistContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isMessageHidden, setIsMessageHidden] = useState<boolean>(true);
+  const [isMessageOpen, setIsMessageOpen] = useState<boolean>(false);
   const [deletedCar, setDeletedCar] = useState<WishlistInput>();
-  const { data: likedCars } = useGetWishlistStatusQuery();
+  const { data: likedCars } = useGetWishlistEntriesQuery();
 
   const [createWishlist] = useCreateWishlistMutation();
   const [deleteWishlist] = useDeleteWishlistMutation();
@@ -35,39 +35,39 @@ const WishlistContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const handleDeleteWishlist = async (data: WishlistInput): Promise<void> => {
     await deleteWishlist(data);
-    setIsMessageHidden(false);
+    setIsMessageOpen(true);
     setDeletedCar(data);
   };
 
-  const likeClick = (data: WishlistInput): void => {
+  const handleLikeClick = (data: WishlistInput): void => {
     const carId = data.modelId ? data.modelId : data.complectationId;
     const isLiked = likedCars?.includes(carId as string);
 
     isLiked ? handleDeleteWishlist(data) : handleCreateWishlist(data);
   };
 
-  const undoDelete = (data: WishlistInput): void => {
+  const handleUndoDelete = (data: WishlistInput): void => {
     handleCreateWishlist(data);
   };
 
-  const handleUndoDelete = (event?: React.MouseEvent): void => {
+  const undoDelete = (event?: React.MouseEvent): void => {
     event?.stopPropagation();
-    setIsMessageHidden(true);
-    deletedCar && undoDelete(deletedCar);
+    setIsMessageOpen(false);
+    deletedCar && handleUndoDelete(deletedCar);
   };
 
   const value = {
     likedCars,
-    likeClick,
+    handleLikeClick,
   };
 
   return (
     <WishlistContext.Provider value={value}>
       <Notification
-        isHidden={isMessageHidden}
-        setIsHidden={setIsMessageHidden}
+        isOpen={isMessageOpen}
+        setIsOpen={setIsMessageOpen}
         icon={<HeartIcon />}
-        undo={handleUndoDelete}
+        undo={undoDelete}
       >
         You removed car from wishlist
       </Notification>

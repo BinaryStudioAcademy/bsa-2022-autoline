@@ -7,11 +7,11 @@ import { AppRoute } from '@common/enums/enums';
 import { ExtendedCarCardPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
 import { CompareToast } from '@components/compare-toast/compare-toast';
+import { WishlistContext } from '@contexts/wishlist-context';
 import { formatPrice } from '@helpers/helpers';
 import { useAppSelector } from '@hooks/hooks';
 import { clsx } from 'clsx';
 
-import { WishlistContext } from '../../contexts/wishlist-context';
 import styles from './styles.module.scss';
 
 const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
@@ -31,9 +31,8 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
   } = props;
 
   const [isHidden, setIsHidden] = useState<boolean>(true);
-  const wishlistContext = useContext(WishlistContext);
-  const { likedCars, likeClick } = wishlistContext;
-  const isLiked = !!likedCars?.includes(carId);
+  const { likedCars, handleLikeClick } = useContext(WishlistContext);
+  const isLiked = likedCars?.includes(carId);
 
   const handleCompare = (): void => {
     setIsHidden(false);
@@ -48,7 +47,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
   );
   const maxPrice = formatPrice(Math.max(...maxPrices));
 
-  const handleLikeClick = (event?: React.MouseEvent): void => {
+  const likeClick = (event?: React.MouseEvent): void => {
     event?.stopPropagation();
     const data: WishlistInput =
       type === 'model' ? { modelId: carId } : { complectationId: carId };
@@ -58,7 +57,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
       return;
     }
 
-    likeClick(data);
+    handleLikeClick(data);
   };
 
   let name = `${brandName} ${carName}`;
@@ -80,7 +79,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
             styles.iconButton,
             isLiked && styles.isLiked,
           )}
-          onClick={handleLikeClick}
+          onClick={likeClick}
         >
           <HeartIcon />
         </button>

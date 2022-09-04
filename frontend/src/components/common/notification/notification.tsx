@@ -5,21 +5,19 @@ import styles from './styles.module.scss';
 
 interface ModalProps {
   children?: React.ReactNode;
-  isHidden: boolean;
-  setIsHidden: (isHidden: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   icon?: React.ReactElement;
   undo?: () => void;
 }
 
 const Notification: FC<ModalProps> = (props) => {
-  const { children, isHidden, setIsHidden, icon, undo } = props;
+  const { children, isOpen, setIsOpen, icon, undo } = props;
 
-  const closeNotification = (): void => {
-    setIsHidden(!isHidden);
-  };
+  const closeNotification = (): void => setIsOpen(!isOpen);
 
   return (
-    <div className={styles.container} hidden={isHidden}>
+    <div className={styles.container} hidden={!isOpen}>
       <div className={styles.content}>
         <button className={styles.close} onClick={closeNotification}>
           ×

@@ -1,7 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, ReactElement } from 'react';
 
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
-import { Autocomplete, SvgIcon, TextField } from '@mui/material';
+import { ArrowDown } from '@components/common/icons/arrow-down/arrow-down';
+import { Autocomplete, TextField } from '@mui/material';
+import isEqual from 'lodash.isequal';
 
 import styles from './styles.module.scss';
 
@@ -19,14 +21,14 @@ const MultiselectInput: FC<Props> = ({
   options,
   value,
   onChange,
-}): JSX.Element => {
+}): ReactElement => {
   const handleSelectChange = (values: AutocompleteValueType[]): void => {
     const ids = values.map((value) => value?.id || '');
 
     onChange({ filterName: filterName || '', list: ids });
   };
 
-  const uniqueOptions = options.filter(
+  const notChosenOptions = options.filter(
     (option) => !value.map((item) => item?.id).includes(option?.id),
   );
 
@@ -34,20 +36,11 @@ const MultiselectInput: FC<Props> = ({
     <Autocomplete
       multiple
       disableCloseOnSelect
-      options={uniqueOptions}
+      options={notChosenOptions}
       value={value}
       className={styles.autocompleteField}
       onChange={(event, value): void => handleSelectChange(value)}
-      popupIcon={
-        <SvgIcon viewBox="0 0 12 8">
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M10.59 0.100098L6 4.6801L1.41 0.100098L0 1.5101L6 7.5101L12 1.5101L10.59 0.100098Z"
-            fill="#C9CFDD"
-          />
-        </SvgIcon>
-      }
+      popupIcon={<ArrowDown />}
       renderInput={(params): JSX.Element => (
         <TextField {...params} label={label} />
       )}
@@ -55,4 +48,17 @@ const MultiselectInput: FC<Props> = ({
   );
 };
 
-export { MultiselectInput };
+const multiselectPropsAreEqual = (
+  prevProps: Props,
+  newProps: Props,
+): boolean => {
+  return (
+    isEqual(prevProps.value, newProps.value) &&
+    isEqual(prevProps.options, newProps.options)
+  );
+};
+
+export const MemoizedMultiselectInput = React.memo(
+  MultiselectInput,
+  multiselectPropsAreEqual,
+);

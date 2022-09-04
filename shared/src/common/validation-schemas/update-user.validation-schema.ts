@@ -45,14 +45,26 @@ const updateUserSchema = Yup.object().shape({
     .max(20, 'Password must not exceed 20 characters')
     .nullable(),
   newPassword: Yup.string()
+    .when('password', {
+      is: (password: string) => password !== null && password.length > 0,
+      then: Yup.string().required('Required').typeError('Required'),
+    })
     .transform((value) => (value === '' ? null : value))
     .min(8, 'Password must be at least 8 characters')
     .max(20, 'Password must not exceed 20 characters')
     .nullable(),
   repeatNewPassword: Yup.string()
+    .when('password', {
+      is: (password: string) => password !== null && password.length > 0,
+      then: Yup.string().required('Required').typeError('Required'),
+    })
     .transform((value) => (value === '' ? null : value))
     .min(8, 'Password must be at least 8 characters')
     .max(20, 'Password must not exceed 20 characters')
+    .oneOf(
+      [Yup.ref('newPassword'), null],
+      "New password and repeat new password don't match!",
+    )
     .nullable(),
   photoUrl: Yup.string().matches(urlReg, 'Photo url should be a valid URL'),
   sex: Yup.string().oneOf(['male', 'female', 'not_known', 'not_appliable']),

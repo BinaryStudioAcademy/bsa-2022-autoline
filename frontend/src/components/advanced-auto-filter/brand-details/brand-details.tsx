@@ -56,7 +56,7 @@ const BrandDetails: FC<Props> = ({
     onBrandDetailsChange({
       id,
       brandId,
-      modelIds: data.data || [],
+      modelIds: data.list || [],
     });
   };
 

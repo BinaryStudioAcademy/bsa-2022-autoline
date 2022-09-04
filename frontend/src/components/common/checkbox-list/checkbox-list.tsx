@@ -32,11 +32,11 @@ const CheckboxList: FC<Props> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value;
-    const data = checkedList.includes(value)
+    const list = checkedList.includes(value)
       ? checkedList.filter((item) => item !== value)
       : [...checkedList, value];
 
-    onListCheck({ filterName, data });
+    onListCheck({ filterName, list });
   };
 
   const showAll = (): void => {

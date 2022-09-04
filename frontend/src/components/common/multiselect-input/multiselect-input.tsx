@@ -10,21 +10,32 @@ interface Props {
   filterName?: string;
   options: AutocompleteValueType[];
   value: AutocompleteValueType[];
-  onChange: (data: { filterName: string; data: string[] }) => void;
+  onChange: (data: { filterName: string; list: string[] }) => void;
 }
 
-const MultiselectInput: FC<Props> = (props): JSX.Element => {
+const MultiselectInput: FC<Props> = ({
+  label,
+  filterName,
+  options,
+  value,
+  onChange,
+}): JSX.Element => {
   const handleSelectChange = (values: AutocompleteValueType[]): void => {
     const ids = values.map((value) => value?.id || '');
 
-    props.onChange({ filterName: props.filterName || '', data: ids });
+    onChange({ filterName: filterName || '', list: ids });
   };
+
+  const uniqueOptions = options.filter(
+    (option) => !value.map((item) => item?.id).includes(option?.id),
+  );
 
   return (
     <Autocomplete
       multiple
-      options={props.options}
-      value={props.value}
+      disableCloseOnSelect
+      options={uniqueOptions}
+      value={value}
       className={styles.autocompleteField}
       onChange={(event, value): void => handleSelectChange(value)}
       popupIcon={
@@ -38,7 +49,7 @@ const MultiselectInput: FC<Props> = (props): JSX.Element => {
         </SvgIcon>
       }
       renderInput={(params): JSX.Element => (
-        <TextField {...params} label={props.label} />
+        <TextField {...params} label={label} />
       )}
     />
   );

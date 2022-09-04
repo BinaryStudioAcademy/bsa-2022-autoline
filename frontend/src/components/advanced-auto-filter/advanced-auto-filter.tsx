@@ -144,7 +144,7 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
 
   const handleCheckboxListChange = (data: CheckboxListDataType): void => {
     const filterName = data.filterName as CheckListsNames;
-    dispatch(setCheckListValue({ filterName, value: data.data }));
+    dispatch(setCheckListValue({ filterName, value: data.list }));
   };
 
   const handleRangeChange = (range: RangeValueType[]): void => {

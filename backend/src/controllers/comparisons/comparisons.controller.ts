@@ -97,10 +97,26 @@ const getActiveComparisonCars = async (
   }
 };
 
+const getActiveComparisonStatus = async (
+  req: TypedRequestBody<{ tokenPayload: TokenPayload }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const comparison = await comparisonsService.getActiveComparisonStatus(
+      req.body.tokenPayload.sub,
+    );
+    res.status(httpStatus.OK).json(comparison);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   addCarToComparison,
   changeComparisonType,
   clearComparison,
   deleteCarFromComparison,
   getActiveComparisonCars,
+  getActiveComparisonStatus,
 };

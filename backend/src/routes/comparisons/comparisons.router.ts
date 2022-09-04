@@ -31,5 +31,9 @@ comparisonsRouter.get(
   userAuthMiddleware,
   comparisonsController.getActiveComparisonCars,
 );
-
+comparisonsRouter.get(
+  `${PATH}/status`,
+  userAuthMiddleware,
+  comparisonsController.getActiveComparisonStatus,
+);
 export { comparisonsRouter };

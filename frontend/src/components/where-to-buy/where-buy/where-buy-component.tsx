@@ -8,8 +8,12 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = ({
   carName,
   url,
   price,
-  workYears,
+  description,
 }) => {
+  const handleBuy = (): void => {
+    window.location.href = url;
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -22,17 +26,17 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = ({
             <a>{url}</a>
           </div>
           <div className={styles.trigger}>
-            <div>Auto.ria has been verified by insurance databases</div>
-            <div>Auto.ria checked against 15 databases</div>
-            <div>
-              {`The seller has been working with Auto.ria for more than ${workYears} years`}
-            </div>
+            <div>{description}</div>
           </div>
         </div>
         <div className={styles.panel}>
           <div className={styles.rectangle} />
           <div className={styles.price}>{`$ ${price}`}</div>
-          <ButtonOutline className={styles.buyButton} text="Buy" />
+          <ButtonOutline
+            className={styles.buyButton}
+            text="Buy"
+            onClick={handleBuy}
+          />
         </div>
       </div>
     </>

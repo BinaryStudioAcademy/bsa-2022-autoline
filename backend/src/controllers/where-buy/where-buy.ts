@@ -1,18 +1,28 @@
-// import { getCarsAutoRia } from '@helpers/cars/cars';
-import { carProperties } from '@services/where-buy/cars-properties';
+import { getCarsAutoRia, getCarById } from '@helpers/cars/api-autoria.helper';
+import { carsSearchAutoria } from '@services/cars/cars-search.service';
+import { Response, NextFunction } from 'express';
 
-import type { Response, NextFunction, Request } from 'express';
+import type { TypedRequestQuery } from '@common/types/controller/controller';
+
+type WhereBuyRequestQuery = {
+  page: string;
+  id: string;
+};
 
 const whereBuy = async (
-  req: Request,
+  req: TypedRequestQuery<WhereBuyRequestQuery>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    // const cars = await getCarsAutoRia({ 'bodystyle[0]': 3 });
-    const carProp = await carProperties('12ab45f7-c52c-4be0-9eb6-1a333954dd43');
-    console.log('qwa', carProp);
-    res.json('Hi');
+    const page = req.query.page;
+    const complectationId = req.query.id;
+    const carProp = await carsSearchAutoria([complectationId], page);
+    const cars = await getCarsAutoRia(carProp);
+    const oneCar = await getCarById(
+      cars?.result.search_result.ids[1] as string,
+    );
+    res.json(oneCar);
   } catch (error) {
     next(error);
   }

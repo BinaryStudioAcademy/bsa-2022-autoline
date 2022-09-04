@@ -8,7 +8,7 @@ const carsSearchAutoria = async (
   const result: Partial<AutoriaRequestParams> = {
     category_id: 1,
     power_name: 1,
-    countpage: 10,
+    countpage: 5,
     page: page,
   };
 
@@ -80,9 +80,9 @@ const carsSearchAutoria = async (
         complectation.engine_displacement.toNumber(),
       [`powerFrom[${index}]`]: complectation.engine_power,
       [`powerTo[${index}]`]: complectation.engine_power,
-      [`price_ot[${index}]`]: complectation.prices_ranges[0].price_start,
-      [`price_do[${index}]`]: complectation.prices_ranges[0].price_end,
-      [`color_id[${index}]`]: complectation.color?.autoria_code,
+      // [`price_ot[${index}]`]: complectation.prices_ranges[0].price_start,
+      // [`price_do[${index}]`]: complectation.prices_ranges[0].price_end,
+      // [`color_id[${index}]`]: complectation.color?.autoria_code,
       [`gear_id[${index}]`]: complectation.transmission_type?.autoria_code,
       [`type_id[${index}]`]: complectation.fuel_type?.autoria_code,
       [`drive_id[${index}]`]: complectation.drivetrain?.autoria_code,

@@ -1,15 +1,25 @@
 import logo from '@assets/images/logo-autoria.png';
-import { WhereBuyItemProps } from '@common/types/where-to-buy/where-to-buy';
+import { WhereBuyInterface } from '@common/types/where-to-buy/where-to-buy';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
+import Divider from '@mui/material/Divider';
 
 import styles from './styles.module.scss';
 
-const WhereBuyItem: React.FC<WhereBuyItemProps> = ({
-  carName,
-  url,
-  price,
-  description,
-}) => {
+interface WhereBuyItemProps {
+  poster: WhereBuyInterface;
+}
+
+const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
+  const {
+    USD: price,
+    autoData: { description, year },
+    linkToView,
+    markName,
+    modelName,
+  } = props.poster;
+  const name = `${markName} ${modelName} ${year}`;
+  const url = `https://auto.ria.com/uk${linkToView}`;
+
   const handleBuy = (): void => {
     window.open(url, '_blank');
   };
@@ -21,9 +31,9 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = ({
           <img className={styles.logo} src={logo} alt="logo" />
         </div>
         <div className={styles.description}>
-          <span className={styles.carName}>{carName}</span>
+          <span className={styles.carName}>{name}</span>
           <div className={styles.sellerLink}>
-            <a>{url}</a>
+            <a>{linkToView}</a>
           </div>
           <div className={styles.trigger}>
             <div>{description}</div>
@@ -38,6 +48,9 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = ({
             onClick={handleBuy}
           />
         </div>
+      </div>
+      <div className={styles.dividerDiv}>
+        <Divider className={styles.divider} />
       </div>
     </>
   );

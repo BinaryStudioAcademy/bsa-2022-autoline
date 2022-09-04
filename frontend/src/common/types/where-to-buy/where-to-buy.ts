@@ -1,9 +1,14 @@
-interface WhereBuyItemProps {
-  carName: string;
-  url: string;
-  price: number;
-  id: string;
-  description: string;
+interface WhereBuyInterface {
+  USD: number;
+  autoData: {
+    description: string;
+    year: number;
+    autoId: number;
+    race: string;
+  };
+  linkToView: string;
+  markName: string;
+  modelName: string;
 }
 
-export { type WhereBuyItemProps };
+export { type WhereBuyInterface };

@@ -19,10 +19,11 @@ const whereBuy = async (
     const complectationId = req.query.id;
     const carProp = await carsSearchAutoria([complectationId], page);
     const cars = await getCarsAutoRia(carProp);
-    const oneCar = await getCarById(
-      cars?.result.search_result.ids[1] as string,
+    const carsIds = cars?.result.search_result.ids;
+    const carPosters = carsIds?.map((car) => getCarById(car));
+    Promise.all(carPosters as readonly unknown[]).then((result) =>
+      res.json(result),
     );
-    res.json(oneCar);
   } catch (error) {
     next(error);
   }

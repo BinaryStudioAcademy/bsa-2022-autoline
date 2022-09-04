@@ -11,7 +11,7 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = ({
   description,
 }) => {
   const handleBuy = (): void => {
-    window.location.href = url;
+    window.open(url, '_blank');
   };
 
   return (

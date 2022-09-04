@@ -22,7 +22,7 @@ interface whereBuyQuery {
 
 const whereBuyApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getWhereBuy: build.query<WhereBuyInterface, whereBuyQuery>({
+    getWhereBuy: build.query<WhereBuyInterface[], whereBuyQuery>({
       query: ({ page, complectationId }) => ({
         url: `${whereBuyPath.WHERE_BUY}`,
         method: 'GET',

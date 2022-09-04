@@ -1,10 +1,8 @@
+import { AutoRiaUrls } from '@common/enums/app/app';
 import { ENV } from '@common/enums/app/env.enum';
 import { AutoriaRequestParams } from '@common/types/types';
 import axios from 'axios';
 import { Response } from 'express';
-
-// TODO Add to config
-const URL = 'https://developers.ria.com/auto/search';
 
 interface AutoriaResponse {
   additional_params: { page: string };
@@ -20,7 +18,7 @@ interface AutoriaResponse {
 const getCarsAutoRia = async (
   requestParams: Partial<AutoriaRequestParams>,
 ): Promise<AutoriaResponse | undefined> => {
-  const response = await axios.get(URL, {
+  const response = await axios.get(AutoRiaUrls.SEARCH_URL, {
     params: {
       api_key: ENV.APP.AUTORIA_API_KEY,
       ...requestParams,
@@ -29,10 +27,9 @@ const getCarsAutoRia = async (
   return response.data;
 };
 
-const idURL = 'https://developers.ria.com/auto/info';
 const getCarById = async (id: string): Promise<Response | undefined> => {
   const requestParams = { auto_id: id };
-  const response = await axios.get(idURL, {
+  const response = await axios.get(AutoRiaUrls.INFO_URL, {
     params: {
       api_key: ENV.APP.AUTORIA_API_KEY,
       ...requestParams,

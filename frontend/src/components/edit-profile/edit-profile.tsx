@@ -241,9 +241,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                 </div>
                 <Stack sx={{ width: '100%' }} spacing={2}>
                   {updateError && 'data' in updateError && (
-                    <Alert severity="error">
-                      Failed to update user data. Try again in a few minutes.
-                    </Alert>
+                    <Alert severity="error">{updateError.data.message}</Alert>
                   )}
                   {deleteError && 'data' in deleteError && (
                     <Alert severity="error">

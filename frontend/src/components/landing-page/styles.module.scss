@@ -154,6 +154,18 @@ body {
     }
   }
 
+  .secondContainer {
+    @media (max-width: $global-sm) {
+      & > div > div {
+        min-width: 100%;
+
+        & > img {
+          height: auto;
+        }
+      }
+    }
+  }
+
   .secondContainer,
   .fourthContainer {
     @include landing-page-margin;

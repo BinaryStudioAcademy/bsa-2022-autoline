@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-// import { useDispatch } from 'react-redux';
+import { useEffect, useMemo, useState } from 'react';
 
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
+import { useAppSelector } from '@hooks/store/store.hooks';
 import { useGetWhereBuyQuery } from '@store/queries/where-buy';
 
 import styles from './styles.module.scss';
@@ -9,27 +9,33 @@ import { WhereBuyItem } from './where-buy/where-buy-item';
 
 const WhereToBuy: React.FC = () => {
   const [page, setPage] = useState(1);
-  // const dispatch = useDispatch();
+  const [isSorted, setIsSorted] = useState(false);
+  const { adverts: list } = useAppSelector((state) => state.whereBuy);
+  const advertsList = useMemo(() => {
+    if (!isSorted) return list;
+    return [...list].sort((advertA, advertB) => advertA.USD - advertB.USD);
+  }, [list, isSorted]);
 
-  const { data: posters } = useGetWhereBuyQuery({
+  const { data: adverts } = useGetWhereBuyQuery({
     page,
     complectationId: '711b75ca-e29f-49e1-bcb9-b782bfb57637',
   });
-  const [cars, setCars] = useState(posters);
+  const [cars, setCars] = useState(adverts);
 
   useEffect(() => {
-    if (cars && posters) {
-      setCars([...cars, ...posters]);
-    } else if (posters) {
-      setCars([...posters]);
+    if (cars && adverts) {
+      setCars([...cars, ...adverts]);
+    } else if (adverts) {
+      setCars([...adverts]);
     }
-  }, [posters]);
+  }, [adverts]);
 
   const byPriceHandler = (): void => {
-    if (cars) {
-      const arrayForSort = [...cars];
-      setCars([...arrayForSort.sort((a, b) => a.USD - b.USD)]);
-    }
+    setIsSorted(!isSorted);
+    // if (cars) {
+    //   const arrayForSort = [...cars];
+    //   setCars([...arrayForSort.sort((a, b) => a.USD - b.USD)]);
+    // }
   };
 
   const seMoreHandler = (): void => {
@@ -50,8 +56,8 @@ const WhereToBuy: React.FC = () => {
           onClick={byPriceHandler}
         />
       </div>
-      {cars &&
-        cars.map((poster) => (
+      {advertsList &&
+        advertsList.map((poster) => (
           <WhereBuyItem key={poster.autoData.autoId} poster={poster} />
         ))}
       <div className={styles.seeAll}>

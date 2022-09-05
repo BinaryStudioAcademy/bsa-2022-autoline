@@ -2,11 +2,11 @@ import { WhereBuyInterface } from '@common/types/where-to-buy/where-to-buy';
 import { createSlice } from '@reduxjs/toolkit';
 
 type WhereBuyState = {
-  advert: WhereBuyInterface[];
+  adverts: WhereBuyInterface[];
 };
 
 const initialState: WhereBuyState = {
-  advert: [],
+  adverts: [],
 };
 
 const { reducer, actions } = createSlice({
@@ -14,8 +14,11 @@ const { reducer, actions } = createSlice({
   initialState,
   reducers: {
     setAdverts: (state, action) => {
+      console.log('ми тут');
       const { adverts } = action.payload;
-      state.advert = [...state.advert, ...adverts];
+      console.log(adverts, 'hjjk');
+      state.adverts = [...state.adverts, ...adverts];
+      console.log('ми тут', state.adverts);
     },
   },
   extraReducers: {},

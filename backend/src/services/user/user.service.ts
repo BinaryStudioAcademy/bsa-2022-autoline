@@ -146,7 +146,7 @@ const passwordCheck = async (id: string, password: string): Promise<void> => {
   );
 
   if (!passwordMatches) {
-    throw new Error('Bad passwords');
+    throw new Error('Incorrect current password');
   }
 };
 

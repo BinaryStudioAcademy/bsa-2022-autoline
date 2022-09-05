@@ -26,7 +26,7 @@ const passwordValidate = async (
 ): Promise<void> => {
   if (req.body.password) {
     if (req.body.newPassword !== req.body.repeatNewPassword) {
-      throw new Error('Bad passwords');
+      throw new Error("New password and repeat new password don't match");
     }
   }
 };

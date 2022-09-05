@@ -128,6 +128,7 @@ export const Header = (): React.ReactElement => {
               {userToken && user ? (
                 <PrivateElements
                   avatar={user.photoUrl}
+                  role={user.role}
                   reminders={reminders}
                   setOpenSettings={setOpenSettings}
                   userMenu={userMenu}

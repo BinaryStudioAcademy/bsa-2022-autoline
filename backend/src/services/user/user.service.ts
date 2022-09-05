@@ -109,6 +109,7 @@ const getUser = async (id: string): Promise<Partial<UpdateUserReq> | null> => {
     email: user.email,
     location: user.location,
     photoUrl: user.photo_url,
+    role: user.role,
     isGoogleConnected: !!user.User_Security?.google_acc_id,
     isFacebookConnected: !!user.User_Security?.facebook_acc_id,
   };

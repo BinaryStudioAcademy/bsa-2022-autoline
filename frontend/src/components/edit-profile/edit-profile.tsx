@@ -6,6 +6,7 @@ import DefaultAvatar from '@assets/images/edit-profile/default-avatar.png';
 import PencilIcon from '@assets/images/edit-profile/pencil.svg';
 import TrashIcon from '@assets/images/edit-profile/trash.svg';
 import { updateUserSchema } from '@autoline/shared';
+import { AppRoute } from '@common/enums/enums';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
@@ -13,6 +14,7 @@ import { DialogDeleteAccount } from '@components/edit-profile/dialog-delete-acco
 import { SelectYearRange } from '@components/edit-profile/select-year-range/select-year-range';
 import { SignIn } from '@components/edit-profile/sign-in/sign-in';
 import { useAppForm } from '@hooks/app-form/app-form.hook';
+import { useAppDispatch } from '@hooks/hooks';
 import { Alert, MenuItem, Modal, Stack } from '@mui/material';
 import {
   ProfileFieldsRequestData,
@@ -31,6 +33,7 @@ interface EditProfileProps {
 
 export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
   const { data: user } = useGetUserQuery();
+  const dispatch = useAppDispatch();
 
   const [openDialog, setOpenDialog] = useState(false);
   const [
@@ -71,10 +74,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
 
   useEffect(() => {
     if (deleteIsSuccess) {
-      logOut();
-      //A temporary solution until logout is implemented
-      localStorage.removeItem('token');
-      location.reload();
+      dispatch(logOut(AppRoute.ROOT));
     }
   }, [deleteIsSuccess]);
 
@@ -228,7 +228,10 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   control={control}
                   inputLabel="Repeat New Password"
                 />
-                <SignIn />
+                <SignIn
+                  google={user?.isGoogleConnected as boolean}
+                  facebook={user?.isFacebookConnected as boolean}
+                />
                 <div className={styles.btnWrapper}>
                   <ButtonOutline
                     text="Cancel"

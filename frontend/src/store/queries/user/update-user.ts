@@ -9,6 +9,8 @@ interface UserFields {
   phone: string | null;
   email: string | null;
   photoUrl: string | null;
+  isGoogleConnected: boolean;
+  isFacebookConnected: boolean;
 }
 
 export interface ProfileFieldsRequestData extends UserFields {
@@ -42,6 +44,14 @@ export const updateUserApi = api.injectEndpoints({
       query: () => API.USER,
       providesTags: ['User'],
     }),
+    deleteOauth: builder.mutation<void, { provider: string }>({
+      query: (params) => ({
+        url: `${API.USER}/oauth`,
+        method: 'PATCH',
+        params,
+      }),
+      invalidatesTags: ['User'],
+    }),
   }),
   overrideExisting: false,
 });
@@ -50,4 +60,5 @@ export const {
   useUpdateUserProfileMutation,
   useDeleteUserProfileMutation,
   useGetUserQuery,
+  useDeleteOauthMutation,
 } = updateUserApi;

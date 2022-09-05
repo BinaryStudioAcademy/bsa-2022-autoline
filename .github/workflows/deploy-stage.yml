@@ -98,6 +98,7 @@ jobs:
             sudo docker compose -f docker-compose.stage.yml rm --force --stop
             sudo docker compose -f docker-compose.stage.yml pull
             sudo docker compose -f docker-compose.stage.yml up -d
+            sudo docker image prune -a -f
   notify:
     needs: deploy
     runs-on: ubuntu-latest

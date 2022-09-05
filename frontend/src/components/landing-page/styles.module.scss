@@ -170,16 +170,14 @@ body {
     margin-bottom: 0;
     padding-right: 0;
 
-    .secondContainerHeader,
-    .fourthContainerHeader {
+    .secondContainerHeader {
       margin-bottom: 1.25rem;
       font-weight: 900;
       font-size: 1.6rem;
       text-transform: uppercase;
     }
 
-    .secondContainerCards,
-    .fourthContainerCards {
+    .secondContainerCards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
       justify-items: center;

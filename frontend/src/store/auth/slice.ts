@@ -1,5 +1,5 @@
-import { StorageKey } from '@common/enums/enums';
-import { createSlice } from '@reduxjs/toolkit';
+import { AppRoute, StorageKey } from '@common/enums/enums';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type AuthState = {
   user: null;
@@ -22,8 +22,10 @@ const { reducer, actions } = createSlice({
       state.token = accessToken;
       if (refreshToken) state.refresh = refreshToken;
     },
-    logOut: (state) => {
-      state.token = null;
+    logOut: (state, action: PayloadAction<AppRoute>) => {
+      if (action.payload) {
+        state.token = null;
+      }
     },
   },
   extraReducers: {},

@@ -21,7 +21,11 @@ const NotFoundPage: FC = () => {
         />
       </Link>
       <div>
-        <img src={crashedCar} alt="crashed car" />
+        <img
+          className={styles.NotFoundImg}
+          src={crashedCar}
+          alt="crashed car"
+        />
       </div>
       <div className={styles.NotFoundContent}>
         <h1 className={styles.NotFoundTitle}>404</h1>

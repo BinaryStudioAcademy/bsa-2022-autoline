@@ -1,19 +1,7 @@
 import { whereBuyPath } from '@common/enums/enums';
+import { WhereBuyInterface } from '@common/types/where-to-buy/where-to-buy';
 
 import { api } from './index';
-
-interface WhereBuyInterface {
-  USD: number;
-  autoData: {
-    description: string;
-    year: number;
-    autoId: number;
-    race: string;
-  };
-  linkToView: string;
-  markName: string;
-  modelName: string;
-}
 
 interface whereBuyQuery {
   page: number;

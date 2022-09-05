@@ -33,14 +33,14 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
         <div className={styles.description}>
           <span className={styles.carName}>{name}</span>
           <div className={styles.sellerLink}>
-            <a>{linkToView}</a>
+            <a>auto.ria.com</a>
           </div>
           <div className={styles.trigger}>
             <div>{description}</div>
           </div>
         </div>
         <div className={styles.panel}>
-          <div className={styles.rectangle} />
+          <div className={styles.colorBox} />
           <div className={styles.price}>{`$ ${price}`}</div>
           <ButtonOutline
             className={styles.buyButton}

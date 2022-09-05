@@ -3,11 +3,12 @@ import { authMiddleware } from '@store/auth/middlewares';
 import { api } from '@store/queries';
 import { combineReducers } from 'redux';
 
-import { auth, carFilter } from './root-reducer';
+import { auth, carFilter, whereBuy } from './root-reducer';
 
 const rootReducer = combineReducers({
   auth,
   carFilter,
+  whereBuy,
   [api.reducerPath]: api.reducer,
 });
 

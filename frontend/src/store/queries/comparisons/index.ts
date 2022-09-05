@@ -16,6 +16,7 @@ export const comparisonsApi = api.injectEndpoints({
         method: 'POST',
         body: newComparison,
       }),
+      invalidatesTags: ['Comparisons'],
     }),
     changeComparisonType: builder.mutation<
       Comparison,
@@ -28,11 +29,11 @@ export const comparisonsApi = api.injectEndpoints({
       }),
     }),
     clearComparison: builder.mutation<Comparison, void>({
-      query: (userId) => ({
+      query: () => ({
         url: `${API.COMPARISONS}/clear`,
         method: 'PATCH',
-        body: { userId },
       }),
+      invalidatesTags: ['Comparisons'],
     }),
     deleteCarFromComparison: builder.mutation<Comparison, ComparisonsRequest>({
       query: (deleteCar) => ({
@@ -40,12 +41,20 @@ export const comparisonsApi = api.injectEndpoints({
         method: 'DELETE',
         body: deleteCar,
       }),
+      invalidatesTags: ['Comparisons'],
     }),
     // TODO: change void type
     getActiveComparisonCars: builder.query<void, void>({
-      query: (userId) => ({
-        url: `${API.COMPARISONS}/${userId}`,
+      query: () => ({
+        url: `${API.COMPARISONS}`,
       }),
+      providesTags: ['Comparisons'],
+    }),
+    getActiveComparisonStatus: builder.query<string[], void>({
+      query: () => ({
+        url: `${API.COMPARISONS}/status`,
+      }),
+      providesTags: ['Comparisons'],
     }),
   }),
 });
@@ -56,4 +65,5 @@ export const {
   useClearComparisonMutation,
   useDeleteCarFromComparisonMutation,
   useGetActiveComparisonCarsQuery,
+  useGetActiveComparisonStatusQuery,
 } = comparisonsApi;

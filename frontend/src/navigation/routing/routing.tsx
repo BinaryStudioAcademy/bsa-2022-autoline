@@ -13,13 +13,15 @@ import { SearchPage } from '@components/search-page/search-page';
 import { RedirectAfterSign } from '@components/sign/components/redirect-after-sign/redirect-after-sign';
 import { Sign } from '@components/sign/sign';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
+import { useGetUserQuery } from '@store/queries/user/update-user';
 
 const Routing: FC = () => {
   const authData = {
     name: 'Oleksandr',
-    role: 'admin',
   };
-  const { role } = authData;
+
+  const { data } = useGetUserQuery();
+  const role = data?.role;
   const isAdmin = role === 'admin';
 
   return (
@@ -57,7 +59,11 @@ const Routing: FC = () => {
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.ROOT} element={<LandingPage />} />
         </Route>
-        <Route element={<ProtectedRoute isAllowed={isAdmin} />}>
+        <Route
+          element={
+            <ProtectedRoute isAllowed={isAdmin} redirectPath={AppRoute.ROOT} />
+          }
+        >
           <Route path={AppRoute.ADMINISTRATION} element={<Administration />} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>

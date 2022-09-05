@@ -37,9 +37,8 @@ export const comparisonsApi = api.injectEndpoints({
     }),
     deleteCarFromComparison: builder.mutation<Comparison, ComparisonsRequest>({
       query: (deleteCar) => ({
-        url: `${API.COMPARISONS}`,
+        url: `${API.COMPARISONS}/${deleteCar.complectationId}`,
         method: 'DELETE',
-        body: deleteCar,
       }),
       invalidatesTags: ['Comparisons'],
     }),

@@ -22,7 +22,7 @@ comparisonsRouter.patch(
   comparisonsController.clearComparison,
 );
 comparisonsRouter.delete(
-  PATH,
+  `${PATH}/:complectationId`,
   userAuthMiddleware,
   comparisonsController.deleteCarFromComparison,
 );

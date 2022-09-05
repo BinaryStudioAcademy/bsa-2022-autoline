@@ -83,7 +83,7 @@ export const Header = (): React.ReactElement => {
     },
     logout: {
       label: 'Logout',
-      onClick: () => dispatch(logOut()),
+      onClick: () => dispatch(logOut(AppRoute.ROOT)),
     },
   };
 

@@ -10,7 +10,7 @@ const initialState: IFoundCars = {
 };
 
 const { reducer, actions } = createSlice({
-  name: 'found-cars',
+  name: 'foundCars',
   initialState,
   reducers: {
     setCars: (state, action: PayloadAction<FilterReturnType>) => {

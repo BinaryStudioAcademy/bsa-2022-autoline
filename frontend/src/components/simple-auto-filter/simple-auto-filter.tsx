@@ -14,11 +14,7 @@ import { getValueById } from '@helpers/get-value-by-id';
 import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import { Button, Zoom } from '@mui/material';
-import {
-  addNewBrandDetails,
-  setBrandDetailsValue,
-  setValue,
-} from '@store/car-filter/slice';
+import { setBrandDetailsValue, setValue } from '@store/car-filter/slice';
 import { API } from '@store/queries/api-routes';
 import {
   useGetUsedOptionsQuery,
@@ -51,10 +47,6 @@ const SimpleAutoFilter: FC = () => {
   const handleRegionChange = (data: AutocompleteValueType): void => {
     const value = data?.id || '';
     dispatch(setValue({ filterName: FiltersNames.REGION_ID, value }));
-  };
-
-  const handleAddNewDetails = (): void => {
-    dispatch(addNewBrandDetails());
   };
 
   const handleBrandDetailsChange = (data: BrandDetailsType): void => {
@@ -99,9 +91,6 @@ const SimpleAutoFilter: FC = () => {
         <div className={styles.column}>
           <div className={styles.row}>
             <h5 className={styles.blockTitle}>Brand Details</h5>
-            <h6 className={styles.addButton} onClick={handleAddNewDetails}>
-              + Add
-            </h6>
           </div>
           {brandDetails.map((brandDetail) => (
             <BrandDetails

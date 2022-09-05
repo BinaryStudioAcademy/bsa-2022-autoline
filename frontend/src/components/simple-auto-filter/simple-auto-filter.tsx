@@ -19,6 +19,7 @@ import {
   setBrandDetailsValue,
   setValue,
 } from '@store/car-filter/slice';
+import { setCars } from '@store/found-car/slice';
 import { API } from '@store/queries/api-routes';
 import {
   useGetUsedOptionsQuery,
@@ -33,18 +34,27 @@ const SimpleAutoFilter: FC = () => {
 
   const { filters, brandDetails } = useAppSelector((state) => state.carFilter);
 
-  const [queryParams, setQueryParams] = useState<string[][]>([]);
+  const [queryParams, setQueryParams] = useState<string[][]>();
 
-  const { data: options, isLoading: isLoading } = useGetUsedOptionsQuery();
-
-  useEffect(() => {
-    setQueryParams(objectToQueryString(filters));
-  }, [filters]);
+  const { data: options, isLoading } = useGetUsedOptionsQuery();
 
   const [search, filteredCars] = useLazyGetFilteredCarsQuery();
 
-  // eslint-disable-next-line no-console
-  console.log(filteredCars);
+  useEffect(() => {
+    if (filteredCars.data) {
+      dispatch(setCars(filteredCars.data));
+    }
+  }, [filteredCars]);
+
+  useEffect(() => {
+    setQueryParams(
+      objectToQueryString({
+        ...filters,
+        brandId: brandDetails.map((item) => item.brandId),
+        modelId: brandDetails.map((item) => item.modelId),
+      }),
+    );
+  }, [filters, brandDetails]);
 
   const years = useMemo(() => yearsRange(30), []);
 
@@ -73,8 +83,8 @@ const SimpleAutoFilter: FC = () => {
       brandDetails[0].modelId != '',
   );
 
-  const doSearch = (): void => {
-    search(queryParams);
+  const doSearch = async (): Promise<void> => {
+    await search(queryParams);
     navigate(API.SEARCH);
   };
 

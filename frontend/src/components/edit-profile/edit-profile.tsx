@@ -6,6 +6,7 @@ import DefaultAvatar from '@assets/images/edit-profile/default-avatar.png';
 import PencilIcon from '@assets/images/edit-profile/pencil.svg';
 import TrashIcon from '@assets/images/edit-profile/trash.svg';
 import { updateUserSchema } from '@autoline/shared';
+import { AppRoute } from '@common/enums/enums';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
@@ -73,7 +74,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
 
   useEffect(() => {
     if (deleteIsSuccess) {
-      dispatch(logOut());
+      dispatch(logOut(AppRoute.ROOT));
     }
   }, [deleteIsSuccess]);
 

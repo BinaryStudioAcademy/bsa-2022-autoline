@@ -9,7 +9,7 @@ import { AppRoute } from '@common/enums/enums';
 import { CarListItemProps } from '@common/types/types';
 import { SliderNavButton } from '@components/car-list-item/slider-nav-button/slider-nav-button';
 import { swiperParams } from '@components/car-list-item/swiper-params';
-import { HeartIcon } from '@components/common/icons/icons';
+import { LikeButtton } from '@components/common/like-button/like-button';
 import { Spinner } from '@components/common/spinner/spinner';
 import { CompleteSetTableCollapsed } from '@components/complete-set-table/complete-set-table-collapsed';
 import { formatPrice } from '@helpers/helpers';
@@ -168,16 +168,7 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
           <div className={styles.titleWrapper}>
             <h4 className={styles.carTitle}>{modelName}</h4>
             <div className={styles.buttonsWrapper}>
-              <button
-                className={clsx(
-                  styles.button,
-                  styles.iconButton,
-                  isLikedModel && styles.isLiked,
-                )}
-                onClick={handleLikeClick}
-              >
-                <HeartIcon />
-              </button>
+              <LikeButtton onClick={handleLikeClick} isLiked={isLikedModel} />
             </div>
           </div>
           <div className={styles.priceBlock}>

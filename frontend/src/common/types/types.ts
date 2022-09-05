@@ -35,3 +35,5 @@ export type {
   ViewedCarDataList,
   ViewedCarData,
 } from './history-of-viewed-cars/history-of-viewed-cars';
+
+export type { LikeButtonPropsType } from './like-button/like-button';

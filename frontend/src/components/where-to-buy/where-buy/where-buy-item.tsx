@@ -16,6 +16,7 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
     linkToView,
     markName,
     modelName,
+    color: { hex: color },
   } = props.poster;
   const name = `${markName} ${modelName} ${year}`;
   const url = `https://auto.ria.com/uk${linkToView}`;
@@ -40,7 +41,7 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
           </div>
         </div>
         <div className={styles.panel}>
-          <div className={styles.colorBox} />
+          <div className={styles.colorBox} style={{ backgroundColor: color }} />
           <div className={styles.price}>{`$ ${price}`}</div>
           <ButtonOutline
             className={styles.buyButton}

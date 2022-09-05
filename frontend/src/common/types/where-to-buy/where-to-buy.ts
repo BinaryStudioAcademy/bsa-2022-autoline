@@ -9,6 +9,9 @@ interface WhereBuyInterface {
   linkToView: string;
   markName: string;
   modelName: string;
+  color: {
+    hex: string;
+  };
 }
 
 export { type WhereBuyInterface };

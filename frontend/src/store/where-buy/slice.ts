@@ -14,11 +14,8 @@ const { reducer, actions } = createSlice({
   initialState,
   reducers: {
     setAdverts: (state, action) => {
-      console.log('ми тут');
       const { adverts } = action.payload;
-      console.log(adverts, 'hjjk');
       state.adverts = [...state.adverts, ...adverts];
-      console.log('ми тут', state.adverts);
     },
   },
   extraReducers: {},

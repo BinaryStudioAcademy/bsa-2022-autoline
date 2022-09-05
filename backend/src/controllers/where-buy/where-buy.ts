@@ -7,6 +7,7 @@ import type { TypedRequestQuery } from '@common/types/controller/controller';
 type WhereBuyRequestQuery = {
   page: string;
   id: string;
+  countpage: string;
 };
 
 const whereBuy = async (
@@ -17,11 +18,19 @@ const whereBuy = async (
   try {
     const page = req.query.page;
     const complectationId = req.query.id;
-    const carProp = await carsSearchAutoria([complectationId], page);
-    const cars = await getCarsAutoRia(carProp);
+    const countpage = +req.query.countpage;
+    console.log(countpage);
+    const querysForRequest = await carsSearchAutoria(
+      [complectationId],
+      page,
+      countpage,
+    );
+    const cars = await getCarsAutoRia(querysForRequest);
     const carsIds = cars?.result.search_result.ids;
-    const carPosters = carsIds?.map((car) => getCarById(car));
-    Promise.all(carPosters as readonly unknown[]).then((result) =>
+    console.log(carsIds);
+    console.log(cars);
+    const carAdverts = carsIds?.map((car) => getCarById(car));
+    Promise.all(carAdverts as readonly unknown[]).then((result) =>
       res.json(result),
     );
   } catch (error) {

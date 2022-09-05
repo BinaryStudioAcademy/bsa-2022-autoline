@@ -3,13 +3,14 @@ import { prisma } from '@data/prisma-client';
 
 const carsSearchAutoria = async (
   complectationId: string[],
-  page = '1',
+  page = '0',
+  countpage = 10,
 ): Promise<Partial<AutoriaRequestParams>> => {
   const result: Partial<AutoriaRequestParams> = {
     category_id: 1,
     power_name: 1,
-    countpage: 5,
-    page: page,
+    countpage,
+    page,
   };
 
   const complectations = await prisma.complectation.findMany({

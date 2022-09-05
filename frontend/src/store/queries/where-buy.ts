@@ -7,26 +7,25 @@ import { api } from './index';
 interface whereBuyQuery {
   page: number;
   complectationId: string;
+  countpage: string;
 }
 
 const whereBuyApi = api.injectEndpoints({
   endpoints: (build) => ({
     getWhereBuy: build.query<WhereBuyInterface[], whereBuyQuery>({
-      query: ({ page, complectationId }) => ({
+      query: ({ page, complectationId, countpage }) => ({
         url: `${whereBuyPath.WHERE_BUY}`,
         method: 'GET',
         params: {
-          page: page,
+          page,
           id: complectationId,
+          countpage,
         },
       }),
-      async onQueryStarted(
-        { page, complectationId },
-        { dispatch, queryFulfilled },
-      ) {
+      async onQueryStarted({ ...rest }, { dispatch, queryFulfilled }) {
+        console.log(rest);
         try {
           const { data: adverts } = await queryFulfilled;
-          console.log('ми в новому query', page, complectationId, adverts);
           dispatch(setAdverts({ adverts }));
         } catch (err) {
           console.error(err);

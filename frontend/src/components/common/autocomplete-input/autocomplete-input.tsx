@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
-import { Autocomplete, SvgIcon, TextField } from '@mui/material';
+import { ArrowDown } from '@components/common/icons/icons';
+import { Autocomplete, TextField } from '@mui/material';
 
 import styles from './styles.module.scss';
 
@@ -24,16 +25,7 @@ const AutocompleteInput: FC<Props> = (props): JSX.Element => {
       onChange={(event, value): void =>
         handleSelectChange(value || { label: '', id: '' })
       }
-      popupIcon={
-        <SvgIcon viewBox="0 0 12 8">
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M10.59 0.100098L6 4.6801L1.41 0.100098L0 1.5101L6 7.5101L12 1.5101L10.59 0.100098Z"
-            fill="#C9CFDD"
-          />
-        </SvgIcon>
-      }
+      popupIcon={<ArrowDown />}
       renderInput={(params): JSX.Element => (
         <TextField {...params} label={props.label} />
       )}

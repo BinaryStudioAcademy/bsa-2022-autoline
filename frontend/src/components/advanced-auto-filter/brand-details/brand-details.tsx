@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { CheckboxListDataType } from '@common/types/cars/checkbox-list-data.type';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
-import { MultiselectInput } from '@components/common/multiselect-input/multiselect-input';
+import { MemoizedMultiselectInput } from '@components/common/multiselect-input/multiselect-input';
 import { SelectField } from '@components/common/select-field/select-field';
 import { Spinner } from '@components/common/spinner/spinner';
 import { getValueById } from '@helpers/get-value-by-id';
@@ -20,29 +20,35 @@ import styles from './styles.module.scss';
 
 type Props = {
   id: string;
+  brandId: string;
+  modelIds: string[];
   onBrandDetailsChange: (data: BrandDetailsType) => void;
   onBrandDetailsRemove?: () => void;
 };
 
 const BrandDetails: FC<Props> = ({
   id,
+  brandId,
+  modelIds,
   onBrandDetailsChange,
   onBrandDetailsRemove,
 }) => {
-  const { brandDetails } = useAppSelector((state) => state.carFilter);
-  const { brandId, modelIds } = brandDetails.find(
-    (item) => item.id === id,
-  ) as BrandDetailsType;
+  const { length: brandDetailsLength } = useAppSelector(
+    (state) => state.carFilter.brandDetails,
+  );
 
   const { data: brands, isLoading } = useGetBrandsQuery();
   const { data: models } = useGetModelsOfBrandQuery(brandId, {
     skip: !brandId,
   });
 
-  const selectedBrandName = getValueById(brands || [], brandId);
-  const selectedModelNames = modelIds.map((id: string) =>
-    getValueById(models || [], id),
-  );
+  const selectedBrandName = useMemo(() => {
+    return getValueById(brands || [], brandId);
+  }, [brandId]);
+
+  const selectedModelsNames = useMemo(() => {
+    return modelIds.map((id: string) => getValueById(models || [], id));
+  }, [modelIds]);
 
   const handleSelectBrand = (data: AutocompleteValueType): void => {
     onBrandDetailsChange({
@@ -64,7 +70,7 @@ const BrandDetails: FC<Props> = ({
 
   return (
     <div>
-      {brandDetails.length > 1 && (
+      {brandDetailsLength > 1 && (
         <Box display="flex" justifyContent="right">
           <IconButton
             onClick={onBrandDetailsRemove}
@@ -87,13 +93,13 @@ const BrandDetails: FC<Props> = ({
         />
       )}
       {models ? (
-        <MultiselectInput
+        <MemoizedMultiselectInput
           label="Model"
           options={models.map((item) => ({
             label: item.name,
             id: item.id,
           }))}
-          value={selectedModelNames}
+          value={selectedModelsNames}
           onChange={handleSelectModel}
         />
       ) : (

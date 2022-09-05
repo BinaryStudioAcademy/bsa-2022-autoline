@@ -34,7 +34,7 @@ const CheckboxList: FC<Props> = ({
     const value = event.target.value;
     const list = checkedList.includes(value)
       ? checkedList.filter((item) => item !== value)
-      : [...checkedList, value];
+      : checkedList.concat(value);
 
     onListCheck({ filterName, list });
   };

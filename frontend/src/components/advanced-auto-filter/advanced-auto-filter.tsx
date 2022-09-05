@@ -25,7 +25,7 @@ import { AdvancedAutoFilterProps } from '@common/types/types';
 import { BrandDetails } from '@components/advanced-auto-filter/brand-details/brand-details';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
-import { MultiselectInput } from '@components/common/multiselect-input/multiselect-input';
+import { MemoizedMultiselectInput } from '@components/common/multiselect-input/multiselect-input';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
 import { Spinner } from '@components/common/spinner/spinner';
 import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
@@ -169,16 +169,15 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
   return (
     <div ref={setFilterContainerRef} className={styles.container}>
       <h4>FILTER</h4>
-      {/*<div className={styles.column}>*/}
       <div className={clsx(styles.column, 'styledScrollbar')}>
         <h5 className={styles.blockTitle}>Body Type</h5>
         {options?.bodyTypes && (
-          <MultiselectInput
+          <MemoizedMultiselectInput
             label="Body Type"
             filterName={CheckListsNames.BODY_TYPE_ID}
             options={
               options &&
-              options?.bodyTypes.map((item: AutoRiaOption) => ({
+              options.bodyTypes.map((item: AutoRiaOption) => ({
                 label: item.name,
                 id: item.id,
               }))
@@ -204,6 +203,8 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
           <BrandDetails
             key={brandDetail.id}
             id={brandDetail.id}
+            brandId={brandDetail.brandId}
+            modelIds={brandDetail.modelIds}
             onBrandDetailsChange={handleBrandDetailsChange}
             onBrandDetailsRemove={(): void =>
               handleBrandDetailsRemove(brandDetail.id)
@@ -279,7 +280,7 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
 
         <h5 className={styles.blockTitle}>Color</h5>
         {options?.colors && (
-          <MultiselectInput
+          <MemoizedMultiselectInput
             label="Color"
             filterName={CheckListsNames.COLOR_ID}
             options={
@@ -298,7 +299,7 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
 
         <h5 className={styles.blockTitle}>Fuel</h5>
         {options?.fuelTypes && (
-          <MultiselectInput
+          <MemoizedMultiselectInput
             label="Fuel"
             filterName={CheckListsNames.FUEL_TYPE_ID}
             options={

@@ -112,6 +112,8 @@ const SimpleAutoFilter: FC = () => {
             <BrandDetails
               key={brandDetail.id}
               id={brandDetail.id}
+              brandId={brandDetail.brandId}
+              modelIds={brandDetail.modelIds}
               onBrandDetailsChange={handleBrandDetailsChange}
               onBrandDetailsRemove={(): void =>
                 handleBrandDetailsRemove(brandDetail.id)

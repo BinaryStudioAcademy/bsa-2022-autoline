@@ -15,6 +15,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { logOut } from '@store/auth/slice';
+import { useGetActiveComparisonStatusQuery } from '@store/queries/comparisons';
 import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 import { useGetUserQuery } from '@store/queries/user/update-user';
 
@@ -28,7 +29,9 @@ export const Header = (): React.ReactElement => {
   const isMatchSm = useMediaQuery(theme.breakpoints.down('sm'));
   const { data: wishlist = { models: [], complectations: [] } } =
     useGetWishlistsQuery();
+  const { data: comparisons } = useGetActiveComparisonStatusQuery();
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [comparisonCount, setComparisonCount] = useState(0);
   const [openSettings, setOpenSettings] = useState(false);
   const userToken = useAppSelector((state) => state.auth.token);
   const navigate = useNavigate();
@@ -36,6 +39,10 @@ export const Header = (): React.ReactElement => {
   useEffect(() => {
     setWishlistCount(wishlist.models.length + wishlist.complectations.length);
   }, [wishlist]);
+
+  useEffect(() => {
+    if (comparisons) setComparisonCount(comparisons.length);
+  }, [comparisons]);
 
   const { data: user } = useGetUserQuery();
 
@@ -53,7 +60,7 @@ export const Header = (): React.ReactElement => {
     comparisons: {
       label: 'Comparisons',
       linkTo: '#',
-      count: 5,
+      count: comparisonCount,
     },
   };
 

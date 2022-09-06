@@ -7,22 +7,22 @@ import styles from './styles.module.scss';
 interface ModalProps {
   carName: string;
   carDescription: string;
-  isHidden: boolean;
-  setIsHidden: Dispatch<boolean>;
+  isOpen: boolean;
+  setIsOpen: Dispatch<boolean>;
 }
 
 const CompareToast: FC<ModalProps> = ({
   carName,
   carDescription,
-  isHidden,
-  setIsHidden,
+  isOpen,
+  setIsOpen,
 }) => {
   const closeToast = (): void => {
-    setIsHidden(!isHidden);
+    setIsOpen(!isOpen);
   };
 
   return (
-    <div className={styles.container} hidden={isHidden}>
+    <div className={styles.container} hidden={!isOpen}>
       <div className={styles.content}>
         <button className={styles.close} onClick={closeToast}>
           ×

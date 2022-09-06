@@ -76,13 +76,33 @@ const getWishlistByUserId = async (
   }
 };
 
-const getWishlistLike = async (
-  req: TypedRequestQuery<WishlistInput>,
+const getWishlistEntries = async (
+  req: TypedRequestQuery<{ user_id: string }>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const userId = req.body.tokenPayload.sub;
+
+    const wishlists = await wishlistService.getWishlistEntries(userId);
+    res.json(wishlists).status(httpStatus.OK);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.sendStatus(404);
+    }
+    next(error);
+  }
+};
+
+const getWishlistLike = async (
+  req: TypedRequestQuery<WishlistInput>,
+
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const userId = req.body.tokenPayload.sub;
+
     const { modelId, complectationId } = req.query;
 
     const wishlist: WishlistInput = {
@@ -100,4 +120,10 @@ const getWishlistLike = async (
   }
 };
 
-export { setWishlist, deleteWishlist, getWishlistByUserId, getWishlistLike };
+export {
+  setWishlist,
+  deleteWishlist,
+  getWishlistByUserId,
+  getWishlistEntries,
+  getWishlistLike,
+};

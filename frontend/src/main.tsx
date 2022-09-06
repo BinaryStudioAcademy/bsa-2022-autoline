@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 
 import { ENV } from '@common/enums/app/env.enum';
+import { WishlistContextProvider } from '@contexts/wishlist-context';
 import { Routing } from '@navigation/routing/routing';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
@@ -21,7 +22,9 @@ Sentry.init({
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Routing />
+      <WishlistContextProvider>
+        <Routing />
+      </WishlistContextProvider>
     </Provider>
   </React.StrictMode>,
 );

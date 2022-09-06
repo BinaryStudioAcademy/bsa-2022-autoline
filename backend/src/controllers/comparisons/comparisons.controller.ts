@@ -86,10 +86,27 @@ const getActiveComparisonCars = async (
   }
 };
 
+const getComparisonGeneralInfo = async (
+  req: TypedRequestQuery<{ userId: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const userId = req.body.tokenPayload.sub;
+    const comparison = await comparisonsService.getComparisonGeneralInfo(
+      userId,
+    );
+    res.status(httpStatus.OK).json(comparison);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   addCarToComparison,
   changeComparisonType,
   clearComparison,
   deleteCarFromComparison,
   getActiveComparisonCars,
+  getComparisonGeneralInfo,
 };

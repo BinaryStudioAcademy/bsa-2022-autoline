@@ -86,19 +86,19 @@ const deleteOauthConnections = async (
 };
 
 const updateUserPhoto = async (
-  /* eslint-disable */
+  /* eslint-disable-next-line */
   req: any,
   res: Response<Partial<UpdateUserReq>>,
   next: NextFunction,
 ): Promise<Response | undefined> => {
   try {
-    if (req.files) {
-      const photoUrl = await uploadFileToS3(req.files.photo);
-      await userService.updateUserPhoto(req.body.tokenPayload.sub, photoUrl);
-      return res.status(httpStatus.OK).json({ photoUrl });
+    if (!req.files) {
+      throw new Error('Failed upload S3');
     }
 
-    throw new Error('Failed upload S3');
+    const photoUrl = await uploadFileToS3(req.files.photo);
+    await userService.updateUserPhoto(req.body.tokenPayload.sub, photoUrl);
+    return res.status(httpStatus.OK).json({ photoUrl });
   } catch (error) {
     next(error);
   }

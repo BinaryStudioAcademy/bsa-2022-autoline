@@ -5,7 +5,7 @@ import CrossIcon from '@assets/images/edit-profile/cross.svg';
 import DefaultAvatar from '@assets/images/edit-profile/default-avatar.png';
 import PencilIcon from '@assets/images/edit-profile/pencil.svg';
 import TrashIcon from '@assets/images/edit-profile/trash.svg';
-import { updateUserSchema } from '@autoline/shared';
+import { FileValidationRule, updateUserSchema } from '@autoline/shared';
 import { AppRoute } from '@common/enums/enums';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
@@ -99,12 +99,12 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
   };
 
   const submitAvatar = async (): Promise<void> => {
-    if (selectedAvatar) {
-      const formData = new FormData();
-      formData.append('photo', selectedAvatar, selectedAvatar.name);
-      await updateUserPhoto(formData);
-      setPreviewAvatar('');
-    }
+    if (!selectedAvatar) return;
+
+    const formData = new FormData();
+    formData.append('photo', selectedAvatar, selectedAvatar.name);
+    await updateUserPhoto(formData);
+    setPreviewAvatar('');
   };
 
   const handleClickOpenDialog = (): void => {
@@ -120,22 +120,22 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
     await deleteUserProfile();
   };
 
-  const handleChangeAvatar = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeAvatar = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): Promise<void> => {
     const fileList = e.target.files;
     if (!fileList) return;
 
     const file = fileList[0];
-    const validation = ['image/jpeg', 'image/jpg', 'image/png'];
-    const fileSize = Math.round(file.size / 1024);
-    if (!validation.includes(file.type)) {
-      alert('This is not an Image File!');
-    } else if (fileSize > 10240) {
-      alert('File too Big, please select a file less than 10mb');
+    if (!FileValidationRule.TYPE.includes(file.type)) {
+      return alert('This is not an Image File!');
+    }
+    if (file.size > FileValidationRule.MAX_SIZE) {
+      return alert('File too Big, please select a file less than 10mb');
     }
 
-    const objectUrl = URL.createObjectURL(fileList[0]);
+    const objectUrl = URL.createObjectURL(file);
     setPreviewAvatar(objectUrl);
-
     setSelectedAvatar(file);
   };
 

@@ -74,7 +74,7 @@
   width: 136px;
   margin-right: 30px;
 
-  button {
+  .avatarMenuItem {
     display: flex;
     margin: 10px 0 0;
     padding: 0;
@@ -89,6 +89,11 @@
       width: 13px;
       margin-right: 6px;
     }
+  }
+
+  .saveAvatarBtn {
+    margin-top: 10px;
+    padding: 6px 45px;
   }
 }
 

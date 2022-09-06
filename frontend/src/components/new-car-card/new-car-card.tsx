@@ -1,12 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import compare from '@assets/images/compare.svg';
 import { WishlistInput } from '@autoline/shared/common/types/types';
 import { AppRoute } from '@common/enums/enums';
 import { ExtendedCarCardPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
-import { CompareToast } from '@components/compare-toast/compare-toast';
 import { WishlistContext } from '@contexts/wishlist-context';
 import { formatPrice } from '@helpers/helpers';
 import { useAppSelector } from '@hooks/hooks';
@@ -30,13 +28,8 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
     },
   } = props;
 
-  const [isHidden, setIsHidden] = useState<boolean>(true);
   const { likedCars, handleLikeClick } = useContext(WishlistContext);
   const isLiked = likedCars?.includes(carId);
-
-  const handleCompare = (): void => {
-    setIsHidden(false);
-  };
 
   const minPrices = pricesRanges.map(
     (price: { price_start: number; price_end: number }) => price.price_start,
@@ -83,12 +76,6 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
         >
           <HeartIcon />
         </button>
-        <button
-          className={clsx(styles.button, styles.iconButton)}
-          onClick={handleCompare}
-        >
-          <img src={compare} alt="compare button" />
-        </button>
       </div>
       <img src={photoUrls[0]} alt="car image" className={styles.carImage} />
       <div className={styles.cardFooter}>
@@ -103,12 +90,6 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
           </span>
         </div>
       </div>
-      <CompareToast
-        carName={name}
-        carDescription={description}
-        isHidden={isHidden}
-        setIsHidden={setIsHidden}
-      />
     </div>
   );
 };

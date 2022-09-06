@@ -16,6 +16,8 @@ const Notification: FC<ModalProps> = (props) => {
 
   const closeNotification = (): void => setIsOpen(!isOpen);
 
+  isOpen && setTimeout(closeNotification, 6000);
+
   return (
     <div className={styles.container} hidden={!isOpen}>
       <div className={styles.content}>

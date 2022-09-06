@@ -82,20 +82,20 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
                   inputLabel="Full name"
                 />
                 <InputField
-                  name="phone"
-                  type="text"
-                  required={false}
-                  errors={errors}
-                  control={control}
-                  inputLabel="Phone"
-                />
-                <InputField
                   name="email"
                   type="text"
                   required={true}
                   errors={errors}
                   control={control}
                   inputLabel="E-mail"
+                />
+                <InputField
+                  name="phone"
+                  type="text"
+                  required={false}
+                  errors={errors}
+                  control={control}
+                  inputLabel="Phone"
                 />
                 <InputField
                   name="location"

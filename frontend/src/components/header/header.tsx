@@ -85,18 +85,19 @@ export const Header = (): React.ReactElement => {
       onClick: (): void => navigate(AppRoute.ADMINISTRATION),
     },
     settings: {
-      label: 'Setting',
+      label: 'Settings',
       onClick: (): void => setOpenSettings(true),
     },
     logout: {
       label: 'Logout',
-      onClick: () => dispatch(logOut()),
+      onClick: () => dispatch(logOut(AppRoute.ROOT)),
     },
   };
 
   return (
     <>
       <AppBar
+        id="mainHeader"
         sx={{
           background: '#ffffff',
           boxShadow: 0,
@@ -134,6 +135,7 @@ export const Header = (): React.ReactElement => {
               {userToken && user ? (
                 <PrivateElements
                   avatar={user.photoUrl}
+                  role={user.role}
                   reminders={reminders}
                   setOpenSettings={setOpenSettings}
                   userMenu={userMenu}

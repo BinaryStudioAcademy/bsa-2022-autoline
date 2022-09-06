@@ -116,7 +116,7 @@ const requestPasswordReset = async (email: string): Promise<string> => {
     data: { password_change_token: resetToken },
   });
 
-  const link = `${ENV.APP.SERVER_HOST}:${ENV.APP.SERVER_PORT}${ENV.API.V1_PREFIX}/auth/local/reset-password-check-token?token=${resetToken}`;
+  const link = `${ENV.APP.SERVER_DOMAIN}${ENV.API.V1_PREFIX}/auth/local/reset-password-check-token?token=${resetToken}`;
 
   const template = getResetRequestMessage({
     name: user.name,

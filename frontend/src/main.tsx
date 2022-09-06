@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 
 import { ENV } from '@common/enums/app/env.enum';
 import { CompareContextProvider } from '@contexts/compare-context';
+import { WishlistContextProvider } from '@contexts/wishlist-context';
 import { Routing } from '@navigation/routing/routing';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
@@ -22,9 +23,11 @@ Sentry.init({
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <CompareContextProvider>
-        <Routing />
-      </CompareContextProvider>
+      <WishlistContextProvider>
+        <CompareContextProvider>
+          <Routing />
+        </CompareContextProvider>
+      </WishlistContextProvider>
     </Provider>
   </React.StrictMode>,
 );

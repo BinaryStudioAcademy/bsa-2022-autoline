@@ -55,7 +55,7 @@ export const ForgotPassword = (): React.ReactElement => {
                 link. Please check your inbox.
               </Alert>
             ) : null}
-            <ButtonFill text="Submit" />
+            <ButtonFill text="Submit" disabled={isSubmitted} />
           </fieldset>
         </form>
       </>

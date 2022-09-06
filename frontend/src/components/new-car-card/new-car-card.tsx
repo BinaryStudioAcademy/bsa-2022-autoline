@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WishlistInput } from '@autoline/shared/common/types/types';
 import { AppRoute } from '@common/enums/enums';
 import { ExtendedCarCardPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
+import { WishlistContext } from '@contexts/wishlist-context';
 import { formatPrice } from '@helpers/helpers';
 import { useAppSelector } from '@hooks/hooks';
-import {
-  useCreateWishlistMutation,
-  useDeleteWishlistMutation,
-} from '@store/queries/preferences/wishlist';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
@@ -18,12 +15,10 @@ import styles from './styles.module.scss';
 const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
   const authToken = useAppSelector((state) => state.auth.token);
   const navigate = useNavigate();
-
   const {
     type,
     car: {
       id: carId,
-      wishlistId,
       modelName: carName,
       pricesRanges,
       brand: { name: brandName, logoUrl: brandLogoUrl },
@@ -33,7 +28,8 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
     },
   } = props;
 
-  const [isLiked, setIsLiked] = useState(Boolean(wishlistId));
+  const { likedCars, handleLikeClick } = useContext(WishlistContext);
+  const isLiked = likedCars?.includes(carId);
 
   const minPrices = pricesRanges.map(
     (price: { price_start: number; price_end: number }) => price.price_start,
@@ -44,19 +40,8 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
   );
   const maxPrice = formatPrice(Math.max(...maxPrices));
 
-  const [createWishlist] = useCreateWishlistMutation();
-  const [deleteWishlist] = useDeleteWishlistMutation();
-
-  const handleCreateWishlist = async (data: WishlistInput): Promise<void> => {
-    await createWishlist(data);
-  };
-
-  const handleDeleteWishlist = async (data: WishlistInput): Promise<void> => {
-    await deleteWishlist(data);
-  };
-
-  const handleLikeClick = (event: React.MouseEvent): void => {
-    event.stopPropagation();
+  const likeClick = (event?: React.MouseEvent): void => {
+    event?.stopPropagation();
     const data: WishlistInput =
       type === 'model' ? { modelId: carId } : { complectationId: carId };
 
@@ -65,9 +50,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
       return;
     }
 
-    isLiked ? handleDeleteWishlist(data) : handleCreateWishlist(data);
-
-    setIsLiked(!isLiked);
+    handleLikeClick(data);
   };
 
   let name = `${brandName} ${carName}`;
@@ -89,7 +72,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
             styles.iconButton,
             isLiked && styles.isLiked,
           )}
-          onClick={handleLikeClick}
+          onClick={likeClick}
         >
           <HeartIcon />
         </button>

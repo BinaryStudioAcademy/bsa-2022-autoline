@@ -33,7 +33,6 @@ type ModelDetailsType = {
 
 type CarPreview = {
   id: string;
-  wishlistId: string;
   modelName: string;
   pricesRanges: {
     price_start: number;

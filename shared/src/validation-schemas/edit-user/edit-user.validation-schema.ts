@@ -25,7 +25,7 @@ const editUserSchema = Yup.object().shape({
   }),
   location: Yup.string()
     .nullable()
-    .transform((value) => (value ? value : null))
+    .transform((value) => value || null)
     .min(2, 'Location must be at least 2 characters')
     .max(150, 'Location must not exceed 150 characters')
     .matches(

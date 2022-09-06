@@ -21,6 +21,7 @@ export default defineConfig({
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@services': path.resolve(__dirname, './src/services'),
       '@store': path.resolve(__dirname, './src/store'),
+      '@contexts': path.resolve(__dirname, './src/contexts'),
       '@validation-schemas': path.resolve(
         __dirname,
         './src/validation-schemas',

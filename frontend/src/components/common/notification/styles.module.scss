@@ -1,0 +1,85 @@
+@import "@assets/css/variables";
+@import "@assets/css/animations";
+
+.container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  animation: hide-notification 1s ease 5s;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  max-width: 400px;
+  padding: 25px 30px 30px;
+  background-color: var(--white);
+  border-top: 5px solid var(--blue100);
+  border-radius: 5px;
+  box-shadow: 3px 0 5px rgba(201 207 221 / 10%), 0 4px 9px 1px rgba(201 207 221 / 16%);
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  padding: 0;
+  color: var(--gray400);
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  opacity: 0.4;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}
+
+.icon {
+  margin-top: 10px;
+  padding: 0;
+}
+
+.button {
+  background-color: var(--white);
+  border: none;
+
+  svg,
+  path {
+    fill: var(--blue100);
+  }
+}
+
+.undoButton {
+  padding: 5px 15px;
+}
+
+.message {
+  align-self: center;
+  margin-top: 10px;
+  padding-right: 20px;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.messageText {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+@media (max-width: $global-sm) {
+  .container {
+    right: 0;
+    max-width: 600px;
+    margin: 0 20px;
+  }
+
+  .content {
+    padding: 15px;
+  }
+}

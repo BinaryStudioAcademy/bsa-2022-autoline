@@ -28,7 +28,7 @@ const initialState: CarFiltersType = {
     {
       id: Date.now().toString(),
       brandId: '',
-      modelId: '',
+      modelIds: [],
     },
   ],
 };

@@ -47,7 +47,7 @@ const SimpleAutoFilter: FC = () => {
       objectToQueryString({
         ...filters,
         brandId: brandDetails.map((item) => item.brandId),
-        modelId: brandDetails.map((item) => item.modelId),
+        modelId: brandDetails.flatMap((item) => item.modelIds),
       }),
     );
   }, [filters, brandDetails]);
@@ -72,7 +72,7 @@ const SimpleAutoFilter: FC = () => {
   const isButtonVisible = Boolean(
     Object.values(filters).some((filter) => filter.length >= 1) ||
       brandDetails[0].brandId != '' ||
-      brandDetails[0].modelId != '',
+      brandDetails[0].modelIds.length,
   );
 
   const doSearch = async (): Promise<void> => {
@@ -106,9 +106,9 @@ const SimpleAutoFilter: FC = () => {
             <BrandDetails
               key={brandDetail.id}
               id={brandDetail.id}
+              brandId={brandDetail.brandId}
+              modelIds={brandDetail.modelIds}
               onBrandDetailsChange={handleBrandDetailsChange}
-              selectedBrandId={brandDetail.brandId}
-              selectedModelId={brandDetail.modelId}
             />
           ))}
         </div>

@@ -1,5 +1,6 @@
 import React, {
   FC,
+  useCallback,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -24,6 +25,7 @@ import { RangeValueType } from '@common/types/cars/range-item.type';
 import { BrandDetails } from '@components/advanced-auto-filter/brand-details/brand-details';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
+import { MultiselectInput } from '@components/common/multiselect-input/multiselect-input';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
 import { Spinner } from '@components/common/spinner/spinner';
 import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
@@ -32,6 +34,7 @@ import { objectToQueryString } from '@helpers/object-to-query';
 import { getElementHeightWithMargins } from '@helpers/utils/get-element-height-with-margins';
 import { getHeightByPosition } from '@helpers/utils/get-height-by-position';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import UTurnRightIcon from '@mui/icons-material/UTurnRight';
 import { Button, Zoom } from '@mui/material';
 import {
@@ -47,6 +50,11 @@ import {
   useGetUsedOptionsQuery,
   useLazyGetFilteredCarsQuery,
 } from '@store/queries/cars';
+import {
+  selectNormalizedOptionsInAutocompleteType,
+  selectOptionsInAutocompleteType,
+} from '@store/selectors/car-filter-selectors';
+import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
@@ -103,7 +111,7 @@ const AdvancedAutoFilter: FC = () => {
         ...filters,
         ...checkLists,
         brandId: brandDetails.map((item) => item.brandId),
-        modelId: brandDetails.map((item) => item.modelId),
+        modelId: brandDetails.flatMap((item) => item.modelIds),
       }),
     );
 
@@ -138,11 +146,13 @@ const AdvancedAutoFilter: FC = () => {
     dispatch(setValue({ filterName: FiltersNames.REGION_ID, value }));
   };
 
-  const handleCheckboxListChange = (data: CheckboxListDataType): void => {
-    dispatch(
-      setCheckListValue({ filterName: data.filterName, value: data.data }),
-    );
-  };
+  const handleCheckboxListChange = useCallback(
+    (data: CheckboxListDataType) => {
+      const filterName = data.filterName as CheckListsNames;
+      dispatch(setCheckListValue({ filterName, value: data.list }));
+    },
+    [dispatch],
+  );
 
   const handleRangeChange = (range: RangeValueType[]): void => {
     range.forEach(({ filterName, value }) => {
@@ -161,33 +171,57 @@ const AdvancedAutoFilter: FC = () => {
 
   const years = useMemo(() => yearsRange(30), []);
 
+  const optionsInAutocompleteForm = useAppSelector(
+    selectOptionsInAutocompleteType,
+  );
+
+  const normalizedOptions = useAppSelector(
+    selectNormalizedOptionsInAutocompleteType,
+  );
+
+  const memoizedCheckListValues = useMemo(() => {
+    if (!normalizedOptions) return;
+    return Object.fromEntries(
+      Object.entries(checkLists).map(([key, value]) => [
+        key,
+        value.map((id) => normalizedOptions[id]),
+      ]),
+    );
+  }, [checkLists, normalizedOptions]);
+
   if (isLoading) return <Spinner />;
 
   return (
     <div ref={setFilterContainerRef} className={styles.container}>
       <h4>FILTER</h4>
-      <div className={styles.column}>
-        <CheckboxList
-          title="Body Type"
-          list={options && options.bodyTypes}
-          checkedList={checkLists.bodyTypeId}
-          listLimit={4}
-          onListCheck={handleCheckboxListChange}
-          filterName={CheckListsNames.BODY_TYPE_ID}
-        />
-
+      <div className={clsx(styles.column, 'styledScrollbar')}>
+        <h5 className={styles.blockTitle}>Body Type</h5>
+        {optionsInAutocompleteForm && memoizedCheckListValues && (
+          <MultiselectInput
+            label="Body Type"
+            filterName={CheckListsNames.BODY_TYPE_ID}
+            options={optionsInAutocompleteForm.bodyTypes}
+            values={memoizedCheckListValues.bodyTypeId}
+            onChange={handleCheckboxListChange}
+          />
+        )}
         <div className={styles.row}>
           <h5 className={styles.blockTitle}>Brand Details</h5>
-          <h6 className={styles.addButton} onClick={handleAddNewDetails}>
-            + Add
-          </h6>
+          <Button
+            onClick={handleAddNewDetails}
+            className={styles.addButton}
+            aria-label="Add"
+          >
+            <AddOutlinedIcon />
+            Add
+          </Button>
         </div>
         {brandDetails.map((brandDetail) => (
           <BrandDetails
             key={brandDetail.id}
             id={brandDetail.id}
-            selectedBrandId={brandDetail.brandId}
-            selectedModelId={brandDetail.modelId}
+            brandId={brandDetail.brandId}
+            modelIds={brandDetail.modelIds}
             onBrandDetailsChange={handleBrandDetailsChange}
             onBrandDetailsRemove={(): void =>
               handleBrandDetailsRemove(brandDetail.id)
@@ -260,13 +294,26 @@ const AdvancedAutoFilter: FC = () => {
             }))}
           />
         )}
-        <CheckboxList
-          title="Color"
-          list={options && options.colors}
-          checkedList={checkLists.colorId}
-          onListCheck={handleCheckboxListChange}
-          filterName={CheckListsNames.COLOR_ID}
-        />
+        <h5 className={styles.blockTitle}>Color</h5>
+        {optionsInAutocompleteForm && memoizedCheckListValues && (
+          <MultiselectInput
+            label="Color"
+            filterName={CheckListsNames.COLOR_ID}
+            options={optionsInAutocompleteForm.colors}
+            values={memoizedCheckListValues.colorId}
+            onChange={handleCheckboxListChange}
+          />
+        )}
+        <h5 className={styles.blockTitle}>Fuel</h5>
+        {optionsInAutocompleteForm && memoizedCheckListValues && (
+          <MultiselectInput
+            label="Fuel"
+            filterName={CheckListsNames.FUEL_TYPE_ID}
+            options={optionsInAutocompleteForm.fuelTypes}
+            values={memoizedCheckListValues.fuelTypeId}
+            onChange={handleCheckboxListChange}
+          />
+        )}
         <CheckboxList
           title="Transmission"
           list={options && options.transmissionTypes}
@@ -280,13 +327,6 @@ const AdvancedAutoFilter: FC = () => {
           checkedList={checkLists.drivetrainId}
           onListCheck={handleCheckboxListChange}
           filterName={CheckListsNames.DRIVETRAIN_ID}
-        />
-        <CheckboxList
-          title="Fuel"
-          list={options && options.fuelTypes}
-          checkedList={checkLists.fuelTypeId}
-          onListCheck={handleCheckboxListChange}
-          filterName={CheckListsNames.FUEL_TYPE_ID}
         />
       </div>
       <Zoom in={isFiltersApplied} unmountOnExit={true}>

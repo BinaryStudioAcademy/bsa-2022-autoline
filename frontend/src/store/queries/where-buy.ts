@@ -22,8 +22,7 @@ const whereBuyApi = api.injectEndpoints({
           countpage,
         },
       }),
-      async onQueryStarted({ ...rest }, { dispatch, queryFulfilled }) {
-        console.log(rest);
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data: adverts } = await queryFulfilled;
           dispatch(setAdverts({ adverts }));

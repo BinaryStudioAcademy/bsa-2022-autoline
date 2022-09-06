@@ -90,7 +90,7 @@ jobs:
 
       - name: Load secret files
         run: |
-          sudo aws s3 cp s3://${{ secrets.AWS_BUCKET_NAME }}/${{ secrets.AWS_BUCKET_WEB_SECRETS_PATH }}/ /home/ubuntu/app/.env --recursive
+          aws s3 cp s3://${{ secrets.AWS_BUCKET_NAME }}/${{ secrets.AWS_BUCKET_WEB_SECRETS_PATH }}/ /home/ubuntu/app/.env --recursive
 
       - name: Run docker-compose.stage.yml on deployment server
         uses: appleboy/ssh-action@master

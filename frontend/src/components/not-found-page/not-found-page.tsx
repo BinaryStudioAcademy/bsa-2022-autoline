@@ -31,7 +31,7 @@ const NotFoundPage: FC = () => {
         <h1 className={styles.NotFoundTitle}>404</h1>
         <span className={styles.NotFoundLine}></span>
         <p className={styles.NotFoundText}>
-          The page you are loking for could not be found.
+          The page you are looking for could not be found.
         </p>
         <Link
           to={AppRoute.ROOT}

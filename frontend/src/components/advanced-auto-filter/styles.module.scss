@@ -39,10 +39,10 @@
   column-gap: 10px;
 }
 
-.addButton {
+button.addButton {
   color: var(--blue100);
   font-weight: 700;
-  cursor: pointer;
+  text-transform: none;
 }
 
 .bottomControls {

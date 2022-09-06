@@ -1,6 +1,5 @@
 @import "./mixins";
 
-
 .MuiInputLabel-root.MuiInputLabel-shrink.Mui-focused,
 .MuiInputLabel-root.MuiInputLabel-shrink.MuiFormLabel-filled {
   color: var(--gray300);
@@ -44,22 +43,36 @@
   .MuiFormControl-root {
     label {
       top: -3px;
+      left: 5px;
       color: var(--gray300);
-      font-size: 14px;
+      font-size: 1.3rem;
     }
   }
 
-  .MuiOutlinedInput-root {
-    height: 46px;
+  .MuiInputBase-root.MuiOutlinedInput-root {
+    padding: 12px 15px 10px;
+    font-size: 1.3rem;
+
+    input {
+      padding: 2px;
+    }
 
     .MuiAutocomplete-endAdornment {
+      top: auto;
       color: var(--gray300);
     }
   }
 
+  .MuiInputLabel-root.MuiInputLabel-shrink,
   .MuiInputLabel-root.MuiInputLabel-shrink.Mui-focused,
   .MuiInputLabel-root.MuiInputLabel-shrink.MuiFormLabel-filled {
+    font-size: 1rem;
     transform: translate(15px, 7px) scale(0.75);
+  }
+
+  .MuiButtonBase-root.MuiChip-root {
+    height: 2.2rem;
+    font-size: 1.1rem;
   }
 
   .MuiAutocomplete-popupIndicator {

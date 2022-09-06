@@ -3,7 +3,6 @@ import { errorsHandler } from '@middlewares/middlewares';
 import {
   healthRouter,
   authRouter,
-  protectedRouter,
   userRouter,
   activateRouter,
   wishlistRouter,
@@ -51,7 +50,6 @@ app
 const routes = [
   healthRouter,
   authRouter,
-  protectedRouter,
   userRouter,
   wishlistRouter,
   carsRouter,

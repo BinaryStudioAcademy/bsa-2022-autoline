@@ -103,6 +103,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
       const formData = new FormData();
       formData.append('photo', selectedAvatar, selectedAvatar.name);
       await updateUserPhoto(formData);
+      setPreviewAvatar('');
     }
   };
 

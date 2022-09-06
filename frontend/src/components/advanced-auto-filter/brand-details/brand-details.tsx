@@ -68,8 +68,7 @@ const BrandDetails: FC<Props> = ({
 
   const brandsOptions = useMemo(
     () =>
-      brands &&
-      brands.map(
+      brands?.map(
         (item) =>
           ({
             label: item.name,
@@ -81,8 +80,7 @@ const BrandDetails: FC<Props> = ({
 
   const modelsOptions = useMemo(
     () =>
-      models &&
-      models.map(
+      models?.map(
         (item) =>
           ({
             label: item.name,

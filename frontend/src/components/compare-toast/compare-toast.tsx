@@ -22,14 +22,14 @@ const CompareToast: FC<ModalProps> = ({
   };
 
   useEffect(() => {
-    if (!isHidden) {
+    if (!isOpen) {
       const timer = setTimeout(closeToast, 6000);
 
       return () => {
         clearTimeout(timer);
       };
     }
-  }, [isHidden]);
+  }, [isOpen]);
 
   return (
     <div className={styles.container} hidden={!isOpen}>

@@ -25,12 +25,6 @@ wishlistRouter.get(
 );
 
 wishlistRouter.get(
-  `${PATH}/like`,
-  userAuthMiddleware,
-  wishlistController.getWishlistLike,
-);
-
-wishlistRouter.get(
   `${PATH}/entries`,
   userAuthMiddleware,
   wishlistController.getWishlistEntries,

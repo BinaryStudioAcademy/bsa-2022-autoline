@@ -4,14 +4,25 @@ interface WhereBuyInterface {
     description: string;
     year: number;
     autoId: number;
-    race: string;
+    raceInt: string;
   };
   linkToView: string;
   markName: string;
   modelName: string;
+  title: string;
   color: {
     hex: string;
+    eng: string;
+  };
+  stateData: {
+    regionNameEng: string;
   };
 }
 
-export { type WhereBuyInterface };
+interface whereBuyQuery {
+  page: number;
+  complectationId: string;
+  countpage: string;
+}
+
+export { type WhereBuyInterface, type whereBuyQuery };

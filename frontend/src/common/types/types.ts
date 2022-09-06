@@ -35,4 +35,7 @@ export type {
   ViewedCarDataList,
   ViewedCarData,
 } from './history-of-viewed-cars/history-of-viewed-cars';
-export type { WhereBuyInterface } from './where-to-buy/where-to-buy';
+export type {
+  WhereBuyInterface,
+  whereBuyQuery,
+} from './where-to-buy/where-to-buy';

@@ -1,14 +1,11 @@
 import { whereBuyPath } from '@common/enums/enums';
-import { WhereBuyInterface } from '@common/types/where-to-buy/where-to-buy';
+import {
+  WhereBuyInterface,
+  whereBuyQuery,
+} from '@common/types/where-to-buy/where-to-buy';
 import { setAdverts } from '@store/root-reducer';
 
 import { api } from './index';
-
-interface whereBuyQuery {
-  page: number;
-  complectationId: string;
-  countpage: string;
-}
 
 const whereBuyApi = api.injectEndpoints({
   endpoints: (build) => ({

@@ -7,6 +7,30 @@
   border-radius: 5px;
 }
 
+.noFoundContainer {
+  margin: 30px;
+  padding: 25px;
+  background-color: var(--white);
+  border: solid 1px var(--white);
+  border-radius: 5px;
+  display: flex;
+
+  h3 {
+    margin: 0;
+  }
+}
+
+
+
+.noCarsTitle {
+  margin: 0;
+  padding-left: 0.5rem;
+}
+
+.searchIcon.icon {
+  font-size: 4rem;
+}
+
 .title {
   display: flex;
   flex-direction: row;

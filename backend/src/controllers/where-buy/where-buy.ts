@@ -19,7 +19,6 @@ const whereBuy = async (
     const page = req.query.page;
     const complectationId = req.query.id;
     const countpage = +req.query.countpage;
-    console.log(countpage);
     const querysForRequest = await carsSearchAutoria(
       [complectationId],
       page,
@@ -27,8 +26,6 @@ const whereBuy = async (
     );
     const cars = await getCarsAutoRia(querysForRequest);
     const carsIds = cars?.result.search_result.ids;
-    console.log(carsIds);
-    console.log(cars);
     const carAdverts = carsIds?.map((car) => getCarById(car));
     Promise.all(carAdverts as readonly unknown[]).then((result) =>
       res.json(result),

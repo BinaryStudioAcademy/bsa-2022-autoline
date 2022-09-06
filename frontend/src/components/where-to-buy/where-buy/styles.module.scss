@@ -8,14 +8,14 @@
   border: solid 1px var(--white);
   border-radius: 5px;
 
-  .logoDiv {
+  .logo {
     display: flex;
     align-items: center;
     width: 93px;
     margin-right: 15px;
     padding: 0 3px 0 0;
 
-    .logo {
+    img {
       width: 90px;
       margin: 0;
     }
@@ -30,30 +30,75 @@
     .carName {
       margin-bottom: 5px;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 1.3rem;
       text-transform: uppercase;
     }
 
-    .sellerLink {
-      flex: 1;
+    .labelGroup {
+      display: flex;
       margin-bottom: 5px;
-      color: var(--blue100);
-      font-size: 14px;
 
-      a {
+      &>div {
+        margin-right: 1.0rem;
+      }
+
+      &>div:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .label {
+      display: flex;
+      align-items: center;
+      height: 2.5rem;
+      padding: 5px 10px;
+      color: var(--white);
+      font-weight: 600;
+      font-size: 1.0rem;
+      font-family: var(--primary-font);
+      font-style: normal;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      background: var(--blue300);
+      border-radius: 4px;
+      margin-right: 100rem;
+
+      &>img {
+        height: 1.0rem;
+        margin-right: 0.5rem;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &:hover {
         cursor: pointer;
       }
+    }
+
+    .label.location {
+      text-transform: capitalize;
     }
 
     .trigger {
       display: flex;
       padding: 0;
+      font-size: 1.2rem;
+      position: relative;
 
-      div {
-        display: inline;
-        max-height: 43px;
+      .textDescription {
+        display: -webkit-box;
+        // max-height: 3rem;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
         padding: 0 10px;
         overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+
+      .textDescription.more {
+        display: inline-block;
       }
 
       div::before {
@@ -112,6 +157,30 @@
 .divider {
   margin-left: 25px;
   color: var(--gray300);
+}
+
+.collapseButton {
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  display: flex;
+  align-items: center;
+  height: 2.2rem;
+  color: var(--blue100);
+  font-weight: 700;
+  font-size: 1rem;
+  font-family: var(--primary-font);
+  background-color: var(--white);
+  border: 1px solid var(--gray100);
+  border-radius: 5px;
+  cursor: pointer;
+  transform: translateY(50%);
+  transition: all 300ms;
+
+  &:hover {
+    border-color: var(--blue100);
+    transition: all 300ms;
+  }
 }
 
 @media (max-width: $global-md) {

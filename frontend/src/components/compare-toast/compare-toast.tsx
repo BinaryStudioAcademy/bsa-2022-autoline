@@ -1,4 +1,4 @@
-import { FC, Dispatch } from 'react';
+import { FC, Dispatch, useEffect } from 'react';
 
 import fillCompare from '@assets/images/icon_balance.svg';
 
@@ -21,7 +21,15 @@ const CompareToast: FC<ModalProps> = ({
     setIsHidden(!isHidden);
   };
 
-  isHidden || setTimeout(closeToast, 6000);
+  useEffect(() => {
+    if (!isHidden) {
+      const timer = setTimeout(closeToast, 6000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [isHidden]);
 
   return (
     <div className={styles.container} hidden={isHidden}>

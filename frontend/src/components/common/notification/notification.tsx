@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import { ButtonOutline } from '../button-outline/button-outline';
 import styles from './styles.module.scss';
@@ -16,7 +16,15 @@ const Notification: FC<ModalProps> = (props) => {
 
   const closeNotification = (): void => setIsOpen(!isOpen);
 
-  isOpen && setTimeout(closeNotification, 6000);
+  useEffect(() => {
+    if (isOpen) {
+      const timer = setTimeout(closeNotification, 6000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [isOpen]);
 
   return (
     <div className={styles.container} hidden={!isOpen}>

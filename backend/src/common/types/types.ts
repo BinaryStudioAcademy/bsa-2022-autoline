@@ -3,6 +3,7 @@ export {
   type TypedRequestQuery,
   type TypedRequestParams,
   type TypedRequest,
+  type AuthRequest,
 } from './controller/controller';
 
 export {

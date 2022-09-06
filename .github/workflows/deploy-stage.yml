@@ -87,7 +87,7 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           source: 's3://autoline-secret/secret'
-          dest: '/home/app/.env'
+          dest: '/home/ubuntu/app/.env'
           flags: --recursive
 
       - name: Run docker-compose.stage.yml on deployment server

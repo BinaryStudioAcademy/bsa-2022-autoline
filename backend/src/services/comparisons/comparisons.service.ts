@@ -177,7 +177,7 @@ const getActiveComparisonCars = async (
 };
 
 const getActiveComparisonStatus = async (userId: string): Promise<string[]> => {
-  const comparison = await prisma.comparisons_Complectations.findMany({
+  const comparisons = await prisma.comparisons_Complectations.findMany({
     select: {
       complectation_id: true,
     },
@@ -187,7 +187,7 @@ const getActiveComparisonStatus = async (userId: string): Promise<string[]> => {
       },
     },
   });
-  return comparison.map((c) => c.complectation_id);
+  return comparisons.map((c) => c.complectation_id);
 };
 
 export {

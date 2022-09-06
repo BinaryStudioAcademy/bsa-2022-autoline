@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - awss3
   workflow_dispatch:
 
 jobs:

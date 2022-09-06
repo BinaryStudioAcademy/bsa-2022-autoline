@@ -12,3 +12,4 @@ export {
   adminAuthMiddleware,
 } from './roles-based-protection/role.middleware';
 export { updateUserMiddleware } from './update-user/update-user.middleware';
+export { photoMiddleware } from './photo/photo.middleware';

@@ -170,4 +170,21 @@ const deleteOauthConnections = async (
   });
 };
 
-export { updateUser, deleteUser, getUser, deleteOauthConnections };
+const updateUserPhoto = async (id: string, photoUrl: string): Promise<void> => {
+  await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      photo_url: photoUrl,
+    },
+  });
+};
+
+export {
+  updateUser,
+  deleteUser,
+  getUser,
+  deleteOauthConnections,
+  updateUserPhoto,
+};

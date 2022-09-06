@@ -50,8 +50,6 @@ export const SignUpForm = (): React.ReactElement => {
       name: stringName,
       email: stringEmail,
       password: stringpassword,
-      phone: '1231',
-      location: 'ua',
     } as SignUpRequestData);
   };
 

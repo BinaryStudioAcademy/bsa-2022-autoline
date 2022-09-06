@@ -153,7 +153,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   required={true}
                   errors={errors}
                   control={control}
-                  inputLabel="Full name"
+                  inputLabel="Full Name"
                 />
                 <div className={styles.selectsWrapper}>
                   <SelectFieldForm
@@ -161,7 +161,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                     name="sex"
                     required={false}
                     control={control}
-                    label="sex"
+                    label="Sex"
                     defaultValue="not_appliable"
                   >
                     <MenuItem value="male">Male</MenuItem>
@@ -175,7 +175,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                     name="birthYear"
                     required={false}
                     control={control}
-                    label="birthday"
+                    label="Birthday"
                     defaultValue="not_appliable"
                   />
                 </div>
@@ -200,7 +200,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   name="location"
                   required={false}
                   control={control}
-                  label="location"
+                  label="Location"
                   defaultValue="not_appliable"
                 >
                   <MenuItem value="not_appliable">Rather not say</MenuItem>

@@ -1,6 +1,5 @@
-import { TokenPayload } from '@autoline/shared';
 import { ExceptionMessage } from '@common/enums/exception/exception-message.enum';
-import { TypedRequestBody } from '@common/types/controller/controller';
+import { TypedRequestBody, AuthRequest } from '@common/types/types';
 import { UpdateUserDto } from '@dtos/user/update-user.dto';
 import { Role, Sex } from '@prisma/client';
 import { uploadFileToS3 } from '@services/aws/aws.service';
@@ -9,7 +8,6 @@ import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
 
 export interface UpdateUserReq {
-  tokenPayload: TokenPayload;
   newPassword?: string;
   repeatNewPassword?: string;
   password?: string;
@@ -40,12 +38,12 @@ const updateUser = async (
 };
 
 const deleteUser = async (
-  req: TypedRequestBody<{ tokenPayload: TokenPayload }>,
+  req: AuthRequest,
   res: Response<Partial<UpdateUserReq>>,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    await userService.deleteUser(req.body.tokenPayload.sub);
+    await userService.deleteUser(req.tokenPayload?.sub as string);
     res.status(httpStatus.OK).json();
   } catch (error) {
     next(error);
@@ -53,12 +51,12 @@ const deleteUser = async (
 };
 
 const getUser = async (
-  req: TypedRequestBody<{ tokenPayload: TokenPayload }>,
+  req: AuthRequest,
   res: Response<Partial<UpdateUserReq>>,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const user = await userService.getUser(req.body.tokenPayload.sub);
+    const user = await userService.getUser(req.tokenPayload?.sub as string);
     if (user) {
       res.status(httpStatus.OK).json(user);
     } else {
@@ -70,13 +68,13 @@ const getUser = async (
 };
 
 const deleteOauthConnections = async (
-  req: TypedRequestBody<{ tokenPayload: TokenPayload; provider: string }>,
+  req: TypedRequestBody<{ provider: string }>,
   res: Response<Partial<UpdateUserReq>>,
   next: NextFunction,
 ): Promise<void> => {
   try {
     await userService.deleteOauthConnections(
-      req.body.tokenPayload.sub,
+      req.tokenPayload?.sub as string,
       req.body.provider,
     );
     res.status(httpStatus.OK).json();

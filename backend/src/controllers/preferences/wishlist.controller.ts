@@ -12,7 +12,7 @@ const setWishlist = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.body.tokenPayload.sub;
+    const userId = req.tokenPayload?.sub as string;
     const { modelId, complectationId } = req.query;
 
     const wishlist: WishlistInput = {
@@ -37,7 +37,7 @@ const deleteWishlist = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.body.tokenPayload.sub;
+    const userId = req.tokenPayload?.sub as string;
     const { modelId, complectationId } = req.query;
 
     const wishlist: WishlistInput = {
@@ -62,7 +62,7 @@ const getWishlistByUserId = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.body.tokenPayload.sub;
+    const userId = req.tokenPayload?.sub as string;
 
     const wishlistResponseDto = await wishlistService.getWishlistByUserId(
       userId,
@@ -82,7 +82,7 @@ const getWishlistEntries = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.body.tokenPayload.sub;
+    const userId = req.tokenPayload?.sub as string;
 
     const wishlists = await wishlistService.getWishlistEntries(userId);
     res.json(wishlists).status(httpStatus.OK);

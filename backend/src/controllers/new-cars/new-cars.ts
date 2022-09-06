@@ -14,7 +14,7 @@ const getNewCars = async (
 ): Promise<void> => {
   try {
     const limit = +req.query.limit;
-    const userId = req.body.tokenPayload ? req.body.tokenPayload.sub : '';
+    const userId = req.tokenPayload ? req.tokenPayload.sub : '';
     const newCars = await newCarsService.getNewCars(limit, userId);
     res.status(httpStatus.OK).json(newCars);
   } catch (error) {

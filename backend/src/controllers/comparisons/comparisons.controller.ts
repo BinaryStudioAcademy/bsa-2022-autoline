@@ -1,7 +1,7 @@
-import { TokenPayload } from '@autoline/shared';
 import {
-  TypedRequest,
+  AuthRequest,
   TypedRequestBody,
+  TypedRequestParams,
 } from '@common/types/controller/controller';
 import { ComparisonType } from '@prisma/client';
 import * as comparisonsService from '@services/comparisons/comparisons.service';
@@ -11,7 +11,6 @@ import httpStatus from 'http-status-codes';
 const addCarToComparison = async (
   req: TypedRequestBody<{
     complectationId: string;
-    tokenPayload: TokenPayload;
   }>,
   res: Response,
   next: NextFunction,
@@ -19,7 +18,7 @@ const addCarToComparison = async (
   try {
     const comparison = await comparisonsService.addCarToComparison({
       complectationId: req.body.complectationId,
-      userId: req.body.tokenPayload.sub,
+      userId: req.tokenPayload?.sub as string,
     });
     res.status(httpStatus.CREATED).json(comparison);
   } catch (error) {
@@ -30,7 +29,6 @@ const addCarToComparison = async (
 const changeComparisonType = async (
   req: TypedRequestBody<{
     type: ComparisonType;
-    tokenPayload: TokenPayload;
   }>,
   res: Response,
   next: NextFunction,
@@ -38,7 +36,7 @@ const changeComparisonType = async (
   try {
     const comparison = await comparisonsService.changeComparisonType({
       type: req.body.type,
-      userId: req.body.tokenPayload.sub,
+      userId: req.tokenPayload?.sub as string,
     });
     res.status(httpStatus.OK).json(comparison);
   } catch (error) {
@@ -47,15 +45,13 @@ const changeComparisonType = async (
 };
 
 const clearComparison = async (
-  req: TypedRequestBody<{
-    tokenPayload: TokenPayload;
-  }>,
+  req: AuthRequest,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const comparison = await comparisonsService.clearComparison(
-      req.body.tokenPayload.sub,
+      req.tokenPayload?.sub as string,
     );
     res.status(httpStatus.OK).json(comparison);
   } catch (error) {
@@ -64,17 +60,14 @@ const clearComparison = async (
 };
 
 const deleteCarFromComparison = async (
-  req: TypedRequest<
-    { complectationId: string },
-    { tokenPayload: TokenPayload }
-  >,
+  req: TypedRequestParams<{ complectationId: string }>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const comparison = await comparisonsService.deleteCarFromComparison({
       complectationId: req.params.complectationId,
-      userId: req.body.tokenPayload.sub,
+      userId: req.tokenPayload?.sub as string,
     });
     res.status(httpStatus.OK).json(comparison);
   } catch (error) {
@@ -83,13 +76,13 @@ const deleteCarFromComparison = async (
 };
 
 const getActiveComparisonCars = async (
-  req: TypedRequestBody<{ tokenPayload: TokenPayload }>,
+  req: AuthRequest,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const comparison = await comparisonsService.getActiveComparisonCars(
-      req.body.tokenPayload.sub,
+      req.tokenPayload?.sub as string,
     );
     res.status(httpStatus.OK).json(comparison);
   } catch (error) {
@@ -98,13 +91,13 @@ const getActiveComparisonCars = async (
 };
 
 const getActiveComparisonStatus = async (
-  req: TypedRequestBody<{ tokenPayload: TokenPayload }>,
+  req: AuthRequest,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const comparison = await comparisonsService.getActiveComparisonStatus(
-      req.body.tokenPayload.sub,
+      req.tokenPayload?.sub as string,
     );
     res.status(httpStatus.OK).json(comparison);
   } catch (error) {

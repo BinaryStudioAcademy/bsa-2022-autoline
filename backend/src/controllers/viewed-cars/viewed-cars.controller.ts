@@ -15,7 +15,7 @@ const getViewedCarsList = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.body.tokenPayload.sub;
+    const userId = req.tokenPayload?.sub as string;
     const { skip, take } = req.query;
     const requestDataDto = {
       userId,
@@ -38,7 +38,7 @@ const addCarToViewed = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.body.tokenPayload.sub;
+    const userId = req.tokenPayload?.sub as string;
     const { modelId, complectationId } = req.query;
 
     const viewedCar = {

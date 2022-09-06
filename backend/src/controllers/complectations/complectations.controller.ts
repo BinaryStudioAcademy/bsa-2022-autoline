@@ -16,7 +16,7 @@ const getComplectations = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.body.tokenPayload.sub;
+    const userId = req.tokenPayload?.sub as string;
     const { complectationId, modelId } = req.query;
     const input: ComplectationsInput = {
       userId,

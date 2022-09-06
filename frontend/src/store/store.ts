@@ -3,7 +3,7 @@ import { authMiddleware } from '@store/auth/middlewares';
 import { api } from '@store/queries';
 import { combineReducers } from 'redux';
 
-import { checkTokenMiddleware } from './middlewares/middlewares';
+import { checkTokenMiddleware } from './queries/preferences/middlewares';
 import { auth, carFilter, foundCars } from './root-reducer';
 
 const rootReducer = combineReducers({

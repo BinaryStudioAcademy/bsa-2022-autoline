@@ -36,6 +36,4 @@ export type {
   ViewedCarData,
 } from './history-of-viewed-cars/history-of-viewed-cars';
 
-export type { LikeButtonPropsType } from './like-button/like-button';
-
 export type { Comparison } from './comparisons/comparisons.type';

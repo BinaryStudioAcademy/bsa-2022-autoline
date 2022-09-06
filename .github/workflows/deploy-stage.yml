@@ -44,7 +44,7 @@ jobs:
           build_extra_args: "--build-arg=VITE_API_ORIGIN_URL=${{ secrets.VITE_APP_API_ORIGIN_URL }}"
 
   prenotify:
-    needs: [build-backend, build-frontend]
+    needs: [ build-backend, build-frontend ]
     runs-on: ubuntu-latest
     if: always()
     environment: development
@@ -64,7 +64,7 @@ jobs:
           MSG_MINIMAL: event,actions url
 
   deploy:
-    needs: [build-backend, build-frontend]
+    needs: [ build-backend, build-frontend ]
     runs-on: ubuntu-latest
     environment: develop
     steps:
@@ -78,6 +78,24 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           source: ".docker/autoline/docker-compose.stage.yml,.docker/autoline/nginx/nginx.rtmp.conf,.docker/autoline/database/Dockerfile,.docker/autoline/database/user_privileges.sql,.docker/autoline/nginx/nginx.conf"
+          target: app
+
+      - name: Copy a file from s3
+        uses: prewk/s3-cp-action@v2
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          source: 's3://autoline-secret/secret'
+          dest: '.env/'
+          flags: --recursive
+
+      - name: Copy secret files to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: .env
           target: app
 
       - name: Run docker-compose.stage.yml on deployment server

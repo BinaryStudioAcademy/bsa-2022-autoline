@@ -24,4 +24,10 @@ wishlistRouter.get(
   wishlistController.getWishlistByUserId,
 );
 
+wishlistRouter.get(
+  `${PATH}/entries`,
+  userAuthMiddleware,
+  wishlistController.getWishlistEntries,
+);
+
 export { wishlistRouter };

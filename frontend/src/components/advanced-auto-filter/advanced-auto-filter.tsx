@@ -22,7 +22,6 @@ import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { CheckboxListDataType } from '@common/types/cars/checkbox-list-data.type';
 import { RangeValueType } from '@common/types/cars/range-item.type';
-import { AdvancedAutoFilterProps } from '@common/types/types';
 import { BrandDetails } from '@components/advanced-auto-filter/brand-details/brand-details';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
@@ -46,6 +45,7 @@ import {
   setCheckListValue,
   setValue,
 } from '@store/car-filter/slice';
+import { setCars } from '@store/found-car/slice';
 import {
   useGetUsedOptionsQuery,
   useLazyGetFilteredCarsQuery,
@@ -58,8 +58,7 @@ import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
-const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
-  const { showFilteredCars } = props;
+const AdvancedAutoFilter: FC = () => {
   const dispatch = useAppDispatch();
 
   const { filters, checkLists, brandDetails } = useAppSelector(
@@ -126,7 +125,7 @@ const AdvancedAutoFilter: FC<AdvancedAutoFilterProps> = (props) => {
 
   useEffect(() => {
     if (filteredCars.data) {
-      showFilteredCars(filteredCars.data);
+      dispatch(setCars(filteredCars.data));
     }
   }, [filteredCars]);
 

@@ -6,6 +6,7 @@ import styles from './styles.module.scss';
 export const ButtonFill = (props: ButtonPropsType): React.ReactElement => {
   return (
     <button
+      disabled={props.disabled}
       className={clsx(props.className, styles.btnFill)}
       onClick={props.onClick}
       type={props.type}

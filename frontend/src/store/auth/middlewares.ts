@@ -1,4 +1,3 @@
-import { AppRoute } from '@common/enums/enums';
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import { logOut } from '@store/root-reducer';
 
@@ -6,9 +5,9 @@ const authMiddleware = createListenerMiddleware();
 
 authMiddleware.startListening({
   actionCreator: logOut,
-  effect: () => {
+  effect: (action) => {
     localStorage.clear();
-    window.location.replace(AppRoute.SIGN_IN);
+    window.location.replace(action.payload);
   },
 });
 

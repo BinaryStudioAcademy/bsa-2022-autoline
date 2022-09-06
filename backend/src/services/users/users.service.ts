@@ -18,6 +18,18 @@ const updateUser = async (
   id: string,
   userData: Pick<User, 'id'> & Partial<User>,
 ): Promise<User> => {
+  const existedUser = await prisma.user.findFirst({
+    where: {
+      id: {
+        not: userData.id,
+      },
+      email: userData.email,
+    },
+  });
+  if (existedUser) {
+    throw new Error('Another user with this email already exists!');
+  }
+
   return await prisma.user.update({
     where: { id },
     data: userData,

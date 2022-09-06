@@ -14,12 +14,8 @@ import { getValueById } from '@helpers/get-value-by-id';
 import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import { Button, Zoom } from '@mui/material';
-import {
-  addNewBrandDetails,
-  removeBrandDetails,
-  setBrandDetailsValue,
-  setValue,
-} from '@store/car-filter/slice';
+import { setBrandDetailsValue, setValue } from '@store/car-filter/slice';
+import { setCars } from '@store/found-car/slice';
 import { API } from '@store/queries/api-routes';
 import {
   useGetUsedOptionsQuery,
@@ -34,18 +30,27 @@ const SimpleAutoFilter: FC = () => {
 
   const { filters, brandDetails } = useAppSelector((state) => state.carFilter);
 
-  const [queryParams, setQueryParams] = useState<string[][]>([]);
+  const [queryParams, setQueryParams] = useState<string[][]>();
 
-  const { data: options, isLoading: isLoading } = useGetUsedOptionsQuery();
-
-  useEffect(() => {
-    setQueryParams(objectToQueryString(filters));
-  }, [filters]);
+  const { data: options, isLoading } = useGetUsedOptionsQuery();
 
   const [search, filteredCars] = useLazyGetFilteredCarsQuery();
 
-  // eslint-disable-next-line no-console
-  console.log(filteredCars);
+  useEffect(() => {
+    if (filteredCars.data) {
+      dispatch(setCars(filteredCars.data));
+    }
+  }, [filteredCars]);
+
+  useEffect(() => {
+    setQueryParams(
+      objectToQueryString({
+        ...filters,
+        brandId: brandDetails.map((item) => item.brandId),
+        modelId: brandDetails.flatMap((item) => item.modelIds),
+      }),
+    );
+  }, [filters, brandDetails]);
 
   const years = useMemo(() => yearsRange(30), []);
 
@@ -54,16 +59,8 @@ const SimpleAutoFilter: FC = () => {
     dispatch(setValue({ filterName: FiltersNames.REGION_ID, value }));
   };
 
-  const handleAddNewDetails = (): void => {
-    dispatch(addNewBrandDetails());
-  };
-
   const handleBrandDetailsChange = (data: BrandDetailsType): void => {
     dispatch(setBrandDetailsValue(data));
-  };
-
-  const handleBrandDetailsRemove = (id: string): void => {
-    dispatch(removeBrandDetails(id));
   };
 
   const handleRangeChange = (range: RangeValueType[]): void => {
@@ -78,8 +75,8 @@ const SimpleAutoFilter: FC = () => {
       brandDetails[0].modelIds.length,
   );
 
-  const doSearch = (): void => {
-    search(queryParams);
+  const doSearch = async (): Promise<void> => {
+    await search(queryParams);
     navigate(API.SEARCH);
   };
 
@@ -104,9 +101,6 @@ const SimpleAutoFilter: FC = () => {
         <div className={styles.column}>
           <div className={styles.row}>
             <h5 className={styles.blockTitle}>Brand Details</h5>
-            <h6 className={styles.addButton} onClick={handleAddNewDetails}>
-              + Add
-            </h6>
           </div>
           {brandDetails.map((brandDetail) => (
             <BrandDetails
@@ -115,9 +109,6 @@ const SimpleAutoFilter: FC = () => {
               brandId={brandDetail.brandId}
               modelIds={brandDetail.modelIds}
               onBrandDetailsChange={handleBrandDetailsChange}
-              onBrandDetailsRemove={(): void =>
-                handleBrandDetailsRemove(brandDetail.id)
-              }
             />
           ))}
         </div>

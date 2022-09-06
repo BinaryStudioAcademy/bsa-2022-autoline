@@ -78,7 +78,7 @@ export const Header = (): React.ReactElement => {
       onClick: (): void => navigate(AppRoute.ADMINISTRATION),
     },
     settings: {
-      label: 'Setting',
+      label: 'Settings',
       onClick: (): void => setOpenSettings(true),
     },
     logout: {
@@ -128,6 +128,7 @@ export const Header = (): React.ReactElement => {
               {userToken && user ? (
                 <PrivateElements
                   avatar={user.photoUrl}
+                  role={user.role}
                   reminders={reminders}
                   setOpenSettings={setOpenSettings}
                   userMenu={userMenu}

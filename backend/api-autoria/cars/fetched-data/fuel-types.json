@@ -1,8 +1,8 @@
 [
   { "name": "Gasoline", "value": 1 },
   { "name": "Diesel", "value": 2 },
-  { "name": "Gas", "value": 3 },
-  { "name": "Gas / Petrol", "value": 4 },
+  { "name": "Natural gas", "value": 3 },
+  { "name": "Bi-fuel", "value": 4 },
   { "name": "Hybrid", "value": 5 },
   { "name": "Electricity", "value": 6 },
   { "name": "Other", "value": 7 },

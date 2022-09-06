@@ -78,7 +78,7 @@ export const Header = (): React.ReactElement => {
   const userMenu = {
     account: {
       label: 'Account',
-      onClick: () => navigate('#'),
+      onClick: () => navigate(AppRoute.PERSONAL),
     },
     administration: {
       label: 'Administration',

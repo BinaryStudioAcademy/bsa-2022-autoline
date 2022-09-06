@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - awss3
   workflow_dispatch:
 
 jobs:
@@ -44,7 +45,7 @@ jobs:
           build_extra_args: "--build-arg=VITE_API_ORIGIN_URL=${{ secrets.VITE_APP_API_ORIGIN_URL }}"
 
   prenotify:
-    needs: [build-backend, build-frontend]
+    needs: [ build-backend, build-frontend ]
     runs-on: ubuntu-latest
     if: always()
     environment: development
@@ -64,7 +65,7 @@ jobs:
           MSG_MINIMAL: event,actions url
 
   deploy:
-    needs: [build-backend, build-frontend]
+    needs: [ build-backend, build-frontend ]
     runs-on: ubuntu-latest
     environment: develop
     steps:
@@ -79,6 +80,17 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: ".docker/autoline/docker-compose.stage.yml,.docker/autoline/nginx/nginx.rtmp.conf,.docker/autoline/database/Dockerfile,.docker/autoline/database/user_privileges.sql,.docker/autoline/nginx/nginx.conf"
           target: app
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      - name: Load secret files
+        run: |
+          sudo aws s3 cp s3://${{ secrets.AWS_BUCKET_NAME }}/${{ secrets.AWS_BUCKET_WEB_SECRETS_PATH }} /home/ubuntu/app/.env/ --recursive
 
       - name: Run docker-compose.stage.yml on deployment server
         uses: appleboy/ssh-action@master

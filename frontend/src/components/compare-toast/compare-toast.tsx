@@ -21,6 +21,8 @@ const CompareToast: FC<ModalProps> = ({
     setIsHidden(!isHidden);
   };
 
+  isHidden || setTimeout(closeToast, 6000);
+
   return (
     <div className={styles.container} hidden={isHidden}>
       <div className={styles.content}>

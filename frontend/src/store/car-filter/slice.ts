@@ -32,7 +32,7 @@ const initialState = {
     {
       id: Date.now().toString(),
       brandId: '',
-      modelId: '',
+      modelIds: [],
     },
   ],
 };

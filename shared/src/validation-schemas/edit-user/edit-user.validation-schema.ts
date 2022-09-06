@@ -19,8 +19,13 @@ const editUserSchema = Yup.object().shape({
     .matches(/@[A-Za-z0-9.\-_]*$/, UserValidationMessage.INVALID_EMAIL)
     .matches(/^[\S]{1,35}@/, UserValidationMessage.INVALID_EMAIL_LENGTH)
     .matches(/@[\S]{3,35}$/, UserValidationMessage.INVALID_EMAIL_LENGTH),
-  phone: Yup.string().matches(phoneReg, 'Phone is invalid'),
+  phone: Yup.string().matches(phoneReg, {
+    message: 'Phone is invalid',
+    excludeEmptyString: true,
+  }),
   location: Yup.string()
+    .nullable()
+    .transform((value) => value || null)
     .min(2, 'Location must be at least 2 characters')
     .max(150, 'Location must not exceed 150 characters')
     .matches(

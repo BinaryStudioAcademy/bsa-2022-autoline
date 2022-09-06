@@ -207,4 +207,21 @@ const getWishlistByUserId = async (
   return wishlists;
 };
 
-export { setWishlist, deleteWishlist, getWishlistByUserId };
+const getWishlistEntries = async (userId: string): Promise<string[]> => {
+  const wishlists = await prisma.user_Wishlist.findMany({
+    where: {
+      user_id: userId,
+    },
+    select: {
+      model_id: true,
+      complectation_id: true,
+    },
+  });
+
+  return wishlists.map(
+    ({ model_id, complectation_id }) =>
+      (model_id as string) || (complectation_id as string),
+  );
+};
+
+export { setWishlist, deleteWishlist, getWishlistByUserId, getWishlistEntries };

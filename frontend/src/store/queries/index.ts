@@ -1,4 +1,4 @@
-import { ApiPath, ENV, StorageKey } from '@common/enums/enums';
+import { ApiPath, AppRoute, ENV, StorageKey } from '@common/enums/enums';
 import { RootState } from '@common/types/types';
 import {
   createApi,
@@ -56,7 +56,7 @@ const baseQueryWithReauth: BaseQueryFn<
 
           result = await baseQuery(args, api, extraOptions);
         } else {
-          api.dispatch(logOut());
+          api.dispatch(logOut(AppRoute.SIGN_IN));
         }
       } finally {
         release();
@@ -71,6 +71,13 @@ const baseQueryWithReauth: BaseQueryFn<
 
 export const api = createApi({
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['WishlistCars', 'User', 'Cars', 'ViewedCars', 'DetailsPanel'],
+  tagTypes: [
+    'WishlistCars',
+    'User',
+    'Cars',
+    'ViewedCars',
+    'DetailsPanel',
+    'Comparisons',
+  ],
   endpoints: () => ({}),
 });

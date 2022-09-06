@@ -8,6 +8,10 @@
   border-radius: 50px;
   cursor: pointer;
   transition: all 300ms;
+
+  &:disabled {
+    background-color: var(--blue300);
+  }
 }
 
 .btnFill:hover {

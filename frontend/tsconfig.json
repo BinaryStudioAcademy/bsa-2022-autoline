@@ -24,7 +24,8 @@
       "@services/*": ["./src/services/*"],
       "@store/*": ["./src/store/*"],
       "@validation-schemas/*": ["./src/validation-schemas/*"],
-      "@navigation/*": ["./src/navigation/*"]
+      "@navigation/*": ["./src/navigation/*"],
+      "@contexts/*": ["./src/contexts/*"]
     }
   }
 }

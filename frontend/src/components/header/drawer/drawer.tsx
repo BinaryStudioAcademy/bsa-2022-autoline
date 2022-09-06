@@ -11,6 +11,7 @@ import {
 } from '@components/header/reminders/reminders';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Divider, Drawer, IconButton, List } from '@mui/material';
+import { useGetUserQuery } from '@store/queries/user/update-user';
 
 import styles from './styles.module.scss';
 
@@ -25,6 +26,10 @@ export const DrawerComponent: React.FC<DrawerComponentProps> = ({
   commonMenu,
 }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
+
+  const { data } = useGetUserQuery();
+  const role = data?.role;
+  const isAdmin = role === 'admin';
 
   return (
     <>
@@ -53,7 +58,7 @@ export const DrawerComponent: React.FC<DrawerComponentProps> = ({
               onClick={userMenu.settings.onClick}
             />
           )}
-          {userMenu && (
+          {userMenu && isAdmin && (
             <DrawerItem
               label={userMenu.administration.label}
               onClick={userMenu.administration.onClick}

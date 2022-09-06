@@ -6,6 +6,7 @@ import DefaultAvatar from '@assets/images/edit-profile/default-avatar.png';
 import PencilIcon from '@assets/images/edit-profile/pencil.svg';
 import TrashIcon from '@assets/images/edit-profile/trash.svg';
 import { updateUserSchema } from '@autoline/shared';
+import { AppRoute } from '@common/enums/enums';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { InputField } from '@components/common/input-field/input-field';
@@ -14,7 +15,7 @@ import { SelectYearRange } from '@components/edit-profile/select-year-range/sele
 import { SignIn } from '@components/edit-profile/sign-in/sign-in';
 import { useAppForm } from '@hooks/app-form/app-form.hook';
 import { useAppDispatch } from '@hooks/hooks';
-import { Alert, MenuItem, Modal, Stack } from '@mui/material';
+import { Alert, Avatar, MenuItem, Modal, Stack } from '@mui/material';
 import {
   ProfileFieldsRequestData,
   useDeleteUserProfileMutation,
@@ -73,7 +74,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
 
   useEffect(() => {
     if (deleteIsSuccess) {
-      dispatch(logOut());
+      dispatch(logOut(AppRoute.ROOT));
     }
   }, [deleteIsSuccess]);
 
@@ -120,7 +121,12 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
         <h2 className={styles.mainTitle}>EDIT PROFILE</h2>
         <div className={styles.profile}>
           <div className={styles.avatarWrapper}>
-            <img className={styles.avatar} src={DefaultAvatar} alt="avatar" />
+            <Avatar
+              className={styles.avatar}
+              src={user && (user.photoUrl || DefaultAvatar)}
+              alt="avatar"
+              sx={{ width: 100, height: 100 }}
+            />
             <button>
               <img src={PencilIcon} alt="pencil" />
               <span>Change Photo</span>
@@ -147,7 +153,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   required={true}
                   errors={errors}
                   control={control}
-                  inputLabel="Full name"
+                  inputLabel="Full Name"
                 />
                 <div className={styles.selectsWrapper}>
                   <SelectFieldForm
@@ -155,7 +161,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                     name="sex"
                     required={false}
                     control={control}
-                    label="sex"
+                    label="Sex"
                     defaultValue="not_appliable"
                   >
                     <MenuItem value="male">Male</MenuItem>
@@ -169,7 +175,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                     name="birthYear"
                     required={false}
                     control={control}
-                    label="birthday"
+                    label="Birthday"
                     defaultValue="not_appliable"
                   />
                 </div>
@@ -194,7 +200,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   name="location"
                   required={false}
                   control={control}
-                  label="location"
+                  label="Location"
                   defaultValue="not_appliable"
                 >
                   <MenuItem value="not_appliable">Rather not say</MenuItem>
@@ -241,9 +247,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                 </div>
                 <Stack sx={{ width: '100%' }} spacing={2}>
                   {updateError && 'data' in updateError && (
-                    <Alert severity="error">
-                      Failed to update user data. Try again in a few minutes.
-                    </Alert>
+                    <Alert severity="error">{updateError.data.message}</Alert>
                   )}
                   {deleteError && 'data' in deleteError && (
                     <Alert severity="error">

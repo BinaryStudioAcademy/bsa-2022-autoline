@@ -3,7 +3,6 @@ import React, { FC, ReactElement } from 'react';
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { ArrowDown } from '@components/common/icons/arrow-down/arrow-down';
 import { Autocomplete, TextField } from '@mui/material';
-import isEqual from 'lodash.isequal';
 
 import styles from './styles.module.scss';
 
@@ -11,7 +10,7 @@ interface Props {
   label: string;
   filterName?: string;
   options: AutocompleteValueType[];
-  value: AutocompleteValueType[];
+  values: AutocompleteValueType[];
   onChange: (data: { filterName: string; list: string[] }) => void;
 }
 
@@ -19,7 +18,7 @@ const MultiselectInput: FC<Props> = ({
   label,
   filterName,
   options,
-  value,
+  values,
   onChange,
 }): ReactElement => {
   const handleSelectChange = (values: AutocompleteValueType[]): void => {
@@ -29,7 +28,7 @@ const MultiselectInput: FC<Props> = ({
   };
 
   const notChosenOptions = options.filter(
-    (option) => !value.map((item) => item?.id).includes(option?.id),
+    (option) => !values.map((item) => item?.id).includes(option?.id),
   );
 
   return (
@@ -37,7 +36,7 @@ const MultiselectInput: FC<Props> = ({
       multiple
       disableCloseOnSelect
       options={notChosenOptions}
-      value={value}
+      value={values}
       className={styles.autocompleteField}
       onChange={(event, value): void => handleSelectChange(value)}
       popupIcon={<ArrowDown />}
@@ -48,17 +47,4 @@ const MultiselectInput: FC<Props> = ({
   );
 };
 
-const multiselectPropsAreEqual = (
-  prevProps: Props,
-  newProps: Props,
-): boolean => {
-  return (
-    isEqual(prevProps.value, newProps.value) &&
-    isEqual(prevProps.options, newProps.options)
-  );
-};
-
-export const MemoizedMultiselectInput = React.memo(
-  MultiselectInput,
-  multiselectPropsAreEqual,
-);
+export { MultiselectInput };

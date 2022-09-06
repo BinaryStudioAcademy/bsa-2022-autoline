@@ -4,7 +4,7 @@ import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { CheckboxListDataType } from '@common/types/cars/checkbox-list-data.type';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
-import { MemoizedMultiselectInput } from '@components/common/multiselect-input/multiselect-input';
+import { MultiselectInput } from '@components/common/multiselect-input/multiselect-input';
 import { SelectField } from '@components/common/select-field/select-field';
 import { Spinner } from '@components/common/spinner/spinner';
 import { getValueById } from '@helpers/get-value-by-id';
@@ -66,6 +66,33 @@ const BrandDetails: FC<Props> = ({
     });
   };
 
+  const brandsOptions = useMemo(
+    () =>
+      brands &&
+      brands.map(
+        (item) =>
+          ({
+            label: item.name,
+            id: item.id,
+          } as AutocompleteValueType),
+      ),
+    [brands],
+  );
+
+  const modelsOptions = useMemo(
+    () =>
+      models &&
+      models.map(
+        (item) =>
+          ({
+            label: item.name,
+            id: item.id,
+          } as AutocompleteValueType),
+      ),
+
+    [models],
+  );
+
   if (isLoading) return <Spinner />;
 
   return (
@@ -81,25 +108,19 @@ const BrandDetails: FC<Props> = ({
           </IconButton>
         </Box>
       )}
-      {brands && (
+      {brandsOptions && (
         <AutocompleteInput
           label="Brand"
-          onChange={handleSelectBrand}
+          options={brandsOptions}
           value={selectedBrandName}
-          options={brands.map((item) => ({
-            label: item.name,
-            id: item.id,
-          }))}
+          onChange={handleSelectBrand}
         />
       )}
-      {models ? (
-        <MemoizedMultiselectInput
+      {modelsOptions ? (
+        <MultiselectInput
           label="Model"
-          options={models.map((item) => ({
-            label: item.name,
-            id: item.id,
-          }))}
-          value={selectedModelsNames}
+          options={modelsOptions}
+          values={selectedModelsNames}
           onChange={handleSelectModel}
         />
       ) : (

@@ -52,6 +52,14 @@ export const updateUserApi = api.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
+    updateUserPhoto: builder.mutation<string, FormData>({
+      query: (put) => ({
+        url: `${API.USER}/photo`,
+        method: 'PUT',
+        body: put,
+      }),
+      invalidatesTags: ['User'],
+    }),
   }),
   overrideExisting: false,
 });
@@ -61,4 +69,5 @@ export const {
   useDeleteUserProfileMutation,
   useGetUserQuery,
   useDeleteOauthMutation,
+  useUpdateUserPhotoMutation,
 } = updateUserApi;

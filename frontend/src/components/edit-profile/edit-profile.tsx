@@ -15,12 +15,13 @@ import { SelectYearRange } from '@components/edit-profile/select-year-range/sele
 import { SignIn } from '@components/edit-profile/sign-in/sign-in';
 import { useAppForm } from '@hooks/app-form/app-form.hook';
 import { useAppDispatch } from '@hooks/hooks';
-import { Alert, MenuItem, Modal, Stack } from '@mui/material';
+import { Alert, Avatar, MenuItem, Modal, Stack } from '@mui/material';
 import {
   ProfileFieldsRequestData,
   useDeleteUserProfileMutation,
   useUpdateUserProfileMutation,
   useGetUserQuery,
+  useUpdateUserPhotoMutation,
 } from '@store/queries/user/update-user';
 import { logOut } from '@store/root-reducer';
 
@@ -54,6 +55,11 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
     },
   ] = useDeleteUserProfileMutation();
 
+  const [
+    updateUserPhoto,
+    { isSuccess: updatePhotoIsSuccess, error: updatePhotoError },
+  ] = useUpdateUserPhotoMutation();
+
   const { control, errors, handleSubmit } =
     useAppForm<ProfileFieldsRequestData>({
       defaultValues: user
@@ -72,6 +78,9 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
       validationSchema: updateUserSchema,
     });
 
+  const [selectedAvatar, setSelectedAvatar] = useState<File>();
+  const [previewAvatar, setPreviewAvatar] = useState<string>();
+
   useEffect(() => {
     if (deleteIsSuccess) {
       dispatch(logOut(AppRoute.ROOT));
@@ -89,6 +98,14 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
     });
   };
 
+  const submitAvatar = async (): Promise<void> => {
+    if (selectedAvatar) {
+      const formData = new FormData();
+      formData.append('photo', selectedAvatar, selectedAvatar.name);
+      await updateUserPhoto(formData);
+    }
+  };
+
   const handleClickOpenDialog = (): void => {
     setOpenDialog(true);
   };
@@ -100,6 +117,25 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
   const handleDeleteProfile = async (): Promise<void> => {
     setOpenDialog(false);
     await deleteUserProfile();
+  };
+
+  const handleChangeAvatar = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const fileList = e.target.files;
+    if (!fileList) return;
+
+    const file = fileList[0];
+    const validation = ['image/jpeg', 'image/jpg', 'image/png'];
+    const fileSize = Math.round(file.size / 1024);
+    if (!validation.includes(file.type)) {
+      alert('This is not an Image File!');
+    } else if (fileSize > 10240) {
+      alert('File too Big, please select a file less than 10mb');
+    }
+
+    const objectUrl = URL.createObjectURL(fileList[0]);
+    setPreviewAvatar(objectUrl);
+
+    setSelectedAvatar(file);
   };
 
   return (
@@ -121,15 +157,37 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
         <h2 className={styles.mainTitle}>EDIT PROFILE</h2>
         <div className={styles.profile}>
           <div className={styles.avatarWrapper}>
-            <img className={styles.avatar} src={DefaultAvatar} alt="avatar" />
-            <button>
+            <Avatar
+              className={styles.avatar}
+              src={previewAvatar || (user && (user.photoUrl || DefaultAvatar))}
+              alt="avatar"
+              sx={{ width: 100, height: 100 }}
+            />
+            <label className={styles.avatarMenuItem}>
               <img src={PencilIcon} alt="pencil" />
-              <span>Change Photo</span>
-            </button>
-            <button onClick={handleClickOpenDialog}>
+              <input
+                hidden
+                accept="image/*"
+                multiple
+                type="file"
+                onChange={handleChangeAvatar}
+              />
+              Change Photo
+            </label>
+            <button
+              onClick={handleClickOpenDialog}
+              className={styles.avatarMenuItem}
+            >
               <img src={TrashIcon} alt="trash" />
               <span>Delete Profile</span>
             </button>
+            {previewAvatar && (
+              <ButtonFill
+                text="Save"
+                className={styles.saveAvatarBtn}
+                onClick={submitAvatar}
+              />
+            )}
           </div>
           <div className={styles.editWrapper}>
             <form
@@ -246,6 +304,11 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                       Failed to update user data. Try again in a few minutes.
                     </Alert>
                   )}
+                  {updatePhotoError && 'data' in updatePhotoError && (
+                    <Alert severity="error">
+                      Failed to update user data. Try again in a few minutes.
+                    </Alert>
+                  )}
                   {deleteError && 'data' in deleteError && (
                     <Alert severity="error">
                       Failed to delete user. Try again in a few minutes.
@@ -253,6 +316,9 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   )}
                   {updateIsSuccess && (
                     <Alert severity="success">User data updated</Alert>
+                  )}
+                  {updatePhotoIsSuccess && (
+                    <Alert severity="success">User avatar updated</Alert>
                   )}
                 </Stack>
               </fieldset>

@@ -6,11 +6,36 @@ const PATH = '/comparisons';
 
 const comparisonsRouter = Router();
 
-comparisonsRouter.post(PATH, comparisonsController.addCarToComparison);
-comparisonsRouter.patch(PATH, comparisonsController.changeComparisonType);
-comparisonsRouter.patch(`${PATH}/clear`, comparisonsController.clearComparison);
-comparisonsRouter.delete(PATH, comparisonsController.deleteCarFromComparison);
-comparisonsRouter.get(PATH, comparisonsController.getActiveComparisonCars);
+comparisonsRouter.post(
+  PATH,
+  userAuthMiddleware,
+  comparisonsController.addCarToComparison,
+);
+comparisonsRouter.patch(
+  PATH,
+  userAuthMiddleware,
+  comparisonsController.changeComparisonType,
+);
+comparisonsRouter.patch(
+  `${PATH}/clear`,
+  userAuthMiddleware,
+  comparisonsController.clearComparison,
+);
+comparisonsRouter.delete(
+  `${PATH}/:complectationId`,
+  userAuthMiddleware,
+  comparisonsController.deleteCarFromComparison,
+);
+comparisonsRouter.get(
+  PATH,
+  userAuthMiddleware,
+  comparisonsController.getActiveComparisonCars,
+);
+comparisonsRouter.get(
+  `${PATH}/status`,
+  userAuthMiddleware,
+  comparisonsController.getActiveComparisonStatus,
+);
 comparisonsRouter.get(
   `${PATH}/general`,
   userAuthMiddleware,

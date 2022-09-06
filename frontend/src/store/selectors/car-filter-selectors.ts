@@ -12,7 +12,7 @@ const selectAllOptionsFlat = createSelector(
     (Object.values(options.data).flatMap((item) => item) as AutoRiaOption[]),
 );
 
-const selectOptionsInAutocompleteForm = createSelector(
+const selectOptionsInAutocompleteType = createSelector(
   [selectOptions],
   (options) => {
     return (
@@ -30,7 +30,7 @@ const selectOptionsInAutocompleteForm = createSelector(
   },
 );
 
-const selectNormalizedOptionsInAutocompleteForm = createSelector(
+const selectNormalizedOptionsInAutocompleteType = createSelector(
   [selectAllOptionsFlat],
   (options) => {
     return (
@@ -50,6 +50,6 @@ const selectNormalizedOptionsInAutocompleteForm = createSelector(
 
 export {
   selectAllOptionsFlat,
-  selectOptionsInAutocompleteForm,
-  selectNormalizedOptionsInAutocompleteForm,
+  selectOptionsInAutocompleteType,
+  selectNormalizedOptionsInAutocompleteType,
 };

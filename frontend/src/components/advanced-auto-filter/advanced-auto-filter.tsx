@@ -51,8 +51,8 @@ import {
   useLazyGetFilteredCarsQuery,
 } from '@store/queries/cars';
 import {
-  selectNormalizedOptionsInAutocompleteForm,
-  selectOptionsInAutocompleteForm,
+  selectNormalizedOptionsInAutocompleteType,
+  selectOptionsInAutocompleteType,
 } from '@store/selectors/car-filter-selectors';
 import { clsx } from 'clsx';
 
@@ -172,11 +172,11 @@ const AdvancedAutoFilter: FC = () => {
   const years = useMemo(() => yearsRange(30), []);
 
   const optionsInAutocompleteForm = useAppSelector(
-    selectOptionsInAutocompleteForm,
+    selectOptionsInAutocompleteType,
   );
 
   const normalizedOptions = useAppSelector(
-    selectNormalizedOptionsInAutocompleteForm,
+    selectNormalizedOptionsInAutocompleteType,
   );
 
   const memoizedCheckListValues = useMemo(() => {

@@ -7,6 +7,8 @@ interface AutoriaRequestParams {
   power_name: number;
   engineVolumeFrom: string;
   engineVolumeTo: string;
+  countpage: number;
+  page: string;
 }
 
 export type { AutoriaRequestParams };

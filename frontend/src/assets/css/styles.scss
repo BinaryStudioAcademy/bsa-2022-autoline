@@ -6,6 +6,7 @@
 @import "./form";
 @import "./typography";
 @import "./mixins";
+@import "./animations";
 
 *,
 *::before,
@@ -27,7 +28,8 @@ body {
   }
 
   &::-webkit-scrollbar {
-    height: 4px;
+    width: 6px;
+    height: 6px;
   }
 
   &::-webkit-scrollbar-thumb {

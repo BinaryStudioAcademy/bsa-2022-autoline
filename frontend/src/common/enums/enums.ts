@@ -5,3 +5,4 @@ export { ContentType } from './file/file';
 export { VerificationLinkPath } from './api/verification-api-path.enum';
 export { CarSetOptions } from './car/options.enum';
 export { NewCarPath } from './api/new-cars-path';
+export { ComparisonTypeEnum } from './comparisons/comparison-type.enum';

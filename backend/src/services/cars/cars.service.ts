@@ -41,17 +41,29 @@ const getModels = async (brandId: string): Promise<Partial<Model>[]> => {
 };
 
 const getUsedOptions = async (): Promise<UsedOptionsType> => {
-  const regions = await prisma.region.findMany();
+  const regions = await prisma.region.findMany({
+    orderBy: { autoria_code: 'asc' },
+  });
 
-  const bodyTypes = await prisma.body_Type.findMany({});
+  const bodyTypes = await prisma.body_Type.findMany({
+    orderBy: { autoria_code: 'asc' },
+  });
 
-  const colors = await prisma.color.findMany({});
+  const colors = await prisma.color.findMany({
+    orderBy: { autoria_code: 'asc' },
+  });
 
-  const drivetrains = await prisma.drivetrain.findMany({});
+  const drivetrains = await prisma.drivetrain.findMany({
+    orderBy: { autoria_code: 'asc' },
+  });
 
-  const fuelTypes = await prisma.fuel_Type.findMany({});
+  const fuelTypes = await prisma.fuel_Type.findMany({
+    orderBy: { autoria_code: 'asc' },
+  });
 
-  const transmissionTypes = await prisma.transmission_Type.findMany({});
+  const transmissionTypes = await prisma.transmission_Type.findMany({
+    orderBy: { autoria_code: 'asc' },
+  });
 
   return {
     regions,

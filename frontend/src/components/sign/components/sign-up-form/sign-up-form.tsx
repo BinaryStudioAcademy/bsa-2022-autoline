@@ -50,13 +50,11 @@ export const SignUpForm = (): React.ReactElement => {
       name: stringName,
       email: stringEmail,
       password: stringpassword,
-      phone: '1231',
-      location: 'ua',
     } as SignUpRequestData);
   };
 
   const navigateToSignIn = (): void => {
-    navigate('../sign-in');
+    navigate(AppRoute.SIGN_IN);
   };
 
   useEffect(() => {

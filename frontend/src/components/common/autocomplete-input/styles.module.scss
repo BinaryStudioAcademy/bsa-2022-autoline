@@ -1,0 +1,19 @@
+.autocompleteField {
+  margin-bottom: 15px;
+
+  .MuiAutocomplete-popupIndicator {
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+  }
+
+  fieldset {
+    top: 0;
+    border-color: var(--gray200);
+    border-radius: 50px;
+
+    legend {
+      display: none;
+    }
+  }
+}

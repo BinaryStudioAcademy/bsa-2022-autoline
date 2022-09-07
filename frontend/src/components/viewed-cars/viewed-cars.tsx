@@ -10,7 +10,6 @@ import type { GetViewedCarsResponse } from '@autoline/shared';
 
 const ViewedCars: FC = () => {
   const [params, setParams] = useState({
-    userId: '0cdfe5ca-256f-49e4-855f-f438a4fac3c9',
     skip: '0',
     take: '8',
   });
@@ -29,7 +28,9 @@ const ViewedCars: FC = () => {
 
   return (
     <article className={styles.ViewedСars}>
-      <h4 className={styles.ViewedСarsTitle}>history of viewed cars</h4>
+      <h4 id="viewed" className={styles.ViewedСarsTitle}>
+        history of viewed cars
+      </h4>
       {isLoading || data?.count === 0 ? null : (
         <>
           <ViewedCarsGrid carDataList={data as GetViewedCarsResponse} />

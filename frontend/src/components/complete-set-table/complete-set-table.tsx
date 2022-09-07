@@ -31,9 +31,6 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
       >
         <TableHead>
           <TableRow>
-            <TableCell className={clsx(styles.tableTitle, styles.model)}>
-              {CarSetOptions.Model}
-            </TableCell>
             <TableCell className={styles.tableTitle}>
               {CarSetOptions.Complectation}
             </TableCell>
@@ -63,9 +60,6 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
         <TableBody>
           {data.map((car) => (
             <TableRow key={car.id} className={styles.tableRow}>
-              <TableCell className={clsx(styles.tableRow, styles.model)}>
-                {car.brand} {car.model}
-              </TableCell>
               <TableCell className={styles.tableRow}>{car.name}</TableCell>
               <TableCell className={styles.tableRow}>
                 <div

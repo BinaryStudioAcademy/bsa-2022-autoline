@@ -3,17 +3,21 @@ import { api } from '../index';
 
 interface UserFields {
   sex: string;
-  birthYear: string;
-  location: string;
+  birthYear: string | null;
+  location: string | null;
   name: string;
-  phone: string;
-  email: string;
+  phone: string | null;
+  email: string | null;
+  photoUrl: string | null;
+  role: string;
+  isGoogleConnected: boolean;
+  isFacebookConnected: boolean;
 }
 
 export interface ProfileFieldsRequestData extends UserFields {
-  password: string;
-  newPassword: string;
-  repeatNewPassword: string;
+  password: string | null;
+  newPassword: string | null;
+  repeatNewPassword: string | null;
 }
 
 export interface ProfileFieldsResponseData extends UserFields {}
@@ -29,6 +33,7 @@ export const updateUserApi = api.injectEndpoints({
         method: 'PUT',
         body: put,
       }),
+      invalidatesTags: ['User'],
     }),
     deleteUserProfile: builder.mutation<void, void>({
       query: () => ({
@@ -36,9 +41,34 @@ export const updateUserApi = api.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    getUser: builder.query<ProfileFieldsResponseData, void>({
+      query: () => API.USER,
+      providesTags: ['User'],
+    }),
+    deleteOauth: builder.mutation<void, { provider: string }>({
+      query: (params) => ({
+        url: `${API.USER}/oauth`,
+        method: 'PATCH',
+        params,
+      }),
+      invalidatesTags: ['User'],
+    }),
+    updateUserPhoto: builder.mutation<string, FormData>({
+      query: (put) => ({
+        url: `${API.USER}/photo`,
+        method: 'PUT',
+        body: put,
+      }),
+      invalidatesTags: ['User'],
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useUpdateUserProfileMutation, useDeleteUserProfileMutation } =
-  updateUserApi;
+export const {
+  useUpdateUserProfileMutation,
+  useDeleteUserProfileMutation,
+  useGetUserQuery,
+  useDeleteOauthMutation,
+  useUpdateUserPhotoMutation,
+} = updateUserApi;

@@ -1,12 +1,52 @@
+@import "@assets/css/styles";
+
 .popup {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 820px;
+  width: $global-md;
   padding: 28px 32px 52px;
+  overflow: auto;
   background: var(--white);
   border-top: 5px solid var(--blue100);
   transform: translate(-50%, -50%);
+
+  @media (max-width: $global-md) {
+    top: 2rem;
+    right: 2rem;
+    bottom: 2rem;
+    left: 2rem;
+    width: auto;
+    transform: none;
+  }
+
+  @media (max-width: $global-sm) {
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+
+    .selectsWrapper {
+      grid-template-columns: 1fr;
+      grid-gap: 0;
+    }
+
+    .profile {
+      flex-direction: column;
+
+      .avatarWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
+        .avatar {
+          width: 7rem;
+          height: 7rem;
+        }
+      }
+    }
+  }
 
   .cross {
     position: absolute;
@@ -34,7 +74,7 @@
   width: 136px;
   margin-right: 30px;
 
-  button {
+  .avatarMenuItem {
     display: flex;
     margin: 10px 0 0;
     padding: 0;
@@ -50,10 +90,16 @@
       margin-right: 6px;
     }
   }
+
+  .saveAvatarBtn {
+    margin-top: 10px;
+    padding: 6px 45px;
+  }
 }
 
 .avatar {
-  width: 100%;
+  width: 100px;
+  height: 100px;
 }
 
 .profile {

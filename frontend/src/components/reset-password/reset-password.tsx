@@ -21,7 +21,7 @@ export const ResetPassword = (): React.ReactElement => {
   const userId = queryParams.get('id') as string;
   useEffect(() => {
     if (!userId) {
-      navigate(`/${AppRoute.NOT_FOUND}`);
+      navigate(AppRoute.NOT_FOUND);
     }
   });
 
@@ -41,7 +41,7 @@ export const ResetPassword = (): React.ReactElement => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(`/${AppRoute.SIGN_IN}`);
+      navigate(AppRoute.SIGN_IN);
     }
   });
 

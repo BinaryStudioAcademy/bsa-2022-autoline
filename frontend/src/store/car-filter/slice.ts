@@ -28,7 +28,7 @@ const initialState: CarFiltersType = {
     {
       id: Date.now().toString(),
       brandId: '',
-      modelId: '',
+      modelIds: [],
     },
   ],
 };
@@ -71,7 +71,12 @@ const { reducer, actions } = createSlice({
         id: Date.now().toString(),
       });
     },
-
+    removeBrandDetails: ({ brandDetails }, action: PayloadAction<string>) => {
+      brandDetails.splice(
+        brandDetails.findIndex((detail) => detail.id === action.payload),
+        1,
+      );
+    },
     resetAllFilters: () => initialState,
   },
   extraReducers: {},
@@ -81,6 +86,7 @@ export const {
   setValue,
   setCheckListValue,
   addNewBrandDetails,
+  removeBrandDetails,
   setBrandDetailsValue,
   resetAllFilters,
 } = actions;

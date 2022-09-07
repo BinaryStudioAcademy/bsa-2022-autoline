@@ -39,11 +39,6 @@
         justify-content: center;
         align-items: center;
         width: 100%;
-
-        .avatar {
-          width: 7rem;
-          height: 7rem;
-        }
       }
     }
   }
@@ -98,8 +93,30 @@
 }
 
 .avatar {
-  width: 100px;
-  height: 100px;
+  position: relative;
+  width: 7rem;
+  height: 7rem;
+
+  &::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #4646467f;
+    background-image: url("@assets/images/edit-profile/cross.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25%;
+    visibility: hidden;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  &:hover::after {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 .profile {

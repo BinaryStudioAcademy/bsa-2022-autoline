@@ -1,3 +1,7 @@
+import {
+  ComparisonGeneralInform,
+  OptionType,
+} from '@autoline/shared/common/types/types';
 import { prisma } from '@data/prisma-client';
 import { Comparison, ComparisonType, Complectation } from '@prisma/client';
 
@@ -190,6 +194,93 @@ const getActiveComparisonStatus = async (userId: string): Promise<string[]> => {
   return comparisons.map((c) => c.complectation_id);
 };
 
+const getComparisonGeneralInfo = async (
+  userId: string,
+): Promise<ComparisonGeneralInform[]> => {
+  const activeComparison = await prisma.comparison.findFirst({
+    where: {
+      active: true,
+      user_id: userId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (!activeComparison) {
+    return [];
+  }
+
+  const complectations = await prisma.comparisons_Complectations.findMany({
+    where: { comparison_id: activeComparison.id },
+    select: { complectation_id: true },
+  });
+
+  const comparisons = await prisma.complectation.findMany({
+    where: {
+      id: { in: Array.from(complectations, (c) => c.complectation_id) },
+    },
+    select: {
+      id: true,
+      color: { select: { name: true } },
+      engine: true,
+      engine_displacement: true,
+      engine_power: true,
+      drivetrain: { select: { name: true } },
+      fuel_type: { select: { name: true } },
+      transmission_type: { select: { name: true } },
+      model: {
+        select: {
+          body_type: true,
+        },
+      },
+      options: {
+        select: {
+          option: { select: { name: true, type: true } },
+        },
+      },
+    },
+  });
+
+  const options: OptionType = {
+    security: [],
+    optics: [],
+    multimedia: [],
+    upholstery: [],
+    sound: [],
+    design: [],
+    comfort: [],
+    auxiliary: [],
+  };
+
+  const comparisonsGeneralInfo = comparisons.map((comparison) => {
+    const optionsList = comparison.options.reduce(
+      (options: OptionType, obj) => {
+        const key = obj.option['type'];
+        options[key] ??= [];
+        options[key].push(obj.option.name);
+        return options;
+      },
+      {},
+    );
+
+    return {
+      id: comparison?.id,
+      bodyType: comparison?.model.body_type.name,
+      engine: comparison?.engine,
+      enginePower: comparison?.engine_power,
+      engineDisplacement: comparison?.engine_displacement.toNumber(),
+      colorName: comparison?.color.name,
+      transmissionTypeName: comparison?.transmission_type.name,
+      drivetrainName: comparison?.drivetrain.name,
+      fuelTypeName: comparison?.fuel_type.name,
+      options: { ...options, ...optionsList },
+    } as ComparisonGeneralInform;
+  });
+
+  return comparisonsGeneralInfo;
+};
+
 export {
   addCarToComparison,
   changeComparisonType,
@@ -197,4 +288,5 @@ export {
   deleteCarFromComparison,
   getActiveComparisonCars,
   getActiveComparisonStatus,
+  getComparisonGeneralInfo,
 };

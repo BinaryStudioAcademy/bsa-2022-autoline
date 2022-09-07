@@ -2,6 +2,7 @@ import {
   CarDetailsResponse,
   CarsSearchAutoriaParams,
 } from '@common/types/types';
+import { prisma } from '@data/prisma-client';
 import { getCarDetailsAutoRia } from '@helpers/cars/api-autoria.helper';
 import { getCarsAutoRia } from '@helpers/helpers';
 
@@ -50,21 +51,38 @@ const getCarDetailsFromAutoria = async (
   return Promise.all(carsPromices);
 };
 
-const carsUpdatePricesFromAutoria = async (
+const updateComplectationPricesFromAutoria = async (
   complectationId: string,
 ): Promise<void> => {
   const carsIds = await getCarsIdsFromAutoria(complectationId);
+  if (carsIds.length === 0) return;
+
   const pricesData = await getCarDetailsFromAutoria(carsIds);
   const prices: number[] = pricesData.map((data) => data.USD);
   const minPrice = Math.min(...prices);
   const maxPrice = Math.max(...prices);
 
-  // eslint-disable-next-line no-console
-  console.log(carsIds);
-  // eslint-disable-next-line no-console
-  console.log(prices);
-  // eslint-disable-next-line no-console
-  console.log(`minPrice: ${minPrice}, maxPrice: ${maxPrice}`);
+  await prisma.prices_Range.updateMany({
+    where: {
+      complectation_id: complectationId,
+    },
+    data: {
+      price_start: minPrice,
+      price_end: maxPrice,
+    },
+  });
+};
+
+const carsUpdatePricesFromAutoria = async (): Promise<void> => {
+  const complectations = await prisma.complectation.findMany({
+    select: {
+      id: true,
+    },
+  });
+
+  complectations.forEach(async (complectation) => {
+    await updateComplectationPricesFromAutoria(complectation.id);
+  });
 };
 
 export { carsUpdatePricesFromAutoria };

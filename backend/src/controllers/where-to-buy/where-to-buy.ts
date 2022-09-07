@@ -1,16 +1,14 @@
-import { getCarsAutoRia, getCarById } from '@helpers/cars/api-autoria.helper';
+import { WhereBuyRequestQuery } from '@common/types/types';
+import {
+  getCarsAutoRia,
+  getCarByIdRia,
+} from '@helpers/cars/api-autoria.helper';
 import { carsSearchAutoria } from '@services/cars/cars-search.service';
 import { Response, NextFunction } from 'express';
 
 import type { TypedRequestQuery } from '@common/types/controller/controller';
 
-type WhereBuyRequestQuery = {
-  page: string;
-  id: string;
-  countpage: string;
-};
-
-const whereBuy = async (
+const whereToBuy = async (
   req: TypedRequestQuery<WhereBuyRequestQuery>,
   res: Response,
   next: NextFunction,
@@ -20,14 +18,14 @@ const whereBuy = async (
     const complectationId = req.query.id;
     const countpage = +req.query.countpage;
     const querysForRequest = await carsSearchAutoria(
-      [complectationId],
+      complectationId,
       page,
       countpage,
     );
-    const cars = await getCarsAutoRia(querysForRequest);
-    const carsIds = cars?.result.search_result.ids;
-    const carAdverts = carsIds?.map((car) => getCarById(car));
-    Promise.all(carAdverts as readonly unknown[]).then((result) =>
+    const allAdverts = await getCarsAutoRia(querysForRequest);
+    const advertsId = allAdverts?.result.search_result.ids;
+    const advertsInfo = advertsId?.map((car) => getCarByIdRia(car));
+    Promise.all(advertsInfo as readonly unknown[]).then((result) =>
       res.json(result),
     );
   } catch (error) {
@@ -35,4 +33,4 @@ const whereBuy = async (
   }
 };
 
-export { whereBuy };
+export { whereToBuy };

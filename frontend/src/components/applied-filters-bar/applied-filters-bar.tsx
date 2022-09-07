@@ -165,6 +165,8 @@ const AppliedFiltersBar = (): ReactElement => {
     );
   }, [appliedRanges, appliedBrandDetails, appliedCheckboxes]);
 
+  if (!isAnyApplies) return <></>;
+
   return (
     <div className={styles.container}>
       {appliedBrandDetails &&

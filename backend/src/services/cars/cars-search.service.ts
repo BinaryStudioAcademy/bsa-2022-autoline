@@ -1,11 +1,8 @@
-import { AutoriaRequestParams } from '@common/types/cars/autoria-request-params';
+import {
+  AutoriaRequestParams,
+  CarsSearchAutoriaParams,
+} from '@common/types/cars/autoria-request-params';
 import { prisma } from '@data/prisma-client';
-
-interface CarsSearchAutoriaParams {
-  complectationId: string;
-  page: string;
-  countpage?: number;
-}
 
 const carsSearchAutoria = async ({
   complectationId,

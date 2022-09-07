@@ -11,4 +11,10 @@ interface AutoriaRequestParams {
   page: string;
 }
 
-export type { AutoriaRequestParams };
+interface CarsSearchAutoriaParams {
+  complectationId: string;
+  page: string;
+  countpage?: number;
+}
+
+export type { AutoriaRequestParams, CarsSearchAutoriaParams };

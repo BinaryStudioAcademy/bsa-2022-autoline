@@ -17,4 +17,12 @@ interface CarsSearchAutoriaParams {
   countpage?: number;
 }
 
-export type { AutoriaRequestParams, CarsSearchAutoriaParams };
+interface CarDetailsResponse {
+  USD: number;
+}
+
+export type {
+  AutoriaRequestParams,
+  CarsSearchAutoriaParams,
+  CarDetailsResponse,
+};

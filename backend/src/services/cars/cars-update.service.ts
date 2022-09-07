@@ -1,4 +1,8 @@
-import { CarsSearchAutoriaParams } from '@common/types/cars/autoria-request-params';
+import {
+  CarDetailsResponse,
+  CarsSearchAutoriaParams,
+} from '@common/types/types';
+import { getCarDetailsAutoRia } from '@helpers/cars/api-autoria.helper';
 import { getCarsAutoRia } from '@helpers/helpers';
 
 import { carsSearchAutoria } from './cars-search.service';
@@ -36,13 +40,31 @@ const getCarsIdsFromAutoria = async (
   return [];
 };
 
+const getCarDetailsFromAutoria = async (
+  ids: string[],
+): Promise<CarDetailsResponse[]> => {
+  const carsPromices: Promise<CarDetailsResponse>[] = [];
+  ids.forEach((id) => {
+    carsPromices.push(getCarDetailsAutoRia(id));
+  });
+  return Promise.all(carsPromices);
+};
+
 const carsUpdatePricesFromAutoria = async (
   complectationId: string,
 ): Promise<void> => {
   const carsIds = await getCarsIdsFromAutoria(complectationId);
+  const pricesData = await getCarDetailsFromAutoria(carsIds);
+  const prices: number[] = pricesData.map((data) => data.USD);
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
 
   // eslint-disable-next-line no-console
   console.log(carsIds);
+  // eslint-disable-next-line no-console
+  console.log(prices);
+  // eslint-disable-next-line no-console
+  console.log(`minPrice: ${minPrice}, maxPrice: ${maxPrice}`);
 };
 
 export { carsUpdatePricesFromAutoria };

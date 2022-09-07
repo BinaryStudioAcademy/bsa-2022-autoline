@@ -107,7 +107,7 @@ const updateUserPhoto = async (
     if (!file) throw new Error('No file provided');
 
     const s3Key = generateS3Key(S3Folders.USER_IMAGES, file.type);
-    const writableStream = resizePhoto(file, {
+    const writableStream = resizePhoto(file.path, {
       width: ProfileImageSize.WIDTH,
       height: ProfileImageSize.HEIGHT,
     });

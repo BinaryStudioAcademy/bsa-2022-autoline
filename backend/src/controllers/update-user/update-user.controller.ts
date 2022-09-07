@@ -95,7 +95,7 @@ const updateUserPhoto = async (
     }
 
     const photoUrl = await uploadFileToS3(req.files.photo);
-    await userService.updateUserPhoto(req.body.tokenPayload.sub, photoUrl);
+    await userService.updateUserPhoto(req.tokenPayload.sub, photoUrl);
     return res.status(httpStatus.OK).json({ photoUrl });
   } catch (error) {
     next(error);

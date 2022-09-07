@@ -13,11 +13,9 @@ const carsSearchAutoria = async (
     page,
   };
 
-  const complectations = await prisma.complectation.findMany({
+  const complectation = await prisma.complectation.findUniqueOrThrow({
     where: {
-      id: {
-        in: complectationId,
-      },
+      id: complectationId,
     },
     select: {
       engine_displacement: true,
@@ -68,26 +66,22 @@ const carsSearchAutoria = async (
     },
   });
 
-  complectations.forEach((complectation, index) => {
-    Object.assign(result, {
-      [`body_type[${index}]`]: complectation.model.body_type?.autoria_code,
-      [`marka_id[${index}]`]: complectation.model.brand?.autoria_code,
-      [`model_id[${index}]`]: complectation.model.autoria_code,
-      [`s_yers[${index}]`]: complectation.model.year_start,
-      [`po_yers[${index}]`]: complectation.model.year_end,
-      [`engineVolumeFrom[${index}]`]:
-        complectation.engine_displacement.toNumber(),
-      [`engineVolumeTo[${index}]`]:
-        complectation.engine_displacement.toNumber(),
-      [`powerFrom[${index}]`]: complectation.engine_power,
-      [`powerTo[${index}]`]: complectation.engine_power,
-      // [`price_ot[${index}]`]: complectation.prices_ranges[0].price_start,
-      // [`price_do[${index}]`]: complectation.prices_ranges[0].price_end,
-      // [`color_id[${index}]`]: complectation.color?.autoria_code,
-      [`gear_id[${index}]`]: complectation.transmission_type?.autoria_code,
-      [`type_id[${index}]`]: complectation.fuel_type?.autoria_code,
-      [`drive_id[${index}]`]: complectation.drivetrain?.autoria_code,
-    });
+  Object.assign(result, {
+    'body_type[0]': complectation.model.body_type?.autoria_code,
+    'marka_id[0]': complectation.model.brand?.autoria_code,
+    'model_id[0]': complectation.model.autoria_code,
+    's_yers[0]': complectation.model.year_start,
+    'po_yers[0]': complectation.model.year_end,
+    'engineVolumeFrom[0]': complectation.engine_displacement.toNumber(),
+    'engineVolumeTo[0]': complectation.engine_displacement.toNumber(),
+    'powerFrom[0]': complectation.engine_power,
+    'powerTo[0]': complectation.engine_power,
+    'price_ot[0]': complectation.prices_ranges[0].price_start,
+    'price_do[0]': complectation.prices_ranges[0].price_end,
+    'color_id[0]': complectation.color?.autoria_code,
+    'gear_id[0]': complectation.transmission_type?.autoria_code,
+    'type_id[0]': complectation.fuel_type?.autoria_code,
+    'drive_id[0]': complectation.drivetrain?.autoria_code,
   });
 
   return result;

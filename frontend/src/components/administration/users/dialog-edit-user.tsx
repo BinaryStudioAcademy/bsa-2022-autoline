@@ -9,13 +9,18 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import { InputField } from '@components/common/input-field/input-field';
 import { SelectFieldForm } from '@components/edit-profile/select-field-form/select-field-form';
 import { useAppForm } from '@hooks/hooks';
+import Alert from '@mui/material/Alert';
 import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
+import { ErrorType } from '@store/queries';
 
 import styles from './styles.module.scss';
 
 interface DialogEditUserProps {
   user?: User;
+  updateUserIsLoading: boolean;
+  updateUserIsError: boolean;
+  updateUserError: ErrorType;
   onSave: (user: User, newUserData: Partial<Omit<User, 'id'>>) => void;
   onClose: () => void;
 }
@@ -23,7 +28,14 @@ interface DialogEditUserProps {
 type EditUserRequestData = Partial<User>;
 
 const DialogEditUser: FC<DialogEditUserProps> = (props) => {
-  const { user, onSave, onClose } = props;
+  const {
+    user,
+    updateUserIsLoading,
+    updateUserIsError,
+    updateUserError,
+    onSave,
+    onClose,
+  } = props;
 
   const { control, errors, handleSubmit, clearErrors, reset } =
     useAppForm<EditUserRequestData>({
@@ -72,7 +84,10 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
               onSubmit={handleSubmit(onSubmit)}
               className={styles.form}
             >
-              <fieldset className={styles.fieldset}>
+              <fieldset
+                disabled={updateUserIsLoading}
+                className={styles.fieldset}
+              >
                 <InputField
                   name="name"
                   type="text"
@@ -82,20 +97,20 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
                   inputLabel="Full name"
                 />
                 <InputField
-                  name="phone"
-                  type="text"
-                  required={false}
-                  errors={errors}
-                  control={control}
-                  inputLabel="Phone"
-                />
-                <InputField
                   name="email"
                   type="text"
                   required={true}
                   errors={errors}
                   control={control}
                   inputLabel="E-mail"
+                />
+                <InputField
+                  name="phone"
+                  type="text"
+                  required={false}
+                  errors={errors}
+                  control={control}
+                  inputLabel="Phone"
                 />
                 <InputField
                   name="location"
@@ -131,6 +146,14 @@ const DialogEditUser: FC<DialogEditUserProps> = (props) => {
                     <MenuItem value="admin">Admin</MenuItem>
                   </SelectFieldForm>
                 </div>
+
+                {updateUserIsError && (
+                  <Alert
+                    className={styles.alert}
+                    severity="error"
+                  >{`${updateUserError.data.message}`}</Alert>
+                )}
+
                 <div className={styles.btnWrapper}>
                   <ButtonOutline
                     text="Cancel"

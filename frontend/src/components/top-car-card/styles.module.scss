@@ -9,7 +9,6 @@
 }
 
 .carInfo,
-.iconGroup,
 .price {
   display: flex;
   align-items: center;
@@ -31,19 +30,6 @@
   font-weight: 700;
   font-size: 1rem;
   font-family: var(--primary-font);
-}
-
-.icon {
-  height: 1.2rem;
-  margin-right: 0.5rem;
-
-  &:last-child {
-    margin-right: 0;
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 .carPicture {

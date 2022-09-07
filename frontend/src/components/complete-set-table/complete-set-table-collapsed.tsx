@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { ComplectationDetailsType } from '@autoline/shared/common/types/types';
 import { CompleteSetPropsType } from '@common/types/types';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { Collapse } from '@mui/material';
 
 import { CompleteSetTable } from './complete-set-table';
 import styles from './styles.module.scss';
@@ -36,9 +35,7 @@ const CompleteSetTableCollapsed: React.FC<CompleteSetPropsType> = (props) => {
     <>
       {rowsHidden > 0 ? (
         <>
-          <Collapse in={open} timeout="auto" collapsedSize="215px">
-            <CompleteSetTable data={carsDisplayed} className={className} />
-          </Collapse>
+          <CompleteSetTable data={carsDisplayed} className={className} />
           <button className={styles.collapseButton} onClick={handleClick}>
             {open ? (
               <ExpandLess />

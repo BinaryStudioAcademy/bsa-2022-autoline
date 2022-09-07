@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
-import { ComplectationDetailsType } from '@autoline/shared/common/types/types';
+import {
+  ComplectationDetailsType,
+  WishlistInput,
+} from '@autoline/shared/common/types/types';
 import { CarListItemProps } from '@common/types/types';
 import { SliderNavButton } from '@components/car-list-item/slider-nav-button/slider-nav-button';
 import { swiperParams } from '@components/car-list-item/swiper-params';
+import { LikeButtton } from '@components/common/like-button/like-button';
 import { Spinner } from '@components/common/spinner/spinner';
 import { CompleteSetTableCollapsed } from '@components/complete-set-table/complete-set-table-collapsed';
+import { WishlistContext } from '@contexts/wishlist-context';
 import { formatPrice } from '@helpers/helpers';
 import { objectToQueryString } from '@helpers/object-to-query';
 import { Grid } from '@mui/material';
@@ -36,6 +41,15 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
   const [modelEnginePower, setModelEnginePower] = useState<string>();
   const [modelFuelType, setModelFuelType] = useState<string>();
   const [modelTransmission, setModelTransmission] = useState<string>();
+
+  const { likedCars, handleLikeClick } = useContext(WishlistContext);
+  const isLiked = likedCars?.includes(model_id);
+
+  const likeClick = (event?: React.MouseEvent): void => {
+    event?.stopPropagation();
+    const data: WishlistInput = { modelId: model_id };
+    handleLikeClick(data);
+  };
 
   useEffect(() => {
     if (model?.priceStart && model?.priceEnd) {
@@ -127,7 +141,12 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
           </div>
         </Grid>
         <Grid item sm={8}>
-          <h4 className={styles.carTitle}>{modelName}</h4>
+          <div className={styles.titleWrapper}>
+            <h4 className={styles.carTitle}>{modelName}</h4>
+            <div className={styles.buttonsWrapper}>
+              <LikeButtton onClick={likeClick} isLiked={isLiked} />
+            </div>
+          </div>
           <div className={styles.priceBlock}>
             <h4 className={styles.primaryPrice}>{modelPrice}</h4>
             {/* TODO: USD-UAH convertation

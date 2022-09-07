@@ -5,4 +5,5 @@ export const API = {
   CARS: '/cars',
   SEARCH: '/search',
   VIEWED_CARS: '/viewed',
+  COMPARISONS: '/comparisons',
 };

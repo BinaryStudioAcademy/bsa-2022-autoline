@@ -5,7 +5,7 @@ import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app-route.enum';
 import { EditProfile } from '@components/edit-profile/edit-profile';
 import { UnauthorisedElements } from '@components/header/unauthorised-elements/unauthorised-elements';
-import { useAppSelector } from '@hooks/hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import {
   AppBar,
   Tab,
@@ -14,6 +14,8 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { logOut } from '@store/auth/slice';
+import { useGetActiveComparisonStatusQuery } from '@store/queries/comparisons';
 import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 import { useGetUserQuery } from '@store/queries/user/update-user';
 
@@ -27,14 +29,20 @@ export const Header = (): React.ReactElement => {
   const isMatchSm = useMediaQuery(theme.breakpoints.down('sm'));
   const { data: wishlist = { models: [], complectations: [] } } =
     useGetWishlistsQuery();
+  const { data: comparisons } = useGetActiveComparisonStatusQuery();
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [comparisonCount, setComparisonCount] = useState(0);
   const [openSettings, setOpenSettings] = useState(false);
   const userToken = useAppSelector((state) => state.auth.token);
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     setWishlistCount(wishlist.models.length + wishlist.complectations.length);
   }, [wishlist]);
+
+  useEffect(() => {
+    if (comparisons) setComparisonCount(comparisons.length);
+  }, [comparisons]);
 
   const { data: user } = useGetUserQuery();
 
@@ -52,7 +60,7 @@ export const Header = (): React.ReactElement => {
     comparisons: {
       label: 'Comparisons',
       linkTo: '#',
-      count: 5,
+      count: comparisonCount,
     },
   };
 
@@ -70,25 +78,26 @@ export const Header = (): React.ReactElement => {
   const userMenu = {
     account: {
       label: 'Account',
-      onClick: () => navigate('#'),
+      onClick: () => navigate(AppRoute.PERSONAL),
     },
     administration: {
       label: 'Administration',
       onClick: (): void => navigate(AppRoute.ADMINISTRATION),
     },
     settings: {
-      label: 'Setting',
+      label: 'Settings',
       onClick: (): void => setOpenSettings(true),
     },
     logout: {
       label: 'Logout',
-      onClick: () => navigate('#'),
+      onClick: () => dispatch(logOut(AppRoute.ROOT)),
     },
   };
 
   return (
     <>
       <AppBar
+        id="mainHeader"
         sx={{
           background: '#ffffff',
           boxShadow: 0,
@@ -126,6 +135,7 @@ export const Header = (): React.ReactElement => {
               {userToken && user ? (
                 <PrivateElements
                   avatar={user.photoUrl}
+                  role={user.role}
                   reminders={reminders}
                   setOpenSettings={setOpenSettings}
                   userMenu={userMenu}

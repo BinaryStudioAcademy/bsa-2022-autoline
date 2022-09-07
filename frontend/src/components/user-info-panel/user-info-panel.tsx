@@ -25,7 +25,7 @@ const UserInfoPanel: FC = () => {
       <li className={styles.UserPanelItem}>
         <img className={styles.UserPanelIcon} src={heartIcon} alt="liked it" />
         <Link to="#liked" className={styles.UserPanelLink}>
-          Liked it
+          Liked
         </Link>
         <span className={styles.UserPanelBadgeInfo}>
           {wishlistIsLoading || wishlistCount}

@@ -1,0 +1,120 @@
+@import "@assets/css/styles";
+
+.NotFound {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+
+  &Logo {
+    position: absolute;
+    top: 30px;
+    left: 0;
+  }
+
+  &Img {
+    @media (max-width: $global-xl) {
+      width: 500px;
+    }
+
+    @media (max-width: $global-lg) {
+      width: 400px;
+    }
+
+    @media (max-width: $global-md) {
+      display: none;
+    }
+  }
+
+  &Content {
+    width: 600px;
+    margin-left: 200px;
+
+    @media (max-width: $global-xl) {
+      width: 350px;
+    }
+
+    @media (max-width: $global-lg) {
+      margin-left: 100px;
+    }
+
+    @media (max-width: $global-md) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 305px;
+      margin-left: 0;
+    }
+  }
+
+  &Title {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 150px;
+
+    @media (max-width: $global-xl) {
+      font-size: 120px;
+    }
+  }
+
+  &Text {
+    margin-bottom: 25px;
+  }
+
+  &Line {
+    display: inline-block;
+    width: 95px;
+    height: 2px;
+    margin-bottom: 40px;
+    background-color: var(--blue100);
+  }
+
+  &Btn {
+    display: inline-block;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+}
+
+.circles {
+  position: absolute;
+  z-index: -1;
+
+  @media (max-width: $global-md) {
+    display: none;
+  }
+
+  &Left {
+    right: calc(100vw - 383px);
+  }
+
+  &Right {
+    top: calc(100vh - 311px);
+    left: calc(100vw - 327px);
+  }
+}
+
+.btnFill {
+  padding: 13px 35px;
+  color: var(--white);
+  font-weight: 700;
+  font-family: var(--primary-font);
+  background-color: var(--blue100);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 300ms;
+
+  &:hover {
+    background-color: var(--blue300);
+    transition: all 300ms;
+  }
+}
+
+.logo {
+  height: 2rem;
+
+  @include landing-page-margin;
+}

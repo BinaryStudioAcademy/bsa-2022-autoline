@@ -1,7 +1,9 @@
+import { ENV } from '@common/enums/app/env.enum';
+
 const MailActivate = {
-  ACTIVATE_URL: `${process.env.VITE_API_ORIGIN_URL}/user/verification/`,
-  SUCCESS_URL: `${process.env.FRONTEND_URL}/verification-success`,
-  FAILED_URL: `${process.env.FRONTEND_URL}/verification-failed`,
+  ACTIVATE_URL: `${ENV.APP.SERVER_DOMAIN}${ENV.API.V1_PREFIX}/user/verification/`,
+  SUCCESS_URL: `${ENV.APP.FRONTEND_URL}/verification-success`,
+  FAILED_URL: `${ENV.APP.FRONTEND_URL}/verification-failed`,
   SUBJECT: 'Welcome To AutoLine Community',
 };
 

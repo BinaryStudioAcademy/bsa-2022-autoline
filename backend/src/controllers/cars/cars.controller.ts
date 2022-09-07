@@ -11,7 +11,7 @@ import { NextFunction, Request, Response } from 'express';
 
 const carsSearchAutoria = async (
   req: TypedRequestQuery<{
-    complectationId: string[];
+    complectationId: string;
     page: string;
   }>,
   res: Response,

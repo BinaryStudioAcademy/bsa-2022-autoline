@@ -11,6 +11,7 @@ import styles from './private-elements.module.scss';
 
 interface PrivateComponentProps extends RemindersProps {
   avatar: string | undefined | null;
+  role: string;
   setOpenSettings: (state: boolean) => void;
   userMenu: UserMenu;
 }
@@ -18,6 +19,7 @@ interface PrivateComponentProps extends RemindersProps {
 export const PrivateElements: React.FC<PrivateComponentProps> = ({
   reminders,
   avatar,
+  role,
   userMenu,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -79,14 +81,16 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
         >
           {userMenu.settings.label}
         </MenuItem>
-        <MenuItem
-          onClick={(): void => {
-            handleClose();
-            userMenu.administration.onClick();
-          }}
-        >
-          {userMenu.administration.label}
-        </MenuItem>
+        {role === 'admin' && (
+          <MenuItem
+            onClick={(): void => {
+              handleClose();
+              userMenu.administration.onClick();
+            }}
+          >
+            {userMenu.administration.label}
+          </MenuItem>
+        )}
         <MenuItem
           onClick={(): void => {
             handleClose();

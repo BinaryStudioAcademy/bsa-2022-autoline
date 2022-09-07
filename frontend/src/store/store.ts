@@ -3,12 +3,13 @@ import { authMiddleware } from '@store/auth/middlewares';
 import { api } from '@store/queries';
 import { combineReducers } from 'redux';
 
-import { auth, carFilter, whereBuy } from './root-reducer';
+import { checkTokenMiddleware } from './queries/preferences/middlewares';
+import { auth, carFilter, foundCars } from './root-reducer';
 
 const rootReducer = combineReducers({
   auth,
   carFilter,
-  whereBuy,
+  foundCars,
   [api.reducerPath]: api.reducer,
 });
 
@@ -16,7 +17,7 @@ export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .prepend(authMiddleware.middleware)
+      .prepend(authMiddleware.middleware, checkTokenMiddleware.middleware)
       .concat(api.middleware),
 });
 

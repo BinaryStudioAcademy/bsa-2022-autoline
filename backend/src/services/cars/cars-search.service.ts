@@ -1,14 +1,21 @@
 import { AutoriaRequestParams } from '@common/types/cars/autoria-request-params';
 import { prisma } from '@data/prisma-client';
 
-const carsSearchAutoria = async (
-  complectationId: string,
-  page = '1',
-): Promise<Partial<AutoriaRequestParams>> => {
+interface CarsSearchAutoriaParams {
+  complectationId: string;
+  page: string;
+  countpage?: number;
+}
+
+const carsSearchAutoria = async ({
+  complectationId,
+  page = '0',
+  countpage = 10,
+}: CarsSearchAutoriaParams): Promise<Partial<AutoriaRequestParams>> => {
   const result: Partial<AutoriaRequestParams> = {
     category_id: 1,
     power_name: 1,
-    countpage: 10,
+    countpage: countpage,
     page: page,
   };
 
@@ -75,8 +82,6 @@ const carsSearchAutoria = async (
     'engineVolumeTo[0]': complectation.engine_displacement.toNumber(),
     'powerFrom[0]': complectation.engine_power,
     'powerTo[0]': complectation.engine_power,
-    'price_ot[0]': complectation.prices_ranges[0].price_start,
-    'price_do[0]': complectation.prices_ranges[0].price_end,
     'color_id[0]': complectation.color?.autoria_code,
     'gear_id[0]': complectation.transmission_type?.autoria_code,
     'type_id[0]': complectation.fuel_type?.autoria_code,

@@ -1,7 +1,6 @@
 import { AutoRiaUrls } from '@common/enums/app/app';
 import { ENV } from '@common/enums/app/env.enum';
-import { AutoriaRequestParams } from '@common/types/types';
-import { AutoriaResponse } from '@common/types/types';
+import { AutoriaRequestParams, AutoriaResponse } from '@common/types/types';
 import axios from 'axios';
 import { Response } from 'express';
 
@@ -17,7 +16,7 @@ const getCarsAutoRia = async (
   return response.data;
 };
 
-const getCarById = async (id: string): Promise<Response | undefined> => {
+const getCarByIdRia = async (id: string): Promise<Response | undefined> => {
   const requestParams = { auto_id: id };
   const response = await axios.get(AutoRiaUrls.INFO_URL, {
     params: {
@@ -28,4 +27,4 @@ const getCarById = async (id: string): Promise<Response | undefined> => {
   return response.data;
 };
 
-export { getCarsAutoRia, getCarById };
+export { getCarsAutoRia, getCarByIdRia };

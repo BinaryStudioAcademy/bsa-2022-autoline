@@ -12,4 +12,7 @@ export {
 } from './prisma/prisma';
 
 export { type AutoriaRequestParams } from './cars/autoria-request-params';
-export { type AutoriaResponse } from './cars/autoria-response';
+export type {
+  AutoriaResponse,
+  WhereBuyRequestQuery,
+} from './where-to-buy/where-to-buy.params';

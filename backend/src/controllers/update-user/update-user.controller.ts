@@ -49,6 +49,7 @@ const deleteUser = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
+    await usersHelper.deleteUserPhoto(req.body.tokenPayload.sub);
     await userService.deleteUser(req.body.tokenPayload.sub);
     res.status(httpStatus.OK).json();
   } catch (error) {

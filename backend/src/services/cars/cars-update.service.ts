@@ -43,13 +43,8 @@ const getCarsIdsFromAutoria = async (
 
 const getCarDetailsFromAutoria = async (
   ids: string[],
-): Promise<CarDetailsResponse[]> => {
-  const carsPromices: Promise<CarDetailsResponse>[] = [];
-  ids.forEach((id) => {
-    carsPromices.push(getCarDetailsAutoRia(id));
-  });
-  return Promise.all(carsPromices);
-};
+): Promise<CarDetailsResponse[]> =>
+  Promise.all(ids.map((id) => getCarDetailsAutoRia(id)));
 
 const updateComplectationPricesFromAutoria = async (
   complectationId: string,
@@ -80,9 +75,11 @@ const carsUpdatePricesFromAutoria = async (): Promise<void> => {
     },
   });
 
-  complectations.forEach(async (complectation) => {
-    await updateComplectationPricesFromAutoria(complectation.id);
-  });
+  await Promise.all(
+    complectations.map((complectation) =>
+      updateComplectationPricesFromAutoria(complectation.id),
+    ),
+  );
 };
 
 export { carsUpdatePricesFromAutoria };

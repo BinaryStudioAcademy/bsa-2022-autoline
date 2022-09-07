@@ -1,9 +1,10 @@
+import { LinksToResources } from '@common/enums/app/app';
 import { ENV } from '@common/enums/app/env.enum';
 import { AutoriaRequestParams, CarDetailsResponse } from '@common/types/types';
 import axios from 'axios';
 
 // TODO Add to config
-const URL = 'https://developers.ria.com/auto';
+const URL = `${LinksToResources.AUTORIA}/auto`;
 
 interface SearchCarsAutoRia {
   result: {

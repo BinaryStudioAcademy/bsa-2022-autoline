@@ -43,7 +43,7 @@ const WhereToBuy: React.FC = () => {
         <div className={styles.carName}>
           {advertsList &&
             advertsList[0] &&
-            `${advertsList[0].markName} ${advertsList[0].modelName} ${advertsList[0].autoData.year}`}
+            `${advertsList[0].markName} ${advertsList[0].modelName}`}
         </div>
         <ButtonOutline
           className={styles.priceButton}

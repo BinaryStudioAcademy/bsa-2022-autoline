@@ -3,10 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 type WhereBuyState = {
   adverts: WhereBuyInterface[];
+  complectationId: string;
 };
 
 const initialState: WhereBuyState = {
   adverts: [],
+  complectationId: '',
 };
 
 const { reducer, actions } = createSlice({
@@ -14,8 +16,13 @@ const { reducer, actions } = createSlice({
   initialState,
   reducers: {
     setAdverts: (state, action) => {
-      const { adverts } = action.payload;
-      state.adverts = [...state.adverts, ...adverts];
+      const { adverts, complectationId } = action.payload;
+      if (state.complectationId == complectationId) {
+        state.adverts = [...state.adverts, ...adverts];
+      } else {
+        state.complectationId = complectationId;
+        state.adverts = [...adverts];
+      }
     },
   },
   extraReducers: {},

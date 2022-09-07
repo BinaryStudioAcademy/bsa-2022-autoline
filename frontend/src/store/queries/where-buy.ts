@@ -19,10 +19,10 @@ const whereBuyApi = api.injectEndpoints({
           countpage,
         },
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ complectationId }, { dispatch, queryFulfilled }) {
         try {
           const { data: adverts } = await queryFulfilled;
-          dispatch(setAdverts({ adverts }));
+          dispatch(setAdverts({ adverts, complectationId }));
         } catch (err) {
           console.error(err);
         }

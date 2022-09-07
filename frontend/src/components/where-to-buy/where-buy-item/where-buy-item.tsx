@@ -6,6 +6,7 @@ import speedometr from '@assets/images/speedometr.svg';
 import { AutoRiaLinks } from '@common/enums/app/app';
 import { WhereBuyInterface } from '@common/types/where-to-buy/where-to-buy';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
+import { formatPrice } from '@helpers/helpers';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import Divider from '@mui/material/Divider';
 import { clsx } from 'clsx';
@@ -35,13 +36,14 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
     stateData: { regionNameEng: location },
   } = props.poster;
   const url = `${AutoRiaLinks.LINK_ADVERT}${linkToView}`;
+  const formatedPrice = formatPrice(price);
 
   const handleBuy = (): void => {
     window.open(url, '_blank');
   };
 
   return (
-    <>
+    <div>
       <div className={styles.container}>
         <div className={styles.logo}>
           <img src={logo} alt="logo" />
@@ -89,7 +91,7 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
         </div>
         <div className={styles.panel}>
           <div className={styles.colorBox} style={{ backgroundColor: color }} />
-          <div className={styles.price}>{`$ ${price}`}</div>
+          <div className={styles.price}>{`$ ${formatedPrice}`}</div>
           <ButtonOutline
             className={styles.buyButton}
             text="Buy"
@@ -100,7 +102,7 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
       <div className={styles.dividerDiv}>
         <Divider className={styles.divider} />
       </div>
-    </>
+    </div>
   );
 };
 

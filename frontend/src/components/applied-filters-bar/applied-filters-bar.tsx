@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 import { ModelType } from '@autoline/shared/common/types/types';
 import { CheckListsNames } from '@common/enums/car/car-filters-names.enum';
+import { AppliedFilterType } from '@common/types/cars/applied-filter.type';
 import { getRangeSymbol } from '@helpers/car-filters/get-range-symbol';
-import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { Chip } from '@mui/material';
@@ -30,8 +30,11 @@ const AppliedFiltersBar: () => false | JSX.Element = () => {
     (state) => state.carFilter,
   );
   const [appliedRanges, setAppliedRanges] = useState<string[][]>();
-  const [appliedCheckboxes, setAppliedCheckboxes] = useState<string[][]>();
-  const [appliedBrandDetails, setAppliedBrandDetails] = useState<string[][]>();
+  const [appliedCheckboxes, setAppliedCheckboxes] = useState<
+    AppliedFilterType[]
+  >([]);
+  const [appliedBrandDetails, setAppliedBrandDetails] =
+    useState<AppliedFilterType[]>();
 
   const [normalizedModels, setNormalizedModels] = useState<{
     [p: string]: ModelType;
@@ -112,35 +115,37 @@ const AppliedFiltersBar: () => false | JSX.Element = () => {
   useEffect(() => {
     if (!normalizedOptions) return;
 
-    const checkboxes = objectToQueryString(checkLists).map(
-      ([filterName, id]) => {
-        const value = normalizedOptions[id];
-        return [filterName, id, value?.label || ''];
-      },
-    );
+    const checkboxes = Object.entries(checkLists).flatMap(([key, value]) => {
+      return value.map((item) => ({
+        filterName: key || '',
+        id: item || '',
+        label: normalizedOptions[item]?.label || '',
+      }));
+    });
+
     setAppliedCheckboxes(checkboxes);
   }, [checkLists]);
 
   useEffect(() => {
     if (!normalizedBrands) return;
 
-    const details: string[][] = [];
+    const details: AppliedFilterType[] = [];
 
     brandDetails.forEach((item) => {
       if (item.brandId !== '') {
-        details.push([
-          'brandId',
-          item.brandId,
-          normalizedBrands[item.brandId]['name'],
-        ]);
+        details.push({
+          filterName: 'brandId',
+          id: item.brandId,
+          label: normalizedBrands[item.brandId].name,
+        });
       }
       if (item.modelIds.length) {
         item.modelIds.forEach((modelId) => {
-          details.push([
-            'modelId',
-            modelId,
-            normalizedModels[modelId] && normalizedModels[modelId]['name'],
-          ]);
+          details.push({
+            filterName: 'modelId',
+            id: modelId,
+            label: normalizedModels[modelId] && normalizedModels[modelId].name,
+          });
         });
       }
     });
@@ -164,7 +169,7 @@ const AppliedFiltersBar: () => false | JSX.Element = () => {
     isAnyApplies && (
       <div className={styles.container}>
         {appliedBrandDetails &&
-          appliedBrandDetails.map(([filterName, id, label]) => (
+          appliedBrandDetails.map(({ filterName, id, label }) => (
             <Chip
               className={styles.chip}
               key={id}
@@ -188,7 +193,7 @@ const AppliedFiltersBar: () => false | JSX.Element = () => {
           ))}
 
         {appliedCheckboxes &&
-          appliedCheckboxes.map(([filterName, id, label]) => (
+          appliedCheckboxes.map(({ filterName, id, label }) => (
             <Chip
               className={styles.chip}
               key={id}

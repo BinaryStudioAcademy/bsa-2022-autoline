@@ -9,20 +9,25 @@ import { clsx } from 'clsx';
 import styles from './styles.module.scss';
 import { WhereBuyItem } from './where-buy-item/where-buy-item';
 
-const WhereToBuy: React.FC = () => {
+interface WhereToBuyProps {
+  complectationId: string;
+}
+
+const WhereToBuy: React.FC<WhereToBuyProps> = ({ complectationId }) => {
   const [page, setPage] = useState(0);
   const [isSorted, setIsSorted] = useState(false);
+  useGetWhereBuyQuery({
+    page,
+    complectationId,
+    countpage: '20',
+  });
 
   const { adverts } = useAppSelector((state) => state.whereBuy);
+
   const advertsList = useMemo(() => {
     if (!isSorted) return adverts;
     return [...adverts].sort((advertA, advertB) => advertA.USD - advertB.USD);
   }, [adverts, isSorted]);
-  useGetWhereBuyQuery({
-    page,
-    complectationId: '711b75ca-e29f-49e1-bcb9-b782bfb57637',
-    countpage: '20',
-  });
 
   const seeMoreHandler = (): void => {
     setPage(page + 1);

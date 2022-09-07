@@ -8,19 +8,17 @@
 }
 
 .noFoundContainer {
+  display: flex;
   margin: 30px;
   padding: 25px;
   background-color: var(--white);
   border: solid 1px var(--white);
   border-radius: 5px;
-  display: flex;
 
   h3 {
     margin: 0;
   }
 }
-
-
 
 .noCarsTitle {
   margin: 0;

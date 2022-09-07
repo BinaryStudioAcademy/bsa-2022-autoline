@@ -23,7 +23,6 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
 
   useEffect(() => {
     const { current: appElement } = elementRef;
-    console.log(appElement?.innerText);
     setHeight(appElement?.clientHeight as number);
   }, []);
 

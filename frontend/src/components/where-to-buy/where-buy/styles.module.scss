@@ -38,11 +38,11 @@
       display: flex;
       margin-bottom: 5px;
 
-      &>div {
-        margin-right: 1.0rem;
+      & > div {
+        margin-right: 1rem;
       }
 
-      &>div:last-child {
+      & > div:last-child {
         margin-right: 0;
       }
     }
@@ -54,17 +54,16 @@
       padding: 5px 10px;
       color: var(--white);
       font-weight: 600;
-      font-size: 1.0rem;
+      font-size: 1rem;
       font-family: var(--primary-font);
       font-style: normal;
       white-space: nowrap;
       text-overflow: ellipsis;
       background: var(--blue300);
       border-radius: 4px;
-      margin-right: 100rem;
 
-      &>img {
-        height: 1.0rem;
+      & > img {
+        height: 1rem;
         margin-right: 0.5rem;
       }
 
@@ -82,19 +81,18 @@
     }
 
     .trigger {
+      position: relative;
       display: flex;
       padding: 0;
       font-size: 1.2rem;
-      position: relative;
 
       .textDescription {
-        display: -webkit-box;
-        // max-height: 3rem;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
+        // display: -webkit-box;
+        // -webkit-line-clamp: 3;
+        // -webkit-box-orient: vertical;
+        margin-bottom: 1.5rem;
         padding: 0 10px;
         overflow: hidden;
-        margin-bottom: 1.5rem;
       }
 
       .textDescription.more {

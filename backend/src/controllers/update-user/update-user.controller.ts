@@ -1,10 +1,10 @@
 import { ExceptionMessage } from '@common/enums/exception/exception-message.enum';
-import { AuthTypedRequestBody, AuthRequest } from '@common/types/types';
+import { TypedRequestBody } from '@common/types/types';
 import { UpdateUserDto } from '@dtos/user/update-user.dto';
 import { Role, Sex } from '@prisma/client';
 import { uploadFileToS3 } from '@services/aws/aws.service';
 import * as userService from '@services/user/user.service';
-import { NextFunction, Response } from 'express';
+import { Request, NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
 
 export interface UpdateUserReq {
@@ -24,7 +24,7 @@ export interface UpdateUserReq {
 }
 
 const updateUser = async (
-  req: AuthTypedRequestBody<UpdateUserReq>,
+  req: TypedRequestBody<UpdateUserReq>,
   res: Response<Partial<UpdateUserReq>>,
   next: NextFunction,
 ): Promise<void> => {
@@ -38,12 +38,12 @@ const updateUser = async (
 };
 
 const deleteUser = async (
-  req: AuthRequest,
+  req: Request,
   res: Response<Partial<UpdateUserReq>>,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    await userService.deleteUser(req.tokenPayload?.sub as string);
+    await userService.deleteUser(req.tokenPayload.sub);
     res.status(httpStatus.OK).json();
   } catch (error) {
     next(error);
@@ -51,12 +51,12 @@ const deleteUser = async (
 };
 
 const getUser = async (
-  req: AuthRequest,
+  req: Request,
   res: Response<Partial<UpdateUserReq>>,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const user = await userService.getUser(req.tokenPayload?.sub as string);
+    const user = await userService.getUser(req.tokenPayload.sub);
     if (user) {
       res.status(httpStatus.OK).json(user);
     } else {
@@ -68,13 +68,13 @@ const getUser = async (
 };
 
 const deleteOauthConnections = async (
-  req: AuthTypedRequestBody<{ provider: string }>,
+  req: TypedRequestBody<{ provider: string }>,
   res: Response<Partial<UpdateUserReq>>,
   next: NextFunction,
 ): Promise<void> => {
   try {
     await userService.deleteOauthConnections(
-      req.tokenPayload?.sub as string,
+      req.tokenPayload.sub,
       req.body.provider,
     );
     res.status(httpStatus.OK).json();

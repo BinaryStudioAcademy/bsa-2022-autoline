@@ -6,11 +6,11 @@ import type {
   GetViewedCarsRequestDto,
   GetViewedCarsResponse,
 } from '@autoline/shared';
-import type { AuthTypedRequestQuery } from '@common/types/controller/controller';
+import type { TypedRequestQuery } from '@common/types/controller/controller';
 import type { NextFunction, Response } from 'express';
 
 const getViewedCarsList = async (
-  req: AuthTypedRequestQuery<GetViewedCarsRequestDto<string>>,
+  req: TypedRequestQuery<GetViewedCarsRequestDto<string>>,
   res: Response<GetViewedCarsResponse>,
   next: NextFunction,
 ): Promise<void> => {
@@ -33,7 +33,7 @@ const getViewedCarsList = async (
 };
 
 const addCarToViewed = async (
-  req: AuthTypedRequestQuery<SetViewedCarRequestDto>,
+  req: TypedRequestQuery<SetViewedCarRequestDto>,
   res: Response<void>,
   next: NextFunction,
 ): Promise<void> => {

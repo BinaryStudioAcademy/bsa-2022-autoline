@@ -1,15 +1,14 @@
 import {
-  AuthRequest,
-  AuthTypedRequestBody,
-  AuthTypedRequestParams,
+  TypedRequestBody,
+  TypedRequestParams,
 } from '@common/types/controller/controller';
 import { ComparisonType } from '@prisma/client';
 import * as comparisonsService from '@services/comparisons/comparisons.service';
-import { NextFunction, Response } from 'express';
+import { Request, NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
 
 const addCarToComparison = async (
-  req: AuthTypedRequestBody<{
+  req: TypedRequestBody<{
     complectationId: string;
   }>,
   res: Response,
@@ -27,7 +26,7 @@ const addCarToComparison = async (
 };
 
 const changeComparisonType = async (
-  req: AuthTypedRequestBody<{
+  req: TypedRequestBody<{
     type: ComparisonType;
   }>,
   res: Response,
@@ -45,7 +44,7 @@ const changeComparisonType = async (
 };
 
 const clearComparison = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
@@ -60,7 +59,7 @@ const clearComparison = async (
 };
 
 const deleteCarFromComparison = async (
-  req: AuthTypedRequestParams<{ complectationId: string }>,
+  req: TypedRequestParams<{ complectationId: string }>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
@@ -76,7 +75,7 @@ const deleteCarFromComparison = async (
 };
 
 const getActiveComparisonCars = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
@@ -91,7 +90,7 @@ const getActiveComparisonCars = async (
 };
 
 const getActiveComparisonStatus = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {

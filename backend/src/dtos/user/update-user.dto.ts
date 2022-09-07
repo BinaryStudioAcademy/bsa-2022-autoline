@@ -1,4 +1,4 @@
-import { AuthTypedRequestBody } from '@common/types/controller/controller';
+import { TypedRequestBody } from '@common/types/controller/controller';
 import { UpdateUserReq } from '@controllers/update-user/update-user.controller';
 import { Sex } from '@prisma/client';
 
@@ -17,7 +17,7 @@ class UpdateUserDto {
   ) {}
 
   public static createFromRequest(
-    req: AuthTypedRequestBody<UpdateUserReq>,
+    req: TypedRequestBody<UpdateUserReq>,
   ): UpdateUserDto {
     const {
       name,

@@ -1,11 +1,11 @@
 import { ErrorMessage, updateUserSchema } from '@autoline/shared';
-import { TypedRequestBody } from '@common/types/controller/controller';
+import { AuthTypedRequestBody } from '@common/types/controller/controller';
 import { UpdateUserReq } from '@controllers/update-user/update-user.controller';
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
 
 const updateUserMiddleware = async (
-  req: TypedRequestBody<UpdateUserReq>,
+  req: AuthTypedRequestBody<UpdateUserReq>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
@@ -22,7 +22,7 @@ const updateUserMiddleware = async (
 };
 
 const passwordValidate = async (
-  req: TypedRequestBody<UpdateUserReq>,
+  req: AuthTypedRequestBody<UpdateUserReq>,
 ): Promise<void> => {
   if (req.body.password) {
     if (req.body.newPassword !== req.body.repeatNewPassword) {

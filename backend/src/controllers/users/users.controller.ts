@@ -1,5 +1,5 @@
 import { TokenPayload } from '@autoline/shared';
-import { TypedRequest, TypedRequestQuery } from '@common/types/types';
+import { AuthTypedRequest, AuthTypedRequestQuery } from '@common/types/types';
 import { errorsHandler } from '@middlewares/middlewares';
 import { Role, Sex } from '@prisma/client';
 import * as usersService from '@services/users/users.service';
@@ -19,7 +19,7 @@ export interface UserUpdateInput {
 }
 
 const getUsers = async (
-  req: TypedRequestQuery<{ name: string } | Record<string, never>>,
+  req: AuthTypedRequestQuery<{ name: string } | Record<string, never>>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
@@ -33,7 +33,7 @@ const getUsers = async (
 };
 
 const updateUser = async (
-  req: TypedRequest<{ id: string }, UserUpdateInput>,
+  req: AuthTypedRequest<{ id: string }, UserUpdateInput>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {

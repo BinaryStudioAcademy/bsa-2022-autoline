@@ -28,9 +28,28 @@ interface TypedRequest<T extends Query, U> extends Request {
   query: T;
 }
 
+interface AuthRequest extends Request {
+  tokenPayload: TokenPayload;
+}
+
+type AuthTypedRequestBody<T> = TypedRequestBody<T> & AuthRequest;
+
+type AuthTypedRequestQuery<T extends Query> = TypedRequestQuery<T> &
+  AuthRequest;
+
+type AuthTypedRequestParams<T extends ParamsDictionary> =
+  TypedRequestParams<T> & AuthRequest;
+
+type AuthTypedRequest<T extends Query, U> = TypedRequest<T, U> & AuthRequest;
+
 export type {
   TypedRequestBody,
   TypedRequestQuery,
   TypedRequestParams,
   TypedRequest,
+  AuthRequest,
+  AuthTypedRequestBody,
+  AuthTypedRequestQuery,
+  AuthTypedRequestParams,
+  AuthTypedRequest,
 };

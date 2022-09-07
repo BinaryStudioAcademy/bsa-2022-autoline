@@ -7,7 +7,7 @@ import { useGetWhereBuyQuery } from '@store/queries/where-buy';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
-import { WhereBuyItem } from './where-buy/where-buy-item';
+import { WhereBuyItem } from './where-buy-item/where-buy-item';
 
 const WhereToBuy: React.FC = () => {
   const [page, setPage] = useState(0);
@@ -18,7 +18,6 @@ const WhereToBuy: React.FC = () => {
     if (!isSorted) return adverts;
     return [...adverts].sort((advertA, advertB) => advertA.USD - advertB.USD);
   }, [adverts, isSorted]);
-  console.log(adverts[0]);
   useGetWhereBuyQuery({
     page,
     complectationId: '711b75ca-e29f-49e1-bcb9-b782bfb57637',

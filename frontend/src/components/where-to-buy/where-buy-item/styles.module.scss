@@ -136,7 +136,7 @@
       padding: 0;
       color: var(--blue100);
       font-weight: 900;
-      font-size: 18px;
+      font-size: 1.8rem;
       font-family: var(--primary-font);
     }
 
@@ -212,6 +212,19 @@
       display: none;
     }
 
+    .labelGroup {
+      display: flex;
+      margin-bottom: 5px;
+
+      & > div {
+        margin-right: 0.5rem;
+      }
+
+      & > div:last-child {
+        margin-right: 0;
+      }
+    }
+
     .panel {
       flex-direction: column;
       justify-content: space-around;
@@ -223,21 +236,11 @@
       }
 
       .price {
-        font-size: 14px;
+        font-size: 1.5rem;
       }
 
       .buyButton {
         margin: 0;
-      }
-    }
-
-    .trigger {
-      display: none;
-
-      div {
-        &:nth-child(2) {
-          display: none;
-        }
       }
     }
   }

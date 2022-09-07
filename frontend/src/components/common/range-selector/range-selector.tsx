@@ -1,19 +1,23 @@
 import React, { FC, useEffect, useState } from 'react';
 
-import { FiltersNames } from '@common/enums/car/car-filters-names.enum';
+import {
+  RangeNames,
+  RangeValueNames,
+} from '@common/enums/car/car-filters-names.enum';
 import { RangeValueType } from '@common/types/cars/range-item.type';
 import { SelectField } from '@components/common/select-field/select-field';
 import { MenuItem, SelectChangeEvent } from '@mui/material';
 
 type Props = {
   list: Array<string>;
+  rangeName: RangeNames;
   minTitle: string;
   maxTitle: string;
-  minFilterName: FiltersNames;
-  maxFilterName: FiltersNames;
+  minFilterName: RangeValueNames;
+  maxFilterName: RangeValueNames;
   selectedMin: string;
   selectedMax: string;
-  onChange: (range: RangeValueType[]) => void;
+  onChange: (range: RangeValueType) => void;
 };
 
 const RangeSelector: FC<Props> = (props) => {
@@ -42,10 +46,13 @@ const RangeSelector: FC<Props> = (props) => {
       max = minValue;
     }
 
-    props.onChange([
-      { filterName: props.minFilterName, value: min },
-      { filterName: props.maxFilterName, value: max },
-    ]);
+    props.onChange({
+      rangeName: props.rangeName,
+      values: {
+        [props.minFilterName]: min,
+        [props.maxFilterName]: max,
+      },
+    });
   }, [minValue, maxValue]);
 
   return (

@@ -164,12 +164,6 @@ const AdvancedAutoFilter: FC = () => {
     [dispatch],
   );
 
-  // const handleRangeChange = (range: RangeValueType[]): void => {
-  //   range.forEach(({ filterName, value }) => {
-  //     dispatch(setValue({ filterName, value }));
-  //   });
-  // };
-
   const handleRangeChange = (range: RangeValueType): void => {
     dispatch(setRangeValue(range));
   };

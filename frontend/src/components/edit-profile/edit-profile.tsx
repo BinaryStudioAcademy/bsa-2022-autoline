@@ -92,6 +92,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
   const [selectedAvatar, setSelectedAvatar] = useState<File>();
   const [previewAvatar, setPreviewAvatar] = useState<string>();
   const [isDeleteAvatar, setIsDeleteAvatar] = useState(false);
+  const [isAvatarImageLoaded, setAvatarImageLoaded] = React.useState(false);
 
   useEffect(() => {
     if (deleteIsSuccess) {
@@ -191,10 +192,12 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                 src={
                   previewAvatar || (user && (user.photoUrl || DefaultAvatar))
                 }
+                onLoad={(): void => setAvatarImageLoaded(true)}
                 alt="avatar"
                 sx={{
                   width: 100,
                   height: 100,
+                  visibility: isAvatarImageLoaded ? 'visible' : 'hidden',
                 }}
               />
             </IconButton>

@@ -42,4 +42,15 @@ comparisonsRouter.get(
   comparisonsController.getComparisonGeneralInfo,
 );
 
+comparisonsRouter.get(
+  `${PATH}/preview`,
+  userAuthMiddleware,
+  comparisonsController.getActiveComparisonCarsPreview,
+);
+comparisonsRouter.patch(
+  `${PATH}/position`,
+  userAuthMiddleware,
+  comparisonsController.updatePositions,
+);
+
 export { comparisonsRouter };

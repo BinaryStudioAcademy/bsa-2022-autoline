@@ -37,6 +37,12 @@ comparisonsRouter.get(
   comparisonsController.getActiveComparisonStatus,
 );
 comparisonsRouter.get(
+  `${PATH}/general`,
+  userAuthMiddleware,
+  comparisonsController.getComparisonGeneralInfo,
+);
+
+comparisonsRouter.get(
   `${PATH}/:type`,
   userAuthMiddleware,
   comparisonsController.getComparisonOptions,

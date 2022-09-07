@@ -38,7 +38,7 @@ export const getMessage = (payload: NodemailerPayload): string => {
                   <p style="text-align:left">Hello, ${payload.name}<br><br> We received a request to reset the password for your account for this email address. To initiate the password reset process for your account, click the link below.
                   </p>
                   <p>
-                    <a target="_blank" style="text-decoration:none; background-color: #3765FF; border: #3765FF 1px solid; border-radius: 30px; color: #fff; padding:10px 10px; display:block;" href="http://${payload.link}">
+                    <a target="_blank" style="text-decoration:none; background-color: #3765FF; border: #3765FF 1px solid; border-radius: 30px; color: #fff; padding:10px 10px; display:block;" href="https://${payload.link}">
                       <strong>Reset Password</strong></a>
                   </p>
                   <p style="text-align:left">This link can only be used once. If you need to reset your password again, please visit <a href="${ENV.APP.FRONTEND_URL}/forgot-password">autoline.com</a> and request another reset.<br><br>If you did not make this request, you can simply ignore this email.</p>

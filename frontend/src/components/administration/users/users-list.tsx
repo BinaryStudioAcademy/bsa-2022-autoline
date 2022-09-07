@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { User } from '@autoline/shared/common/types/types';
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,6 +11,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { ErrorType } from '@store/queries';
 import { useUpdateUserMutation } from '@store/queries/users';
 import { upperFirst, replace } from 'lodash';
 
@@ -22,7 +23,17 @@ type UsersListProps = {
 
 const UsersList: FC<UsersListProps> = ({ users }) => {
   const [selectedUser, setSelectedUser] = useState<User | undefined>();
-  const [updateUser] = useUpdateUserMutation();
+  const [
+    updateUser,
+    {
+      isLoading: updateUserIsLoading,
+      isSuccess: updateUserIsSuccess,
+      isError: updateUserIsError,
+      error: updateUserError,
+      reset: updateUserReset,
+    },
+  ] = useUpdateUserMutation();
+  const updateUserErrorData = updateUserError as ErrorType;
 
   const handleClickEdit = (user: User): void => {
     setSelectedUser(user);
@@ -30,13 +41,13 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
 
   const handleClose = (): void => {
     setSelectedUser(undefined);
+    updateUserReset();
   };
 
   const handleSubmit = async (
     user: User,
     newUserData: Partial<User>,
   ): Promise<void> => {
-    setSelectedUser(undefined);
     if (
       newUserData?.name === user.name &&
       newUserData?.email === user.email &&
@@ -45,6 +56,7 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
       newUserData?.sex === user.sex &&
       newUserData?.role === user.role
     ) {
+      setSelectedUser(undefined);
       return;
     }
 
@@ -56,6 +68,12 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
     await updateUser(newUser);
   };
 
+  useEffect(() => {
+    if (updateUserIsSuccess) {
+      setSelectedUser(undefined);
+    }
+  }, [updateUserIsSuccess]);
+
   const getPrettified = (str: string): string =>
     upperFirst(replace(str, '_', ' '));
 
@@ -65,9 +83,9 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell></TableCell>
+              <TableCell>Photo</TableCell>
               <TableCell>Full name</TableCell>
-              <TableCell>e-mail</TableCell>
+              <TableCell>E-mail</TableCell>
               <TableCell>Phone</TableCell>
               <TableCell>Location</TableCell>
               <TableCell>Sex</TableCell>
@@ -110,6 +128,9 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
 
       <DialogEditUser
         user={selectedUser}
+        updateUserIsLoading={updateUserIsLoading}
+        updateUserIsError={updateUserIsError}
+        updateUserError={updateUserErrorData}
         onSave={handleSubmit}
         onClose={handleClose}
       />

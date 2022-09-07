@@ -25,7 +25,7 @@ export const SelectFieldForm = (
         props.errors && styles.selectFieldError,
       )}
     >
-      <InputLabel className={styles.label}>{props.name}</InputLabel>
+      <InputLabel className={styles.label}>{props.label}</InputLabel>
       <Select
         id={props.id}
         label={props.label}

@@ -6,7 +6,7 @@ import * as usersService from '@services/users/users.service';
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
 
-interface UserUpdateInput {
+export interface UserUpdateInput {
   id: string;
   tokenPayload: TokenPayload;
   name?: string;

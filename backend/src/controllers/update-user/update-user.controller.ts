@@ -2,7 +2,8 @@ import { TokenPayload } from '@autoline/shared';
 import { ExceptionMessage } from '@common/enums/exception/exception-message.enum';
 import { TypedRequestBody } from '@common/types/controller/controller';
 import { UpdateUserDto } from '@dtos/user/update-user.dto';
-import { Sex } from '@prisma/client';
+import { Role, Sex } from '@prisma/client';
+import { uploadFileToS3 } from '@services/aws/aws.service';
 import * as userService from '@services/user/user.service';
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
@@ -19,6 +20,9 @@ export interface UpdateUserReq {
   email: string;
   location?: string | null;
   photoUrl?: string | null;
+  role?: Role | null;
+  isGoogleConnected: boolean;
+  isFacebookConnected: boolean;
 }
 
 const updateUser = async (
@@ -65,4 +69,45 @@ const getUser = async (
   }
 };
 
-export { updateUser, deleteUser, getUser };
+const deleteOauthConnections = async (
+  req: TypedRequestBody<{ tokenPayload: TokenPayload; provider: string }>,
+  res: Response<Partial<UpdateUserReq>>,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    await userService.deleteOauthConnections(
+      req.body.tokenPayload.sub,
+      req.body.provider,
+    );
+    res.status(httpStatus.OK).json();
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateUserPhoto = async (
+  /* eslint-disable-next-line */
+  req: any,
+  res: Response<Partial<UpdateUserReq>>,
+  next: NextFunction,
+): Promise<Response | undefined> => {
+  try {
+    if (!req.files) {
+      throw new Error('Failed upload S3');
+    }
+
+    const photoUrl = await uploadFileToS3(req.files.photo);
+    await userService.updateUserPhoto(req.body.tokenPayload.sub, photoUrl);
+    return res.status(httpStatus.OK).json({ photoUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export {
+  updateUser,
+  deleteUser,
+  getUser,
+  deleteOauthConnections,
+  updateUserPhoto,
+};

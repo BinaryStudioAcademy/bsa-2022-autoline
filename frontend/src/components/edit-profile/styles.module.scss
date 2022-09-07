@@ -41,7 +41,8 @@
         width: 100%;
 
         .avatar {
-          width: 33%;
+          width: 7rem;
+          height: 7rem;
         }
       }
     }
@@ -73,7 +74,7 @@
   width: 136px;
   margin-right: 30px;
 
-  button {
+  .avatarMenuItem {
     display: flex;
     margin: 10px 0 0;
     padding: 0;
@@ -89,10 +90,16 @@
       margin-right: 6px;
     }
   }
+
+  .saveAvatarBtn {
+    margin-top: 10px;
+    padding: 6px 45px;
+  }
 }
 
 .avatar {
-  width: 100%;
+  width: 100px;
+  height: 100px;
 }
 
 .profile {

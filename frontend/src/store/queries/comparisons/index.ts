@@ -1,3 +1,4 @@
+import { ComplPreviewInfo } from '@autoline/shared';
 import { ComparisonGeneralInform } from '@autoline/shared/common/types/types';
 import { ComparisonTypeEnum } from '@common/enums/enums';
 import { Comparison } from '@common/types/types';
@@ -58,6 +59,21 @@ export const comparisonsApi = api.injectEndpoints({
         url: `${API.COMPARISONS}/option/${type}`,
       }),
     }),
+    getComparisonsPreviewCars: builder.query<ComplPreviewInfo[], void>({
+      query: () => ({
+        url: API.COMPARISONS,
+        method: 'GET',
+      }),
+      providesTags: ['Comparisons'],
+    }),
+    updatePositions: builder.mutation<void, string[]>({
+      query: (positions) => ({
+        url: `${API.COMPARISONS}/position`,
+        method: 'PATCH',
+        body: { positions },
+      }),
+      invalidatesTags: ['Comparisons'],
+    }),
   }),
 });
 
@@ -69,4 +85,6 @@ export const {
   useGetActiveComparisonStatusQuery,
   useGetComparisonOptionsQuery,
   useGetComparisonGeneralInfoQuery,
+  useGetComparisonsPreviewCarsQuery,
+  useUpdatePositionsMutation,
 } = comparisonsApi;

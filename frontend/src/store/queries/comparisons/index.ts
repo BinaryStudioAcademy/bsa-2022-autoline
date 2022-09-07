@@ -48,6 +48,11 @@ export const comparisonsApi = api.injectEndpoints({
       }),
       providesTags: ['Comparisons'],
     }),
+    getComparisonOptions: builder.query<string[], { type: string }>({
+      query: ({ type }) => ({
+        url: `${API.COMPARISONS}/${type}`,
+      }),
+    }),
   }),
 });
 
@@ -57,4 +62,5 @@ export const {
   useClearComparisonMutation,
   useDeleteCarFromComparisonMutation,
   useGetActiveComparisonStatusQuery,
+  useGetComparisonOptionsQuery,
 } = comparisonsApi;

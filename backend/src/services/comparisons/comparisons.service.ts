@@ -1,5 +1,10 @@
 import { prisma } from '@data/prisma-client';
-import { Comparison, ComparisonType, Complectation } from '@prisma/client';
+import {
+  Comparison,
+  ComparisonType,
+  Complectation,
+  Type,
+} from '@prisma/client';
 
 const addCarToComparison = async ({
   complectationId,
@@ -190,6 +195,18 @@ const getActiveComparisonStatus = async (userId: string): Promise<string[]> => {
   return comparisons.map((c) => c.complectation_id);
 };
 
+const getComparisonOptions = async (optionType: Type): Promise<string[]> => {
+  const options = await prisma.option.findMany({
+    where: {
+      type: optionType,
+    },
+    select: {
+      name: true,
+    },
+  });
+  return options.map((o) => o.name);
+};
+
 export {
   addCarToComparison,
   changeComparisonType,
@@ -197,4 +214,5 @@ export {
   deleteCarFromComparison,
   getActiveComparisonCars,
   getActiveComparisonStatus,
+  getComparisonOptions,
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 
 import { ModelType } from '@autoline/shared/common/types/types';
 import { CheckListsNames } from '@common/enums/car/car-filters-names.enum';
@@ -23,7 +23,7 @@ import {
 
 import styles from './styles.module.scss';
 
-const AppliedFiltersBar: () => false | JSX.Element = () => {
+const AppliedFiltersBar = (): ReactElement => {
   const dispatch = useAppDispatch();
 
   const { rangeFilters, checkLists, brandDetails } = useAppSelector(
@@ -166,55 +166,53 @@ const AppliedFiltersBar: () => false | JSX.Element = () => {
   }, [appliedRanges, appliedBrandDetails, appliedCheckboxes]);
 
   return (
-    isAnyApplies && (
-      <div className={styles.container}>
-        {appliedBrandDetails &&
-          appliedBrandDetails.map(({ filterName, id, label }) => (
-            <Chip
-              className={styles.chip}
-              key={id}
-              size="small"
-              label={label}
-              variant="outlined"
-              onDelete={(): void => handleBrandDetailDelete(filterName, id)}
-            />
-          ))}
-
-        {appliedRanges &&
-          appliedRanges.map(([rangeName, label]) => (
-            <Chip
-              className={styles.chip}
-              key={label}
-              size="small"
-              label={label}
-              variant="outlined"
-              onDelete={(): void => handleRangeDelete(rangeName)}
-            />
-          ))}
-
-        {appliedCheckboxes &&
-          appliedCheckboxes.map(({ filterName, id, label }) => (
-            <Chip
-              className={styles.chip}
-              key={id}
-              size="small"
-              label={label}
-              variant="outlined"
-              onDelete={(): void => handleCheckboxDelete(filterName, id)}
-            />
-          ))}
-        {isAnyApplies && (
+    <div className={styles.container}>
+      {appliedBrandDetails &&
+        appliedBrandDetails.map(({ filterName, id, label }) => (
           <Chip
-            className={styles.deleteButton}
+            className={styles.chip}
+            key={id}
             size="small"
-            label="Delete all"
-            onClick={resetFilters}
-            onDelete={resetFilters}
-            deleteIcon={<DeleteOutlinedIcon />}
+            label={label}
+            variant="outlined"
+            onDelete={(): void => handleBrandDetailDelete(filterName, id)}
           />
-        )}
-      </div>
-    )
+        ))}
+
+      {appliedRanges &&
+        appliedRanges.map(([rangeName, label]) => (
+          <Chip
+            className={styles.chip}
+            key={label}
+            size="small"
+            label={label}
+            variant="outlined"
+            onDelete={(): void => handleRangeDelete(rangeName)}
+          />
+        ))}
+
+      {appliedCheckboxes &&
+        appliedCheckboxes.map(({ filterName, id, label }) => (
+          <Chip
+            className={styles.chip}
+            key={id}
+            size="small"
+            label={label}
+            variant="outlined"
+            onDelete={(): void => handleCheckboxDelete(filterName, id)}
+          />
+        ))}
+      {isAnyApplies && (
+        <Chip
+          className={styles.deleteButton}
+          size="small"
+          label="Delete all"
+          onClick={resetFilters}
+          onDelete={resetFilters}
+          deleteIcon={<DeleteOutlinedIcon />}
+        />
+      )}
+    </div>
   );
 };
 

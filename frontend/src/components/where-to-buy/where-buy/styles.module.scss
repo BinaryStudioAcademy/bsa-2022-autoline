@@ -87,9 +87,10 @@
       font-size: 1.2rem;
 
       .textDescription {
-        // display: -webkit-box;
-        // -webkit-line-clamp: 3;
-        // -webkit-box-orient: vertical;
+        /* stylelint-disable-next-line value-no-vendor-prefix */
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
         margin-bottom: 1.5rem;
         padding: 0 10px;
         overflow: hidden;

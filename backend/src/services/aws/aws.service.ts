@@ -1,11 +1,10 @@
-import * as fs from 'fs';
+import { PassThrough } from 'stream';
 
 import { ENV } from '@common/enums/app/env.enum';
-import { FormidableFile } from '@common/types/file/file';
 import { HttpError } from '@dtos/execptions/error.dto';
 import AWS from 'aws-sdk';
+import { ManagedUpload } from 'aws-sdk/clients/s3';
 import httpStatus from 'http-status-codes';
-import { v4 as uuid } from 'uuid';
 
 const s3 = new AWS.S3({
   accessKeyId: ENV.AWS.ACCESS_KEY_ID,
@@ -13,16 +12,23 @@ const s3 = new AWS.S3({
   region: 'eu-west-1',
 });
 
-const uploadFileToS3 = async (file: FormidableFile): Promise<string> => {
-  const imagePath = file.path;
-  const blob = fs.readFileSync(imagePath);
+const parseS3KeyFromUrl = (url: string): string => {
+  const { pathname } = new URL(url);
+  if (!pathname) throw new Error('Can`t parse key from url');
+  return pathname.substring(1);
+};
 
-  const params = {
-    Bucket: ENV.AWS.BUCKET_NAME || '',
-    Key: `user-images/${uuid()}.${file.type.split('/')[1]}`,
-    Body: blob,
-  };
+const uploadFileToS3 = async (
+  body: ManagedUpload.SendData | PassThrough,
+  s3Key: string,
+): Promise<string> => {
   try {
+    const params = {
+      Bucket: ENV.AWS.BUCKET_NAME || '',
+      Key: s3Key,
+      Body: body,
+    };
+
     const data = await s3.upload(params).promise();
     return data.Location;
   } catch (error) {
@@ -34,4 +40,20 @@ const uploadFileToS3 = async (file: FormidableFile): Promise<string> => {
   }
 };
 
-export { uploadFileToS3 };
+const deleteFileFromS3 = async (fileKey: string): Promise<void> => {
+  const params = {
+    Bucket: ENV.AWS.BUCKET_NAME || '',
+    Key: fileKey,
+  };
+  try {
+    await s3.deleteObject(params).promise();
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new HttpError(error, httpStatus.INTERNAL_SERVER_ERROR);
+    } else {
+      throw error;
+    }
+  }
+};
+
+export { uploadFileToS3, deleteFileFromS3, parseS3KeyFromUrl };

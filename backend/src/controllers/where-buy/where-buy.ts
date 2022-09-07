@@ -20,7 +20,7 @@ const whereBuy = async (
     const complectationId = req.query.id;
     const countpage = +req.query.countpage;
     const querysForRequest = await carsSearchAutoria(
-      [complectationId],
+      complectationId,
       page,
       countpage,
     );

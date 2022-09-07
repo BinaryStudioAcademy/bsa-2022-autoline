@@ -2,7 +2,7 @@ import { AutoriaRequestParams } from '@common/types/cars/autoria-request-params'
 import { prisma } from '@data/prisma-client';
 
 const carsSearchAutoria = async (
-  complectationId: string[],
+  complectationId: string,
   page = '0',
   countpage = 10,
 ): Promise<Partial<AutoriaRequestParams>> => {

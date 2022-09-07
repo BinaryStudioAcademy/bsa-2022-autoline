@@ -1,19 +1,9 @@
 import { AutoRiaUrls } from '@common/enums/app/app';
 import { ENV } from '@common/enums/app/env.enum';
 import { AutoriaRequestParams } from '@common/types/types';
+import { AutoriaResponse } from '@common/types/types';
 import axios from 'axios';
 import { Response } from 'express';
-
-interface AutoriaResponse {
-  additional_params: { page: string };
-  result: {
-    search_result: {
-      ids: string[];
-      count: number;
-      last_id: number;
-    };
-  };
-}
 
 const getCarsAutoRia = async (
   requestParams: Partial<AutoriaRequestParams>,

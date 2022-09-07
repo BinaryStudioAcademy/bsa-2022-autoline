@@ -1,4 +1,5 @@
 import { ENV } from '@common/enums/app/app';
+import { logger } from '@helpers/logger/logger';
 import { errorsHandler } from '@middlewares/middlewares';
 import {
   healthRouter,
@@ -81,8 +82,7 @@ app.listen(ENV.APP.SERVER_PORT, ENV.APP.SERVER_HOST, () => {
 // The cron task will be executed at every 30th minute
 const task = cron.schedule('*/30 * * * *', () => {
   carsUpdatePricesFromAutoria();
-  // eslint-disable-next-line no-console
-  console.log(
+  logger.info(
     `${new Date().toString()}: Cron task carsUpdatePricesFromAutoria()`,
   );
 });

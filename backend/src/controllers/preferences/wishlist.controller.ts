@@ -2,17 +2,17 @@ import * as wishlistService from '@services/preferences/wishlist.service';
 import httpStatus from 'http-status-codes';
 
 import type { WishlistResponseDto } from '@autoline/shared/common/types/types';
-import type { TypedRequestQuery } from '@common/types/controller/controller';
+import type { AuthTypedRequestQuery } from '@common/types/controller/controller';
 import type { WishlistInput } from '@common/types/types';
 import type { NextFunction, Response } from 'express';
 
 const setWishlist = async (
-  req: TypedRequestQuery<WishlistInput>,
+  req: AuthTypedRequestQuery<WishlistInput>,
   res: Response<WishlistResponseDto>,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.tokenPayload?.sub as string;
+    const userId = req.tokenPayload.sub;
     const { modelId, complectationId } = req.query;
 
     const wishlist: WishlistInput = {
@@ -32,12 +32,12 @@ const setWishlist = async (
 };
 
 const deleteWishlist = async (
-  req: TypedRequestQuery<WishlistInput>,
+  req: AuthTypedRequestQuery<WishlistInput>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.tokenPayload?.sub as string;
+    const userId = req.tokenPayload.sub;
     const { modelId, complectationId } = req.query;
 
     const wishlist: WishlistInput = {
@@ -57,12 +57,12 @@ const deleteWishlist = async (
 };
 
 const getWishlistByUserId = async (
-  req: TypedRequestQuery<WishlistInput>,
+  req: AuthTypedRequestQuery<WishlistInput>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.tokenPayload?.sub as string;
+    const userId = req.tokenPayload.sub;
 
     const wishlistResponseDto = await wishlistService.getWishlistByUserId(
       userId,
@@ -77,12 +77,12 @@ const getWishlistByUserId = async (
 };
 
 const getWishlistEntries = async (
-  req: TypedRequestQuery<{ user_id: string }>,
+  req: AuthTypedRequestQuery<{ user_id: string }>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.tokenPayload?.sub as string;
+    const userId = req.tokenPayload.sub;
 
     const wishlists = await wishlistService.getWishlistEntries(userId);
     res.json(wishlists).status(httpStatus.OK);

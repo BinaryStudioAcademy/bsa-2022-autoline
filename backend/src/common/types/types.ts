@@ -4,6 +4,10 @@ export {
   type TypedRequestParams,
   type TypedRequest,
   type AuthRequest,
+  type AuthTypedRequestBody,
+  type AuthTypedRequestQuery,
+  type AuthTypedRequestParams,
+  type AuthTypedRequest,
 } from './controller/controller';
 
 export {

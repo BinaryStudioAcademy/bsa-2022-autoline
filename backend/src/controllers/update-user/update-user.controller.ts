@@ -1,5 +1,5 @@
 import { ExceptionMessage } from '@common/enums/exception/exception-message.enum';
-import { TypedRequestBody, AuthRequest } from '@common/types/types';
+import { AuthTypedRequestBody, AuthRequest } from '@common/types/types';
 import { UpdateUserDto } from '@dtos/user/update-user.dto';
 import { Role, Sex } from '@prisma/client';
 import { uploadFileToS3 } from '@services/aws/aws.service';
@@ -24,7 +24,7 @@ export interface UpdateUserReq {
 }
 
 const updateUser = async (
-  req: TypedRequestBody<UpdateUserReq>,
+  req: AuthTypedRequestBody<UpdateUserReq>,
   res: Response<Partial<UpdateUserReq>>,
   next: NextFunction,
 ): Promise<void> => {
@@ -68,7 +68,7 @@ const getUser = async (
 };
 
 const deleteOauthConnections = async (
-  req: TypedRequestBody<{ provider: string }>,
+  req: AuthTypedRequestBody<{ provider: string }>,
   res: Response<Partial<UpdateUserReq>>,
   next: NextFunction,
 ): Promise<void> => {

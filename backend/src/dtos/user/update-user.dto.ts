@@ -1,4 +1,4 @@
-import { TypedRequestBody } from '@common/types/controller/controller';
+import { AuthTypedRequestBody } from '@common/types/controller/controller';
 import { UpdateUserReq } from '@controllers/update-user/update-user.controller';
 import { Sex } from '@prisma/client';
 
@@ -17,7 +17,7 @@ class UpdateUserDto {
   ) {}
 
   public static createFromRequest(
-    req: TypedRequestBody<UpdateUserReq>,
+    req: AuthTypedRequestBody<UpdateUserReq>,
   ): UpdateUserDto {
     const {
       name,
@@ -31,7 +31,7 @@ class UpdateUserDto {
       birthYear,
     } = req.body;
 
-    const id = req.tokenPayload?.sub as string;
+    const id = req.tokenPayload.sub;
 
     return new UpdateUserDto(
       id,

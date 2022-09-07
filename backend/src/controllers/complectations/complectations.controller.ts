@@ -1,7 +1,7 @@
 import * as complectationsService from '@services/complectations/complectations.service';
 import httpStatus from 'http-status-codes';
 
-import type { TypedRequestQuery } from '@common/types/controller/controller';
+import type { AuthTypedRequestQuery } from '@common/types/controller/controller';
 import type { NextFunction, Response } from 'express';
 
 type ComplectationsInput = {
@@ -11,12 +11,12 @@ type ComplectationsInput = {
 };
 
 const getComplectations = async (
-  req: TypedRequestQuery<ComplectationsInput>,
+  req: AuthTypedRequestQuery<ComplectationsInput>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.tokenPayload?.sub as string;
+    const userId = req.tokenPayload.sub;
     const { complectationId, modelId } = req.query;
     const input: ComplectationsInput = {
       userId,

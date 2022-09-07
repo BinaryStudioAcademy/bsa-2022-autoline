@@ -6,16 +6,16 @@ import type {
   GetViewedCarsRequestDto,
   GetViewedCarsResponse,
 } from '@autoline/shared';
-import type { TypedRequestQuery } from '@common/types/controller/controller';
+import type { AuthTypedRequestQuery } from '@common/types/controller/controller';
 import type { NextFunction, Response } from 'express';
 
 const getViewedCarsList = async (
-  req: TypedRequestQuery<GetViewedCarsRequestDto<string>>,
+  req: AuthTypedRequestQuery<GetViewedCarsRequestDto<string>>,
   res: Response<GetViewedCarsResponse>,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.tokenPayload?.sub as string;
+    const userId = req.tokenPayload.sub;
     const { skip, take } = req.query;
     const requestDataDto = {
       userId,
@@ -33,12 +33,12 @@ const getViewedCarsList = async (
 };
 
 const addCarToViewed = async (
-  req: TypedRequestQuery<SetViewedCarRequestDto>,
+  req: AuthTypedRequestQuery<SetViewedCarRequestDto>,
   res: Response<void>,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.tokenPayload?.sub as string;
+    const userId = req.tokenPayload.sub;
     const { modelId, complectationId } = req.query;
 
     const viewedCar = {

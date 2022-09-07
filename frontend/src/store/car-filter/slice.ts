@@ -32,7 +32,7 @@ const initialState = {
     {
       id: Date.now().toString(),
       brandId: '',
-      modelIds: [],
+      modelIds: [''],
     },
   ],
 };
@@ -46,11 +46,26 @@ const { reducer, actions } = createSlice({
       const rangeName = action.payload.rangeName as RangeNames;
       state.rangeFilters[rangeName] = values;
     },
+    removeRangeValue: (state, action) => {
+      const rangeName = action.payload as RangeNames;
+      state.rangeFilters = {
+        ...state.rangeFilters,
+        [rangeName]: initialState.rangeFilters[rangeName],
+      };
+    },
     setCheckListValue: (state, action) => {
       state.checkLists = {
         ...state.checkLists,
         [action.payload.filterName]: action.payload.value,
       };
+    },
+    setBrandDetails: ({ brandDetails }, action) => {
+      const needle = brandDetails.findIndex(
+        (item) => item.id === action.payload.id,
+      );
+      if (needle !== -1) {
+        brandDetails[needle] = action.payload;
+      }
     },
     setBrandDetailsValue: ({ brandDetails }, action) => {
       const needle = brandDetails.findIndex(
@@ -66,11 +81,17 @@ const { reducer, actions } = createSlice({
         id: Date.now().toString(),
       });
     },
-    removeBrandDetails: ({ brandDetails }, action: PayloadAction<string>) => {
-      brandDetails.splice(
-        brandDetails.findIndex((detail) => detail.id === action.payload),
-        1,
-      );
+    removeBrandDetails: (state, action: PayloadAction<string>) => {
+      if (state.brandDetails.length === 1) {
+        state.brandDetails = initialState.brandDetails;
+      } else {
+        state.brandDetails.splice(
+          state.brandDetails.findIndex(
+            (detail) => detail.id === action.payload,
+          ),
+          1,
+        );
+      }
     },
     resetAllFilters: () => initialState,
   },
@@ -79,6 +100,7 @@ const { reducer, actions } = createSlice({
 
 export const {
   setRangeValue,
+  removeRangeValue,
   setCheckListValue,
   addNewBrandDetails,
   removeBrandDetails,

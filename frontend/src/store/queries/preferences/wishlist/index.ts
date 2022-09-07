@@ -43,3 +43,5 @@ export const {
   useCreateWishlistMutation,
   useDeleteWishlistMutation,
 } = wishlistApi;
+
+export const like = wishlistApi.endpoints.createWishlist.matchRejected;

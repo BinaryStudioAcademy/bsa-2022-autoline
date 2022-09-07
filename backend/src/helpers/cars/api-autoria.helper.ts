@@ -3,7 +3,6 @@ import { ENV } from '@common/enums/app/env.enum';
 import { AutoriaRequestParams, CarDetailsResponse } from '@common/types/types';
 import axios from 'axios';
 
-// TODO Add to config
 const URL = `${LinksToResources.AUTORIA}/auto`;
 
 interface SearchCarsAutoRia {

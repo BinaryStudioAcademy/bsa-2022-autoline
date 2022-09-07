@@ -1,14 +1,14 @@
 import * as newCarsService from '@services/new-cars/new-cars.service';
 import httpStatus from 'http-status-codes';
 
-import type { AuthTypedRequestQuery } from '@common/types/controller/controller';
+import type { TypedRequestQuery } from '@common/types/controller/controller';
 import type { Response, NextFunction } from 'express';
 
 type NewCarsRequestQuery = {
   limit: string;
 };
 const getNewCars = async (
-  req: AuthTypedRequestQuery<NewCarsRequestQuery>,
+  req: TypedRequestQuery<NewCarsRequestQuery>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {

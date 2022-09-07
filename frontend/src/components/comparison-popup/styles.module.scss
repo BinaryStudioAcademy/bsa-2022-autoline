@@ -1,0 +1,77 @@
+@import "@assets/css/styles";
+
+.popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1000px;
+  padding: 28px 32px 52px;
+  overflow: auto;
+  background: var(--white);
+  border-top: 5px solid var(--blue100);
+  transform: translate(-50%, -50%);
+
+  @media (max-width: $global-md) {
+    top: 2rem;
+    right: 2rem;
+    bottom: 2rem;
+    left: 2rem;
+    width: auto;
+    transform: none;
+  }
+
+  .cross {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    cursor: pointer;
+  }
+
+  .mainTitle {
+    margin: 0 0 20px;
+    font-weight: 800;
+    font-size: 18px;
+    text-transform: uppercase;
+  }
+}
+
+.comparison {
+  display: flex;
+
+  &Title {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
+
+  &Left {
+    flex: 2;
+  }
+
+  &Right {
+    flex: 3;
+    padding-left: 60px;
+  }
+
+  &List {
+    max-height: 365px;
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+    list-style: none;
+  }
+
+  &Form {
+    padding-top: 15px;
+  }
+}
+
+.btnWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0;
+}
+
+.cancel {
+  border: none;
+}

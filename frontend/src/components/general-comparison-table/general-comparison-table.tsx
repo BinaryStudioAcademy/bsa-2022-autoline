@@ -1,22 +1,26 @@
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useMemo, useState } from 'react';
 
 import { CollapseElement } from '@components/collapse-component/collapse-element/collapse-element';
 import { Spinner } from '@components/common/spinner/spinner';
 import { getElementHeightWithMargins } from '@helpers/utils/get-element-height-with-margins';
-import { useGetComparisonGeneralInfoQuery } from '@store/queries/comparison';
+import { uuid4 } from '@sentry/utils';
+import { useGetComparisonGeneralInfoQuery } from '@store/queries/comparisons';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
 const GeneralComparisonTable: React.FC = () => {
-  const { data: generalInfos, isLoading } = useGetComparisonGeneralInfoQuery();
+  const { data: generalInfo, isLoading } = useGetComparisonGeneralInfoQuery();
 
-  const options: Set<string> = new Set();
-  generalInfos?.forEach((car) =>
-    Object.keys(car.options).map((optionType: string) =>
-      options.add(optionType),
-    ),
-  );
+  const options: Set<string> = useMemo((): Set<string> => {
+    const options: Set<string> = new Set();
+    generalInfo?.forEach((car) =>
+      Object.keys(car.options).map((optionType: string) =>
+        options.add(optionType),
+      ),
+    );
+    return options;
+  }, [generalInfo]);
 
   const [generalTable, setGeneralTableRef] = useState<HTMLDivElement | null>(
     null,
@@ -25,17 +29,23 @@ const GeneralComparisonTable: React.FC = () => {
   useLayoutEffect(() => {
     if (!generalTable) return;
 
-    const optionsValues = generalTable.querySelectorAll(
+    //Get all options table cells
+    const optionsValuesElements = generalTable.querySelectorAll(
       '[data-optionvalue]',
     ) as NodeListOf<HTMLDivElement>;
+    const optionsValues = [...optionsValuesElements];
 
+    //Create list of heights for all options
     const optionsHighestHeights = new Map();
 
-    [...optionsValues].forEach((value: HTMLDivElement) => {
+    //Go through all options cells to find the larger height of cell
+    optionsValues.forEach((value: HTMLDivElement) => {
       const borderHeight = 1;
+      //Get height and option title of current table cell
       const height = getElementHeightWithMargins(value) + borderHeight;
       const title = value.getAttribute('data-optionvalue');
 
+      //If current table cell has larger height then similar cell of other car, accept it as highest height
       if (
         height > optionsHighestHeights.get(title) ||
         !optionsHighestHeights.has(title)
@@ -44,11 +54,16 @@ const GeneralComparisonTable: React.FC = () => {
       }
     });
 
-    [...optionsValues].forEach((value: HTMLDivElement) => {
+    //Go through all options cells to set heights of cells
+    optionsValues.forEach((value: HTMLDivElement) => {
       const title = value.getAttribute('data-optionvalue');
+      //Get title cell of the option, e.g. `Security`
       const tableTitleElement = generalTable.querySelector(
-        '[data-optiontitle=' + title + ']',
+        `[data-optiontitle=${title}]`,
       ) as HTMLDivElement;
+
+      //Set the same height for similar options of cars and their titles
+      //e.g. `Security` cells for all cars have height 100px
       value.style.height = `${optionsHighestHeights.get(title)}px`;
       tableTitleElement.style.height = `${optionsHighestHeights.get(title)}px`;
     });
@@ -76,16 +91,23 @@ const GeneralComparisonTable: React.FC = () => {
             Wheel Drive
           </div>
           {[...options].map((option) => (
-            <div className={styles.tableCell} data-optiontitle={option}>
+            <div
+              className={styles.tableCell}
+              data-optiontitle={option}
+              key={uuid4()}
+            >
               {option}
             </div>
           ))}
           <div className={styles.tableCell}>Color</div>
         </div>
-        <div className={clsx('styledScrollbar', styles.generalInfos)}>
-          {generalInfos?.map((info) => {
+        <div className={clsx('styledScrollbar', styles.generalInfo)}>
+          {generalInfo?.map((info) => {
             return (
-              <div className={clsx(styles.tableData, styles.tableColumn)}>
+              <div
+                className={clsx(styles.tableData, styles.tableColumn)}
+                key={info.id}
+              >
                 <div className={styles.tableCell} data-optionvalue="bodytype">
                   {info.bodyType}
                 </div>
@@ -105,7 +127,11 @@ const GeneralComparisonTable: React.FC = () => {
                   {info.drivetrainName}
                 </div>
                 {Object.keys(info.options).map((type: string) => (
-                  <div className={styles.tableCell} data-optionvalue={type}>
+                  <div
+                    className={styles.tableCell}
+                    data-optionvalue={type}
+                    key={uuid4()}
+                  >
                     {info.options[type].join(', ')}
                   </div>
                 ))}

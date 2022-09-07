@@ -196,7 +196,7 @@ const getActiveComparisonStatus = async (userId: string): Promise<string[]> => {
 
 const getComparisonGeneralInfo = async (
   userId: string,
-): Promise<ComparisonGeneralInform[] | []> => {
+): Promise<ComparisonGeneralInform[]> => {
   const activeComparison = await prisma.comparison.findFirst({
     where: {
       active: true,

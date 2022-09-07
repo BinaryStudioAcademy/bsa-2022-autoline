@@ -1,4 +1,4 @@
-type ComparisonGeneralInform = {
+interface ComparisonGeneralInform {
   id: string;
   bodyType: string;
   engine: string;
@@ -9,6 +9,6 @@ type ComparisonGeneralInform = {
   drivetrainName: string;
   fuelTypeName: string;
   options: { [x: string]: string[] };
-};
+}
 
 export type { ComparisonGeneralInform };

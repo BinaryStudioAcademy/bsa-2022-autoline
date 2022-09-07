@@ -21,7 +21,7 @@ interface SelectingComplactationData {
 const ComparisonPopup: FC = () => {
   const [open, setOpen] = useState(false);
 
-  const { control, handleSubmit } = useAppForm<SelectingComplactationData>({
+  const { control } = useAppForm<SelectingComplactationData>({
     defaultValues: {
       type: '',
       brand: '',
@@ -68,9 +68,7 @@ const ComparisonPopup: FC = () => {
                 Select a complectation from the drop-down list
               </h3>
               <div className={styles.comparisonForm}>
-                <form
-                  onSubmit={handleSubmit((): void => console.log('submit'))}
-                >
+                <form>
                   <SelectFieldForm
                     id="type"
                     name="type"

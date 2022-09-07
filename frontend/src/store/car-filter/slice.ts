@@ -1,7 +1,8 @@
 import { RangeNames } from '@common/enums/car/car-filters-names.enum';
+import { CarFiltersType } from '@common/types/cars/filters.type';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+const initialState: CarFiltersType = {
   rangeFilters: {
     year: {
       yearStart: '',
@@ -32,7 +33,7 @@ const initialState = {
     {
       id: Date.now().toString(),
       brandId: '',
-      modelIds: [''],
+      modelIds: [],
     },
   ],
 };

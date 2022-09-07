@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  padding: 10px 0;
+
+  .chip {
+    font-weight: 700;
+    font-size: 1rem;
+    background-color: var(--gray300);
+    border: none;
+    border-radius: 5px;
+  }
+
+  .deleteButton {
+    color: var(--white);
+    font-weight: 700;
+    font-size: 1rem;
+    background-color: var(--blue100);
+    border: none;
+    border-radius: 30px;
+
+    &:hover {
+      background-color: var(--blue300);
+    }
+
+    svg {
+      color: white;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+}

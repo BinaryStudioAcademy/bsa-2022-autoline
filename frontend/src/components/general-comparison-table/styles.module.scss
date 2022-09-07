@@ -1,0 +1,66 @@
+@import "@assets/css/styles";
+
+.table {
+  display: flex;
+  max-width: max-content;
+  padding: 2rem;
+  border: 1px solid var(--gray300);
+  border-radius: 5px;
+}
+
+.tableCell {
+  min-height: 45px;
+  margin: 0 1rem;
+  padding: 1rem 0;
+  line-height: 1.6;
+  text-transform: capitalize;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--gray300);
+  }
+}
+
+.tableTitles {
+  color: var(--gray400);
+  font-weight: 600;
+  border-right: 1px solid var(--gray300);
+}
+
+.tableColumn {
+  width: 250px;
+
+  &:not(:last-child) {
+    border-right: 1px solid var(--gray300);
+  }
+}
+
+.colorCell {
+  display: flex;
+  align-items: center;
+}
+
+.colorBox {
+  width: 20px;
+  height: 20px;
+  margin-right: 15px;
+  border-radius: 2px;
+  box-shadow: 0 0 4px 0 rgba(0 0 0 / 30%);
+}
+
+.generalInfo {
+  display: grid;
+  grid-auto-columns: 250px;
+  grid-auto-flow: column;
+  width: calc(100% - 250px);
+  overflow-x: scroll;
+}
+
+@media (max-width: $global-sm) {
+  .tableTitles {
+    width: 110px;
+  }
+
+  .generalInfos {
+    width: calc(100% - 110px);
+  }
+}

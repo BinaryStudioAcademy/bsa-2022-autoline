@@ -67,3 +67,8 @@ export type {
   GetViwedCarsPayload,
   SetViewedCarPayload,
 } from './viewed-cars/viewed-cars';
+
+export type {
+  RecentSearchCarsResponse,
+  RecentSearchRequestDto,
+} from './recent-search-cars/recent-searh-cars';

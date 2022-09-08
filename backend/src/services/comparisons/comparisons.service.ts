@@ -3,7 +3,12 @@ import {
   OptionType,
 } from '@autoline/shared/common/types/types';
 import { prisma } from '@data/prisma-client';
-import { Comparison, ComparisonType, Complectation } from '@prisma/client';
+import {
+  Comparison,
+  ComparisonType,
+  Complectation,
+  Type,
+} from '@prisma/client';
 
 const addCarToComparison = async ({
   complectationId,
@@ -281,6 +286,18 @@ const getComparisonGeneralInfo = async (
   return comparisonsGeneralInfo;
 };
 
+const getComparisonOptions = async (optionType: Type): Promise<string[]> => {
+  const options = await prisma.option.findMany({
+    where: {
+      type: optionType,
+    },
+    select: {
+      name: true,
+    },
+  });
+  return options.map((o) => o.name);
+};
+
 export {
   addCarToComparison,
   changeComparisonType,
@@ -289,4 +306,5 @@ export {
   getActiveComparisonCars,
   getActiveComparisonStatus,
   getComparisonGeneralInfo,
+  getComparisonOptions,
 };

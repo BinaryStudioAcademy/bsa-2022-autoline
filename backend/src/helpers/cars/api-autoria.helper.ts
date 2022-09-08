@@ -1,13 +1,23 @@
-import { AutoRiaUrls } from '@common/enums/app/app';
+import { LinksToResources } from '@common/enums/app/app';
 import { ENV } from '@common/enums/app/env.enum';
-import { AutoriaRequestParams, AutoriaResponse } from '@common/types/types';
+import { AutoriaRequestParams, CarDetailsResponse } from '@common/types/types';
 import axios from 'axios';
-import { Response } from 'express';
+
+const URL = `${LinksToResources.AUTORIA}/auto`;
+
+interface SearchCarsAutoRia {
+  result: {
+    search_result: {
+      ids: string[];
+      count: number;
+    };
+  };
+}
 
 const getCarsAutoRia = async (
   requestParams: Partial<AutoriaRequestParams>,
-): Promise<AutoriaResponse> => {
-  const response = await axios.get(AutoRiaUrls.SEARCH_URL, {
+): Promise<SearchCarsAutoRia> => {
+  const response = await axios.get(`${URL}/search`, {
     params: {
       api_key: ENV.APP.AUTORIA_API_KEY,
       ...requestParams,
@@ -16,15 +26,16 @@ const getCarsAutoRia = async (
   return response.data;
 };
 
-const getCarByIdRia = async (id: string): Promise<Response | undefined> => {
-  const requestParams = { auto_id: id };
-  const response = await axios.get(AutoRiaUrls.INFO_URL, {
+const getCarDetailsAutoRia = async (
+  id: string,
+): Promise<CarDetailsResponse> => {
+  const response = await axios.get(`${URL}/info`, {
     params: {
       api_key: ENV.APP.AUTORIA_API_KEY,
-      ...requestParams,
+      auto_id: id,
     },
   });
   return response.data;
 };
 
-export { getCarsAutoRia, getCarByIdRia };
+export { getCarsAutoRia, getCarDetailsAutoRia };

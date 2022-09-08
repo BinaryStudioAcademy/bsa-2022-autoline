@@ -20,7 +20,6 @@ class UpdateUserDto {
     req: TypedRequestBody<UpdateUserReq>,
   ): UpdateUserDto {
     const {
-      tokenPayload: { sub: id },
       name,
       email,
       sex,
@@ -31,6 +30,8 @@ class UpdateUserDto {
       password,
       birthYear,
     } = req.body;
+
+    const id = req.tokenPayload.sub;
 
     return new UpdateUserDto(
       id,

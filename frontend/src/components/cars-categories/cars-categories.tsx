@@ -5,7 +5,6 @@ import { Brand } from '@common/types/cars/brand.type';
 import { mockBrands } from '@components/cars-categories/mock-brands';
 import { SliderNavButton } from '@components/cars-categories/slider-nav-button/slider-nav-button';
 import { swiperParams } from '@components/cars-categories/swiper-params';
-import { useMediaQuery, useTheme } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -15,18 +14,11 @@ import styles from './styles.module.scss';
 
 const CarsCategories: FC = () => {
   const [brands] = useState<Brand[]>(mockBrands);
-  const theme = useTheme();
-  const isMatchSm = useMediaQuery(theme.breakpoints.down('sm'));
-  const isMatchMd = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <div className={styles.container}>
       <div className={styles.arrowWrapper}>
-        <Swiper
-          className={styles.swiperWrapper}
-          {...swiperParams}
-          slidesPerView={isMatchMd ? 8 : isMatchSm ? 3 : 5}
-        >
+        <Swiper className={styles.swiperWrapper} {...swiperParams}>
           <SliderNavButton direction="prev" />
           <SliderNavButton direction="next" />
 

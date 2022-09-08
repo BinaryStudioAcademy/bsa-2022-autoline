@@ -117,7 +117,7 @@ const BrandDetails: FC<Props> = ({
           onChange={handleSelectBrand}
         />
       )}
-      {modelsOptions ? (
+      {selectedBrandName?.id && modelsOptions ? (
         <MultiselectInput
           label="Model"
           options={modelsOptions}

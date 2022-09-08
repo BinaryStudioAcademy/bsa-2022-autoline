@@ -21,7 +21,7 @@ const updateUser = async (
   const existedUser = await prisma.user.findFirst({
     where: {
       id: {
-        not: userData.id,
+        not: id,
       },
       email: userData.email,
     },

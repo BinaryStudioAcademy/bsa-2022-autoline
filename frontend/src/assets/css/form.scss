@@ -3,7 +3,7 @@
 .MuiInputLabel-root.MuiInputLabel-shrink.Mui-focused,
 .MuiInputLabel-root.MuiInputLabel-shrink.MuiFormLabel-filled {
   color: var(--gray300);
-  font-size: 12px;
+  font-size: 1rem;
   transform: translate(0, 5px) scale(0.75);
 }
 
@@ -27,7 +27,7 @@
     padding-top: 15px;
     padding-bottom: 10px;
     padding-left: 0;
-    font-size: 14px;
+    font-size: 1rem;
     font-family: var(--primary-font);
   }
 
@@ -36,6 +36,18 @@
       right: 18px;
       width: 12px;
     }
+  }
+}
+
+.MuiInputBase-root.MuiOutlinedInput-root {
+  height: 3.4rem;
+  font-size: 1rem;
+}
+
+.MuiFormControl-root {
+  .MuiFormLabel-root {
+    font-size: 1rem;
+    transform: translate(0, 1rem) scale(1);
   }
 }
 
@@ -120,5 +132,13 @@
   .MuiListItemButton-root {
     display: flex;
     justify-content: center;
+  }
+}
+
+.MuiBadge-root {
+  span {
+    min-width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
   }
 }

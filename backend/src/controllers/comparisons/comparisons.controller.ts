@@ -2,6 +2,7 @@ import { TokenPayload } from '@autoline/shared';
 import {
   TypedRequest,
   TypedRequestBody,
+  TypedRequestQuery,
 } from '@common/types/controller/controller';
 import { ComparisonType } from '@prisma/client';
 import * as comparisonsService from '@services/comparisons/comparisons.service';
@@ -112,6 +113,22 @@ const getActiveComparisonStatus = async (
   }
 };
 
+const getComparisonGeneralInfo = async (
+  req: TypedRequestQuery<{ userId: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const userId = req.body.tokenPayload.sub;
+    const comparison = await comparisonsService.getComparisonGeneralInfo(
+      userId,
+    );
+    res.status(httpStatus.OK).json(comparison);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   addCarToComparison,
   changeComparisonType,
@@ -119,4 +136,5 @@ export {
   deleteCarFromComparison,
   getActiveComparisonCars,
   getActiveComparisonStatus,
+  getComparisonGeneralInfo,
 };

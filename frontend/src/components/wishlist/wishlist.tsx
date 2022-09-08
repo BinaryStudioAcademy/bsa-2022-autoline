@@ -10,7 +10,9 @@ const Wishlist: React.FC = () => {
   if (isLoading) return null;
   return (
     <>
-      <Title element="h4">LIKED MODELS</Title>
+      <Title element="h4" id="liked">
+        LIKED MODELS
+      </Title>
       <Grid container spacing={2}>
         {data?.models?.map((model: CarPreview) => {
           return (

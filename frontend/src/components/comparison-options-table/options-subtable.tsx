@@ -11,7 +11,7 @@ import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
-enum Entity {
+enum HTMLSymbol {
   check = 10003,
   times = 215,
 }
@@ -29,7 +29,7 @@ const OptionsSubtable: React.FC<{ title: string }> = ({ title }) => {
 
   const getOptionSymbol = (isOptionExists: boolean): JSX.Element => {
     const symbol = String.fromCharCode(
-      isOptionExists ? Entity.check : Entity.times,
+      isOptionExists ? HTMLSymbol.check : HTMLSymbol.times,
     );
     const color = isOptionExists ? Color.green : Color.red;
     return <p style={{ color, margin: '0' }}>{symbol}</p>;

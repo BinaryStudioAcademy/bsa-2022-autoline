@@ -1,3 +1,5 @@
+@import "@assets/css/styles";
+
 .topAutoriaContainer {
   margin-top: 4rem;
 }
@@ -14,4 +16,12 @@
   grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   justify-items: center;
   gap: 1.5rem;
+
+  @media (max-width: $global-sm) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: $global-xl) {
+    grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
+  }
 }

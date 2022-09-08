@@ -49,8 +49,8 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
           onLoad={(): void => setAvatarImageLoaded(true)}
           alt="avatar"
           sx={{
-            width: 35,
-            height: 35,
+            width: '3rem',
+            height: '3rem',
             visibility: isAvatarImageLoaded ? 'visible' : 'hidden',
           }}
         />

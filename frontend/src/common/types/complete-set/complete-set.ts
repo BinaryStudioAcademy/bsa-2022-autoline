@@ -4,4 +4,6 @@ export type CompleteSetPropsType = {
   data: ComplectationDetailsType[];
   className?: string;
   collapsed?: boolean;
+  onClick?: (id: string) => void;
+  activeRowId?: string;
 };

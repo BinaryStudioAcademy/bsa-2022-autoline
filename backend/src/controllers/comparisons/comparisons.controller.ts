@@ -3,7 +3,7 @@ import {
   TypedRequestBody,
   TypedRequestParams,
 } from '@common/types/controller/controller';
-import { ComparisonType } from '@prisma/client';
+import { ComparisonType, Type } from '@prisma/client';
 import * as comparisonsService from '@services/comparisons/comparisons.service';
 import { Request, NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
@@ -105,6 +105,21 @@ const getActiveComparisonStatus = async (
   }
 };
 
+const getComparisonOptions = async (
+  req: TypedRequestParams<{ type: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const options = await comparisonsService.getComparisonOptions(
+      req.params.type as Type,
+    );
+    res.status(httpStatus.OK).json(options);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getComparisonGeneralInfo = async (
   req: TypedRequestQuery<{ userId: string }>,
   res: Response,
@@ -128,5 +143,6 @@ export {
   deleteCarFromComparison,
   getActiveComparisonCars,
   getActiveComparisonStatus,
+  getComparisonOptions,
   getComparisonGeneralInfo,
 };

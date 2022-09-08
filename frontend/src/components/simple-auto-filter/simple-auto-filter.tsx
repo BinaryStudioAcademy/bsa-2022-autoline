@@ -32,11 +32,7 @@ const SimpleAutoFilter: FC = () => {
 
   const { filters, brandDetails } = useAppSelector((state) => state.carFilter);
 
-  const {
-    id: detailId,
-    brandId,
-    modelIds,
-  } = useMemo(() => brandDetails[0], [brandDetails[0]]);
+  const { id: detailId, brandId, modelIds } = brandDetails[0];
 
   const { data: brands, isLoading: isBrandsLoading } = useGetBrandsQuery();
   const { data: models } = useGetModelsOfBrandQuery(brandId, {
@@ -117,11 +113,11 @@ const SimpleAutoFilter: FC = () => {
 
   const selectedBrandName = useMemo(() => {
     return getValueById(brands || [], brandId);
-  }, [brandDetails[0]]);
+  }, [brandId]);
 
   const selectedModelName = useMemo(
     () => getValueById(models || [], modelIds[0]),
-    [modelIds[0]],
+    [modelIds],
   );
 
   const handleSelectBrand = (data: AutocompleteValueType): void => {
@@ -182,13 +178,7 @@ const SimpleAutoFilter: FC = () => {
               onChange={handleSelectModel}
             />
           ) : (
-            <SelectField
-              id="disabled"
-              name="Model"
-              value=""
-              disabled={true}
-              required={false}
-            >
+            <SelectField name="Model" value="" disabled required={false}>
               disabled
             </SelectField>
           )}

@@ -1,21 +1,18 @@
 :root {
-  --swiper-width: 540px;
+  --swiper-width: 100%;
   --z-index-current-image: 1;
   --preview-image-height: 70px;
   --main-image-height: 380px;
 }
 
-html,
-body {
-  position: relative;
-  height: 100%;
-}
-
-.swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.mySwiper,
+.mySwiper2 {
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .mySwiper2 {

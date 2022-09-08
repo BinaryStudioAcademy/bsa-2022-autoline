@@ -9,6 +9,7 @@ import { RangeValueType } from '@common/types/cars/range-item.type';
 import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
 import { SelectField } from '@components/common/select-field/select-field';
+import { Spinner } from '@components/common/spinner/spinner';
 import { getValueById } from '@helpers/get-value-by-id';
 import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
@@ -146,7 +147,7 @@ const SimpleAutoFilter: FC = () => {
     );
   };
 
-  if (isBrandsLoading || isOptionsLoading) return <h1>Loading...</h1>;
+  if (isBrandsLoading || isOptionsLoading) return <Spinner />;
   return (
     <div className={styles.container}>
       <h5 className={styles.title}>SELECT YOUR CAR</h5>

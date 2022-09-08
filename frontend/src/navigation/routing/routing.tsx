@@ -13,7 +13,6 @@ import { ResetPassword } from '@components/reset-password/reset-password';
 import { SearchPage } from '@components/search-page/search-page';
 import { RedirectAfterSign } from '@components/sign/components/redirect-after-sign/redirect-after-sign';
 import { Sign } from '@components/sign/sign';
-import { WhereToBuy } from '@components/where-buy/where-buy';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 import { useGetUserQuery } from '@store/queries/user/update-user';
 
@@ -47,7 +46,6 @@ const Routing: FC = () => {
             path={AppRoute.MAIL_FAILED_VALIDATION}
             element={<MailVerificationFailed />}
           />
-          <Route path="/where" element={<WhereToBuy />} />
           <Route
             path={AppRoute.SIGN_REDIRECT}
             element={<RedirectAfterSign />}

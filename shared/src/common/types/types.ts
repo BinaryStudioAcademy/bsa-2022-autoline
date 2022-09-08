@@ -71,4 +71,5 @@ export type {
 export type {
   RecentSearchCarsResponse,
   RecentSearchRequestDto,
+  RecentSearchInput,
 } from './recent-search-cars/recent-searh-cars';

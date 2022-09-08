@@ -7,8 +7,10 @@ import type {
 
 const getRecentSearchCars = async (
   userId: string,
+  take: number,
 ): Promise<RecentSearchCarsResponse[]> => {
   const recentSearchCars = await prisma.users_Searches_Cars.findMany({
+    take,
     where: {
       user_id: userId,
     },

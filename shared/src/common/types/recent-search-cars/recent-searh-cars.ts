@@ -19,4 +19,13 @@ type RecentSearchRequestDto = {
   modelId: string;
 };
 
-export type { RecentSearchCarsResponse, RecentSearchRequestDto };
+type RecentSearchInput = {
+  userId: string;
+  take: string;
+};
+
+export type {
+  RecentSearchCarsResponse,
+  RecentSearchRequestDto,
+  RecentSearchInput,
+};

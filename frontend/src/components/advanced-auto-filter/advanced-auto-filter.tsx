@@ -50,6 +50,7 @@ import {
   useGetUsedOptionsQuery,
   useLazyGetFilteredCarsQuery,
 } from '@store/queries/cars';
+import { useCreateRecentSearchCarsMutation } from '@store/queries/recent-serach-cars';
 import {
   selectNormalizedOptionsInAutocompleteType,
   selectOptionsInAutocompleteType,
@@ -71,8 +72,12 @@ const AdvancedAutoFilter: FC = () => {
 
   const [search, filteredCars] = useLazyGetFilteredCarsQuery();
 
-  const doSearch = (): void => {
-    search(queryParams);
+  const [addRecentSearchCar] = useCreateRecentSearchCarsMutation();
+  const doSearch = async (): Promise<void> => {
+    const { data } = await search(queryParams);
+    if (data) {
+      addRecentSearchCar(data[0]?.model_id);
+    }
     window.scrollTo({
       top: 0,
       behavior: 'smooth',

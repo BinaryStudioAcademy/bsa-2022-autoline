@@ -5,15 +5,20 @@ import { API } from '../api-routes';
 
 const recentSearchApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getRecentSearchCars: build.query<RecentSearchCarsResponse, void>({
-      query: () => API.RECENT_SEARCH,
-    }),
-    createRecentSearchCars: build.mutation<void, string>({
+    getRecentSearchCars: build.query<RecentSearchCarsResponse[], number>({
       query: (params) => ({
         url: `${API.RECENT_SEARCH}`,
-        method: 'POST',
-        body: params,
+        params: { take: params },
       }),
+      providesTags: ['RecentSearchCars'],
+    }),
+    createRecentSearchCars: build.mutation<void, string>({
+      query: (modelId) => ({
+        url: `${API.RECENT_SEARCH}`,
+        method: 'POST',
+        body: { modelId },
+      }),
+      invalidatesTags: ['RecentSearchCars'],
     }),
   }),
   overrideExisting: false,

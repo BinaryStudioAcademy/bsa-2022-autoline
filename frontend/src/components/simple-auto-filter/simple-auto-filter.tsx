@@ -21,6 +21,7 @@ import {
   useGetUsedOptionsQuery,
   useLazyGetFilteredCarsQuery,
 } from '@store/queries/cars';
+import { useCreateRecentSearchCarsMutation } from '@store/queries/recent-serach-cars';
 
 import styles from './styles.module.scss';
 
@@ -35,6 +36,8 @@ const SimpleAutoFilter: FC = () => {
   const { data: options, isLoading } = useGetUsedOptionsQuery();
 
   const [search, filteredCars] = useLazyGetFilteredCarsQuery();
+
+  const [addRecentSearchCar] = useCreateRecentSearchCarsMutation();
 
   useEffect(() => {
     if (filteredCars.data) {
@@ -76,7 +79,10 @@ const SimpleAutoFilter: FC = () => {
   );
 
   const doSearch = async (): Promise<void> => {
-    await search(queryParams);
+    const { data: cars } = await search(queryParams);
+    if (cars) {
+      addRecentSearchCar(cars[0]?.model_id);
+    }
     navigate(API.SEARCH);
   };
 

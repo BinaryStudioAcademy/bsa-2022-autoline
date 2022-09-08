@@ -12,13 +12,18 @@ import { TopCarsAutoria } from '@components/top-cars-autoria/top-cars-autoria';
 import { useAppSelector } from '@hooks/hooks';
 import { Container } from '@mui/material';
 import { useGetNewCarsQuery } from '@store/queries/new-cars';
+import { useGetRecentSearchCarsQuery } from '@store/queries/recent-serach-cars';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {
-  const { data: cars } = useGetNewCarsQuery(4);
   const isAuth = useAppSelector((state) => state.auth.token);
+  const { data: cars } = !isAuth
+    ? useGetRecentSearchCarsQuery(4)
+    : useGetNewCarsQuery(4);
+  //const { data } = useGetRecentSearchCarsQuery(4);
+
   return (
     <>
       <Header />

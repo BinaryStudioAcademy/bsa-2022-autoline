@@ -67,7 +67,7 @@ const GeneralComparisonTable: React.FC = () => {
       value.style.height = `${optionsHighestHeights.get(title)}px`;
       tableTitleElement.style.height = `${optionsHighestHeights.get(title)}px`;
     });
-  }, [generalTable]);
+  }, [generalTable, generalInfo]);
 
   if (isLoading) return <Spinner />;
 

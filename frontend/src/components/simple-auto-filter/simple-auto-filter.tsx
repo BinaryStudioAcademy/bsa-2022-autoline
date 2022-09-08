@@ -132,8 +132,7 @@ const SimpleAutoFilter: FC = () => {
   };
 
   const handleSelectModel = (data: AutocompleteValueType): void => {
-    const newModelIds =
-      modelIds.length !== 1 && data?.id ? [data?.id, ...modelIds.slice(1)] : [];
+    const newModelIds = data?.id ? [data?.id] : [];
     dispatch(
       setBrandDetailsValue({
         id: detailId,

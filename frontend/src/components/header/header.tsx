@@ -60,7 +60,7 @@ export const Header = (): React.ReactElement => {
     },
     comparisons: {
       label: 'Comparisons',
-      linkTo: '#',
+      linkTo: AppRoute.COMPARISONS,
       count: comparisonCount,
     },
   };

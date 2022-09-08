@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { WishlistInput } from '@autoline/shared/common/types/types';
+import { ComplectationReturnedData, WishlistInput } from '@autoline/shared/common/types/types';
 import { DetailsCarPanelPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
 import { convertPrice } from '@helpers/utils/convert-price';
@@ -29,19 +29,20 @@ const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
   const [deleteWishlist] = useDeleteWishlistMutation();
 
   const handleCreateWishlist = async (): Promise<void> => {
-    const data: WishlistInput = complectationId
-      ? { modelId }
-      : { complectationId };
-
+    const data: WishlistInput = modelId ? { modelId } : { complectationId };
     await createWishlist(data);
   };
 
   const handleDeleteWishlist = async (): Promise<void> => {
-    const data: WishlistInput = complectationId
-      ? { modelId }
-      : { complectationId };
+    const data: WishlistInput = modelId ? { modelId } : { complectationId };
     await deleteWishlist(data);
   };
+
+  let complectationName = '';
+  if (!modelId && complectationId && !isLoading) {
+    const complectationData = data as ComplectationReturnedData;
+    complectationName = `${complectationData.brand} ${complectationData.model} ${complectationData.name}`;
+  }
 
   const handleLikeClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
@@ -54,6 +55,9 @@ const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
 
   return (
     <div className={styles.container}>
+      {complectationName && (
+        <h4 className={styles.complectationHeader}>{complectationName}</h4>
+      )}
       <div className={styles.header}>
         <div className={styles.price}>{`$ ${data?.minPrice}
           - ${data?.maxPrice}

@@ -16,6 +16,17 @@ const getComplectationsById = async (
       id: complectationId,
     },
     select: {
+      name: true,
+      model: {
+        select: {
+          name: true,
+          brand: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
       users_wishlists: {
         where: {
           user_id: userId,
@@ -80,6 +91,9 @@ const getComplectationsById = async (
   );
 
   const complectationData = {
+    model: data?.model.name,
+    brand: data?.model.brand.name,
+    name: data?.name,
     enginePowers: [data?.engine_power],
     colors: [data?.color.name],
     engineDisplacements: [data?.engine_displacement.toNumber()],

@@ -303,7 +303,7 @@ const getComparisonOptions = async (optionType: Type): Promise<string[]> => {
 
 const getActiveComparisonCarsPreview = async (
   userId: string,
-): Promise<ComplPreviewInfo[]> => {
+): Promise<ComparisonInfo[]> => {
   const activeComparison = await prisma.comparison.findFirst({
     where: {
       active: true,
@@ -378,7 +378,7 @@ const getActiveComparisonCarsPreview = async (
     },
   });
 
-  const complPreviewInfo = complectations.map((compl) => {
+  const comparisonInfo = complectations.map((compl) => {
     const modelIndex = modelsInfo.findIndex(
       (model) => model.id === compl.complectation.model_id,
     );
@@ -402,7 +402,7 @@ const getActiveComparisonCarsPreview = async (
     };
   });
 
-  return complPreviewInfo;
+  return comparisonInfo;
 };
 
 const updatePositions = async (
@@ -443,6 +443,6 @@ export {
   getActiveComparisonStatus,
   getComparisonGeneralInfo,
   getComparisonOptions,
-  getActiveComparisonCarsPreview,
+  getActiveComparison,
   updatePositions,
 };

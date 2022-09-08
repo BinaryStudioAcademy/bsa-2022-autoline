@@ -69,4 +69,4 @@ export type {
   SetViewedCarPayload,
 } from './viewed-cars/viewed-cars';
 
-export type { ComplPreviewInfo } from './comparisons/comp-preview-info';
+export type { ComparisonInfo } from './comparisons/comparison-info';

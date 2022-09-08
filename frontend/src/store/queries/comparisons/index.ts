@@ -1,5 +1,4 @@
-import { ComplPreviewInfo } from '@autoline/shared';
-import { ComparisonGeneralInform } from '@autoline/shared/common/types/types';
+import { ComparisonInfo, ComparisonGeneralInform } from '@autoline/shared';
 import { ComparisonTypeEnum } from '@common/enums/enums';
 import { Comparison } from '@common/types/types';
 import { API } from '@store/queries/api-routes';
@@ -59,7 +58,7 @@ export const comparisonsApi = api.injectEndpoints({
         url: `${API.COMPARISONS}/option/${type}`,
       }),
     }),
-    getComparisonsPreviewCars: builder.query<ComplPreviewInfo[], void>({
+    getComparisonCars: builder.query<ComparisonInfo[], void>({
       query: () => ({
         url: API.COMPARISONS,
         method: 'GET',
@@ -85,6 +84,6 @@ export const {
   useGetActiveComparisonStatusQuery,
   useGetComparisonOptionsQuery,
   useGetComparisonGeneralInfoQuery,
-  useGetComparisonsPreviewCarsQuery,
+  useGetComparisonCarsQuery,
   useUpdatePositionsMutation,
 } = comparisonsApi;

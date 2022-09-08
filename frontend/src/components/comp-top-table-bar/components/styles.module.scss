@@ -5,24 +5,12 @@ html {
 .wrapper {
   display: flex;
   align-items: center;
-  margin: 20px;
   border: 1px solid var(--gray300);
   border-radius: var(--border-radius-container);
 }
 
-.droppableContainer {
+.comparisonContainer {
   display: flex;
-  flex-direction: column;
-}
-
-.carsList {
-  display: flex;
-}
-
-.carContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -47,11 +35,6 @@ html {
   .btnOutline {
     font-size: 1rem;
   }
-}
-
-.swiperWrapper {
-  width: 60rem;
-  margin: 0;
 }
 
 .btnContainer,
@@ -128,10 +111,6 @@ html {
   display: flex;
   border-left: 0.075rem solid var(--gray300);
 
-  &:active {
-    border-left: 1px;
-  }
-
   .compCarContainerBtns {
     display: flex;
     flex-direction: column;
@@ -166,6 +145,8 @@ html {
 }
 
 .noCarsError {
+  padding-left: 2rem;
   color: var(--blue100);
   font-size: 1.5rem;
+  border-left: 0.075rem solid var(--gray300);
 }

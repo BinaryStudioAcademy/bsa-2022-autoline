@@ -1,4 +1,4 @@
-export interface ComplPreviewInfo {
+export interface ComparisonInfo {
   position: number;
   wishlistId: string | undefined;
   id: string;

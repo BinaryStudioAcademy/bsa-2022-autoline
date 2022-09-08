@@ -27,7 +27,7 @@ comparisonsRouter.delete(
   comparisonsController.deleteCarFromComparison,
 );
 comparisonsRouter.get(
-  `${PATH}/preview`,
+  `${PATH}/info`,
   userAuthMiddleware,
   comparisonsController.getActiveComparisonCars,
 );
@@ -50,7 +50,7 @@ comparisonsRouter.get(
 comparisonsRouter.get(
   PATH,
   userAuthMiddleware,
-  comparisonsController.getActiveComparisonCarsPreview,
+  comparisonsController.getActiveComparison,
 );
 comparisonsRouter.patch(
   `${PATH}/position`,

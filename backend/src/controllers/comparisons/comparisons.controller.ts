@@ -136,17 +136,16 @@ const getComparisonGeneralInfo = async (
   }
 };
 
-const getActiveComparisonCarsPreview = async (
+const getActiveComparison = async (
   req: TypedRequestBody<{ tokenPayload: TokenPayload }>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const comparisonPreview =
-      await comparisonsService.getActiveComparisonCarsPreview(
-        req.body.tokenPayload.sub,
-      );
-    res.status(httpStatus.OK).json(comparisonPreview);
+    const comparison = await comparisonsService.getActiveComparison(
+      req.body.tokenPayload.sub,
+    );
+    res.status(httpStatus.OK).json(comparison);
   } catch (error) {
     next(error);
   }
@@ -158,11 +157,11 @@ const updatePositions = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const comparisonPreview = await comparisonsService.updatePositions(
+    const comparison = await comparisonsService.updatePositions(
       req.body.tokenPayload.sub,
       req.body.positions,
     );
-    res.status(httpStatus.OK).json(comparisonPreview);
+    res.status(httpStatus.OK).json(comparison);
   } catch (error) {
     next(error);
   }
@@ -177,6 +176,6 @@ export {
   getActiveComparisonStatus,
   getComparisonOptions,
   getComparisonGeneralInfo,
-  getActiveComparisonCarsPreview,
+  getActiveComparison,
   updatePositions,
 };

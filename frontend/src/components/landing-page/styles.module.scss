@@ -59,11 +59,9 @@ body {
     justify-content: space-between;
     align-items: center;
     height: calc(100vh - var(--header-height));
-
-    @include landing-page-margin;
-
     padding-right: 0;
     padding-left: 0;
+    overflow: hidden;
 
     @media (max-width: $global-md) {
       height: auto;
@@ -73,6 +71,10 @@ body {
       flex-direction: column;
       align-items: flex-start;
       height: auto;
+    }
+
+    .firstContainerInner {
+      position: relative;
     }
 
     .firstContainerLeft {
@@ -132,23 +134,22 @@ body {
       }
 
       .car {
-        width: 60rem;
+        position: absolute;
+        top: 50%;
+        right: -33%;
+        z-index: -1;
+        width: 1550px;
+        max-width: 80vw;
+        transform: translateY(-50%);
 
         @media (max-width: $global-md) {
           width: 100%;
         }
 
         @media (max-width: $global-sm) {
+          position: static;
           width: 100%;
-          max-width: 33rem;
-        }
-
-        @media (min-width: $global-sm) {
-          margin-right: calc(0px - var(--mui-padding-md));
-        }
-
-        @media (max-width: $global-sm) {
-          margin-right: calc(0px - var(--mui-padding-sm));
+          transform: none;
         }
       }
     }
@@ -156,16 +157,6 @@ body {
 
   .secondContainer,
   .fourthContainer {
-    @include landing-page-margin;
-
-    @media (min-width: $global-sm) {
-      margin-right: 6rem;
-    }
-
-    @media (max-width: $global-sm) {
-      margin-right: 2rem;
-    }
-
     margin-top: 0;
     margin-bottom: 0;
     padding-right: 0;
@@ -179,13 +170,23 @@ body {
 
     .secondContainerCards {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(25rem, 48%));
       justify-items: center;
       gap: 1.5rem;
+
+      @media (max-width: $global-md) {
+        grid-template-columns: minmax(25rem, 1fr);
+      }
+
+      @media (min-width: $global-xl) {
+        grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
+      }
     }
   }
 
   .thirdContainer {
+    background-color: var(--white);
+
     @media (min-width: $global-sm) {
       margin: var(--header-height) calc(0px - var(--mui-padding-md));
     }

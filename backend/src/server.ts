@@ -1,9 +1,9 @@
 import { ENV } from '@common/enums/app/app';
+import { logger } from '@helpers/logger/logger';
 import { errorsHandler } from '@middlewares/middlewares';
 import {
   healthRouter,
   authRouter,
-  protectedRouter,
   userRouter,
   activateRouter,
   wishlistRouter,
@@ -19,8 +19,10 @@ import {
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
+import { carsUpdatePricesFromAutoria } from '@services/cars/cars-update.service';
 import cors from 'cors';
 import express from 'express';
+import * as cron from 'node-cron';
 
 // Express server configuration
 const app = express();
@@ -52,7 +54,6 @@ app
 const routes = [
   healthRouter,
   authRouter,
-  protectedRouter,
   userRouter,
   wishlistRouter,
   carsRouter,
@@ -77,3 +78,12 @@ app.listen(ENV.APP.SERVER_PORT, ENV.APP.SERVER_HOST, () => {
   // eslint-disable-next-line no-console
   console.log(`Server is running at ${ENV.APP.SERVER_PORT}`);
 });
+
+// The cron task will be executed at every 30th minute
+const task = cron.schedule('*/30 * * * *', () => {
+  carsUpdatePricesFromAutoria();
+  logger.info(
+    `${new Date().toString()}: Cron task carsUpdatePricesFromAutoria()`,
+  );
+});
+task.start();

@@ -6,7 +6,7 @@ import { Header } from '@components/header/header';
 import { TopCarsAutoria } from '@components/top-cars-autoria/top-cars-autoria';
 import { useAppSelector } from '@hooks/hooks';
 import SearchIcon from '@mui/icons-material/Search';
-import { Container, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
@@ -21,17 +21,19 @@ const SearchPage: React.FC = () => {
         <Title id="searchTitle" element="h3">
           Search
         </Title>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} className={styles.searchPageContent}>
           <Grid item xs={12} md={8}>
             {cars.length === 0 && (
               <>
-                <Container sx={{ display: 'flex' }}>
+                <div className={styles.nothingFound}>
                   <SearchIcon
                     className={clsx(styles.searchIcon, styles.icon)}
                   />
                   <h3 className={styles.noCarsTitle}>No cars found</h3>
-                </Container>
-                <TopCarsAutoria />
+                </div>
+                <TopCarsAutoria
+                  cardsContainerClassName={styles.topSearchCars}
+                />
               </>
             )}
             {cars.map((car) => (

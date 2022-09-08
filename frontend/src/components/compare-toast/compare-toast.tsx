@@ -22,7 +22,7 @@ const CompareToast: FC<ModalProps> = ({
   };
 
   useEffect(() => {
-    if (!isOpen) {
+    if (isOpen) {
       const timer = setTimeout(closeToast, 6000);
 
       return () => {

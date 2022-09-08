@@ -56,6 +56,7 @@ export type {
   ModelDetailsType,
   ComplectationDetailsType,
   CarPreview,
+  ComparisonGeneralInform,
 } from './cars/cars';
 
 export type {

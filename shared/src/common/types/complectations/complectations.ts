@@ -9,6 +9,9 @@ type ComplectationsInput = {
 };
 
 type ComplectationReturnedData = {
+  model: string;
+  brand: string;
+  name: string;
   options: OptionType;
   enginePowers: Array<number | undefined>;
   colors: Array<string | undefined>;

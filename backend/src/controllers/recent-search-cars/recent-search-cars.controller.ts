@@ -18,7 +18,7 @@ const getRecentSearchCars = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.body.tokenPayload.sub;
+    const userId = req.tokenPayload.sub;
     const { take } = req.query;
     const result = await recentSearchCarsService.getRecentSearchCars(
       userId,
@@ -36,7 +36,7 @@ const addCarToRecentSearch = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.body.tokenPayload.sub;
+    const userId = req.tokenPayload.sub;
     const { modelId } = req.body;
     const recentSearchCar = {
       userId,

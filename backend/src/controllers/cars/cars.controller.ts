@@ -18,10 +18,10 @@ const carsSearchAutoria = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const carsData = await carsSearchService.carsSearchAutoria(
-      req.query.complectationId,
-      req.query.page,
-    );
+    const carsData = await carsSearchService.carsSearchAutoria({
+      complectationId: req.query.complectationId,
+      page: req.query.page,
+    });
     const autoRiaCarsData = await getCarsAutoRia(carsData);
 
     res.json(autoRiaCarsData);

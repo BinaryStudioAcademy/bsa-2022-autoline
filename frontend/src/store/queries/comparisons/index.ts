@@ -55,7 +55,7 @@ export const comparisonsApi = api.injectEndpoints({
     }),
     getComparisonOptions: builder.query<string[], { type: string }>({
       query: ({ type }) => ({
-        url: `${API.COMPARISONS}/${type}`,
+        url: `${API.COMPARISONS}/option/${type}`,
       }),
     }),
   }),

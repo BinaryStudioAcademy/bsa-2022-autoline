@@ -43,7 +43,7 @@ comparisonsRouter.get(
 );
 
 comparisonsRouter.get(
-  `${PATH}/:type`,
+  `${PATH}/option/:type`,
   userAuthMiddleware,
   comparisonsController.getComparisonOptions,
 );

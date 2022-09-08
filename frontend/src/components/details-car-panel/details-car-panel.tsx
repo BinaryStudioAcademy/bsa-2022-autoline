@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 
 import {
   ComplectationReturnedData,
@@ -6,15 +6,12 @@ import {
 } from '@autoline/shared/common/types/types';
 import { DetailsCarPanelPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
+import { WishlistContext } from '@contexts/wishlist-context';
 import { convertPrice } from '@helpers/utils/convert-price';
 import {
   useGetComplectationsForPanelQuery,
   useGetRateQuery,
 } from '@store/queries/details-panel';
-import {
-  useCreateWishlistMutation,
-  useDeleteWishlistMutation,
-} from '@store/queries/preferences/wishlist';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
@@ -23,36 +20,25 @@ const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
   complectationId = '',
   modelId = '',
 }) => {
+  const { likedCars, handleLikeClick } = useContext(WishlistContext);
   const { data, isLoading } = useGetComplectationsForPanelQuery({
     complectationId,
     modelId,
   });
+
+  const likeClick = (event: React.MouseEvent): void => {
+    event.stopPropagation();
+    const data: WishlistInput = modelId ? { modelId } : { complectationId };
+    handleLikeClick(data);
+  };
+
   const { data: rate } = useGetRateQuery();
-  const [createWishlist] = useCreateWishlistMutation();
-  const [deleteWishlist] = useDeleteWishlistMutation();
-
-  const handleCreateWishlist = async (): Promise<void> => {
-    const data: WishlistInput = modelId ? { modelId } : { complectationId };
-    await createWishlist(data);
-  };
-
-  const handleDeleteWishlist = async (): Promise<void> => {
-    const data: WishlistInput = modelId ? { modelId } : { complectationId };
-    await deleteWishlist(data);
-  };
 
   let complectationName = '';
   if (!modelId && complectationId && !isLoading) {
     const complectationData = data as ComplectationReturnedData;
     complectationName = `${complectationData.brand} ${complectationData.model} ${complectationData.name}`;
   }
-
-  const handleLikeClick = (event: React.MouseEvent): void => {
-    event.stopPropagation();
-    data?.wishlist.length != 0
-      ? handleDeleteWishlist()
-      : handleCreateWishlist();
-  };
 
   if (isLoading) return null;
 
@@ -75,9 +61,11 @@ const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
             className={clsx(
               styles.button,
               styles.iconButton,
-              data?.wishlist.length != 0 && styles.isLiked,
+              likedCars?.includes(modelId ? modelId : complectationId)
+                ? styles.isLiked
+                : '',
             )}
-            onClick={handleLikeClick}
+            onClick={likeClick}
           >
             <HeartIcon />
           </button>

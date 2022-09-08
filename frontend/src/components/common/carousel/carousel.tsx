@@ -31,7 +31,7 @@ export const Carousel = (props: { images: string[] }): React.ReactElement => {
           setCurrentImage(activeIndex + 1);
         }}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper2"
+        className="mainSwiper"
       >
         <div className="navigation-bar">
           <img src={IconPark} />
@@ -54,7 +54,7 @@ export const Carousel = (props: { images: string[] }): React.ReactElement => {
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper"
+        className="thumbsSwiper"
         onSlideChange={({ clickedIndex }): void => {
           if (clickedIndex) setCurrentImage(clickedIndex + 1);
         }}

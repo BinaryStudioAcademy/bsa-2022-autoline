@@ -5,8 +5,8 @@
   --main-image-height: 380px;
 }
 
-.mySwiper,
-.mySwiper2 {
+.mainSwiper, 
+.thumbsSwiper {
   .swiper-slide img {
     display: block;
     width: 100%;
@@ -15,7 +15,7 @@
   }
 }
 
-.mySwiper2 {
+.mainSwiper {
   width: var(--swiper-width);
   height: var(--main-image-height);
   border-radius: 10px;
@@ -26,7 +26,7 @@
   }
 }
 
-.mySwiper {
+.thumbsSwiper {
   box-sizing: border-box;
   width: var(--swiper-width);
   height: var(--preview-image-height);
@@ -58,7 +58,8 @@
   }
 }
 
-.mySwiper2:hover {
+.mainSwiper:hover {
+
   .swiper-button-prev::after,
   .swiper-button-next::after {
     padding: 10px 15px;

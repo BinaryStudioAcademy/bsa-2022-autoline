@@ -21,7 +21,8 @@ const updateUserSchema = Yup.object().shape({
     .matches(/^[A-Za-z0-9.\-_]*@/, UserValidationMessage.INVALID_EMAIL)
     .matches(/@[A-Za-z0-9.\-_]*$/, UserValidationMessage.INVALID_EMAIL)
     .matches(/^[\S]{1,35}@/, UserValidationMessage.INVALID_EMAIL)
-    .matches(/@.{4,35}?\./, UserValidationMessage.INVALID_EMAIL),
+    .matches(/@.{4,35}$/, UserValidationMessage.INVALID_EMAIL)
+    .matches(/@.*\..{2,}/, UserValidationMessage.INVALID_EMAIL),
   phone: Yup.string()
     .transform((value) => (value === '' ? null : value))
     .matches(phoneReg, 'Phone is invalid')

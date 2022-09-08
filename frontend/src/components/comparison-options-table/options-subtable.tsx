@@ -3,34 +3,35 @@ import React from 'react';
 import { CollapseElement } from '@components/collapse-component/collapse-element/collapse-element';
 import { Spinner } from '@components/common/spinner/spinner';
 import { uuid4 } from '@sentry/utils';
-import { useGetComparisonOptionsQuery } from '@store/queries/comparisons';
+import {
+  useGetComparisonGeneralInfoQuery,
+  useGetComparisonOptionsQuery,
+} from '@store/queries/comparisons';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
-
-interface SubTableProps {
-  title: string;
-  options: {
-    name: string;
-    type: string;
-  }[];
-}
 
 enum Entity {
   check = 10003,
   times = 215,
 }
+enum Color {
+  green = '#008000',
+  red = '#e81414',
+}
 
-const OptionsSubtable: React.FC<SubTableProps> = ({ title, options }) => {
+const OptionsSubtable: React.FC<{ title: string }> = ({ title }) => {
   const { data: optionNames, isLoading } = useGetComparisonOptionsQuery({
     type: title,
   });
 
-  const getOptionSymbol = (name: string, option: string): JSX.Element => {
+  const { data: cars } = useGetComparisonGeneralInfoQuery();
+
+  const getOptionSymbol = (isOptionExists: boolean): JSX.Element => {
     const symbol = String.fromCharCode(
-      name === option ? Entity.check : Entity.times,
+      isOptionExists ? Entity.check : Entity.times,
     );
-    const color = name === option ? 'green' : 'red';
+    const color = isOptionExists ? Color.green : Color.red;
     return <p style={{ color, margin: '0' }}>{symbol}</p>;
   };
 
@@ -48,11 +49,11 @@ const OptionsSubtable: React.FC<SubTableProps> = ({ title, options }) => {
             ))}
           </div>
           <div className={clsx('styledScrollbar', styles.generalInfo)}>
-            {options.map((option) => (
+            {cars?.map((car) => (
               <div className={styles.tableColumn} key={uuid4()}>
                 {optionNames?.map((optionName) => (
                   <div className={styles.tableCell} key={uuid4()}>
-                    {getOptionSymbol(option.name, optionName)}
+                    {getOptionSymbol(car.options[title].includes(optionName))}
                   </div>
                 ))}
               </div>

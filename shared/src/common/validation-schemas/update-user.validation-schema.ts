@@ -28,7 +28,9 @@ const updateUserSchema = Yup.object().shape({
     .matches(phoneReg, 'Phone is invalid')
     .nullable(),
   location: Yup.string()
-    .oneOf(['kyiv', 'kharkiv', 'odesa', 'not_appliable', null])
+    .min(2, 'Password must be at least 8 characters')
+    .max(150, 'Full name must not exceed 150 characters')
+    .matches(/^[A-Za-z\-\s]*$/)
     .nullable(),
   birthYear: Yup.lazy((value) => {
     if (value == 'not_appliable') {

@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useMemo, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 import { ModelType } from '@autoline/shared/common/types/types';
 import { CheckListsNames } from '@common/enums/car/car-filters-names.enum';
@@ -60,7 +60,7 @@ const AppliedFiltersBar = (): ReactElement => {
     if (!models.data) return;
 
     const newModels = models.data.reduce(
-      (obj, item) => Object.assign(obj, { [item.id]: item }),
+      (obj, item) => ({ ...obj, [item.id]: item }),
       {},
     );
     setNormalizedModels({ ...normalizedModels, ...newModels });
@@ -84,9 +84,9 @@ const AppliedFiltersBar = (): ReactElement => {
       dispatch(removeBrandDetails(detail.id));
     }
     if (filterName === 'modelId') {
-      const detail = brandDetails.filter((item) =>
+      const [detail] = brandDetails.filter((item) =>
         item.modelIds.includes(id),
-      )[0];
+      );
       const newDetail = {
         ...detail,
         modelIds: detail.modelIds.filter((modelId) => modelId !== id),
@@ -97,17 +97,17 @@ const AppliedFiltersBar = (): ReactElement => {
 
   useEffect(() => {
     const ranges = Object.entries(rangeFilters)
-      .map((item) => {
-        const label = Object.values(item[1])
-          .filter((value) => value !== '')
+      .map(([rangeName, rangeValue]) => {
+        const label = Object.values(rangeValue)
+          .filter(Boolean)
           .sort((a, b) => +a - +b)
           .join(' - ');
 
-        const icon = label !== '' ? getRangeSymbol(item[0]) : '';
+        const icon = label !== '' ? getRangeSymbol(rangeName) : '';
 
-        return [item[0], `${icon}${label}`];
+        return [rangeName, `${icon}${label}`];
       })
-      .filter((range) => range[1] !== '');
+      .filter(([_, rangeValue]) => rangeValue !== '');
 
     setAppliedRanges(ranges);
   }, [rangeFilters]);
@@ -132,7 +132,7 @@ const AppliedFiltersBar = (): ReactElement => {
     const details: AppliedFilterType[] = [];
 
     brandDetails.forEach((item) => {
-      if (item.brandId !== '') {
+      if (item.brandId) {
         details.push({
           filterName: 'brandId',
           id: item.brandId,
@@ -157,13 +157,11 @@ const AppliedFiltersBar = (): ReactElement => {
     dispatch(resetAllFilters());
   };
 
-  const isAnyApplies = useMemo(() => {
-    return Boolean(
-      appliedCheckboxes?.length ||
-        appliedRanges?.length ||
-        appliedBrandDetails?.length,
-    );
-  }, [appliedRanges, appliedBrandDetails, appliedCheckboxes]);
+  const isAnyApplies = Boolean(
+    appliedCheckboxes?.length ||
+      appliedRanges?.length ||
+      appliedBrandDetails?.length,
+  );
 
   if (!isAnyApplies) return <></>;
 

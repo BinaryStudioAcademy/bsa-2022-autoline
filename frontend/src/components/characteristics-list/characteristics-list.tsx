@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
 import { ComplectationReturnedData } from '@autoline/shared';
-import { CharacteristicsListInfoProps } from '@common/types/characteristics-list/characteristics-list';
 import { CircularProgress } from '@mui/material';
 import { useGetComplectationsForPanelQuery } from '@store/queries/details-panel';
 import { clsx } from 'clsx';
@@ -11,7 +10,6 @@ import {
   splitOptionsIntoColums,
   сreateGeneralInfoGroup,
 } from './helpers/helpers';
-import { mockCarInfo } from './mock-car-info';
 import styles from './styles.module.scss';
 
 interface CharacteristicsListProps {

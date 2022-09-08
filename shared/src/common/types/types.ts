@@ -68,3 +68,5 @@ export type {
   GetViwedCarsPayload,
   SetViewedCarPayload,
 } from './viewed-cars/viewed-cars';
+
+export type { ComplPreviewInfo } from './comparisons/comp-preview-info';

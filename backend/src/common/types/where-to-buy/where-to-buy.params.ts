@@ -9,10 +9,10 @@ interface AutoriaResponse {
   };
 }
 
-type WhereBuyRequestQuery = {
+interface WhereBuyRequestQuery {
+  [id: string]: string;
   page: string;
-  id: string;
   countpage: string;
-};
+}
 
 export type { AutoriaResponse, WhereBuyRequestQuery };

@@ -23,11 +23,11 @@ const whereToBuy = async (
       countpage,
     );
     const allAdverts = await getCarsAutoRia(querysForRequest);
-    const advertsId = allAdverts?.result.search_result.ids;
-    const advertsInfo = advertsId?.map((car) => getCarByIdRia(car));
-    Promise.all(advertsInfo as readonly unknown[]).then((result) =>
-      res.json(result),
+    const advertsIds = allAdverts.result.search_result.ids;
+    const advertsInfo = await Promise.all(
+      advertsIds.map((car) => getCarByIdRia(car)),
     );
+    res.json(advertsInfo);
   } catch (error) {
     next(error);
   }

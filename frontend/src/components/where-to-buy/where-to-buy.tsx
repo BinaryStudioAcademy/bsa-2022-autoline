@@ -16,10 +16,11 @@ interface WhereToBuyProps {
 const WhereToBuy: React.FC<WhereToBuyProps> = ({ complectationId }) => {
   const [page, setPage] = useState(0);
   const [isSorted, setIsSorted] = useState(false);
+  const countpage = 20;
   useGetWhereBuyQuery({
     page,
     complectationId,
-    countpage: '20',
+    countpage,
   });
 
   const { adverts } = useAppSelector((state) => state.whereBuy);
@@ -37,19 +38,15 @@ const WhereToBuy: React.FC<WhereToBuyProps> = ({ complectationId }) => {
     return (
       <div className={styles.noFoundContainer}>
         <SearchIcon className={clsx(styles.searchIcon, styles.icon)} />
-        <h3 className={styles.noAdvertsTitle}>No adverts found</h3>
+        <h3 className={styles.mg0}>No adverts found</h3>
       </div>
     );
   }
-
+  const name = `${advertsList[0].markName} ${advertsList[0].modelName}`;
   return (
     <div className={styles.container}>
       <div className={styles.title}>
-        <div className={styles.carName}>
-          {advertsList &&
-            advertsList[0] &&
-            `${advertsList[0].markName} ${advertsList[0].modelName}`}
-        </div>
+        <div className={styles.carName}>{name}</div>
         <ButtonOutline
           className={styles.priceButton}
           text="By Price"

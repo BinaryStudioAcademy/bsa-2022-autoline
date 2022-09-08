@@ -6,7 +6,7 @@ import { Response } from 'express';
 
 const getCarsAutoRia = async (
   requestParams: Partial<AutoriaRequestParams>,
-): Promise<AutoriaResponse | undefined> => {
+): Promise<AutoriaResponse> => {
   const response = await axios.get(AutoRiaUrls.SEARCH_URL, {
     params: {
       api_key: ENV.APP.AUTORIA_API_KEY,

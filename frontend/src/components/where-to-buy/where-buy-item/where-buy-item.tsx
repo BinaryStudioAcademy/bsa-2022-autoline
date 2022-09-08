@@ -21,6 +21,7 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
   const [open, setOpen] = useState(false);
   const [height, setHeight] = useState(0);
   const elementRef = useRef<HTMLDivElement>(null);
+  const maxHeight = 48;
 
   useEffect(() => {
     const { current: appElement } = elementRef;
@@ -71,7 +72,7 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
               >
                 {description}
               </div>
-              {height > 47 && (
+              {height >= maxHeight && (
                 <button
                   className={styles.collapseButton}
                   onClick={(): void => setOpen(!open)}

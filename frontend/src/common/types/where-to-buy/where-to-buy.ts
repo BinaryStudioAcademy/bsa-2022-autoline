@@ -20,9 +20,9 @@ interface WhereBuyInterface {
 }
 
 interface whereBuyQuery {
-  page: number;
   complectationId: string;
-  countpage: string;
+  page: number;
+  countpage: number;
 }
 
 export { type WhereBuyInterface, type whereBuyQuery };

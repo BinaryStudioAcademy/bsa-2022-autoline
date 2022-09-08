@@ -17,7 +17,7 @@ const { reducer, actions } = createSlice({
   reducers: {
     setAdverts: (state, action) => {
       const { adverts, complectationId } = action.payload;
-      if (state.complectationId == complectationId) {
+      if (state.complectationId === complectationId) {
         state.adverts = [...state.adverts, ...adverts];
       } else {
         state.complectationId = complectationId;

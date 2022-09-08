@@ -14,6 +14,7 @@ import {
   viewedCarsRouter,
   locationRouter,
   newCarsRouter,
+  whereBuyRouter,
   comparisonsRouter,
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
@@ -63,6 +64,7 @@ const routes = [
   viewedCarsRouter,
   locationRouter,
   comparisonsRouter,
+  whereBuyRouter,
 ];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 

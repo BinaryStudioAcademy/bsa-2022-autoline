@@ -18,10 +18,10 @@ const getRecentSearchCars = async (
       created_at: 'desc',
     },
     select: {
-      id: true,
       model_id: true,
       model: {
         select: {
+          id: true,
           name: true,
           year_start: true,
           year_end: true,
@@ -47,7 +47,7 @@ const getRecentSearchCars = async (
   const cars: RecentSearchCarsResponse[] = [];
   recentSearchCars.map((car) => {
     const data = {
-      id: car.id,
+      id: car.model.id,
       modelName: car.model.name,
       yearStart: car.model.year_start,
       yearEnd: car.model.year_end,

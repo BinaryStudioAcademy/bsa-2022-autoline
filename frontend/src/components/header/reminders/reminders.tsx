@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 import { theme } from '@common/theme/theme';
 import BalanceIcon from '@mui/icons-material/Balance';
@@ -45,7 +46,7 @@ export const Reminders: React.FC<RemindersProps> = ({
         disablePadding
         className={clsx(styles.list, { [styles.row]: needRow })}
       >
-        <Link to={favorites.linkTo}>
+        <HashLink to={`${favorites.linkTo}#liked`}>
           <ListItemButton>
             <Badge
               badgeContent={favorites.count}
@@ -55,7 +56,7 @@ export const Reminders: React.FC<RemindersProps> = ({
               <FavoriteBorderIcon color="primary" sx={iconsSx} />
             </Badge>
           </ListItemButton>
-        </Link>
+        </HashLink>
         <Link to={notifications.linkTo}>
           <ListItemButton>
             <Badge

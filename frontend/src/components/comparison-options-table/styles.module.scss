@@ -42,7 +42,9 @@
   overflow-x: scroll;
 
   .tableCell {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -53,9 +55,5 @@
 
   .generalInfo {
     width: calc(100% - 10rem);
-  }
-
-  .tableCell {
-    height: 6rem;
   }
 }

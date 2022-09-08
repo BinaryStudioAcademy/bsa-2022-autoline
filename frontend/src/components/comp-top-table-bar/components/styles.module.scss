@@ -1,3 +1,5 @@
+@import "@assets/css/styles";
+
 html {
   font: var(--primary-font);
 }
@@ -5,6 +7,7 @@ html {
 .wrapper {
   display: flex;
   align-items: center;
+  padding: var(--mui-padding-md);
   border: 1px solid var(--gray300);
   border-radius: var(--border-radius-container);
 }
@@ -149,4 +152,16 @@ html {
   color: var(--blue100);
   font-size: 1.5rem;
   border-left: 0.075rem solid var(--gray300);
+}
+
+@media (max-width: $global-sm) {
+  .btnContainer {
+    min-width: 10rem;
+    max-width: 10rem;
+  }
+
+  .btnOutline {
+    max-width: 9rem;
+    padding: 0;
+  }
 }

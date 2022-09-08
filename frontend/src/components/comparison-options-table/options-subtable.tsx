@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 
 import { CollapseElement } from '@components/collapse-component/collapse-element/collapse-element';
 import { Spinner } from '@components/common/spinner/spinner';
+import { getElementHeightWithMargins } from '@helpers/utils/get-element-height-with-margins';
 import { uuid4 } from '@sentry/utils';
 import {
   useGetComparisonGeneralInfoQuery,
@@ -35,15 +36,44 @@ const OptionsSubtable: React.FC<{ title: string }> = ({ title }) => {
     return <p style={{ color, margin: '0' }}>{symbol}</p>;
   };
 
+  const [optionTable, setGeneralTableRef] = useState<HTMLDivElement | null>(
+    null,
+  );
+
+  useLayoutEffect(() => {
+    if (!optionTable) return;
+    const optionTitle = optionTable.querySelectorAll(
+      '[data-title]',
+    ) as NodeListOf<HTMLDivElement>;
+
+    optionTitle.forEach((option) => {
+      const title = option.getAttribute('data-title');
+      const tableElement = optionTable.querySelectorAll(
+        `[data-value="${title}"]`,
+      ) as NodeListOf<HTMLDivElement>;
+
+      tableElement.forEach(
+        (element) =>
+          (element.style.height = `${
+            getElementHeightWithMargins(option) + 1
+          }px`),
+      );
+    });
+  }, [optionTable, optionNames]);
+
   return (
     <CollapseElement label={title}>
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className={styles.table}>
+        <div className={styles.table} ref={setGeneralTableRef}>
           <div className={clsx(styles.tableTitles, styles.tableColumn)}>
             {optionNames?.map((option) => (
-              <div className={styles.tableCell} key={uuid4()}>
+              <div
+                className={styles.tableCell}
+                key={uuid4()}
+                data-title={option}
+              >
                 {option}
               </div>
             ))}
@@ -52,7 +82,11 @@ const OptionsSubtable: React.FC<{ title: string }> = ({ title }) => {
             {cars?.map((car) => (
               <div className={styles.tableColumn} key={uuid4()}>
                 {optionNames?.map((optionName) => (
-                  <div className={styles.tableCell} key={uuid4()}>
+                  <div
+                    className={styles.tableCell}
+                    key={uuid4()}
+                    data-value={optionName}
+                  >
                     {getOptionSymbol(car.options[title].includes(optionName))}
                   </div>
                 ))}

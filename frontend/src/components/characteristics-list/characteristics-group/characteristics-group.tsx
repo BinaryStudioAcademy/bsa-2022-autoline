@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
 import { CharacteristicsGroupProps } from '@common/types/characteristics-list/characteristics-list';
-import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
@@ -11,13 +10,13 @@ export const CharacteristicsGroup: FC<CharacteristicsGroupProps> = ({
 }) => {
   return (
     <>
-      <h6 className={styles.title}>{name}</h6>
+      <h5 className={styles.title}>{name}</h5>
       {options.map((option) => (
-        <div className={clsx('body2', styles.option)}>
+        <div className={styles.option} key={option.value}>
           {'name' in option && (
             <div className={styles.optionName}>{option.name}</div>
           )}
-          {'color' in option && (
+          {'color' in option && option.color && (
             <div
               className={styles.optionColor}
               style={{ backgroundColor: option.color }}

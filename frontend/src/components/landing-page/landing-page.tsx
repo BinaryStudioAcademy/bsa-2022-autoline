@@ -19,11 +19,9 @@ import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {
   const isAuth = useAppSelector((state) => state.auth.token);
-  const { data: cars } = !isAuth
+  const { data: cars } = isAuth
     ? useGetRecentSearchCarsQuery(4)
     : useGetNewCarsQuery(4);
-  //const { data } = useGetRecentSearchCarsQuery(4);
-
   return (
     <>
       <Header />
@@ -70,7 +68,11 @@ export const LandingPage = (): React.ReactElement => {
           </div>
         </div>
         <div className={styles.secondContainer}>
-          <div className={styles.secondContainerHeader}>New Cars</div>
+          {cars?.length != 0 && (
+            <div className={styles.secondContainerHeader}>
+              {isAuth ? 'Recent Searches' : 'New Cars'}
+            </div>
+          )}
           <div className={styles.secondContainerCards}>
             {cars &&
               cars?.map((car) => (

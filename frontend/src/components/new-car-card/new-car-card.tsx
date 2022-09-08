@@ -53,6 +53,10 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
     handleLikeClick(data);
   };
 
+  const handleCardClick = (): void => {
+    navigate({ pathname: AppRoute.DETAILS, search: `?model=${carId}` });
+  };
+
   let name = `${brandName} ${carName}`;
 
   if (complectationName) {
@@ -60,7 +64,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} onClick={handleCardClick}>
       <div className={styles.carTitle}>
         <img className={styles.carLogo} src={brandLogoUrl} alt={brandName} />
         <span className={styles.carName}>{name}</span>

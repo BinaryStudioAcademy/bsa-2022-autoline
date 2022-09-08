@@ -22,7 +22,9 @@ import {
   MenuItem,
   Modal,
   Stack,
+  Typography,
 } from '@mui/material';
+import { useGetUsedOptionsQuery } from '@store/queries/cars';
 import {
   ProfileFieldsRequestData,
   useDeleteUserProfileMutation,
@@ -89,6 +91,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
       validationSchema: updateUserSchema,
     });
 
+  const { data: options } = useGetUsedOptionsQuery();
   const [selectedAvatar, setSelectedAvatar] = useState<File>();
   const [previewAvatar, setPreviewAvatar] = useState<string>();
   const [isDeleteAvatar, setIsDeleteAvatar] = useState(false);
@@ -217,7 +220,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
               className={styles.avatarMenuItem}
             >
               <img src={TrashIcon} alt="trash" />
-              <span>Delete Profile</span>
+              <Typography>Delete Profile</Typography>
             </button>
           </div>
           <div className={styles.editWrapper}>
@@ -287,10 +290,13 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   label="Location"
                   defaultValue="not_appliable"
                 >
+                  {options &&
+                    options.regions.map(({ id, name }) => (
+                      <MenuItem key={id} value={name.split(' ').join('')}>
+                        {name}
+                      </MenuItem>
+                    ))}
                   <MenuItem value="not_appliable">Rather not say</MenuItem>
-                  <MenuItem value="kyiv">Kyiv</MenuItem>
-                  <MenuItem value="kharkiv">Kharkiv</MenuItem>
-                  <MenuItem value="odesa">Odesa</MenuItem>
                 </SelectFieldForm>
                 <h2 className={styles.title}>Change Password</h2>
                 <InputField

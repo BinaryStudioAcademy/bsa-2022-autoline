@@ -189,7 +189,16 @@
     }
 
     .panel {
-      width: 200px;
+      flex-direction: column;
+      width: 100px;
+
+      .colorBox {
+        margin-bottom: 6px;
+      }
+
+      .price {
+        margin-bottom: 6px;
+      }
     }
   }
 }

@@ -13,6 +13,7 @@ import { ResetPassword } from '@components/reset-password/reset-password';
 import { SearchPage } from '@components/search-page/search-page';
 import { RedirectAfterSign } from '@components/sign/components/redirect-after-sign/redirect-after-sign';
 import { Sign } from '@components/sign/sign';
+import { WhereToBuy } from '@components/where-to-buy/where-to-buy';
 import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 import { useGetUserQuery } from '@store/queries/user/update-user';
 
@@ -38,6 +39,24 @@ const Routing: FC = () => {
         >
           <Route path={AppRoute.SIGN_IN} element={<Sign />} />
           <Route path={AppRoute.SIGN_UP} element={<Sign />} />
+          <Route
+            path="/where"
+            element={
+              <WhereToBuy complectationId="03a66dff-d95d-4945-a305-703de7ec6637" />
+            }
+          />
+          <Route
+            path="/where/1"
+            element={
+              <WhereToBuy complectationId="148b8bf0-c50d-4dc8-a786-8e8a158d643b" />
+            }
+          />
+          <Route
+            path="/where/2"
+            element={
+              <WhereToBuy complectationId="2ab7886c-654e-4e1f-8296-f07b05c39016" />
+            }
+          />
           <Route
             path={AppRoute.MAIL_SUCCESS_VALIDATION}
             element={<MailVerificationSuccess />}

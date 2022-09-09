@@ -2,6 +2,7 @@ import { PageContainer } from '@components/common/page-container/page-container'
 import { Title } from '@components/common/title/title';
 import { Header } from '@components/header/header';
 import { Grid } from '@mui/material';
+import { uuid4 } from '@sentry/utils';
 
 import styles from './styles.module.scss';
 import { teamMembers } from './team-members';
@@ -36,7 +37,7 @@ const AboutPage: React.FC = () => {
         </Grid>
         <Grid container spacing={4} className={styles.team}>
           {teamMembers.map((person) => (
-            <Grid item xs={12} sm={4} md={2}>
+            <Grid item xs={12} sm={4} md={2} key={uuid4()}>
               <div className={styles.teamMember}>
                 <div className={styles.avatar}>
                   <img src={person.image} alt={person.name} />

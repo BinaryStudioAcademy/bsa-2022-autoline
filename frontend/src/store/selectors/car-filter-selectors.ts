@@ -1,9 +1,45 @@
-import { AutoRiaOption } from '@autoline/shared/common/types/types';
+import { AutoRiaOption, BrandType } from '@autoline/shared/common/types/types';
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
+import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { createSelector } from '@reduxjs/toolkit';
 import { carsApi } from '@store/queries/cars';
 
 const selectOptions = carsApi.endpoints.getUsedOptions.select();
+
+const selectNormalizedBrands = createSelector(
+  [carsApi.endpoints.getBrands.select()],
+  ({ data: brands }) => {
+    if (!brands) return;
+
+    return brands.reduce(
+      (obj, item) => Object.assign(obj, { [item.id]: item }),
+      {},
+    ) as { [p: string]: BrandType };
+  },
+);
+
+const selectAppliedBrands = createSelector(
+  [(state): BrandDetailsType[] => state.carFilter.brandDetails],
+  (brandDetails) => {
+    const arr: string[] = [];
+    brandDetails.forEach((item: BrandDetailsType) => {
+      if (item.brandId !== '') arr.push(item.brandId);
+    });
+
+    return arr;
+  },
+);
+
+const selectNotAppliedBrands = createSelector(
+  [carsApi.endpoints.getBrands.select(), selectAppliedBrands],
+  (allBrands, appliedBrandIds) => {
+    if (!allBrands.data && !appliedBrandIds.length) return;
+
+    return allBrands?.data?.filter(
+      (brand) => !appliedBrandIds.includes(brand.id),
+    );
+  },
+);
 
 const selectAllOptionsFlat = createSelector(
   selectOptions,
@@ -32,17 +68,15 @@ const selectOptionsInAutocompleteType = createSelector(
 
 const selectNormalizedOptionsInAutocompleteType = createSelector(
   [selectAllOptionsFlat],
-  (options) => {
+  (options): { [p: string]: AutocompleteValueType } | undefined => {
     return (
       options &&
-      Object.fromEntries(
-        options.map((option) => {
-          const value = {
-            id: option.id || '',
-            label: option.name || '',
-          } as AutocompleteValueType;
-          return [option.id, value];
-        }),
+      options.reduce(
+        (obj, { id, name }) =>
+          Object.assign(obj, {
+            [id]: { id: id || '', label: name || '' },
+          }),
+        {},
       )
     );
   },
@@ -52,4 +86,7 @@ export {
   selectAllOptionsFlat,
   selectOptionsInAutocompleteType,
   selectNormalizedOptionsInAutocompleteType,
+  selectNormalizedBrands,
+  selectAppliedBrands,
+  selectNotAppliedBrands,
 };

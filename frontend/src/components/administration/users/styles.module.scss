@@ -57,3 +57,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
+
+.limitLength {
+  word-break: break-all;
+}

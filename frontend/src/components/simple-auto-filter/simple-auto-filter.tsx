@@ -2,7 +2,11 @@ import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AutoRiaOption } from '@autoline/shared/common/types/types';
-import { FiltersNames } from '@common/enums/car/car-filters-names.enum';
+import {
+  CheckListsNames,
+  RangeNames,
+  RangeValueNames,
+} from '@common/enums/car/car-filters-names.enum';
 import { pricesRange, yearsRange } from '@common/enums/car/ranges';
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { RangeValueType } from '@common/types/cars/range-item.type';
@@ -10,11 +14,17 @@ import { AutocompleteInput } from '@components/common/autocomplete-input/autocom
 import { RangeSelector } from '@components/common/range-selector/range-selector';
 import { SelectField } from '@components/common/select-field/select-field';
 import { Spinner } from '@components/common/spinner/spinner';
+import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
+import { rangeFiltersToObject } from '@helpers/car-filters/range-filters-to-object';
 import { getValueById } from '@helpers/get-value-by-id';
 import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import { Button, Zoom } from '@mui/material';
-import { setBrandDetailsValue, setValue } from '@store/car-filter/slice';
+import {
+  setBrandDetailsValue,
+  setCheckListValue,
+  setRangeValue,
+} from '@store/car-filter/slice';
 import { setCars } from '@store/found-car/slice';
 import { API } from '@store/queries/api-routes';
 import {
@@ -30,7 +40,9 @@ const SimpleAutoFilter: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { filters, brandDetails } = useAppSelector((state) => state.carFilter);
+  const { rangeFilters, checkLists, brandDetails } = useAppSelector(
+    (state) => state.carFilter,
+  );
 
   const { id: detailId, brandId, modelIds } = brandDetails[0];
 
@@ -55,30 +67,33 @@ const SimpleAutoFilter: FC = () => {
   useEffect(() => {
     setQueryParams(
       objectToQueryString({
-        ...filters,
+        ...rangeFiltersToObject(rangeFilters),
+        ...checkLists,
         brandId: brandDetails.map((item) => item.brandId),
         modelId: brandDetails.flatMap((item) => item.modelIds),
       }),
     );
-  }, [filters, brandDetails]);
+  }, [rangeFilters, checkLists, brandDetails]);
 
   const years = useMemo(() => yearsRange(30), []);
 
   const handleRegionChange = (data: AutocompleteValueType): void => {
-    const value = data?.id || '';
-    dispatch(setValue({ filterName: FiltersNames.REGION_ID, value }));
+    const value = [data?.id || ''];
+    dispatch(
+      setCheckListValue({
+        filterName: CheckListsNames.REGION_ID,
+        value,
+      }),
+    );
   };
 
-  const handleRangeChange = (range: RangeValueType[]): void => {
-    range.forEach(({ filterName, value }) => {
-      dispatch(setValue({ filterName, value }));
-    });
+  const handleRangeChange = (range: RangeValueType): void => {
+    dispatch(setRangeValue(range));
   };
 
-  const isButtonVisible = Boolean(
-    Object.values(filters).some((filter) => filter.length >= 1) ||
-      brandDetails[0].brandId != '' ||
-      brandDetails[0].modelIds.length,
+  const isFiltersApplied = Boolean(
+    !isFiltersEmpty({ ...rangeFiltersToObject(rangeFilters), ...checkLists }) ||
+      brandDetails.some((detail) => detail.brandId !== ''),
   );
 
   const doSearch = async (): Promise<void> => {
@@ -132,8 +147,7 @@ const SimpleAutoFilter: FC = () => {
   };
 
   const handleSelectModel = (data: AutocompleteValueType): void => {
-    const newModelIds =
-      modelIds.length !== 1 && data?.id ? [data?.id, ...modelIds.slice(1)] : [];
+    const newModelIds = data?.id ? [data?.id] : [];
     dispatch(
       setBrandDetailsValue({
         id: detailId,
@@ -152,7 +166,7 @@ const SimpleAutoFilter: FC = () => {
         <AutocompleteInput
           label="Regions"
           onChange={handleRegionChange}
-          value={getValueById(options.regions, filters.regionId)}
+          value={getValueById(options.regions, checkLists.regionId[0])}
           options={options.regions.map((item: AutoRiaOption) => ({
             label: item.name,
             id: item.id,
@@ -189,11 +203,12 @@ const SimpleAutoFilter: FC = () => {
               list={years}
               minTitle="Year Min"
               maxTitle="Year Max"
-              selectedMin={filters.yearStart}
-              selectedMax={filters.yearEnd}
+              rangeName={RangeNames.YEAR}
+              minFilterName={RangeValueNames.YEAR_START}
+              maxFilterName={RangeValueNames.YEAR_END}
+              selectedMin={rangeFilters.year.yearStart}
+              selectedMax={rangeFilters.year.yearEnd}
               onChange={handleRangeChange}
-              minFilterName={FiltersNames.YEAR_START}
-              maxFilterName={FiltersNames.YEAR_END}
             />
           </div>
           <div className={styles.row}></div>
@@ -202,20 +217,21 @@ const SimpleAutoFilter: FC = () => {
               list={pricesRange.map((item: number) => item.toString())}
               minTitle="$ Min"
               maxTitle="$ Max"
-              minFilterName={FiltersNames.PRICE_START}
-              maxFilterName={FiltersNames.PRICE_END}
-              selectedMin={filters.priceStart}
-              selectedMax={filters.priceEnd}
+              rangeName={RangeNames.PRICE}
+              minFilterName={RangeValueNames.PRICE_START}
+              maxFilterName={RangeValueNames.PRICE_END}
+              selectedMin={rangeFilters.price.priceStart}
+              selectedMax={rangeFilters.price.priceEnd}
               onChange={handleRangeChange}
             />
           </div>
         </div>
       </div>
       <div className={styles.buttonWrapper}>
-        <Zoom in={isButtonVisible}>
+        <Zoom in={isFiltersApplied}>
           <Button
             onClick={doSearch}
-            disabled={!isButtonVisible}
+            disabled={!isFiltersApplied}
             className={styles.searchButton}
             variant="contained"
           >

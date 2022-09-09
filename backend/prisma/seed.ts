@@ -135,7 +135,7 @@ async function main(): Promise<void> {
           year_start: model.year_start,
           year_end: model.year_end,
           photo_urls: model.photo_urls,
-          autoria_code: model.value,
+          autoria_code: model.model_id,
           prices_ranges: {
             create: {
               price_start: model.price_start,

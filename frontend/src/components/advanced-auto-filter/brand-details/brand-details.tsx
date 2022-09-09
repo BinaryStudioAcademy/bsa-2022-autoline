@@ -15,6 +15,7 @@ import {
   useGetBrandsQuery,
   useGetModelsOfBrandQuery,
 } from '@store/queries/cars';
+import { selectNotAppliedBrands } from '@store/selectors/car-filter-selectors';
 
 import styles from './styles.module.scss';
 
@@ -42,6 +43,8 @@ const BrandDetails: FC<Props> = ({
     skip: !brandId,
   });
 
+  const notAppliedBrands = useAppSelector(selectNotAppliedBrands);
+
   const selectedBrandName = useMemo(() => {
     return getValueById(brands || [], brandId);
   }, [brandId]);
@@ -68,7 +71,7 @@ const BrandDetails: FC<Props> = ({
 
   const brandsOptions = useMemo(
     () =>
-      brands?.map(
+      notAppliedBrands?.map(
         (item) =>
           ({
             label: item.name,
@@ -114,7 +117,7 @@ const BrandDetails: FC<Props> = ({
           onChange={handleSelectBrand}
         />
       )}
-      {modelsOptions ? (
+      {selectedBrandName?.id && modelsOptions ? (
         <MultiselectInput
           label="Model"
           options={modelsOptions}

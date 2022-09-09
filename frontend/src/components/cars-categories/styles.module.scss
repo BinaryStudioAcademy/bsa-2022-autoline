@@ -5,11 +5,11 @@
   height: 15rem;
 
   @media (min-width: $global-sm) {
-    padding: 0 calc(var(--land-page-margin-md) + var(--mui-padding-md));
+    padding: 0 var(--mui-padding-md);
   }
 
   @media (max-width: $global-sm) {
-    padding: 0 calc(var(--land-page-margin-sm) + var(--mui-padding-sm));
+    padding: 0 var(--mui-padding-sm);
   }
 
   background: var(--white);

@@ -1,9 +1,8 @@
 import { TokenPayload } from '@autoline/shared/common/types/types';
 import { ExceptionMessage } from '@common/enums/exception/exception-message.enum';
-import { TypedRequestBody } from '@common/types/controller/controller';
 import { verifyToken } from '@helpers/token/token';
 import { Role } from '@prisma/client';
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import httpStatus from 'http-status-codes';
 
 const guestAccess = {
@@ -13,11 +12,7 @@ const guestAccess = {
 
 const availableFor =
   (roles: Role[], guestIsAllowed: boolean) =>
-  (
-    req: TypedRequestBody<{ tokenPayload: TokenPayload }>,
-    res: Response,
-    next: NextFunction,
-  ): void => {
+  (req: Request, res: Response, next: NextFunction): void => {
     let token = req.headers['authorization'];
 
     if (token) {
@@ -26,7 +21,7 @@ const availableFor =
 
       if (roles.includes(payload.role as Role)) {
         if (req.route.path !== '/users/:id') {
-          req.body.tokenPayload = payload;
+          req.tokenPayload = payload;
         }
         return next();
       }

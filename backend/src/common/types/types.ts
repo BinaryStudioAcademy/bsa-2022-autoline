@@ -11,4 +11,8 @@ export {
   type WishlistInput,
 } from './prisma/prisma';
 
-export { type AutoriaRequestParams } from './cars/autoria-request-params';
+export type {
+  AutoriaRequestParams,
+  CarsSearchAutoriaParams,
+  CarDetailsResponse,
+} from './cars/autoria-request-params';

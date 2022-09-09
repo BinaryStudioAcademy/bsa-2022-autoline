@@ -45,7 +45,7 @@
       top: -3px;
       left: 5px;
       color: var(--gray300);
-      font-size: 1.3rem;
+      font-size: 14px;
     }
   }
 
@@ -54,7 +54,8 @@
     font-size: 1.3rem;
 
     input {
-      padding: 2px;
+      padding: 3px 5px 0;
+      font-size: 14px;
     }
 
     .MuiAutocomplete-endAdornment {

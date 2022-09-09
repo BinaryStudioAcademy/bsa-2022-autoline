@@ -10,7 +10,8 @@ import React, {
 import { AutoRiaOption } from '@autoline/shared/common/types/types';
 import {
   CheckListsNames,
-  FiltersNames,
+  RangeNames,
+  RangeValueNames,
 } from '@common/enums/car/car-filters-names.enum';
 import {
   engineDisplacementRange,
@@ -29,6 +30,7 @@ import { MultiselectInput } from '@components/common/multiselect-input/multisele
 import { RangeSelector } from '@components/common/range-selector/range-selector';
 import { Spinner } from '@components/common/spinner/spinner';
 import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
+import { rangeFiltersToObject } from '@helpers/car-filters/range-filters-to-object';
 import { getValueById } from '@helpers/get-value-by-id';
 import { objectToQueryString } from '@helpers/object-to-query';
 import { getElementHeightWithMargins } from '@helpers/utils/get-element-height-with-margins';
@@ -43,7 +45,7 @@ import {
   resetAllFilters,
   setBrandDetailsValue,
   setCheckListValue,
-  setValue,
+  setRangeValue,
 } from '@store/car-filter/slice';
 import { setCars } from '@store/found-car/slice';
 import {
@@ -61,7 +63,7 @@ import styles from './styles.module.scss';
 const AdvancedAutoFilter: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { filters, checkLists, brandDetails } = useAppSelector(
+  const { rangeFilters, checkLists, brandDetails } = useAppSelector(
     (state) => state.carFilter,
   );
 
@@ -108,7 +110,7 @@ const AdvancedAutoFilter: FC = () => {
   useEffect(() => {
     setQueryParams(
       objectToQueryString({
-        ...filters,
+        ...rangeFiltersToObject(rangeFilters),
         ...checkLists,
         brandId: brandDetails.map((item) => item.brandId),
         modelId: brandDetails.flatMap((item) => item.modelIds),
@@ -116,12 +118,15 @@ const AdvancedAutoFilter: FC = () => {
     );
 
     if (
-      isFiltersEmpty({ ...filters, ...checkLists }) &&
+      isFiltersEmpty({
+        ...rangeFiltersToObject(rangeFilters),
+        ...checkLists,
+      }) &&
       brandDetails.every((detail) => detail.brandId === '')
     ) {
       search([], true);
     }
-  }, [filters, checkLists, brandDetails]);
+  }, [rangeFilters, checkLists, brandDetails]);
 
   useEffect(() => {
     if (filteredCars.data) {
@@ -142,8 +147,13 @@ const AdvancedAutoFilter: FC = () => {
   };
 
   const handleRegionChange = (data: AutocompleteValueType): void => {
-    const value = data?.id || '';
-    dispatch(setValue({ filterName: FiltersNames.REGION_ID, value }));
+    const value = [data?.id || ''];
+    dispatch(
+      setCheckListValue({
+        filterName: CheckListsNames.REGION_ID,
+        value,
+      }),
+    );
   };
 
   const handleCheckboxListChange = useCallback(
@@ -154,10 +164,8 @@ const AdvancedAutoFilter: FC = () => {
     [dispatch],
   );
 
-  const handleRangeChange = (range: RangeValueType[]): void => {
-    range.forEach(({ filterName, value }) => {
-      dispatch(setValue({ filterName, value }));
-    });
+  const handleRangeChange = (range: RangeValueType): void => {
+    dispatch(setRangeValue(range));
   };
 
   const resetFilters = (): void => {
@@ -165,7 +173,7 @@ const AdvancedAutoFilter: FC = () => {
   };
 
   const isFiltersApplied = Boolean(
-    !isFiltersEmpty({ ...filters, ...checkLists }) ||
+    !isFiltersEmpty({ ...rangeFiltersToObject(rangeFilters), ...checkLists }) ||
       brandDetails.some((detail) => detail.brandId !== ''),
   );
 
@@ -235,10 +243,11 @@ const AdvancedAutoFilter: FC = () => {
             list={pricesRange.map((item: number) => item.toString())}
             minTitle="$ Min"
             maxTitle="$ Max"
-            minFilterName={FiltersNames.PRICE_START}
-            maxFilterName={FiltersNames.PRICE_END}
-            selectedMin={filters.priceStart}
-            selectedMax={filters.priceEnd}
+            rangeName={RangeNames.PRICE}
+            minFilterName={RangeValueNames.PRICE_START}
+            maxFilterName={RangeValueNames.PRICE_END}
+            selectedMin={rangeFilters.price.priceStart}
+            selectedMax={rangeFilters.price.priceEnd}
             onChange={handleRangeChange}
           />
         </div>
@@ -249,11 +258,12 @@ const AdvancedAutoFilter: FC = () => {
             list={years}
             minTitle="Year Min"
             maxTitle="Year Max"
-            selectedMin={filters.yearStart}
-            selectedMax={filters.yearEnd}
+            rangeName={RangeNames.YEAR}
+            minFilterName={RangeValueNames.YEAR_START}
+            maxFilterName={RangeValueNames.YEAR_END}
+            selectedMin={rangeFilters.year.yearStart}
+            selectedMax={rangeFilters.year.yearEnd}
             onChange={handleRangeChange}
-            minFilterName={FiltersNames.YEAR_START}
-            maxFilterName={FiltersNames.YEAR_END}
           />
         </div>
         <h5 className={styles.blockTitle}>Engine Power</h5>
@@ -262,10 +272,11 @@ const AdvancedAutoFilter: FC = () => {
             list={enginePowerRange.map((item: number) => item.toString())}
             minTitle="hP Min"
             maxTitle="hP Max"
-            minFilterName={FiltersNames.ENGINE_POWER_START}
-            maxFilterName={FiltersNames.ENGINE_POWER_END}
-            selectedMin={filters.enginePowerStart}
-            selectedMax={filters.enginePowerEnd}
+            rangeName={RangeNames.ENGINE_POWER}
+            minFilterName={RangeValueNames.ENGINE_POWER_START}
+            maxFilterName={RangeValueNames.ENGINE_POWER_END}
+            selectedMin={rangeFilters.enginePower.enginePowerStart}
+            selectedMax={rangeFilters.enginePower.enginePowerEnd}
             onChange={handleRangeChange}
           />
         </div>
@@ -275,10 +286,13 @@ const AdvancedAutoFilter: FC = () => {
             list={engineDisplacementRange}
             minTitle="L Min"
             maxTitle="L Max"
-            minFilterName={FiltersNames.ENGINE_DISPLACEMENT_START}
-            maxFilterName={FiltersNames.ENGINE_DISPLACEMENT_END}
-            selectedMin={filters.engineDisplacementStart}
-            selectedMax={filters.engineDisplacementEnd}
+            rangeName={RangeNames.ENGINE_DISPLACEMENT}
+            minFilterName={RangeValueNames.ENGINE_DISPLACEMENT_START}
+            maxFilterName={RangeValueNames.ENGINE_DISPLACEMENT_END}
+            selectedMin={
+              rangeFilters.engineDisplacement.engineDisplacementStart
+            }
+            selectedMax={rangeFilters.engineDisplacement.engineDisplacementEnd}
             onChange={handleRangeChange}
           />
         </div>
@@ -287,7 +301,7 @@ const AdvancedAutoFilter: FC = () => {
           <AutocompleteInput
             label="Regions"
             onChange={handleRegionChange}
-            value={getValueById(options.regions, filters.regionId)}
+            value={getValueById(options.regions, checkLists.regionId[0])}
             options={options.regions.map((item: AutoRiaOption) => ({
               label: item.name,
               id: item.id,

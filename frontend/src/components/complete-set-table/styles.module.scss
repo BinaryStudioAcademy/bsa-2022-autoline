@@ -3,7 +3,12 @@
 
   &:hover {
     background-color: var(--gray200);
+    cursor: pointer;
   }
+}
+
+.tableRowActive {
+  background-color: var(--gray300);
 }
 
 .tableContainer {
@@ -109,4 +114,34 @@
     border-color: var(--blue100);
     transition: all 300ms;
   }
+}
+
+.button {
+  height: 1.2rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.iconButton {
+  padding: 0;
+  background: transparent;
+  border: none;
+
+  path {
+    transition: all 300ms;
+  }
+
+  &.isLiked,
+  &:hover {
+    path {
+      transition: all 300ms;
+      fill: var(--blue100);
+    }
+  }
+}
+
+.iconCell {
+  width: 1rem;
 }

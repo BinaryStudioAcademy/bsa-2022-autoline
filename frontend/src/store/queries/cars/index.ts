@@ -45,6 +45,7 @@ export const carsApi = api.injectEndpoints({
 export const {
   useGetBrandsQuery,
   useGetModelsOfBrandQuery,
+  useLazyGetModelsOfBrandQuery,
   useGetUsedOptionsQuery,
   useLazyGetFilteredCarsQuery,
   useGetModelDetailsQuery,

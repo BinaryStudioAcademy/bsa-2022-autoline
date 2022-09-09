@@ -13,7 +13,6 @@ import 'swiper/css/thumbs';
 
 import type { Swiper as SwiperType } from 'swiper';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Carousel = (props: { images: string[] }): React.ReactElement => {
   const { images } = props;
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);

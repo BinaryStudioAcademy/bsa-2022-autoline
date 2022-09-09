@@ -1,4 +1,5 @@
 import { useLayoutEffect, useMemo, useState } from 'react';
+import { ScrollSyncPane } from 'react-scroll-sync';
 
 import { CollapseElement } from '@components/collapse-component/collapse-element/collapse-element';
 import { Spinner } from '@components/common/spinner/spinner';
@@ -101,51 +102,56 @@ const GeneralComparisonTable: React.FC = () => {
           ))}
           <div className={styles.tableCell}>Color</div>
         </div>
-        <div className={clsx('styledScrollbar', styles.generalInfo)}>
-          {generalInfo?.map((info) => {
-            return (
-              <div
-                className={clsx(styles.tableData, styles.tableColumn)}
-                key={info.id}
-              >
-                <div className={styles.tableCell} data-optionvalue="bodytype">
-                  {info.bodyType}
-                </div>
-                <div className={styles.tableCell} data-optionvalue="motor">
-                  {info.engineDisplacement} l.
-                </div>
+        <ScrollSyncPane>
+          <div className={clsx('styledScrollbar', styles.generalInfo)}>
+            {generalInfo?.map((info) => {
+              return (
                 <div
-                  className={styles.tableCell}
-                  data-optionvalue="enginepower"
+                  className={clsx(styles.tableData, styles.tableColumn)}
+                  key={info.id}
                 >
-                  {info.enginePower} h.p.
-                </div>
-                <div className={styles.tableCell} data-optionvalue="engine">
-                  {info.engine}
-                </div>
-                <div className={styles.tableCell} data-optionvalue="wheeldrive">
-                  {info.drivetrainName}
-                </div>
-                {Object.keys(info.options).map((type: string) => (
+                  <div className={styles.tableCell} data-optionvalue="bodytype">
+                    {info.bodyType}
+                  </div>
+                  <div className={styles.tableCell} data-optionvalue="motor">
+                    {info.engineDisplacement} l.
+                  </div>
                   <div
                     className={styles.tableCell}
-                    data-optionvalue={type}
-                    key={uuid4()}
+                    data-optionvalue="enginepower"
                   >
-                    {info.options[type].join(', ')}
+                    {info.enginePower} h.p.
                   </div>
-                ))}
-                <div className={clsx(styles.tableCell, styles.colorCell)}>
+                  <div className={styles.tableCell} data-optionvalue="engine">
+                    {info.engine}
+                  </div>
                   <div
-                    className={styles.colorBox}
-                    style={{ backgroundColor: info.colorName }}
-                  />
-                  <span>{info.colorName}</span>
+                    className={styles.tableCell}
+                    data-optionvalue="wheeldrive"
+                  >
+                    {info.drivetrainName}
+                  </div>
+                  {Object.keys(info.options).map((type: string) => (
+                    <div
+                      className={styles.tableCell}
+                      data-optionvalue={type}
+                      key={uuid4()}
+                    >
+                      {info.options[type].join(', ')}
+                    </div>
+                  ))}
+                  <div className={clsx(styles.tableCell, styles.colorCell)}>
+                    <div
+                      className={styles.colorBox}
+                      style={{ backgroundColor: info.colorName }}
+                    />
+                    <span>{info.colorName}</span>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        </ScrollSyncPane>
       </div>
     </CollapseElement>
   );

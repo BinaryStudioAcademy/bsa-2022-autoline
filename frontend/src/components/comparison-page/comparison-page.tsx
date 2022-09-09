@@ -1,4 +1,5 @@
 import React from 'react';
+import { ScrollSync } from 'react-scroll-sync';
 
 import { PageContainer } from '@components/common/page-container/page-container';
 import { Title } from '@components/common/title/title';
@@ -17,18 +18,20 @@ const ComparisonPage: React.FC = () => {
         <Title id="comparisonTitle" element="h3">
           Comparison
         </Title>
-        <div className={styles.tablesWrapper}>
-          <CompTopTableBar />
-          <GeneralComparisonTable />
-          <OptionsSubtable title="design" />
-          <OptionsSubtable title="sound" />
-          <OptionsSubtable title="security" />
-          <OptionsSubtable title="multimedia" />
-          <OptionsSubtable title="comfort" />
-          <OptionsSubtable title="optics" />
-          <OptionsSubtable title="auxiliary" />
-          <OptionsSubtable title="upholstery" />
-        </div>
+        <ScrollSync>
+          <div className={styles.tablesWrapper}>
+            <CompTopTableBar />
+            <GeneralComparisonTable />
+            <OptionsSubtable title="design" />
+            <OptionsSubtable title="sound" />
+            <OptionsSubtable title="security" />
+            <OptionsSubtable title="multimedia" />
+            <OptionsSubtable title="comfort" />
+            <OptionsSubtable title="optics" />
+            <OptionsSubtable title="auxiliary" />
+            <OptionsSubtable title="upholstery" />
+          </div>
+        </ScrollSync>
       </PageContainer>
     </>
   );

@@ -1,4 +1,5 @@
 import React, { useState, useLayoutEffect } from 'react';
+import { ScrollSyncPane } from 'react-scroll-sync';
 
 import { CollapseElement } from '@components/collapse-component/collapse-element/collapse-element';
 import { Spinner } from '@components/common/spinner/spinner';
@@ -78,21 +79,23 @@ const OptionsSubtable: React.FC<{ title: string }> = ({ title }) => {
               </div>
             ))}
           </div>
-          <div className={clsx('styledScrollbar', styles.generalInfo)}>
-            {cars?.map((car) => (
-              <div className={styles.tableColumn} key={uuid4()}>
-                {optionNames?.map((optionName) => (
-                  <div
-                    className={styles.tableCell}
-                    key={uuid4()}
-                    data-value={optionName}
-                  >
-                    {getOptionSymbol(car.options[title].includes(optionName))}
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
+          <ScrollSyncPane>
+            <div className={clsx('styledScrollbar', styles.generalInfo)}>
+              {cars?.map((car) => (
+                <div className={styles.tableColumn} key={uuid4()}>
+                  {optionNames?.map((optionName) => (
+                    <div
+                      className={styles.tableCell}
+                      key={uuid4()}
+                      data-value={optionName}
+                    >
+                      {getOptionSymbol(car.options[title].includes(optionName))}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </ScrollSyncPane>
         </div>
       )}
     </CollapseElement>

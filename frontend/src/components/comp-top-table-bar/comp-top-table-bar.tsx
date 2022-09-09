@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { ScrollSyncPane } from 'react-scroll-sync';
 
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { TrashCanIcon } from '@components/common/icons/trash-can/trash-can';
@@ -67,16 +68,18 @@ export const CompTopTableBar = (): React.ReactElement => {
           <div className={styles.clearBtnText}>Clear the Table</div>
         </div>
       </div>
-      <div className={styles.slider}>
-        {!isCleared ? (
-          <Comparison
-            cars={passingCarsData}
-            positions={initialData.carsPositions}
-          />
-        ) : (
-          <NoActiveComparison />
-        )}
-      </div>
+      <ScrollSyncPane>
+        <div className={styles.slider}>
+          {!isCleared ? (
+            <Comparison
+              cars={passingCarsData}
+              positions={initialData.carsPositions}
+            />
+          ) : (
+            <NoActiveComparison />
+          )}
+        </div>
+      </ScrollSyncPane>
     </div>
   );
 };

@@ -15,4 +15,5 @@ export type SelectFieldFormPropsType = {
   label: string;
   onChange?: (event: SelectChangeEvent) => void;
   onClose?: (event: SelectChangeEvent) => void;
+  disabled?: boolean;
 };

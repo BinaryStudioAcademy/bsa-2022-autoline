@@ -73,7 +73,7 @@ const GeneralComparisonTable: React.FC = () => {
   if (isLoading) return <Spinner />;
 
   return (
-    <CollapseElement label="General inform">
+    <CollapseElement label="General information" isOpen={true}>
       <div className={styles.table} ref={setGeneralTableRef}>
         <div className={clsx(styles.tableTitles, styles.tableColumn)}>
           <div className={styles.tableCell} data-optiontitle="bodytype">

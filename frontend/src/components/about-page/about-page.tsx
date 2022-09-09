@@ -4,7 +4,7 @@ import { Header } from '@components/header/header';
 import { Grid } from '@mui/material';
 
 import styles from './styles.module.scss';
-import { teamMembers } from './teamMembers';
+import { teamMembers } from './team-members';
 
 const AboutPage: React.FC = () => {
   return (

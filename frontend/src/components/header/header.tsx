@@ -53,9 +53,9 @@ export const Header = (): React.ReactElement => {
       linkTo: AppRoute.PERSONAL,
       count: wishlistCount,
     },
-    notifications: {
-      label: 'Notifications',
-      linkTo: '#',
+    viewed: {
+      label: 'Viewed',
+      linkTo: AppRoute.PERSONAL,
       count: 7,
     },
     comparisons: {

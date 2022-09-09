@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
+import eyeIcon from '@assets/images/eye.svg';
 import { theme } from '@common/theme/theme';
 import BalanceIcon from '@mui/icons-material/Balance';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { Badge, List, ListItemButton, ThemeProvider } from '@mui/material';
 import { clsx } from 'clsx';
 
@@ -20,7 +20,7 @@ interface Reminder {
 export interface RemindersProps {
   reminders?: {
     favorites: Reminder;
-    notifications: Reminder;
+    viewed: Reminder;
     comparisons: Reminder;
   };
   needRow?: boolean;
@@ -38,7 +38,7 @@ export const Reminders: React.FC<RemindersProps> = ({
     fontSize: needRow ? 20 : 24,
   };
 
-  const { favorites, notifications, comparisons } = reminders;
+  const { favorites, viewed, comparisons } = reminders;
 
   return (
     <ThemeProvider theme={theme}>
@@ -57,17 +57,21 @@ export const Reminders: React.FC<RemindersProps> = ({
             </Badge>
           </ListItemButton>
         </HashLink>
-        <Link to={notifications.linkTo}>
+        <HashLink to={`${viewed.linkTo}#viewed`}>
           <ListItemButton>
             <Badge
-              badgeContent={notifications.count}
+              badgeContent={viewed.count}
               color="primary"
-              invisible={notifications.count < 1}
+              invisible={viewed.count < 1}
             >
-              <NotificationsNoneIcon color="primary" sx={iconsSx} />
+              <img
+                className={styles.viewedIcon}
+                src={eyeIcon}
+                alt="history of viewed cars"
+              />
             </Badge>
           </ListItemButton>
-        </Link>
+        </HashLink>
         <Link to={comparisons.linkTo}>
           <ListItemButton>
             <Badge

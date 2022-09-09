@@ -6,6 +6,15 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import { SelectFieldForm } from '@components/edit-profile/select-field-form/select-field-form';
 import { useAppForm } from '@hooks/hooks';
 import { Modal, Button, Box, MenuItem } from '@mui/material';
+import {
+  useGetBrandsQuery,
+  useGetModelsOfBrandQuery,
+  useGetComplectationsOfModelQuery,
+} from '@store/queries/cars';
+import {
+  useGetComparisonsPreviewCarsQuery,
+  useDeleteCarFromComparisonMutation,
+} from '@store/queries/comparisons';
 import { clsx } from 'clsx';
 
 import { CarCard } from './car-card/car-card';
@@ -20,18 +29,38 @@ interface SelectingComplactationData {
 
 const ComparisonPopup: FC = () => {
   const [open, setOpen] = useState(false);
+  const [itemToRemove, setItemToRemove] = useState<string[]>([]);
+  const { data: brands } = useGetBrandsQuery();
 
-  const { control } = useAppForm<SelectingComplactationData>({
-    defaultValues: {
-      type: '',
-      brand: '',
-      model: '',
-      complectation: '',
-    },
-  });
+  const { control, handleSubmit, watch } =
+    useAppForm<SelectingComplactationData>({
+      defaultValues: {
+        type: '',
+        brand: '',
+        model: '',
+        complectation: '',
+      },
+    });
+  const { data: models } = useGetModelsOfBrandQuery(watch('brand'));
+  const { data: complectations } = useGetComplectationsOfModelQuery(
+    watch('model'),
+  );
+
+  const { data } = useGetComparisonsPreviewCarsQuery();
+  const [deleteCarFromComparison] = useDeleteCarFromComparisonMutation();
+
+  const onSubmit = (): void => {
+    itemToRemove.forEach((complectationId) => {
+      deleteCarFromComparison({ complectationId });
+    });
+    handleClose();
+  };
 
   const handleOpen = (): void => setOpen(true);
-  const handleClose = (): void => setOpen(false);
+  const handleClose = (): void => {
+    setOpen(false);
+    setItemToRemove([]);
+  };
   return (
     <>
       <Button onClick={handleOpen}>click</Button>
@@ -56,11 +85,18 @@ const ComparisonPopup: FC = () => {
                 Complectation in comparison
               </h3>
               <ul className={clsx(styles.comparisonList, 'styledScrollbar')}>
-                {[...Array(6)].map((_, index) => (
-                  <li key={index}>
-                    <CarCard />
-                  </li>
-                ))}
+                {data &&
+                  data.map((item) => {
+                    if (itemToRemove.includes(item.id)) return null;
+                    return (
+                      <li key={item.id}>
+                        <CarCard
+                          data={item}
+                          setItemToRemove={setItemToRemove}
+                        />
+                      </li>
+                    );
+                  })}
               </ul>
             </div>
             <div className={styles.comparisonRight}>
@@ -68,17 +104,7 @@ const ComparisonPopup: FC = () => {
                 Select a complectation from the drop-down list
               </h3>
               <div className={styles.comparisonForm}>
-                <form>
-                  <SelectFieldForm
-                    id="type"
-                    name="type"
-                    required={false}
-                    control={control}
-                    label="Select a type"
-                    defaultValue="not_appliable"
-                  >
-                    <MenuItem value="sedan">Sedan</MenuItem>
-                  </SelectFieldForm>
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <SelectFieldForm
                     id="brand"
                     name="brand"
@@ -87,7 +113,9 @@ const ComparisonPopup: FC = () => {
                     label="Select a brand"
                     defaultValue="not_appliable"
                   >
-                    <MenuItem value="mazda">Mazda</MenuItem>
+                    {brands?.map((item) => (
+                      <MenuItem value={item.id}>{item.name}</MenuItem>
+                    ))}
                   </SelectFieldForm>
                   <SelectFieldForm
                     id="model"
@@ -96,8 +124,11 @@ const ComparisonPopup: FC = () => {
                     control={control}
                     label="Select a model"
                     defaultValue="not_appliable"
+                    disabled={!watch('brand')}
                   >
-                    <MenuItem value="3">3</MenuItem>
+                    {models?.map((item) => (
+                      <MenuItem value={item.id}>{item.name}</MenuItem>
+                    ))}
                   </SelectFieldForm>
                   <SelectFieldForm
                     id="complectation"
@@ -106,8 +137,11 @@ const ComparisonPopup: FC = () => {
                     control={control}
                     label="Select a complectation"
                     defaultValue="not_appliable"
+                    disabled={!watch('model')}
                   >
-                    <MenuItem value="TOURING">TOURING</MenuItem>
+                    {complectations?.map((item) => (
+                      <MenuItem value={item.id}>{item.name}</MenuItem>
+                    ))}
                   </SelectFieldForm>
                   <div className={styles.btnWrapper}>
                     <ButtonOutline

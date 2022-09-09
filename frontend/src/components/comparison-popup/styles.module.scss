@@ -54,11 +54,15 @@
   }
 
   &List {
-    max-height: 365px;
+    max-height: 370px;
     margin: 0;
     padding: 0;
     overflow-y: scroll;
     list-style: none;
+
+    li {
+      padding-bottom: 1px;
+    }
   }
 
   &Form {
@@ -74,4 +78,8 @@
 
 .cancel {
   border: none;
+}
+
+.displayNone {
+  display: none;
 }

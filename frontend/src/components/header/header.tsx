@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app-route.enum';
@@ -25,7 +25,8 @@ import { PrivateElements } from './private-elements/private-elements';
 import styles from './styles.module.scss';
 
 export const Header = (): React.ReactElement => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(-1);
+  const location = useLocation();
   const theme = useTheme();
   const isMatchSm = useMediaQuery(theme.breakpoints.down('sm'));
   const { data: wishlist = { models: [], complectations: [] } } =
@@ -46,6 +47,16 @@ export const Header = (): React.ReactElement => {
   }, [comparisons]);
 
   const { data: user } = useGetUserQuery();
+
+  useEffect(() => {
+    if (location.pathname === AppRoute.SEARCH) {
+      setValue(0);
+    } else if (location.pathname === AppRoute.ABOUT_US) {
+      setValue(1);
+    } else {
+      setValue(-1);
+    }
+  });
 
   const reminders = {
     favorites: {

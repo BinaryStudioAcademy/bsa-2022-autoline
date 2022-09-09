@@ -209,6 +209,7 @@ const getActiveComparisonStatus = async (userId: string): Promise<string[]> => {
     where: {
       comparison: {
         user_id: userId,
+        active: true,
       },
     },
   });

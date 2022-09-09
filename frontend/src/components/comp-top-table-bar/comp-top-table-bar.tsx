@@ -69,14 +69,10 @@ export const CompTopTableBar = (): React.ReactElement => {
       </div>
       <div className={styles.slider}>
         {!isCleared ? (
-          ((): React.ReactElement => {
-            return (
-              <Comparison
-                cars={passingCarsData}
-                positions={initialData.carsPositions}
-              />
-            );
-          })()
+          <Comparison
+            cars={passingCarsData}
+            positions={initialData.carsPositions}
+          />
         ) : (
           <NoActiveComparison />
         )}

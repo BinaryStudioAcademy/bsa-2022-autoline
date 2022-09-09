@@ -7,9 +7,22 @@ import {
   Comparison,
   ComparisonType,
   Complectation,
+  Prisma,
   Type,
 } from '@prisma/client';
 
+export interface ComparisonInfo {
+  position: number;
+  wishlistId: string | undefined;
+  id: string;
+  brandName: string;
+  complectationName: string;
+  modelId: string;
+  priceStart: number;
+  priceEnd: number;
+  modelName: string;
+  photos: Prisma.JsonValue;
+}
 const addCarToComparison = async ({
   complectationId,
   userId,
@@ -301,9 +314,9 @@ const getComparisonOptions = async (optionType: Type): Promise<string[]> => {
   return options.map((o) => o.name);
 };
 
-const getActiveComparisonCarsPreview = async (
+const getActiveComparison = async (
   userId: string,
-): Promise<ComparisonInfo[]> => {
+): Promise<ComparisonInfo[] | null> => {
   const activeComparison = await prisma.comparison.findFirst({
     where: {
       active: true,

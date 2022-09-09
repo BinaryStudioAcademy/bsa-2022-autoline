@@ -137,13 +137,13 @@ const getComparisonGeneralInfo = async (
 };
 
 const getActiveComparison = async (
-  req: TypedRequestBody<{ tokenPayload: TokenPayload }>,
+  req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const comparison = await comparisonsService.getActiveComparison(
-      req.body.tokenPayload.sub,
+      req.tokenPayload.sub,
     );
     res.status(httpStatus.OK).json(comparison);
   } catch (error) {
@@ -152,13 +152,13 @@ const getActiveComparison = async (
 };
 
 const updatePositions = async (
-  req: TypedRequestBody<{ tokenPayload: TokenPayload; positions: string[] }>,
+  req: TypedRequestBody<{ positions: string[] }>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
     const comparison = await comparisonsService.updatePositions(
-      req.body.tokenPayload.sub,
+      req.tokenPayload.sub,
       req.body.positions,
     );
     res.status(httpStatus.OK).json(comparison);

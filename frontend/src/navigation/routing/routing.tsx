@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app';
+import { AboutPage } from '@components/about-page/about-page';
 import { Administration } from '@components/administration';
 import { ForgotPassword } from '@components/forgot-password/forgot-password';
 import { LandingPage } from '@components/landing-page/landing-page';
@@ -73,6 +74,7 @@ const Routing: FC = () => {
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.SEARCH} element={<SearchPage />} />
         </Route>
+        <Route path={AppRoute.ABOUT} element={<AboutPage />} />
         <Route path={AppRoute.NOT_FOUND} element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

@@ -30,7 +30,7 @@ const updateUserSchema = Yup.object().shape({
   location: Yup.string()
     .min(2, 'Password must be at least 8 characters')
     .max(150, 'Full name must not exceed 150 characters')
-    .matches(/^[A-Za-z\-\s]*$/)
+    .matches(/^[A-Za-z\-\s_]*$/)
     .nullable(),
   birthYear: Yup.lazy((value) => {
     if (value == 'not_appliable') {

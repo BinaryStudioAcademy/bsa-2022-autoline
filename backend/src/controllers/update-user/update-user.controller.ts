@@ -1,6 +1,3 @@
-import fs from 'fs';
-import stream from 'stream';
-
 import { TokenPayload } from '@autoline/shared';
 import { S3Folders } from '@common/enums/aws/aws';
 import { ExceptionMessage } from '@common/enums/exception/exception-message.enum';
@@ -14,8 +11,6 @@ import { resizePhoto } from '@services/photo/photo.service';
 import * as userService from '@services/user/user.service';
 import { Request, NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
-import sharp from 'sharp';
-import { v4 as uuid } from 'uuid';
 
 export interface UpdateUserReq {
   tokenPayload: TokenPayload;
@@ -54,8 +49,8 @@ const deleteUser = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    await usersHelper.deleteUserPhoto(req.body.tokenPayload.sub);
-    await userService.deleteUser(req.body.tokenPayload.sub);
+    await usersHelper.deleteUserPhoto(req.tokenPayload.sub);
+    await userService.deleteUser(req.tokenPayload.sub);
     res.status(httpStatus.OK).json();
   } catch (error) {
     next(error);
@@ -113,8 +108,8 @@ const updateUserPhoto = async (
       height: ProfileImageSize.HEIGHT,
     });
     const photoUrl = await uploadFileToS3(writableStream, s3Key);
-    await usersHelper.deleteUserPhoto(req.body.tokenPayload.sub);
-    await userService.updateUserPhoto(req.body.tokenPayload.sub, photoUrl);
+    await usersHelper.deleteUserPhoto(req.tokenPayload.sub);
+    await userService.updateUserPhoto(req.tokenPayload.sub, photoUrl);
 
     return res.status(httpStatus.OK).json({ photoUrl });
   } catch (error) {
@@ -128,7 +123,7 @@ const deleteUserPhoto = async (
   next: NextFunction,
 ): Promise<Response | undefined> => {
   try {
-    await usersHelper.deleteUserPhoto(req.body.tokenPayload.sub);
+    await usersHelper.deleteUserPhoto(req.tokenPayload.sub);
     return res.status(httpStatus.OK).json();
   } catch (error) {
     next(error);

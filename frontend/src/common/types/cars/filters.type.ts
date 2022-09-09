@@ -1,18 +1,8 @@
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
-
-type FiltersType = {
-  regionId: string;
-  yearStart: string;
-  yearEnd: string;
-  priceStart: string;
-  priceEnd: string;
-  enginePowerStart: string;
-  enginePowerEnd: string;
-  engineDisplacementStart: string;
-  engineDisplacementEnd: string;
-};
+import { RangeFiltersType } from '@common/types/cars/range-filters.type';
 
 type CheckListsType = {
+  regionId: string[];
   bodyTypeId: string[];
   colorId: string[];
   transmissionTypeId: string[];
@@ -21,7 +11,7 @@ type CheckListsType = {
 };
 
 type CarFiltersType = {
-  filters: FiltersType;
+  rangeFilters: RangeFiltersType;
   checkLists: CheckListsType;
   brandDetails: BrandDetailsType[];
 };

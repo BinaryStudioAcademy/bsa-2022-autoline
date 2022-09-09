@@ -19,16 +19,9 @@ export const CompTopTableBar = (): React.ReactElement => {
   const [clearTable] = useClearComparisonMutation();
   const [isCleared, setIsCleared] = useState(false);
 
-  const { cars, carsIds } = useMemo(() => {
-    const cars = data?.slice().sort((a, b) => a.position - b.position);
-    const carsIds = cars?.map((car) => car.id);
-    return { cars, carsIds };
+  const carsIds = useMemo(() => {
+    return data?.map((car) => car.id);
   }, [data]);
-
-  const initialData = {
-    cars,
-    carsPositions: carsIds,
-  };
 
   const handleClearTable = async (): Promise<void> => {
     await clearTable();
@@ -42,17 +35,6 @@ export const CompTopTableBar = (): React.ReactElement => {
   };
 
   if (isLoading) return <Spinner />;
-
-  let passingCarsData;
-  const fetchedData = initialData.cars;
-  if (fetchedData) {
-    passingCarsData = initialData.carsPositions?.map((carId) => {
-      const index = fetchedData.findIndex((car) => car.id === carId);
-      return fetchedData[index];
-    });
-  } else {
-    passingCarsData = undefined;
-  }
 
   return (
     <div className={styles.wrapper}>
@@ -71,10 +53,7 @@ export const CompTopTableBar = (): React.ReactElement => {
       <ScrollSyncPane>
         <div className={styles.slider}>
           {!isCleared ? (
-            <Comparison
-              cars={passingCarsData}
-              positions={initialData.carsPositions}
-            />
+            <Comparison cars={data} positions={carsIds} />
           ) : (
             <NoActiveComparison />
           )}

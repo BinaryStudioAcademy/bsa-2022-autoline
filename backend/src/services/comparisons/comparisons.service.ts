@@ -225,44 +225,41 @@ const getComparisonGeneralInfo = async (
       user_id: userId,
     },
     select: {
-      id: true,
+      comparisons_complectations: {
+        orderBy: {
+          position: 'asc',
+        },
+        select: {
+          complectation: {
+            select: {
+              id: true,
+              color: { select: { name: true } },
+              engine: true,
+              engine_displacement: true,
+              engine_power: true,
+              drivetrain: { select: { name: true } },
+              fuel_type: { select: { name: true } },
+              transmission_type: { select: { name: true } },
+              model: {
+                select: {
+                  body_type: true,
+                },
+              },
+              options: {
+                select: {
+                  option: { select: { name: true, type: true } },
+                },
+              },
+            },
+          },
+        },
+      },
     },
   });
 
   if (!activeComparison) {
     return [];
   }
-
-  const complectations = await prisma.comparisons_Complectations.findMany({
-    where: { comparison_id: activeComparison.id },
-    select: { complectation_id: true },
-  });
-
-  const comparisons = await prisma.complectation.findMany({
-    where: {
-      id: { in: Array.from(complectations, (c) => c.complectation_id) },
-    },
-    select: {
-      id: true,
-      color: { select: { name: true } },
-      engine: true,
-      engine_displacement: true,
-      engine_power: true,
-      drivetrain: { select: { name: true } },
-      fuel_type: { select: { name: true } },
-      transmission_type: { select: { name: true } },
-      model: {
-        select: {
-          body_type: true,
-        },
-      },
-      options: {
-        select: {
-          option: { select: { name: true, type: true } },
-        },
-      },
-    },
-  });
 
   const options: OptionType = {
     security: [],
@@ -275,30 +272,32 @@ const getComparisonGeneralInfo = async (
     auxiliary: [],
   };
 
-  const comparisonsGeneralInfo = comparisons.map((comparison) => {
-    const optionsList = comparison.options.reduce(
-      (options: OptionType, obj) => {
-        const key = obj.option['type'];
-        options[key] ??= [];
-        options[key].push(obj.option.name);
-        return options;
-      },
-      {},
-    );
+  const comparisonsGeneralInfo =
+    activeComparison.comparisons_complectations.map((comparison) => {
+      const optionsList = comparison.complectation.options.reduce(
+        (options: OptionType, obj) => {
+          const key = obj.option['type'];
+          options[key] ??= [];
+          options[key].push(obj.option.name);
+          return options;
+        },
+        {},
+      );
 
-    return {
-      id: comparison?.id,
-      bodyType: comparison?.model.body_type.name,
-      engine: comparison?.engine,
-      enginePower: comparison?.engine_power,
-      engineDisplacement: comparison?.engine_displacement.toNumber(),
-      colorName: comparison?.color.name,
-      transmissionTypeName: comparison?.transmission_type.name,
-      drivetrainName: comparison?.drivetrain.name,
-      fuelTypeName: comparison?.fuel_type.name,
-      options: { ...options, ...optionsList },
-    } as ComparisonGeneralInform;
-  });
+      return {
+        id: comparison?.complectation.id,
+        bodyType: comparison?.complectation.model.body_type.name,
+        engine: comparison?.complectation.engine,
+        enginePower: comparison?.complectation.engine_power,
+        engineDisplacement:
+          comparison?.complectation.engine_displacement.toNumber(),
+        colorName: comparison?.complectation.color.name,
+        transmissionTypeName: comparison?.complectation.transmission_type.name,
+        drivetrainName: comparison?.complectation.drivetrain.name,
+        fuelTypeName: comparison?.complectation.fuel_type.name,
+        options: { ...options, ...optionsList },
+      } as ComparisonGeneralInform;
+    });
 
   return comparisonsGeneralInfo;
 };
@@ -324,97 +323,65 @@ const getActiveComparison = async (
       user_id: userId,
     },
     select: {
-      id: true,
+      comparisons_complectations: {
+        orderBy: {
+          position: 'asc',
+        },
+        select: {
+          position: true,
+          complectation: {
+            select: {
+              id: true,
+              name: true,
+              prices_ranges: {
+                select: {
+                  price_start: true,
+                  price_end: true,
+                },
+              },
+              model: {
+                select: {
+                  id: true,
+                  name: true,
+                  photo_urls: true,
+                  brand: {
+                    select: {
+                      name: true,
+                    },
+                  },
+                },
+              },
+              users_wishlists: {
+                where: {
+                  user_id: userId,
+                },
+                select: {
+                  id: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   });
   if (!activeComparison) {
     return [];
   }
-
-  const complectations = await prisma.comparisons_Complectations.findMany({
-    where: { comparison_id: activeComparison.id },
-    select: {
-      complectation_id: true,
-      position: true,
-      complectation: {
-        select: {
-          name: true,
-          model_id: true,
-        },
-      },
-    },
-  });
-
-  const priceRanges = await prisma.prices_Range.findMany({
-    where: {
-      complectation_id: {
-        in: Array.from(complectations, (c) => c.complectation_id),
-      },
-    },
-    select: {
-      complectation_id: true,
-      price_start: true,
-      price_end: true,
-    },
-  });
-
-  const modelsInfo = await prisma.model.findMany({
-    where: {
-      id: { in: Array.from(complectations, (c) => c.complectation.model_id) },
-    },
-    select: {
-      id: true,
-      name: true,
-      photo_urls: true,
-      brand: {
-        select: {
-          name: true,
-        },
-      },
-    },
-  });
-
-  const complectationsInfo = await prisma.complectation.findMany({
-    where: {
-      id: { in: Array.from(complectations, (c) => c.complectation_id) },
-    },
-    select: {
-      id: true,
-      name: true,
-      users_wishlists: {
-        where: {
-          user_id: userId,
-        },
-        select: {
-          id: true,
-        },
-      },
-    },
-  });
-
-  const comparisonInfo = complectations.map((compl) => {
-    const modelIndex = modelsInfo.findIndex(
-      (model) => model.id === compl.complectation.model_id,
-    );
-    const complIndex = complectationsInfo.findIndex(
-      (complInfo) => complInfo.id === compl.complectation_id,
-    );
-    const priceIndex = priceRanges.findIndex(
-      (prices) => prices.complectation_id === compl.complectation_id,
-    );
-    return {
-      id: compl.complectation_id,
+  const comparisonInfo = activeComparison.comparisons_complectations.map(
+    (compl) => ({
+      id: compl.complectation.id,
       complectationName: compl.complectation.name,
       position: compl.position,
-      brandName: modelsInfo[modelIndex].brand.name,
-      modelName: modelsInfo[modelIndex].name,
-      modelId: modelsInfo[modelIndex].id,
-      photos: modelsInfo[modelIndex].photo_urls,
-      priceStart: priceRanges[priceIndex].price_start,
-      priceEnd: priceRanges[priceIndex].price_end,
-      wishlistId: complectationsInfo[complIndex].users_wishlists[0]?.id,
-    };
-  });
+      brandName: compl.complectation.model.brand.name,
+      modelName: compl.complectation.model.name,
+      modelId: compl.complectation.model.id,
+      photos: compl.complectation.model.photo_urls,
+      priceStart: compl.complectation.prices_ranges[0].price_start,
+      priceEnd: compl.complectation.prices_ranges[0].price_end,
+      wishlistId: compl.complectation.users_wishlists[0]?.id,
+    }),
+  );
 
   return comparisonInfo;
 };

@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { logOut } from '@store/auth/slice';
 import { useGetActiveComparisonStatusQuery } from '@store/queries/comparisons';
+import { useGetHistoryOfViwedCarsQuery } from '@store/queries/history-viewed-cars';
 import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 import { useGetUserQuery } from '@store/queries/user/update-user';
 
@@ -31,8 +32,10 @@ export const Header = (): React.ReactElement => {
   const { data: wishlist = { models: [], complectations: [] } } =
     useGetWishlistsQuery();
   const { data: comparisons } = useGetActiveComparisonStatusQuery();
+  const { data: viewed } = useGetHistoryOfViwedCarsQuery({});
   const [wishlistCount, setWishlistCount] = useState(0);
   const [comparisonCount, setComparisonCount] = useState(0);
+  const [viewedCount, setViewedCount] = useState(0);
   const [openSettings, setOpenSettings] = useState(false);
   const userToken = useAppSelector((state) => state.auth.token);
   const navigate = useNavigate();
@@ -45,6 +48,10 @@ export const Header = (): React.ReactElement => {
     if (comparisons) setComparisonCount(comparisons.length);
   }, [comparisons]);
 
+  useEffect(() => {
+    if (viewed) setViewedCount(viewed.length);
+  }, [viewed]);
+
   const { data: user } = useGetUserQuery();
 
   const reminders = {
@@ -56,7 +63,7 @@ export const Header = (): React.ReactElement => {
     viewed: {
       label: 'Viewed',
       linkTo: AppRoute.PERSONAL,
-      count: 7,
+      count: viewedCount,
     },
     comparisons: {
       label: 'Comparisons',

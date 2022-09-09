@@ -206,10 +206,23 @@ const getComplectationsDetails = async (
   }));
 };
 
+const getComplectationsOfModel = async (
+  modelId: string,
+): Promise<Partial<Model>[]> => {
+  return await prisma.complectation.findMany({
+    where: { model_id: modelId },
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+};
+
 export {
   getBrands,
   getModels,
   getUsedOptions,
   getModelDetails,
   getComplectationsDetails,
+  getComplectationsOfModel,
 };

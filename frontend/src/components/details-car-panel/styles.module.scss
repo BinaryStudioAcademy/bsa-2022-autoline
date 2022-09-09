@@ -1,9 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 680px;
-  margin: 30px;
-  padding: 30px;
+  padding: 2.5rem;
   background-color: var(--white);
   border: solid 1px var(--white);
   border-radius: var(--border-radius-container);
@@ -15,11 +13,15 @@
   margin-bottom: 10px;
 }
 
+.complectationHeader {
+  margin: 0 0 0.8rem;
+}
+
 .price {
   color: var(--blue100);
   font-weight: 800;
   font-size: 1.5rem;
-  line-height: 24px;
+  line-height: 1.1;
   text-transform: uppercase;
 }
 
@@ -27,8 +29,8 @@
   margin-left: 10px;
   color: var(--gray400);
   font-weight: var(--font-weight-regular);
-  font-size: 0.875rem;
-  line-height: 18px;
+  font-size: 1.1rem;
+  line-height: 1.1;
 }
 
 .lables {
@@ -44,8 +46,8 @@
   padding: 4px 9px;
   color: var(--white);
   font-weight: var(--font-weight-regular);
-  font-size: 0.875rem;
-  line-height: 17px;
+  font-size: 1.1rem;
+  line-height: 1.1;
   background: var(--blue300);
   border-radius: var(--border-radius-pill);
 
@@ -66,24 +68,25 @@
 }
 
 .complectationName {
-  min-width: 85px;
+  min-width: 6.8rem;
   margin-right: 10px;
   color: var(--gray400);
   font-weight: var(--font-weight-regular);
-  font-size: 0.875rem;
-  line-height: 17px;
+  font-size: 1.1rem;
+  line-height: 1.1;
 }
 
 .complectationValue {
   font-weight: var(--font-weight-regular);
-  font-size: 0.875rem;
-  line-height: 17px;
+  font-size: 1.1rem;
+  line-height: 1.4;
 }
 
 .iconButton {
   padding: 0;
   background: transparent;
   border: none;
+  cursor: pointer;
 
   svg {
     width: 20px;

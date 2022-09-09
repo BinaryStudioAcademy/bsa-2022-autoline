@@ -224,7 +224,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                     <MenuItem value="not_appliable">Rather not say</MenuItem>
                   </SelectFieldForm>
                   <SelectYearRange
-                    start={1960}
+                    start={new Date().getFullYear() - 95}
                     end={new Date().getFullYear()}
                     name="birthYear"
                     required={false}

@@ -25,7 +25,9 @@
     "build:backend": "cd backend && yarn build",
     "build": "yarn build:shared && yarn build:frontend && yarn build:backend",
     "start:backend:dev": "cd backend && yarn start:dev",
-    "db:migrate:prod": "cd backend && yarn db:migrate:prod"
+    "db:migrate:prod": "cd backend && yarn db:migrate:prod",
+    "cypress-run": "cypress run",
+    "int-test": "start-server-and-test start_command http://localhost:3000 cypress-run"
   },
   "dependencies": {
     "@sentry/node": "^7.9.0"
@@ -35,6 +37,7 @@
     "@types/node": "17.0.45",
     "@typescript-eslint/eslint-plugin": "5.30.3",
     "@typescript-eslint/parser": "^5.30.3",
+    "cypress": "^10.7.0",
     "editorconfig-checker": "4.0.2",
     "eslint": "8.19.0",
     "eslint-config-prettier": "^8.5.0",
@@ -44,6 +47,7 @@
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
     "simple-git-hooks": "2.8.0",
+    "start-server-and-test": "^1.14.0",
     "stylelint": "14.9.1",
     "stylelint-config-standard": "26.0.0",
     "stylelint-order": "5.0.0",

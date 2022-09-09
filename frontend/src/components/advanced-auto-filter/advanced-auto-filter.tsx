@@ -112,8 +112,10 @@ const AdvancedAutoFilter: FC = () => {
       objectToQueryString({
         ...rangeFiltersToObject(rangeFilters),
         ...checkLists,
-        brandId: brandDetails.map((item) => item.brandId),
-        modelId: brandDetails.flatMap((item) => item.modelIds),
+        brandDetails: brandDetails.map(({ modelIds, brandId }) => ({
+          modelIds,
+          brandId,
+        })),
       }),
     );
 

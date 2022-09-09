@@ -1,7 +1,5 @@
 type CarsSearchParams = {
   bodyTypeId: string[];
-  brandId: string[];
-  modelId: string[];
   yearStart: string;
   yearEnd: string;
   priceStart: string;
@@ -16,6 +14,10 @@ type CarsSearchParams = {
   enginePowerEnd: string;
   engineDisplacementStart: string;
   engineDisplacementEnd: string;
+  brandDetails: Array<{
+    brandId: string;
+    modelIds?: string[];
+  }>;
 };
 
 export { type CarsSearchParams };

@@ -49,7 +49,7 @@ export const Header = (): React.ReactElement => {
   }, [comparisons]);
 
   useEffect(() => {
-    if (viewed) setViewedCount(viewed.length);
+    if (viewed) setViewedCount(viewed.count);
   }, [viewed]);
 
   const { data: user } = useGetUserQuery();

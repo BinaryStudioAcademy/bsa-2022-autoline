@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app';
 import { Administration } from '@components/administration';
+import { Spinner } from '@components/common/spinner/spinner';
 import { ForgotPassword } from '@components/forgot-password/forgot-password';
 import { LandingPage } from '@components/landing-page/landing-page';
 import { MailVerificationFailed } from '@components/mail-verification/verification-failed/mail-verification-failed';
@@ -17,13 +18,10 @@ import { ProtectedRoute } from '@navigation/protected-route/protected-route';
 import { useGetUserQuery } from '@store/queries/user/update-user';
 
 const Routing: FC = () => {
-  const authData = {
-    name: 'Oleksandr',
-  };
+  const { data: authData, isLoading, error } = useGetUserQuery();
+  const isAdmin = authData?.role === 'admin';
 
-  const { data } = useGetUserQuery();
-  const role = data?.role;
-  const isAdmin = role === 'admin';
+  if (isLoading && !error) return <Spinner />;
 
   return (
     <BrowserRouter>
@@ -31,7 +29,7 @@ const Routing: FC = () => {
         <Route
           element={
             <ProtectedRoute
-              isAllowed={!!authData}
+              isAllowed={!authData}
               redirectPath={AppRoute.ROOT}
             />
           }
@@ -57,9 +55,7 @@ const Routing: FC = () => {
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.RESET_PASSWORD} element={<ResetPassword />} />
         </Route>
-        <Route element={<ProtectedRoute isAllowed={!!authData} />}>
-          <Route path={AppRoute.ROOT} element={<LandingPage />} />
-        </Route>
+        <Route path={AppRoute.ROOT} element={<LandingPage />} />
         <Route
           element={
             <ProtectedRoute isAllowed={isAdmin} redirectPath={AppRoute.ROOT} />
@@ -70,9 +66,7 @@ const Routing: FC = () => {
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.PERSONAL} element={<PersonalPage />} />
         </Route>
-        <Route element={<ProtectedRoute isAllowed={!!authData} />}>
-          <Route path={AppRoute.SEARCH} element={<SearchPage />} />
-        </Route>
+        <Route path={AppRoute.SEARCH} element={<SearchPage />} />
         <Route path={AppRoute.NOT_FOUND} element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

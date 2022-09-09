@@ -1,24 +1,33 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { TrashCanIcon } from '@components/common/icons/trash-can/trash-can';
 import { Spinner } from '@components/common/spinner/spinner';
 import {
   useClearComparisonMutation,
-  useGetComparisonsPreviewCarsQuery,
+  useGetComparisonCarsQuery,
 } from '@store/queries/comparisons';
 import { clsx } from 'clsx';
 
-import { DragAndDrop } from './components/drag-and-drop';
+import { Comparison } from './components/comparison';
+import { NoActiveComparison } from './components/no-active-comparison';
 import styles from './components/styles.module.scss';
 
 export const CompTopTableBar = (): React.ReactElement => {
-  const { data, isLoading } = useGetComparisonsPreviewCarsQuery();
+  const { data, isLoading } = useGetComparisonCarsQuery();
   const [clearTable] = useClearComparisonMutation();
   const [isCleared, setIsCleared] = useState(false);
 
-  const cars = data?.slice().sort((a, b) => a.position - b.position);
-  const ids = cars?.map((car) => car.id);
+  const { cars, carsIds } = useMemo(() => {
+    const cars = data?.slice().sort((a, b) => a.position - b.position);
+    const carsIds = cars?.map((car) => car.id);
+    return { cars, carsIds };
+  }, [data]);
+
+  const initialData = {
+    cars,
+    carsPositions: carsIds,
+  };
 
   const handleClearTable = async (): Promise<void> => {
     await clearTable();
@@ -31,17 +40,18 @@ export const CompTopTableBar = (): React.ReactElement => {
     handleClearTable();
   };
 
-  const initialData = {
-    cars,
-    columns: [
-      {
-        id: '0',
-        carsIds: ids,
-      },
-    ],
-  };
-
   if (isLoading) return <Spinner />;
+
+  let passingCarsData;
+  const fetchedData = initialData.cars;
+  if (fetchedData) {
+    passingCarsData = initialData.carsPositions?.map((carId) => {
+      const index = fetchedData.findIndex((car) => car.id === carId);
+      return fetchedData[index];
+    });
+  } else {
+    passingCarsData = undefined;
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -57,7 +67,16 @@ export const CompTopTableBar = (): React.ReactElement => {
           <div className={styles.clearBtnText}>Clear the Table</div>
         </div>
       </div>
-      {!isCleared && <DragAndDrop initialData={initialData} />}
+      <div className={styles.slider}>
+        {!isCleared ? (
+          <Comparison
+            cars={passingCarsData}
+            positions={initialData.carsPositions}
+          />
+        ) : (
+          <NoActiveComparison />
+        )}
+      </div>
     </div>
   );
 };

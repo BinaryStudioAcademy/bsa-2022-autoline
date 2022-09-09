@@ -7,9 +7,22 @@ import {
   Comparison,
   ComparisonType,
   Complectation,
+  Prisma,
   Type,
 } from '@prisma/client';
 
+export interface ComparisonInfo {
+  position: number;
+  wishlistId: string | undefined;
+  id: string;
+  brandName: string;
+  complectationName: string;
+  modelId: string;
+  priceStart: number;
+  priceEnd: number;
+  modelName: string;
+  photos: Prisma.JsonValue;
+}
 const addCarToComparison = async ({
   complectationId,
   userId,
@@ -26,7 +39,10 @@ const addCarToComparison = async ({
 
   if (activeComparison) {
     const presenceCheck = await prisma.comparisons_Complectations.findFirst({
-      where: { complectation_id: complectationId },
+      where: {
+        complectation_id: complectationId,
+        comparison_id: activeComparison.id,
+      },
     });
 
     if (presenceCheck) {
@@ -80,7 +96,7 @@ const changeComparisonType = async ({
   type: ComparisonType;
   userId: string;
 }): Promise<Comparison> => {
-  const comparison = await prisma.comparison.findFirst({
+  const activeComparison = await prisma.comparison.findFirst({
     where: {
       active: true,
       user_id: userId,
@@ -89,17 +105,17 @@ const changeComparisonType = async ({
       id: true,
     },
   });
-  if (!comparison) {
+  if (!activeComparison) {
     throw new Error('There is no active comparison');
   }
   return prisma.comparison.update({
-    where: { id: comparison.id },
+    where: { id: activeComparison.id },
     data: { type },
   });
 };
 
 const clearComparison = async (userId: string): Promise<Comparison> => {
-  const comparison = await prisma.comparison.findFirst({
+  const activeComparison = await prisma.comparison.findFirst({
     where: {
       active: true,
       user_id: userId,
@@ -108,11 +124,11 @@ const clearComparison = async (userId: string): Promise<Comparison> => {
       id: true,
     },
   });
-  if (!comparison) {
+  if (!activeComparison) {
     throw new Error('There is no active comparison');
   }
   return prisma.comparison.update({
-    where: { id: comparison.id },
+    where: { id: activeComparison.id },
     data: { active: false },
   });
 };
@@ -124,7 +140,7 @@ const deleteCarFromComparison = async ({
   complectationId: string;
   userId: string;
 }): Promise<void> => {
-  const comparison = await prisma.comparison.findFirst({
+  const activeComparison = await prisma.comparison.findFirst({
     where: {
       active: true,
       user_id: userId,
@@ -134,25 +150,25 @@ const deleteCarFromComparison = async ({
     },
   });
 
-  if (!comparison) {
+  if (!activeComparison) {
     throw new Error('There is no active comparison');
   }
   await prisma.comparisons_Complectations.delete({
     where: {
       comparison_id_complectation_id: {
-        comparison_id: comparison.id,
+        comparison_id: activeComparison.id,
         complectation_id: complectationId,
       },
     },
   });
 
   const complectationsAmount = await prisma.comparisons_Complectations.count({
-    where: { comparison_id: comparison.id },
+    where: { comparison_id: activeComparison.id },
   });
 
   if (!complectationsAmount) {
     await prisma.comparison.delete({
-      where: { id: comparison.id },
+      where: { id: activeComparison.id },
     });
   }
 };
@@ -298,6 +314,139 @@ const getComparisonOptions = async (optionType: Type): Promise<string[]> => {
   return options.map((o) => o.name);
 };
 
+const getActiveComparison = async (
+  userId: string,
+): Promise<ComparisonInfo[] | null> => {
+  const activeComparison = await prisma.comparison.findFirst({
+    where: {
+      active: true,
+      user_id: userId,
+    },
+    select: {
+      id: true,
+    },
+  });
+  if (!activeComparison) {
+    return [];
+  }
+
+  const complectations = await prisma.comparisons_Complectations.findMany({
+    where: { comparison_id: activeComparison.id },
+    select: {
+      complectation_id: true,
+      position: true,
+      complectation: {
+        select: {
+          name: true,
+          model_id: true,
+        },
+      },
+    },
+  });
+
+  const priceRanges = await prisma.prices_Range.findMany({
+    where: {
+      complectation_id: {
+        in: Array.from(complectations, (c) => c.complectation_id),
+      },
+    },
+    select: {
+      complectation_id: true,
+      price_start: true,
+      price_end: true,
+    },
+  });
+
+  const modelsInfo = await prisma.model.findMany({
+    where: {
+      id: { in: Array.from(complectations, (c) => c.complectation.model_id) },
+    },
+    select: {
+      id: true,
+      name: true,
+      photo_urls: true,
+      brand: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+
+  const complectationsInfo = await prisma.complectation.findMany({
+    where: {
+      id: { in: Array.from(complectations, (c) => c.complectation_id) },
+    },
+    select: {
+      id: true,
+      name: true,
+      users_wishlists: {
+        where: {
+          user_id: userId,
+        },
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+
+  const comparisonInfo = complectations.map((compl) => {
+    const modelIndex = modelsInfo.findIndex(
+      (model) => model.id === compl.complectation.model_id,
+    );
+    const complIndex = complectationsInfo.findIndex(
+      (complInfo) => complInfo.id === compl.complectation_id,
+    );
+    const priceIndex = priceRanges.findIndex(
+      (prices) => prices.complectation_id === compl.complectation_id,
+    );
+    return {
+      id: compl.complectation_id,
+      complectationName: compl.complectation.name,
+      position: compl.position,
+      brandName: modelsInfo[modelIndex].brand.name,
+      modelName: modelsInfo[modelIndex].name,
+      modelId: modelsInfo[modelIndex].id,
+      photos: modelsInfo[modelIndex].photo_urls,
+      priceStart: priceRanges[priceIndex].price_start,
+      priceEnd: priceRanges[priceIndex].price_end,
+      wishlistId: complectationsInfo[complIndex].users_wishlists[0]?.id,
+    };
+  });
+
+  return comparisonInfo;
+};
+
+const updatePositions = async (
+  userId: string,
+  positions: string[],
+): Promise<void> => {
+  const activeComparison = await prisma.comparison.findFirst({
+    where: {
+      active: true,
+      user_id: userId,
+    },
+    select: {
+      id: true,
+    },
+  });
+  if (!activeComparison) {
+    throw new Error('There is no active comparison');
+  }
+  positions.map(async (complectationId, index) => {
+    await prisma.comparisons_Complectations.update({
+      where: {
+        comparison_id_complectation_id: {
+          comparison_id: activeComparison.id,
+          complectation_id: complectationId,
+        },
+      },
+      data: { position: index + 1 },
+    });
+  });
+};
+
 export {
   addCarToComparison,
   changeComparisonType,
@@ -307,4 +456,6 @@ export {
   getActiveComparisonStatus,
   getComparisonGeneralInfo,
   getComparisonOptions,
+  getActiveComparison,
+  updatePositions,
 };

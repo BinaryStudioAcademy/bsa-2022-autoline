@@ -10,13 +10,11 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-import { images } from './mock-data';
 
 import type { Swiper as SwiperType } from 'swiper';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Carousel = (props: { images: string[] }): React.ReactElement => {
-  // const { images } = props;
+  const { images } = props;
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const [currentImage, setCurrentImage] = useState(1);
 
@@ -32,7 +30,7 @@ export const Carousel = (props: { images: string[] }): React.ReactElement => {
           setCurrentImage(activeIndex + 1);
         }}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper2"
+        className="mainSwiper"
       >
         <div className="navigation-bar">
           <img src={IconPark} />
@@ -55,7 +53,7 @@ export const Carousel = (props: { images: string[] }): React.ReactElement => {
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper"
+        className="thumbsSwiper"
         onSlideChange={({ clickedIndex }): void => {
           if (clickedIndex) setCurrentImage(clickedIndex + 1);
         }}

@@ -18,11 +18,12 @@ export const CompTopTableBar = (): React.ReactElement => {
   const [clearTable] = useClearComparisonMutation();
   const [isCleared, setIsCleared] = useState(false);
 
-  const cars = useMemo(
-    () => data?.slice().sort((a, b) => a.position - b.position),
-    [data],
-  );
-  const carsIds = cars?.map((car) => car.id);
+  const { cars, carsIds } = useMemo(() => {
+    const cars = data?.slice().sort((a, b) => a.position - b.position);
+    const carsIds = cars?.map((car) => car.id);
+    return { cars, carsIds };
+  }, [data]);
+
   const initialData = {
     cars,
     carsPositions: carsIds,

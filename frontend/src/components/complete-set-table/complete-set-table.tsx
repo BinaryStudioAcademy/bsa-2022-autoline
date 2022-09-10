@@ -1,11 +1,13 @@
 import { MouseEvent, useContext } from 'react';
 
-import { WishlistInput } from '@autoline/shared';
+import { ComplectationDetailsType, WishlistInput } from '@autoline/shared';
 import { CarSetOptions } from '@common/enums/enums';
 import { CompleteSetPropsType } from '@common/types/types';
 import { HeartIcon, OptionsIcon } from '@components/common/icons/icons';
+import { CompareContext } from '@contexts/compare-context';
 import { WishlistContext } from '@contexts/wishlist-context';
 import { formatPrice } from '@helpers/helpers';
+import BalanceIcon from '@mui/icons-material/Balance';
 import {
   TableContainer,
   Paper,
@@ -22,10 +24,17 @@ import styles from './styles.module.scss';
 const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
   const { className, data, onClick, activeRowId } = props;
   const { likedCars, handleLikeClick } = useContext(WishlistContext);
+  const { comparedCars, handleCompareClick } = useContext(CompareContext);
+
   const likeClick = (complectationId: string): void => {
     const data: WishlistInput = { complectationId };
     handleLikeClick(data);
   };
+
+  const compareClick = (car: ComplectationDetailsType): void => {
+    handleCompareClick(car.id, `${car.brand} ${car.model} ${car.name}`);
+  };
+
   const rowClick = (id: string): void => {
     if (onClick) {
       onClick(id);
@@ -45,6 +54,9 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
       >
         <TableHead>
           <TableRow>
+            <TableCell
+              className={clsx(styles.tableTitle, styles.iconCell)}
+            ></TableCell>
             <TableCell
               className={clsx(styles.tableTitle, styles.iconCell)}
             ></TableCell>
@@ -97,6 +109,7 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
                   className={clsx(
                     styles.button,
                     styles.iconButton,
+                    styles.likeButton,
                     likedCars?.includes(car.id) && styles.isLiked,
                   )}
                   onClick={(event: MouseEvent): void => {
@@ -105,6 +118,25 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
                   }}
                 >
                   <HeartIcon />
+                </button>
+              </TableCell>
+              <TableCell
+                className={clsx(styles.tableRow, styles.iconCell)}
+                align="center"
+              >
+                <button
+                  className={clsx(
+                    styles.button,
+                    styles.iconButton,
+                    styles.compareButton,
+                    comparedCars?.includes(car.id) && styles.isCompared,
+                  )}
+                  onClick={(event: MouseEvent): void => {
+                    event.stopPropagation();
+                    compareClick(car);
+                  }}
+                >
+                  <BalanceIcon color="primary" sx={{ fontSize: 20 }} />
                 </button>
               </TableCell>
               <TableCell className={styles.tableRow}>{car.name}</TableCell>

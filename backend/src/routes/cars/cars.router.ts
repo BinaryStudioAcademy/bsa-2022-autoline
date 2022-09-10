@@ -6,6 +6,7 @@ import {
   carsSearchLocal,
   getModelDetails,
   getComplectationDetails,
+  getComplectationsOfModel,
 } from '@controllers/cars/cars.controller';
 import { Router } from 'express';
 
@@ -20,6 +21,8 @@ carsRouter.get(`${PATH}/search-autoria`, carsSearchAutoria);
 carsRouter.get(`${PATH}/brands`, getBrands);
 
 carsRouter.get(`${PATH}/brand/:id/models`, getModelsOfBrand);
+
+carsRouter.get(`${PATH}/model/:id/complectations`, getComplectationsOfModel);
 
 carsRouter.get(`${PATH}/options`, getUsedOptions);
 

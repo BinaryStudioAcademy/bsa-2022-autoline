@@ -6,7 +6,7 @@ import { AppRoute } from '@common/enums/app/app-route.enum';
 import { PageContainer } from '@components/common/page-container/page-container';
 import { EditProfile } from '@components/edit-profile/edit-profile';
 import { UnauthorisedElements } from '@components/header/unauthorised-elements/unauthorised-elements';
-import { useAppDispatch, useAppSelector } from '@hooks/hooks';
+import { useAppDispatch } from '@hooks/hooks';
 import {
   AppBar,
   Tab,
@@ -37,7 +37,7 @@ export const Header = (): React.ReactElement => {
   const [comparisonCount, setComparisonCount] = useState(0);
   const [viewedCount, setViewedCount] = useState(0);
   const [openSettings, setOpenSettings] = useState(false);
-  const userToken = useAppSelector((state) => state.auth.token);
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -52,7 +52,7 @@ export const Header = (): React.ReactElement => {
     if (viewed) setViewedCount(viewed.count);
   }, [viewed]);
 
-  const { data: user } = useGetUserQuery();
+  const { data: authData } = useGetUserQuery();
 
   const reminders = {
     favorites: {
@@ -79,7 +79,7 @@ export const Header = (): React.ReactElement => {
     },
     aboutUs: {
       label: 'About Us',
-      onClick: () => navigate('#'),
+      onClick: () => navigate(AppRoute.ABOUT),
     },
   };
 
@@ -120,8 +120,8 @@ export const Header = (): React.ReactElement => {
             </Link>
             {isMatchSm ? (
               <DrawerComponent
-                userMenu={userToken ? userMenu : undefined}
-                reminders={userToken ? reminders : undefined}
+                userMenu={authData ? userMenu : undefined}
+                reminders={authData ? reminders : undefined}
                 commonMenu={commonMenu}
               />
             ) : (
@@ -142,10 +142,10 @@ export const Header = (): React.ReactElement => {
                     onClick={commonMenu.aboutUs.onClick}
                   />
                 </Tabs>
-                {userToken && user ? (
+                {authData ? (
                   <PrivateElements
-                    avatar={user.photoUrl}
-                    role={user.role}
+                    avatar={authData.photoUrl}
+                    role={authData.role}
                     reminders={reminders}
                     setOpenSettings={setOpenSettings}
                     userMenu={userMenu}

@@ -72,7 +72,7 @@ export const Header = (): React.ReactElement => {
     },
     aboutUs: {
       label: 'About Us',
-      onClick: () => navigate('#'),
+      onClick: () => navigate(AppRoute.ABOUT),
     },
   };
 

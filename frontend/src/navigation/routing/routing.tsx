@@ -42,7 +42,7 @@ const Routing: FC = () => {
           <Route
             path="/where"
             element={
-              <WhereToBuy complectationId="03a66dff-d95d-4945-a305-703de7ec6637" />
+              <WhereToBuy complectationId="135505c1-d64b-46bf-ad97-184bd0ac3bdb" />
             }
           />
           <Route

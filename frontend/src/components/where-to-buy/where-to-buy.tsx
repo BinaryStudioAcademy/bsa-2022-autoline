@@ -47,13 +47,15 @@ const WhereToBuy: React.FC<WhereToBuyProps> = ({ complectationId }) => {
     <div className={styles.container}>
       <div className={styles.title}>
         <div className={styles.carName}>{name}</div>
-        <ButtonOutline
-          className={styles.priceButton}
-          text="By Price"
-          onClick={(): void => {
-            setIsSorted(!isSorted);
-          }}
-        />
+        <div className={styles.priceDiv}>
+          <ButtonOutline
+            className={styles.priceButton}
+            text="By Price"
+            onClick={(): void => {
+              setIsSorted(!isSorted);
+            }}
+          />
+        </div>
       </div>
       {advertsList &&
         advertsList.map((poster) => (

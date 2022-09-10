@@ -180,12 +180,9 @@
 
 @media (max-width: $global-md) {
   .container {
-    .logoDiv {
-      width: 73px;
-
-      .logo {
-        width: 70px;
-      }
+    .logo {
+      display: none;
+      width: 70px;
     }
 
     .panel {
@@ -202,6 +199,7 @@
     }
   }
 }
+
 
 @media (max-width: $global-sm) {
   .container {
@@ -226,7 +224,7 @@
       flex-direction: column;
       justify-content: space-around;
       align-items: center;
-      width: 93px;
+      width: 100px;
 
       .rectangle {
         display: none;

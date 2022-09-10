@@ -44,8 +44,7 @@ const getRecentSearchCars = async (
     },
   });
 
-  const cars: RecentSearchCarsResponse[] = [];
-  recentSearchCars.map((car) => {
+  return recentSearchCars.map((car) => {
     const data = {
       id: car.model.id,
       modelName: car.model.name,
@@ -59,10 +58,8 @@ const getRecentSearchCars = async (
       pricesRanges: car.model.prices_ranges,
       description: car.model.description,
     } as RecentSearchCarsResponse;
-    cars.push(data);
+    return data;
   });
-
-  return cars;
 };
 
 const addCarToRecentSearch = async ({

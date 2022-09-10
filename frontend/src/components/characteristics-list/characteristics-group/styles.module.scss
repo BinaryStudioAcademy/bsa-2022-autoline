@@ -1,15 +1,17 @@
 .title {
   margin: 1.875rem 0 0.313rem;
+  text-transform: capitalize;
 }
 
 .option {
   display: flex;
-  margin-top: 0.625rem;
+  padding-top: 0.625rem;
+  font-size: 1.1rem;
 }
 
 .optionName {
-  width: 35%;
-  margin-right: 0.625rem;
+  width: 8rem;
+  padding-right: 1rem;
   color: var(--gray400);
   word-wrap: break-word;
 }

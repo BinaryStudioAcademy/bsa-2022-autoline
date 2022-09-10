@@ -1,0 +1,61 @@
+@import "@assets/css/styles";
+
+.table {
+  display: flex;
+  max-width: max-content;
+  padding: 2rem;
+  border: 1px solid var(--gray300);
+  border-radius: 5px;
+}
+
+.tableTitles {
+  color: var(--gray400);
+  font-weight: 600;
+  border-right: 1px solid var(--gray300);
+}
+
+.tableCell {
+  min-height: 45px;
+  margin: 0 1rem;
+  padding: 1rem 0;
+  line-height: 1.6;
+  text-transform: capitalize;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--gray300);
+  }
+}
+
+.tableColumn {
+  width: 250px;
+
+  &:not(:last-child) {
+    border-right: 1px solid var(--gray300);
+  }
+}
+
+.generalInfo {
+  display: grid;
+  grid-auto-columns: 250px;
+  grid-auto-flow: column;
+  width: calc(100% - 250px);
+  overflow-x: scroll;
+
+  .tableCell {
+    text-align: center;
+  }
+}
+
+@media (max-width: $global-sm) {
+  .tableTitles {
+    width: 110px;
+  }
+
+  .generalInfo {
+    width: calc(100% - 110px);
+  }
+
+  .tableCell {
+    height: 6rem;
+  }
+}

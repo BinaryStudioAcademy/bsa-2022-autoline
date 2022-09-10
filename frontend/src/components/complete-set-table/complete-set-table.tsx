@@ -1,6 +1,10 @@
+import { MouseEvent, useContext } from 'react';
+
+import { WishlistInput } from '@autoline/shared';
 import { CarSetOptions } from '@common/enums/enums';
 import { CompleteSetPropsType } from '@common/types/types';
-import { OptionsIcon } from '@components/common/icons/icons';
+import { HeartIcon, OptionsIcon } from '@components/common/icons/icons';
+import { WishlistContext } from '@contexts/wishlist-context';
 import { formatPrice } from '@helpers/helpers';
 import {
   TableContainer,
@@ -16,7 +20,17 @@ import { clsx } from 'clsx';
 import styles from './styles.module.scss';
 
 const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
-  const { className, data } = props;
+  const { className, data, onClick, activeRowId } = props;
+  const { likedCars, handleLikeClick } = useContext(WishlistContext);
+  const likeClick = (complectationId: string): void => {
+    const data: WishlistInput = { complectationId };
+    handleLikeClick(data);
+  };
+  const rowClick = (id: string): void => {
+    if (onClick) {
+      onClick(id);
+    }
+  };
 
   return (
     <TableContainer
@@ -31,6 +45,9 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
       >
         <TableHead>
           <TableRow>
+            <TableCell
+              className={clsx(styles.tableTitle, styles.iconCell)}
+            ></TableCell>
             <TableCell className={styles.tableTitle}>
               {CarSetOptions.Complectation}
             </TableCell>
@@ -59,7 +76,37 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
         </TableHead>
         <TableBody>
           {data.map((car) => (
-            <TableRow key={car.id} className={styles.tableRow}>
+            <TableRow
+              key={car.id}
+              className={clsx(
+                styles.tableRow,
+                activeRowId && activeRowId === car.id
+                  ? styles.tableRowActive
+                  : '',
+              )}
+              onClick={(event: MouseEvent): void => {
+                event.stopPropagation();
+                rowClick(car.id);
+              }}
+            >
+              <TableCell
+                className={clsx(styles.tableRow, styles.iconCell)}
+                align="center"
+              >
+                <button
+                  className={clsx(
+                    styles.button,
+                    styles.iconButton,
+                    likedCars?.includes(car.id) && styles.isLiked,
+                  )}
+                  onClick={(event: MouseEvent): void => {
+                    event.stopPropagation();
+                    likeClick(car.id);
+                  }}
+                >
+                  <HeartIcon />
+                </button>
+              </TableCell>
               <TableCell className={styles.tableRow}>{car.name}</TableCell>
               <TableCell className={styles.tableRow}>
                 <div

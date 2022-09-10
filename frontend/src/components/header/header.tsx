@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app-route.enum';
+import { PageContainer } from '@components/common/page-container/page-container';
 import { EditProfile } from '@components/edit-profile/edit-profile';
 import { UnauthorisedElements } from '@components/header/unauthorised-elements/unauthorised-elements';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
@@ -103,52 +104,55 @@ export const Header = (): React.ReactElement => {
           boxShadow: 0,
           position: 'static',
         }}
+        className={styles.header}
       >
-        <Toolbar>
-          <Link to={AppRoute.ROOT}>
-            <img className={styles.logo} src={Logo} alt="Autoline" />
-          </Link>
-          {isMatchSm ? (
-            <DrawerComponent
-              userMenu={userToken ? userMenu : undefined}
-              reminders={userToken ? reminders : undefined}
-              commonMenu={commonMenu}
-            />
-          ) : (
-            <>
-              <Tabs
-                onChange={(e, value): void => setValue(value)}
-                value={value}
-                className={styles.navigation}
-              >
-                <Tab
-                  label={commonMenu.search.label}
-                  className={styles.navLink}
-                  onClick={commonMenu.search.onClick}
-                />
-                <Tab
-                  label={commonMenu.aboutUs.label}
-                  className={styles.navLink}
-                  onClick={commonMenu.aboutUs.onClick}
-                />
-              </Tabs>
-              {userToken && user ? (
-                <PrivateElements
-                  avatar={user.photoUrl}
-                  role={user.role}
-                  reminders={reminders}
-                  setOpenSettings={setOpenSettings}
-                  userMenu={userMenu}
-                />
-              ) : (
-                <UnauthorisedElements />
-              )}
-            </>
-          )}
-          {openSettings && (
-            <EditProfile onClose={(): void => setOpenSettings(false)} />
-          )}
-        </Toolbar>
+        <PageContainer>
+          <Toolbar className={styles.toolbar}>
+            <Link to={AppRoute.ROOT}>
+              <img className={styles.logo} src={Logo} alt="Autoline" />
+            </Link>
+            {isMatchSm ? (
+              <DrawerComponent
+                userMenu={userToken ? userMenu : undefined}
+                reminders={userToken ? reminders : undefined}
+                commonMenu={commonMenu}
+              />
+            ) : (
+              <>
+                <Tabs
+                  onChange={(e, value): void => setValue(value)}
+                  value={value}
+                  className={styles.navigation}
+                >
+                  <Tab
+                    label={commonMenu.search.label}
+                    className={styles.navLink}
+                    onClick={commonMenu.search.onClick}
+                  />
+                  <Tab
+                    label={commonMenu.aboutUs.label}
+                    className={styles.navLink}
+                    onClick={commonMenu.aboutUs.onClick}
+                  />
+                </Tabs>
+                {userToken && user ? (
+                  <PrivateElements
+                    avatar={user.photoUrl}
+                    role={user.role}
+                    reminders={reminders}
+                    setOpenSettings={setOpenSettings}
+                    userMenu={userMenu}
+                  />
+                ) : (
+                  <UnauthorisedElements />
+                )}
+              </>
+            )}
+            {openSettings && (
+              <EditProfile onClose={(): void => setOpenSettings(false)} />
+            )}
+          </Toolbar>
+        </PageContainer>
       </AppBar>
     </>
   );

@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import {
   ComplectationDetailsType,
   WishlistInput,
 } from '@autoline/shared/common/types/types';
+import { AppRoute } from '@common/enums/enums';
 import { CarListItemProps } from '@common/types/types';
 import { SliderNavButton } from '@components/car-list-item/slider-nav-button/slider-nav-button';
 import { swiperParams } from '@components/car-list-item/swiper-params';
@@ -101,10 +103,22 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
     setModelTransmission(transmissions);
   }, [complectations]);
 
+  const navigate = useNavigate();
+  const handleCompleteSetClick = (id: string): void => {
+    navigate({
+      pathname: AppRoute.DETAILS,
+      search: `?model=${model_id}&complectation=${id}`,
+    });
+  };
+
+  const handleCardClick = (): void => {
+    navigate({ pathname: AppRoute.DETAILS, search: `?model=${model_id}` });
+  };
+
   if (isComplectationsLoading || isModelLoading) return <Spinner />;
 
   return (
-    <div className={styles.listCard}>
+    <div className={styles.listCard} onClick={handleCardClick}>
       <Grid container spacing={2}>
         <Grid item sm={4}>
           <Swiper
@@ -166,6 +180,7 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
               <CompleteSetTableCollapsed
                 data={complectations}
                 className={clsx(styles.table, 'styledScrollbar')}
+                onClick={handleCompleteSetClick}
               />
             </div>
           )}

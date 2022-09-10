@@ -16,6 +16,7 @@ import { useUpdateUserMutation } from '@store/queries/users';
 import { upperFirst, replace } from 'lodash';
 
 import { DialogEditUser } from './dialog-edit-user';
+import styles from './styles.module.scss';
 
 type UsersListProps = {
   users: User[];
@@ -102,8 +103,12 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
                 <TableCell component="th" scope="row">
                   <Avatar alt={user.name} src={user.photo_url} />
                 </TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
+                <TableCell className={styles.limitLength}>
+                  {user.name}
+                </TableCell>
+                <TableCell className={styles.limitLength}>
+                  {user.email}
+                </TableCell>
                 <TableCell>{user.phone}</TableCell>
                 <TableCell>{user.location}</TableCell>
                 <TableCell>{getPrettified(String(user.sex))}</TableCell>

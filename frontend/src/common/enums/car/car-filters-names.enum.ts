@@ -1,5 +1,11 @@
-enum FiltersNames {
-  REGION_ID = 'regionId',
+enum RangeNames {
+  YEAR = 'year',
+  PRICE = 'price',
+  ENGINE_POWER = 'enginePower',
+  ENGINE_DISPLACEMENT = 'engineDisplacement',
+}
+
+enum RangeValueNames {
   YEAR_START = 'yearStart',
   YEAR_END = 'yearEnd',
   PRICE_START = 'priceStart',
@@ -11,6 +17,7 @@ enum FiltersNames {
 }
 
 enum CheckListsNames {
+  REGION_ID = 'regionId',
   COLOR_ID = 'colorId',
   TRANSMISSION_TYPE_ID = 'transmissionTypeId',
   FUEL_TYPE_ID = 'fuelTypeId',
@@ -18,4 +25,4 @@ enum CheckListsNames {
   BODY_TYPE_ID = 'bodyTypeId',
 }
 
-export { FiltersNames, CheckListsNames };
+export { RangeNames, RangeValueNames, CheckListsNames };

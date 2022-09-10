@@ -1,13 +1,19 @@
 .wrapper {
   display: grid;
   grid-template-rows: 18% minmax(1fr, 55%) 27%;
-  grid-template-columns: 1fr 5rem;
+  grid-template-columns: 1fr 50px;
   box-sizing: border-box;
-  min-width: 20vw;
+  width: 100%;
   min-height: 25rem;
   padding: 2rem;
   background-color: var(--white);
+  border: solid 1px transparent;
   border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    border: solid 1px var(--blue100);
+  }
 }
 
 .carImage {

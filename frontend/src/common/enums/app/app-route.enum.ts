@@ -13,6 +13,7 @@ enum AppRoute {
   PERSONAL = '/personal-page',
   DETAILS = '/details',
   SEARCH = '/search',
+  ABOUT = '/about',
 }
 
 export { AppRoute };

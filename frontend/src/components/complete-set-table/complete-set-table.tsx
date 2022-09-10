@@ -54,12 +54,8 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
       >
         <TableHead>
           <TableRow>
-            <TableCell
-              className={clsx(styles.tableTitle, styles.iconCell)}
-            ></TableCell>
-            <TableCell
-              className={clsx(styles.tableTitle, styles.iconCell)}
-            ></TableCell>
+            <TableCell className={clsx(styles.tableTitle, styles.iconCell)} />
+            <TableCell className={clsx(styles.tableTitle, styles.iconCell)} />
             <TableCell className={styles.tableTitle}>
               {CarSetOptions.Complectation}
             </TableCell>

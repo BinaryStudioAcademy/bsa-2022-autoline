@@ -1,0 +1,36 @@
+.title {
+  margin-top: 3.2rem;
+}
+
+.headerPage {
+  display: flex;
+  margin-top: 2.2rem;
+  margin-bottom: 3.5rem;
+
+  & > div:first-child {
+    margin-right: 1.875rem;
+  }
+}
+
+.notification {
+  padding: 3rem 2rem;
+  font-size: 1.1rem;
+  background-color: var(--white);
+  border-radius: 10px;
+}
+
+.carouselWrapper {
+  width: 50%;
+}
+
+.detailsCarPanelWrapper {
+  width: 50%;
+}
+
+.completeSetWrapper {
+  margin: -1.875rem 0;
+}
+
+.footerPage {
+  min-height: 6.75rem;
+}

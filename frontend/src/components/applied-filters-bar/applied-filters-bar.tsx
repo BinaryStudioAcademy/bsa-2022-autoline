@@ -14,9 +14,10 @@ import {
   setBrandDetailsValue,
   setCheckListValue,
 } from '@store/car-filter/slice';
-import { useLazyGetModelsOfBrandQuery } from '@store/queries/cars';
+import { carsApi, useLazyGetModelsOfBrandQuery } from '@store/queries/cars';
 import {
   selectAppliedBrands,
+  selectFiltersQueryArr,
   selectNormalizedBrands,
   selectNormalizedOptionsInAutocompleteType,
 } from '@store/selectors/car-filter-selectors';
@@ -40,6 +41,8 @@ const AppliedFiltersBar = (): ReactElement => {
     [p: string]: ModelType;
   }>({});
 
+  const [lastQueryArgs, setLastQueryArgs] = useState<string[][]>([]);
+
   const normalizedOptions = useAppSelector(
     selectNormalizedOptionsInAutocompleteType,
   );
@@ -49,6 +52,16 @@ const AppliedFiltersBar = (): ReactElement => {
   const allAppliedBrands = useAppSelector(selectAppliedBrands);
 
   const [getModelsOfBrand, models] = useLazyGetModelsOfBrandQuery();
+
+  const filtersQueryArr = useAppSelector(selectFiltersQueryArr);
+
+  const { originalArgs } = useAppSelector((state) =>
+    carsApi.endpoints.getFilteredCars.select(filtersQueryArr)(state),
+  );
+
+  useEffect(() => {
+    originalArgs && setLastQueryArgs(originalArgs);
+  }, [originalArgs]);
 
   useEffect(() => {
     allAppliedBrands.forEach((brandId) => {
@@ -163,7 +176,7 @@ const AppliedFiltersBar = (): ReactElement => {
       appliedBrandDetails?.length,
   );
 
-  if (!isAnyApplies) return <></>;
+  if (!isAnyApplies || !lastQueryArgs?.length) return <></>;
 
   return (
     <div className={styles.container}>

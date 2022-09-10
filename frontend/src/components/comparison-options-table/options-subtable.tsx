@@ -37,19 +37,19 @@ const OptionsSubtable: React.FC<{ title: string }> = ({ title }) => {
     return <p style={{ color, margin: '0' }}>{symbol}</p>;
   };
 
-  const [optionTable, setGeneralTableRef] = useState<HTMLDivElement | null>(
+  const [optionsTable, setOptionsTableRef] = useState<HTMLDivElement | null>(
     null,
   );
 
   useLayoutEffect(() => {
-    if (!optionTable) return;
-    const optionTitle = optionTable.querySelectorAll(
+    if (!optionsTable) return;
+    const optionTitle = optionsTable.querySelectorAll(
       '[data-title]',
     ) as NodeListOf<HTMLDivElement>;
 
     optionTitle.forEach((option) => {
       const title = option.getAttribute('data-title');
-      const tableElement = optionTable.querySelectorAll(
+      const tableElement = optionsTable.querySelectorAll(
         `[data-value="${title}"]`,
       ) as NodeListOf<HTMLDivElement>;
 
@@ -60,14 +60,14 @@ const OptionsSubtable: React.FC<{ title: string }> = ({ title }) => {
           }px`),
       );
     });
-  }, [optionTable, optionNames]);
+  }, [optionsTable, optionNames]);
 
   return (
     <CollapseElement label={title}>
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className={styles.table} ref={setGeneralTableRef}>
+        <div className={styles.table} ref={setOptionsTableRef}>
           <div className={clsx(styles.tableTitles, styles.tableColumn)}>
             {optionNames?.map((option) => (
               <div

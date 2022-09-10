@@ -9,11 +9,7 @@ import {
 
 type CompareContextType = {
   comparedCars: string[] | undefined;
-  handleCompareClick: (
-    complectationId: string,
-    name: string,
-    description: string,
-  ) => void;
+  handleCompareClick: (complectationId: string, name: string) => void;
 };
 
 const CompareContext = createContext<CompareContextType>({
@@ -25,7 +21,7 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [carData, setCarData] = useState({ name: '', description: '' });
+  const [carData, setCarData] = useState('');
   const { data: comparedCars } = useGetActiveComparisonStatusQuery();
 
   const [addCarToComparison] = useAddCarToComparisonMutation();
@@ -41,13 +37,9 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
     await deleteCarFromComparison({ complectationId });
   };
 
-  const handleCompareClick = (
-    complectationId: string,
-    name: string,
-    description: string,
-  ): void => {
+  const handleCompareClick = (complectationId: string, name: string): void => {
     const isCompared = comparedCars?.includes(complectationId);
-    setCarData({ name, description });
+    setCarData(name);
 
     isCompared
       ? handleDeleteFromCompare(complectationId)
@@ -56,12 +48,7 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <CompareContext.Provider value={{ comparedCars, handleCompareClick }}>
-      <CompareToast
-        carName={carData.name}
-        carDescription={carData.description}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
+      <CompareToast carName={carData} isOpen={isOpen} setIsOpen={setIsOpen} />
       {children}
     </CompareContext.Provider>
   );

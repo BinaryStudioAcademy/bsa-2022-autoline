@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollSync } from 'react-scroll-sync';
 
+import { complectationOptions } from '@common/enums/comparisons/options';
 import { PageContainer } from '@components/common/page-container/page-container';
 import { Title } from '@components/common/title/title';
 import { CompTopTableBar } from '@components/comp-top-table-bar/comp-top-table-bar';
@@ -22,14 +23,9 @@ const ComparisonPage: React.FC = () => {
           <div className={styles.tablesWrapper}>
             <CompTopTableBar />
             <GeneralComparisonTable />
-            <OptionsSubtable title="design" />
-            <OptionsSubtable title="sound" />
-            <OptionsSubtable title="security" />
-            <OptionsSubtable title="multimedia" />
-            <OptionsSubtable title="comfort" />
-            <OptionsSubtable title="optics" />
-            <OptionsSubtable title="auxiliary" />
-            <OptionsSubtable title="upholstery" />
+            {complectationOptions.map((option) => (
+              <OptionsSubtable key={option} title={option} />
+            ))}
           </div>
         </ScrollSync>
       </PageContainer>

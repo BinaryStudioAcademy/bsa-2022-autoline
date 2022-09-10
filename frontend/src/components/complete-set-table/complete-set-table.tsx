@@ -84,7 +84,8 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
                   ? styles.tableRowActive
                   : '',
               )}
-              onClick={(): void => {
+              onClick={(event: MouseEvent): void => {
+                event.stopPropagation();
                 rowClick(car.id);
               }}
             >

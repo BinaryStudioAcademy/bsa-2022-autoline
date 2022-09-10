@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute } from '@common/enums/app/app';
 import { Administration } from '@components/administration';
+import { DetailsPage } from '@components/details-page/details-page';
 import { ForgotPassword } from '@components/forgot-password/forgot-password';
 import { LandingPage } from '@components/landing-page/landing-page';
 import { MailVerificationFailed } from '@components/mail-verification/verification-failed/mail-verification-failed';
@@ -72,6 +73,9 @@ const Routing: FC = () => {
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.SEARCH} element={<SearchPage />} />
+        </Route>
+        <Route element={<ProtectedRoute isAllowed={!!authData} />}>
+          <Route path={AppRoute.DETAILS} element={<DetailsPage />} />
         </Route>
         <Route path={AppRoute.NOT_FOUND} element={<NotFoundPage />} />
       </Routes>

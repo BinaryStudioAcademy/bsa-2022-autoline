@@ -185,6 +185,21 @@
       width: 70px;
     }
 
+    .labelGroup {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 5px;
+
+      & > div {
+        margin-right: 0.5rem;
+        margin-bottom: 5px;
+      }
+
+      & > div:last-child {
+        margin-right: 0;
+      }
+    }
+
     .panel {
       flex-direction: column;
       width: 100px;
@@ -205,19 +220,6 @@
   .container {
     .logoDiv {
       display: none;
-    }
-
-    .labelGroup {
-      display: flex;
-      margin-bottom: 5px;
-
-      & > div {
-        margin-right: 0.5rem;
-      }
-
-      & > div:last-child {
-        margin-right: 0;
-      }
     }
 
     .panel {

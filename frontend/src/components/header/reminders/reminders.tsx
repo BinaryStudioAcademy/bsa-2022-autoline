@@ -46,7 +46,7 @@ export const Reminders: React.FC<RemindersProps> = ({
         disablePadding
         className={clsx(styles.list, { [styles.row]: needRow })}
       >
-        <HashLink to={`${favorites.linkTo}#liked`}>
+        <HashLink smooth to={`${favorites.linkTo}#liked`}>
           <ListItemButton>
             <Badge
               badgeContent={favorites.count}
@@ -57,7 +57,7 @@ export const Reminders: React.FC<RemindersProps> = ({
             </Badge>
           </ListItemButton>
         </HashLink>
-        <HashLink to={`${viewed.linkTo}#viewed`}>
+        <HashLink smooth to={`${viewed.linkTo}#viewed`}>
           <ListItemButton>
             <Badge
               badgeContent={viewed.count}

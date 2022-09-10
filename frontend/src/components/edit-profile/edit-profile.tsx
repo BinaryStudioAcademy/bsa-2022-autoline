@@ -35,6 +35,8 @@ interface EditProfileProps {
 export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
   const { data: user } = useGetUserQuery();
   const dispatch = useAppDispatch();
+  const maxBirthdayDate = new Date().getFullYear();
+  const minBirthdayDate = maxBirthdayDate - 95;
 
   const [openDialog, setOpenDialog] = useState(false);
   const [
@@ -224,8 +226,8 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                     <MenuItem value="not_appliable">Rather not say</MenuItem>
                   </SelectFieldForm>
                   <SelectYearRange
-                    start={new Date().getFullYear() - 95}
-                    end={new Date().getFullYear()}
+                    start={minBirthdayDate}
+                    end={maxBirthdayDate}
                     name="birthYear"
                     required={false}
                     control={control}

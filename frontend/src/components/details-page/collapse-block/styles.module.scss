@@ -1,0 +1,19 @@
+.captionRow {
+  display: flex;
+  align-items: center;
+  margin: 1.875rem 0;
+  cursor: pointer;
+
+  & h4 {
+    margin: 0;
+    text-transform: uppercase;
+  }
+}
+
+.toggle {
+  margin-right: 0.4rem;
+  color: var(--blue100);
+  font-weight: 800;
+  font-size: 1.375rem;
+  border: none;
+}

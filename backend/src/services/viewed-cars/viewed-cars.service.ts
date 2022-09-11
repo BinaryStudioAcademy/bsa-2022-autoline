@@ -24,10 +24,24 @@ const getViewedCarsList = async ({
     },
     select: {
       id: true,
-      model_id: true,
       complectation_id: true,
     },
   });
+
+  const complectationWithModelList = await Promise.all(
+    viewedСarsList.map(async ({ id, complectation_id }) => {
+      const viewedCar = await prisma.complectation.findFirst({
+        where: {
+          id: complectation_id,
+        },
+        select: {
+          model_id: true,
+        },
+      });
+
+      return { id, complectation_id, model_id: viewedCar?.model_id };
+    }),
+  );
 
   const countViewedCars = await prisma.users_Viewed_Cars.count({
     where: {
@@ -36,42 +50,44 @@ const getViewedCarsList = async ({
   });
 
   const detailedListOfViewedCars = await Promise.all(
-    viewedСarsList.map(async ({ id, model_id, complectation_id }) => {
-      const viewedCar = await prisma.model.findFirst({
-        where: {
-          id: model_id,
-        },
-        select: {
-          name: true,
-          year_start: true,
-          year_end: true,
-          photo_urls: true,
-          brand: {
-            select: {
-              name: true,
-            },
+    complectationWithModelList.map(
+      async ({ id, model_id, complectation_id }) => {
+        const viewedCar = await prisma.model.findFirst({
+          where: {
+            id: model_id,
           },
-          complectations: {
-            where: {
-              id: complectation_id,
+          select: {
+            name: true,
+            year_start: true,
+            year_end: true,
+            photo_urls: true,
+            brand: {
+              select: {
+                name: true,
+              },
             },
-            select: {
-              name: true,
-              prices_ranges: {
-                select: {
-                  price_start: true,
-                  price_end: true,
+            complectations: {
+              where: {
+                id: complectation_id,
+              },
+              select: {
+                name: true,
+                prices_ranges: {
+                  select: {
+                    price_start: true,
+                    price_end: true,
+                  },
                 },
               },
             },
           },
-        },
-      });
+        });
 
-      const result = formatDtoForResponse(viewedCar as ViewedCarPrismaDto);
+        const result = formatDtoForResponse(viewedCar as ViewedCarPrismaDto);
 
-      return { id, ...result };
-    }),
+        return { id, ...result };
+      },
+    ),
   );
 
   return {
@@ -82,13 +98,11 @@ const getViewedCarsList = async ({
 
 const addCarToViewed = async ({
   userId,
-  modelId,
   complectationId,
 }: SetViewedCarRequestDto): Promise<void> => {
   const viewedCar = await prisma.users_Viewed_Cars.findFirst({
     where: {
       user_id: userId,
-      model_id: modelId,
       complectation_id: complectationId,
     },
     select: {
@@ -111,7 +125,6 @@ const addCarToViewed = async ({
   await prisma.users_Viewed_Cars.create({
     data: {
       user_id: userId,
-      model_id: modelId,
       complectation_id: complectationId,
     },
     select: {

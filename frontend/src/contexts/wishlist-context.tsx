@@ -58,7 +58,7 @@ const WishlistContextProvider: React.FC<{ children: ReactNode }> = ({
     if (isLiked) {
       const existing = notifications.find(
         (n) =>
-          n.modelId === data.modelId ??
+          n.modelId === data.modelId &&
           n.complectationId === data.complectationId,
       );
       const nextNotifications = existing

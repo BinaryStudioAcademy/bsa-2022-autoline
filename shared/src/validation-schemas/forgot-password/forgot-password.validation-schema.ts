@@ -1,9 +1,5 @@
+import { UserValidationMessage, UserValidationRule } from '@common/enums/enums';
 import * as Yup from 'yup';
-
-import {
-  UserValidationMessage,
-  UserValidationRule,
-} from '../../common/enums/enums';
 
 const forgotPassword = Yup.object().shape({
   email: Yup.string()

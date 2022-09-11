@@ -1,6 +1,6 @@
-import { FiltersNames } from '@common/enums/car/car-filters-names.enum';
+import { RangeNames } from '@common/enums/car/car-filters-names.enum';
 
 export type RangeValueType = {
-  filterName: FiltersNames;
-  value: string;
+  rangeName: RangeNames;
+  values: { [p: string]: string };
 };

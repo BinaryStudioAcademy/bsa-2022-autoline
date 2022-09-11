@@ -101,6 +101,11 @@ const getModelDetails = async (modelId: string): Promise<ModelDetailsType> => {
           price_end: true,
         },
       },
+      complectations: {
+        select: {
+          id: true,
+        },
+      },
     },
   });
 
@@ -112,6 +117,7 @@ const getModelDetails = async (modelId: string): Promise<ModelDetailsType> => {
     brandName: model?.brand.name,
     priceStart: model?.prices_ranges[0].price_start,
     priceEnd: model?.prices_ranges[0].price_end,
+    complectationsId: model?.complectations.map((i) => i.id),
   } as ModelDetailsType;
 };
 
@@ -206,10 +212,23 @@ const getComplectationsDetails = async (
   }));
 };
 
+const getComplectationsOfModel = async (
+  modelId: string,
+): Promise<Partial<Model>[]> => {
+  return await prisma.complectation.findMany({
+    where: { model_id: modelId },
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+};
+
 export {
   getBrands,
   getModels,
   getUsedOptions,
   getModelDetails,
   getComplectationsDetails,
+  getComplectationsOfModel,
 };

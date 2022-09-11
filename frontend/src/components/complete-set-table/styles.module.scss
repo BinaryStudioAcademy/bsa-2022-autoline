@@ -132,12 +132,24 @@
   path {
     transition: all 300ms;
   }
+}
 
+.likeButton {
   &.isLiked,
   &:hover {
     path {
       transition: all 300ms;
       fill: var(--blue100);
+    }
+  }
+}
+
+.compareButton {
+  &.isCompared,
+  &:hover {
+    path {
+      transition: all 300ms;
+      fill: var(--blue300);
     }
   }
 }

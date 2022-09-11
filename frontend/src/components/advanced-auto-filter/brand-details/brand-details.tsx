@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
@@ -8,13 +8,15 @@ import { MultiselectInput } from '@components/common/multiselect-input/multisele
 import { SelectField } from '@components/common/select-field/select-field';
 import { Spinner } from '@components/common/spinner/spinner';
 import { getValueById } from '@helpers/get-value-by-id';
-import { useAppSelector } from '@hooks/store/store.hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { Box, IconButton } from '@mui/material';
+import { setModels } from '@store/car-models/slice';
 import {
   useGetBrandsQuery,
   useGetModelsOfBrandQuery,
 } from '@store/queries/cars';
+import { selectNotAppliedBrands } from '@store/selectors/car-filter-selectors';
 
 import styles from './styles.module.scss';
 
@@ -33,6 +35,8 @@ const BrandDetails: FC<Props> = ({
   onBrandDetailsChange,
   onBrandDetailsRemove,
 }) => {
+  const dispatch = useAppDispatch();
+
   const { length: brandDetailsLength } = useAppSelector(
     (state) => state.carFilter.brandDetails,
   );
@@ -41,6 +45,12 @@ const BrandDetails: FC<Props> = ({
   const { data: models } = useGetModelsOfBrandQuery(brandId, {
     skip: !brandId,
   });
+
+  useEffect(() => {
+    models && dispatch(setModels(models));
+  }, [models]);
+
+  const notAppliedBrands = useAppSelector(selectNotAppliedBrands);
 
   const selectedBrandName = useMemo(() => {
     return getValueById(brands || [], brandId);
@@ -68,14 +78,14 @@ const BrandDetails: FC<Props> = ({
 
   const brandsOptions = useMemo(
     () =>
-      brands?.map(
+      notAppliedBrands?.map(
         (item) =>
           ({
             label: item.name,
             id: item.id,
           } as AutocompleteValueType),
       ),
-    [brands],
+    [brands, notAppliedBrands],
   );
 
   const modelsOptions = useMemo(

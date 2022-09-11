@@ -60,6 +60,21 @@ const getModelsOfBrand = async (
   }
 };
 
+const getComplectationsOfModel = async (
+  req: TypedRequestParams<{ id: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const complectations = await carsService.getComplectationsOfModel(
+      req.params.id,
+    );
+    res.json(complectations);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getUsedOptions = async (
   req: Request,
   res: Response,
@@ -122,4 +137,5 @@ export {
   carsSearchLocal,
   getModelDetails,
   getComplectationDetails,
+  getComplectationsOfModel,
 };

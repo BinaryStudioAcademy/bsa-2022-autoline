@@ -1,4 +1,5 @@
 import { AdvancedAutoFilter } from '@components/advanced-auto-filter/advanced-auto-filter';
+import { AppliedFiltersBar } from '@components/applied-filters-bar/applied-filters-bar';
 import { CarListItem } from '@components/car-list-item/car-list-item';
 import { PageContainer } from '@components/common/page-container/page-container';
 import { Title } from '@components/common/title/title';
@@ -13,6 +14,7 @@ import styles from './styles.module.scss';
 
 const SearchPage: React.FC = () => {
   const cars = useAppSelector((state) => state.foundCars.cars);
+
   return (
     <>
       <Header />
@@ -22,6 +24,7 @@ const SearchPage: React.FC = () => {
         </Title>
         <Grid container spacing={2} className={styles.searchPageContent}>
           <Grid item xs={12} md={8}>
+            <AppliedFiltersBar />
             {cars.length === 0 && (
               <>
                 <div className={styles.nothingFound}>

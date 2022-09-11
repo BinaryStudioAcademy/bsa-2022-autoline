@@ -61,6 +61,13 @@ export const updateUserApi = api.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
+    deleteUserPhoto: builder.mutation<void, void>({
+      query: () => ({
+        url: `${API.USER}/photo`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['User'],
+    }),
   }),
   overrideExisting: false,
 });
@@ -71,4 +78,5 @@ export const {
   useGetUserQuery,
   useDeleteOauthMutation,
   useUpdateUserPhotoMutation,
+  useDeleteUserPhotoMutation,
 } = updateUserApi;

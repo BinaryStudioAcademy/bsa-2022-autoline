@@ -4,11 +4,18 @@ import { api } from '@store/queries';
 import { combineReducers } from 'redux';
 
 import { checkTokenMiddleware } from './queries/preferences/middlewares';
-import { auth, carFilter, foundCars, whereBuy } from './root-reducer';
+import {
+  auth,
+  carFilter,
+  carModels,
+  foundCars,
+  whereBuy,
+} from './root-reducer';
 
 const rootReducer = combineReducers({
   auth,
   carFilter,
+  carModels,
   foundCars,
   whereBuy,
   [api.reducerPath]: api.reducer,

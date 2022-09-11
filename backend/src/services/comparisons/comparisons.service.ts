@@ -26,7 +26,10 @@ const addCarToComparison = async ({
 
   if (activeComparison) {
     const presenceCheck = await prisma.comparisons_Complectations.findFirst({
-      where: { complectation_id: complectationId },
+      where: {
+        complectation_id: complectationId,
+        comparison_id: activeComparison.id,
+      },
     });
 
     if (presenceCheck) {
@@ -193,6 +196,7 @@ const getActiveComparisonStatus = async (userId: string): Promise<string[]> => {
     where: {
       comparison: {
         user_id: userId,
+        active: true,
       },
     },
   });

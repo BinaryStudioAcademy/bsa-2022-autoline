@@ -1,5 +1,4 @@
 import { ENV } from '@common/enums/app/app';
-import { logger } from '@helpers/logger/logger';
 import { errorsHandler } from '@middlewares/middlewares';
 import {
   healthRouter,
@@ -16,6 +15,7 @@ import {
   newCarsRouter,
   whereBuyRouter,
   comparisonsRouter,
+  recentSearchCarsRouter,
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -66,6 +66,7 @@ const routes = [
   locationRouter,
   comparisonsRouter,
   whereBuyRouter,
+  recentSearchCarsRouter,
 ];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 
@@ -80,10 +81,17 @@ app.listen(ENV.APP.SERVER_PORT, ENV.APP.SERVER_HOST, () => {
 });
 
 // The cron task will be executed at every 30th minute
-const task = cron.schedule('*/30 * * * *', () => {
-  carsUpdatePricesFromAutoria();
-  logger.info(
-    `${new Date().toString()}: Cron task carsUpdatePricesFromAutoria()`,
+const task = cron.schedule('*/30 * * * *', async () => {
+  Sentry.captureMessage(
+    'Cron task started: "Cars. Updating prices from AutoRia"',
+    'info',
+  );
+  const carComplectations = await carsUpdatePricesFromAutoria();
+  Sentry.captureMessage(
+    `Cron task finished: "Cars. Updating prices from AutoRia". Updated car complectations: ${carComplectations.join(
+      ', ',
+    )}`,
+    'info',
   );
 });
 task.start();

@@ -12,3 +12,4 @@ export { locationRouter } from './location/location.router';
 export { newCarsRouter } from './new-cars/new-cars.router';
 export { whereBuyRouter } from './where-buy/where-buy.router';
 export { comparisonsRouter } from './comparisons/comparisons.router';
+export { recentSearchCarsRouter } from './recent-search-cars/recent-search-cars.router';

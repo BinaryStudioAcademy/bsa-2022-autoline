@@ -171,7 +171,10 @@ const deleteOauthConnections = async (
   });
 };
 
-const updateUserPhoto = async (id: string, photoUrl: string): Promise<void> => {
+const updateUserPhoto = async (
+  id: string,
+  photoUrl: string | null,
+): Promise<void> => {
   await prisma.user.update({
     where: {
       id,

@@ -115,7 +115,6 @@ const getWishlistByUserId = async (
 
     const data = {
       id: wishlist.model?.id,
-      modelId: wishlist.model?.id,
       createdAt: wishlist.created_at,
       wishlistId: wishlist.id,
       modelName: wishlist.model?.name,

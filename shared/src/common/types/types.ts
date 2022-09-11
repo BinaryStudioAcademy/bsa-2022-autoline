@@ -70,3 +70,9 @@ export type {
 } from './viewed-cars/viewed-cars';
 
 export type { ComparisonInfo } from './comparisons/comparison-info';
+
+export type {
+  RecentSearchCarsResponse,
+  RecentSearchRequestDto,
+  RecentSearchInput,
+} from './recent-search-cars/recent-searh-cars';

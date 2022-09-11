@@ -1,6 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 
-import { ModelType } from '@autoline/shared/common/types/types';
 import { CheckListsNames } from '@common/enums/car/car-filters-names.enum';
 import { AppliedFilterType } from '@common/types/cars/applied-filter.type';
 import { getRangeSymbol } from '@helpers/car-filters/get-range-symbol';
@@ -14,9 +13,7 @@ import {
   setBrandDetailsValue,
   setCheckListValue,
 } from '@store/car-filter/slice';
-import { useLazyGetModelsOfBrandQuery } from '@store/queries/cars';
 import {
-  selectAppliedBrands,
   selectNormalizedBrands,
   selectNormalizedOptionsInAutocompleteType,
 } from '@store/selectors/car-filter-selectors';
@@ -36,35 +33,13 @@ const AppliedFiltersBar = (): ReactElement => {
   const [appliedBrandDetails, setAppliedBrandDetails] =
     useState<AppliedFilterType[]>();
 
-  const [normalizedModels, setNormalizedModels] = useState<{
-    [p: string]: ModelType;
-  }>({});
+  const normalizedModels = useAppSelector((state) => state.carModels);
 
   const normalizedOptions = useAppSelector(
     selectNormalizedOptionsInAutocompleteType,
   );
 
   const normalizedBrands = useAppSelector(selectNormalizedBrands);
-
-  const allAppliedBrands = useAppSelector(selectAppliedBrands);
-
-  const [getModelsOfBrand, models] = useLazyGetModelsOfBrandQuery();
-
-  useEffect(() => {
-    allAppliedBrands.forEach((brandId) => {
-      getModelsOfBrand(brandId, true);
-    });
-  }, [brandDetails]);
-
-  useEffect(() => {
-    if (!models.data) return;
-
-    const newModels = models.data.reduce(
-      (obj, item) => ({ ...obj, [item.id]: item }),
-      {},
-    );
-    setNormalizedModels({ ...normalizedModels, ...newModels });
-  }, [models]);
 
   const handleRangeDelete = (rangeName: string): void => {
     dispatch(removeRangeValue(rangeName));

@@ -17,7 +17,6 @@ import { Spinner } from '@components/common/spinner/spinner';
 import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
 import { rangeFiltersToObject } from '@helpers/car-filters/range-filters-to-object';
 import { getValueById } from '@helpers/get-value-by-id';
-import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import { Button, Zoom } from '@mui/material';
 import {
@@ -35,6 +34,7 @@ import {
   useLazyGetFilteredCarsQuery,
 } from '@store/queries/cars';
 import { useCreateRecentSearchCarsMutation } from '@store/queries/recent-serach-cars';
+import { selectFiltersQueryArr } from '@store/selectors/car-filter-selectors';
 
 import styles from './styles.module.scss';
 
@@ -72,15 +72,10 @@ const SimpleAutoFilter: FC = () => {
     }
   }, [filteredCars]);
 
+  const filtersArr = useAppSelector(selectFiltersQueryArr);
+
   useEffect(() => {
-    setQueryParams(
-      objectToQueryString({
-        ...rangeFiltersToObject(rangeFilters),
-        ...checkLists,
-        brandId: brandDetails.map((item) => item.brandId),
-        modelId: brandDetails.flatMap((item) => item.modelIds),
-      }),
-    );
+    setQueryParams(filtersArr);
   }, [rangeFilters, checkLists, brandDetails]);
 
   const years = useMemo(() => yearsRange(30), []);

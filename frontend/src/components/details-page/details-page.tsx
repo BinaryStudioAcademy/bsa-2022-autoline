@@ -7,7 +7,7 @@ import { PageContainer } from '@components/common/page-container/page-container'
 import { CompleteSetTable } from '@components/complete-set-table/complete-set-table';
 import { DetailsCarPanel } from '@components/details-car-panel/details-car-panel';
 import { Header } from '@components/header/header';
-import { objectToQueryString } from '@helpers/object-to-query';
+import { objectToQueryArr } from '@helpers/object-to-query';
 import { CircularProgress } from '@mui/material';
 import {
   useGetComplectationsQuery,
@@ -30,7 +30,7 @@ export const DetailsPage: FC = () => {
 
   let idParams: string[][] = [];
   if (model) {
-    idParams = objectToQueryString({
+    idParams = objectToQueryArr({
       'id': model?.complectationsId as string[],
     });
   }

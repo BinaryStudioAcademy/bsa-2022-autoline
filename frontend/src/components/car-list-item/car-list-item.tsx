@@ -14,7 +14,7 @@ import { Spinner } from '@components/common/spinner/spinner';
 import { CompleteSetTableCollapsed } from '@components/complete-set-table/complete-set-table-collapsed';
 import { WishlistContext } from '@contexts/wishlist-context';
 import { formatPrice } from '@helpers/helpers';
-import { objectToQueryString } from '@helpers/object-to-query';
+import { objectToQueryArr } from '@helpers/object-to-query';
 import { Grid } from '@mui/material';
 import { uuid4 } from '@sentry/utils';
 import {
@@ -29,7 +29,7 @@ import styles from './styles.module.scss';
 const CarListItem: React.FC<CarListItemProps> = (props) => {
   const { model_id, complectations_id } = props;
 
-  const idParams = objectToQueryString({ 'id': complectations_id });
+  const idParams = objectToQueryArr({ 'id': complectations_id });
 
   const { data: complectations = [], isLoading: isComplectationsLoading } =
     useGetComplectationsQuery(idParams);

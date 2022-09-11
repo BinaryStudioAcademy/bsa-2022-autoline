@@ -13,7 +13,9 @@ import {
   setBrandDetailsValue,
   setCheckListValue,
 } from '@store/car-filter/slice';
+import { carsApi } from '@store/queries/cars';
 import {
+  selectFiltersQueryArr,
   selectNormalizedBrands,
   selectNormalizedOptionsInAutocompleteType,
 } from '@store/selectors/car-filter-selectors';
@@ -35,11 +37,23 @@ const AppliedFiltersBar = (): ReactElement => {
 
   const normalizedModels = useAppSelector((state) => state.carModels);
 
+  const [lastQueryArgs, setLastQueryArgs] = useState<string[][]>([]);
+
   const normalizedOptions = useAppSelector(
     selectNormalizedOptionsInAutocompleteType,
   );
 
   const normalizedBrands = useAppSelector(selectNormalizedBrands);
+
+  const filtersQueryArr = useAppSelector(selectFiltersQueryArr);
+
+  const { originalArgs } = useAppSelector((state) =>
+    carsApi.endpoints.getFilteredCars.select(filtersQueryArr)(state),
+  );
+
+  useEffect(() => {
+    originalArgs && setLastQueryArgs(originalArgs);
+  }, [originalArgs]);
 
   const handleRangeDelete = (rangeName: string): void => {
     dispatch(removeRangeValue(rangeName));
@@ -138,7 +152,7 @@ const AppliedFiltersBar = (): ReactElement => {
       appliedBrandDetails?.length,
   );
 
-  if (!isAnyApplies) return <></>;
+  if (!isAnyApplies || !lastQueryArgs?.length) return <></>;
 
   return (
     <div className={styles.container}>

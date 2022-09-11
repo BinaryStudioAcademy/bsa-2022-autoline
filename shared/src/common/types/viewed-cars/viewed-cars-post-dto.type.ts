@@ -10,6 +10,7 @@ type SetViewedCarRequestDto = {
 };
 
 interface ViewedCarPrismaDto {
+  id: string;
   name: string;
   year_start: number;
   year_end: number | null;
@@ -28,6 +29,7 @@ interface ViewedCarPrismaDto {
 
 interface ViewedCarResponseDto {
   id?: string;
+  modelId: string;
   brand: string;
   model: string;
   complectation: string;

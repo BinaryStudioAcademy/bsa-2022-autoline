@@ -49,7 +49,6 @@ export const DetailsPage: FC = () => {
     };
     setSearchParams(params);
     addCar({
-      modelId: modelId,
       complectationId: id,
     });
   };

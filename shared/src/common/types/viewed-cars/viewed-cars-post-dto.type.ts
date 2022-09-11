@@ -1,11 +1,9 @@
 type SetViewedCarPayload = {
-  modelId: string;
   complectationId: string;
 };
 
 type SetViewedCarRequestDto = {
   userId: string;
-  modelId: string;
   complectationId: string;
 };
 

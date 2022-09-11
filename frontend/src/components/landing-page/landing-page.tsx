@@ -12,13 +12,17 @@ import { SimpleAutoFilter } from '@components/simple-auto-filter/simple-auto-fil
 import { TopCarsAutoria } from '@components/top-cars-autoria/top-cars-autoria';
 import { useAppSelector } from '@hooks/hooks';
 import { useGetNewCarsQuery } from '@store/queries/new-cars';
+import { useGetRecentSearchCarsQuery } from '@store/queries/recent-serach-cars';
+import { selectAuthToken } from '@store/selectors';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
 export const LandingPage = (): React.ReactElement => {
-  const { data: cars } = useGetNewCarsQuery(4);
-  const isAuth = useAppSelector((state) => state.auth.token);
+  const isAuth = useAppSelector(selectAuthToken);
+  const { data: cars } = isAuth
+    ? useGetRecentSearchCarsQuery(4)
+    : useGetNewCarsQuery(4);
   return (
     <>
       <Header />
@@ -65,7 +69,11 @@ export const LandingPage = (): React.ReactElement => {
         </div>
         <div className={styles.secondContainer}>
           <PageContainer>
-            <div className={styles.secondContainerHeader}>New Cars</div>
+            {cars?.length != 0 && (
+              <div className={styles.secondContainerHeader}>
+                {isAuth ? 'Recent Searches' : 'New Cars'}
+              </div>
+            )}
             <div className={styles.secondContainerCards}>
               {cars &&
                 cars?.map((car) => (

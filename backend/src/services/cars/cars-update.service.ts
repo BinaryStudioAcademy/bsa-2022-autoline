@@ -48,9 +48,10 @@ const getCarDetailsFromAutoria = async (
 
 const updateComplectationPricesFromAutoria = async (
   complectationId: string,
-): Promise<void> => {
+  complectationName: string,
+): Promise<string> => {
   const carsIds = await getCarsIdsFromAutoria(complectationId);
-  if (carsIds.length === 0) return;
+  if (carsIds.length === 0) return '';
 
   const pricesData = await getCarDetailsFromAutoria(carsIds);
   const prices: number[] = pricesData.map((data) => data.USD);
@@ -66,19 +67,35 @@ const updateComplectationPricesFromAutoria = async (
       price_end: maxPrice,
     },
   });
+
+  return complectationName;
 };
 
-const carsUpdatePricesFromAutoria = async (): Promise<void> => {
+const carsUpdatePricesFromAutoria = async (): Promise<string[]> => {
   const complectations = await prisma.complectation.findMany({
     select: {
       id: true,
+      name: true,
+      model: {
+        select: {
+          name: true,
+          brand: true,
+        },
+      },
     },
   });
 
-  await Promise.all(
+  const updatedComplectations = await Promise.all(
     complectations.map((complectation) =>
-      updateComplectationPricesFromAutoria(complectation.id),
+      updateComplectationPricesFromAutoria(
+        complectation.id,
+        `${complectation.model.brand.name} ${complectation.model.name} ${complectation.name}`,
+      ),
     ),
+  );
+
+  return updatedComplectations.filter(
+    (carComplectation) => carComplectation !== '',
   );
 };
 

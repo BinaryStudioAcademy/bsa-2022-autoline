@@ -13,6 +13,7 @@ import {
   useGetComplectationsQuery,
   useGetModelDetailsQuery,
 } from '@store/queries/cars';
+import { useAddViewedCarMutation } from '@store/queries/history-viewed-cars';
 
 import { CollapseBlock } from './collapse-block/collapse-block';
 import styles from './styles.module.scss';
@@ -21,6 +22,7 @@ export const DetailsPage: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const modelId = (searchParams.get('model') as string) ?? '';
   const complectationId = (searchParams.get('complectation') as string) ?? '';
+  const [addCar] = useAddViewedCarMutation();
 
   const { data: model, isLoading: isModelLoading } =
     useGetModelDetailsQuery(modelId);
@@ -46,6 +48,10 @@ export const DetailsPage: FC = () => {
       complectation: id,
     };
     setSearchParams(params);
+    addCar({
+      modelId: modelId,
+      complectationId: id,
+    });
   };
 
   return (

@@ -1,13 +1,19 @@
+import { TokenPayload } from '@autoline/shared';
+import { S3Folders } from '@common/enums/aws/aws';
 import { ExceptionMessage } from '@common/enums/exception/exception-message.enum';
-import { TypedRequestBody } from '@common/types/types';
+import { ProfileImageSize } from '@common/enums/image/image';
+import { TypedRequestBody } from '@common/types/controller/controller';
 import { UpdateUserDto } from '@dtos/user/update-user.dto';
+import { usersHelper } from '@helpers/helpers';
 import { Role, Sex } from '@prisma/client';
-import { uploadFileToS3 } from '@services/aws/aws.service';
+import { generateS3Key, uploadFileToS3 } from '@services/aws/aws.service';
+import { resizePhoto } from '@services/photo/photo.service';
 import * as userService from '@services/user/user.service';
 import { Request, NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
 
 export interface UpdateUserReq {
+  tokenPayload: TokenPayload;
   newPassword?: string;
   repeatNewPassword?: string;
   password?: string;
@@ -43,6 +49,7 @@ const deleteUser = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
+    await usersHelper.deleteUserPhoto(req.tokenPayload.sub);
     await userService.deleteUser(req.tokenPayload.sub);
     res.status(httpStatus.OK).json();
   } catch (error) {
@@ -90,13 +97,34 @@ const updateUserPhoto = async (
   next: NextFunction,
 ): Promise<Response | undefined> => {
   try {
-    if (!req.files) {
-      throw new Error('Failed upload S3');
-    }
+    if (!req.files) throw new Error('Failed upload S3');
 
-    const photoUrl = await uploadFileToS3(req.files.photo);
+    const file = req.files.photo;
+    if (!file) throw new Error('No file provided');
+
+    const s3Key = generateS3Key(S3Folders.USER_IMAGES, file.type);
+    const writableStream = resizePhoto(file.path, {
+      width: ProfileImageSize.WIDTH,
+      height: ProfileImageSize.HEIGHT,
+    });
+    const photoUrl = await uploadFileToS3(writableStream, s3Key);
+    await usersHelper.deleteUserPhoto(req.tokenPayload.sub);
     await userService.updateUserPhoto(req.tokenPayload.sub, photoUrl);
+
     return res.status(httpStatus.OK).json({ photoUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteUserPhoto = async (
+  req: Request,
+  res: Response<Partial<UpdateUserReq>>,
+  next: NextFunction,
+): Promise<Response | undefined> => {
+  try {
+    await usersHelper.deleteUserPhoto(req.tokenPayload.sub);
+    return res.status(httpStatus.OK).json();
   } catch (error) {
     next(error);
   }
@@ -108,4 +136,5 @@ export {
   getUser,
   deleteOauthConnections,
   updateUserPhoto,
+  deleteUserPhoto,
 };

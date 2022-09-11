@@ -24,6 +24,7 @@ import {
   setCheckListValue,
   setRangeValue,
 } from '@store/car-filter/slice';
+import { setModels } from '@store/car-models/slice';
 import { setCars } from '@store/found-car/slice';
 import { API } from '@store/queries/api-routes';
 import {
@@ -32,6 +33,7 @@ import {
   useGetUsedOptionsQuery,
   useLazyGetFilteredCarsQuery,
 } from '@store/queries/cars';
+import { useCreateRecentSearchCarsMutation } from '@store/queries/recent-serach-cars';
 import { selectFiltersQueryArr } from '@store/selectors/car-filter-selectors';
 
 import styles from './styles.module.scss';
@@ -51,12 +53,18 @@ const SimpleAutoFilter: FC = () => {
     skip: !brandId,
   });
 
+  useEffect(() => {
+    models && dispatch(setModels(models));
+  }, [models]);
+
   const [queryParams, setQueryParams] = useState<string[][]>();
 
   const { data: options, isLoading: isOptionsLoading } =
     useGetUsedOptionsQuery();
 
   const [search, filteredCars] = useLazyGetFilteredCarsQuery();
+
+  const [addRecentSearchCar] = useCreateRecentSearchCarsMutation();
 
   useEffect(() => {
     if (filteredCars.data) {
@@ -92,7 +100,10 @@ const SimpleAutoFilter: FC = () => {
   );
 
   const doSearch = async (): Promise<void> => {
-    await search(queryParams);
+    const { data: cars } = await search(queryParams);
+    if (cars) {
+      addRecentSearchCar(cars[0]?.model_id);
+    }
     navigate(API.SEARCH);
   };
 

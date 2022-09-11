@@ -57,22 +57,12 @@ const getViewedCarsList = async ({
             },
             select: {
               name: true,
-            },
-          },
-          prices_ranges: {
-            where: {
-              OR: [
-                {
-                  model_id: model_id,
+              prices_ranges: {
+                select: {
+                  price_start: true,
+                  price_end: true,
                 },
-                {
-                  complectation_id: complectation_id,
-                },
-              ],
-            },
-            select: {
-              price_start: true,
-              price_end: true,
+              },
             },
           },
         },

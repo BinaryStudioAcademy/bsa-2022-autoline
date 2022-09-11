@@ -14,6 +14,7 @@ import styles from './styles.module.scss';
 
 const SearchPage: React.FC = () => {
   const cars = useAppSelector((state) => state.foundCars.cars);
+
   return (
     <>
       <Header />

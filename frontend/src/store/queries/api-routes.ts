@@ -6,4 +6,5 @@ export const API = {
   SEARCH: '/search',
   VIEWED_CARS: '/viewed',
   COMPARISONS: '/comparisons',
+  RECENT_SEARCH: 'recent-search',
 };

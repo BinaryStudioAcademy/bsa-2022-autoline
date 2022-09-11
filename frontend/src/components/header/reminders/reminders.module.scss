@@ -1,14 +1,18 @@
 .list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 0.6rem;
 
   &.row {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 0;
 
     a {
-      width: 40px;
+      width: 2.5rem;
     }
   }
+}
+
+.viewedIcon {
+  height: 20px;
 }

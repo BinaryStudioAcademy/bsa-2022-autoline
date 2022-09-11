@@ -16,7 +16,7 @@ const updateUserMiddleware = async (
     next();
   } catch (err) {
     const { message } = err as ErrorMessage;
-    res.status(httpStatus.FORBIDDEN).json({ error: message });
+    res.status(httpStatus.FORBIDDEN).json({ message });
     next(err);
   }
 };

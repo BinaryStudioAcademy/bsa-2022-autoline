@@ -25,6 +25,7 @@ import {
   setCheckListValue,
   setRangeValue,
 } from '@store/car-filter/slice';
+import { setModels } from '@store/car-models/slice';
 import { setCars } from '@store/found-car/slice';
 import { API } from '@store/queries/api-routes';
 import {
@@ -51,6 +52,10 @@ const SimpleAutoFilter: FC = () => {
   const { data: models } = useGetModelsOfBrandQuery(brandId, {
     skip: !brandId,
   });
+
+  useEffect(() => {
+    models && dispatch(setModels(models));
+  }, [models]);
 
   const [queryParams, setQueryParams] = useState<string[][]>();
 

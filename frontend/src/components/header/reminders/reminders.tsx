@@ -35,7 +35,7 @@ export const Reminders: React.FC<RemindersProps> = ({
   }
 
   const iconsSx = {
-    fontSize: needRow ? 20 : 24,
+    fontSize: needRow ? '1.5rem' : '1.75rem',
   };
 
   const { favorites, viewed, comparisons } = reminders;

@@ -136,6 +136,37 @@ const getComparisonGeneralInfo = async (
   }
 };
 
+const getActiveComparison = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const comparison = await comparisonsService.getActiveComparison(
+      req.tokenPayload.sub,
+    );
+    res.status(httpStatus.OK).json(comparison);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updatePositions = async (
+  req: TypedRequestBody<{ positions: string[] }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const comparison = await comparisonsService.updatePositions(
+      req.tokenPayload.sub,
+      req.body.positions,
+    );
+    res.status(httpStatus.OK).json(comparison);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   addCarToComparison,
   changeComparisonType,
@@ -145,4 +176,6 @@ export {
   getActiveComparisonStatus,
   getComparisonOptions,
   getComparisonGeneralInfo,
+  getActiveComparison,
+  updatePositions,
 };

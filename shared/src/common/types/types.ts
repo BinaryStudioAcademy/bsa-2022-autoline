@@ -69,6 +69,8 @@ export type {
   SetViewedCarPayload,
 } from './viewed-cars/viewed-cars';
 
+export type { ComparisonInfo } from './comparisons/comparison-info';
+
 export type {
   RecentSearchCarsResponse,
   RecentSearchRequestDto,

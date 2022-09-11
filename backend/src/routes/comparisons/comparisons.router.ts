@@ -27,7 +27,7 @@ comparisonsRouter.delete(
   comparisonsController.deleteCarFromComparison,
 );
 comparisonsRouter.get(
-  PATH,
+  `${PATH}/info`,
   userAuthMiddleware,
   comparisonsController.getActiveComparisonCars,
 );
@@ -47,4 +47,15 @@ comparisonsRouter.get(
   userAuthMiddleware,
   comparisonsController.getComparisonOptions,
 );
+comparisonsRouter.get(
+  PATH,
+  userAuthMiddleware,
+  comparisonsController.getActiveComparison,
+);
+comparisonsRouter.patch(
+  `${PATH}/position`,
+  userAuthMiddleware,
+  comparisonsController.updatePositions,
+);
+
 export { comparisonsRouter };

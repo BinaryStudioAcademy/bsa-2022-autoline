@@ -19,10 +19,10 @@ interface ViewedCarPrismaDto {
   };
   complectations: {
     name: string;
-  }[];
-  prices_ranges: {
-    price_start: number;
-    price_end: number;
+    prices_ranges: {
+      price_start: number;
+      price_end: number;
+    }[];
   }[];
 }
 

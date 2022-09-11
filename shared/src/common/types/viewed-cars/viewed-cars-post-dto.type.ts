@@ -28,6 +28,7 @@ interface ViewedCarPrismaDto {
 }
 
 interface ViewedCarResponseDto {
+  id?: string;
   modelId: string;
   brand: string;
   model: string;

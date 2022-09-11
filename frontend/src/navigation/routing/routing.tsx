@@ -5,6 +5,7 @@ import { AppRoute } from '@common/enums/app/app';
 import { AboutPage } from '@components/about-page/about-page';
 import { Administration } from '@components/administration';
 import { Spinner } from '@components/common/spinner/spinner';
+import { ComparisonPage } from '@components/comparison-page/comparison-page';
 import { DetailsPage } from '@components/details-page/details-page';
 import { ForgotPassword } from '@components/forgot-password/forgot-password';
 import { LandingPage } from '@components/landing-page/landing-page';
@@ -70,6 +71,9 @@ const Routing: FC = () => {
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.SEARCH} element={<SearchPage />} />
+        </Route>
+        <Route element={<ProtectedRoute isAllowed={!!authData} />}>
+          <Route path={AppRoute.COMPARISONS} element={<ComparisonPage />} />
         </Route>
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.DETAILS} element={<DetailsPage />} />

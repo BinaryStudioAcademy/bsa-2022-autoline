@@ -126,7 +126,7 @@ const getComparisonGeneralInfo = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.body.tokenPayload.sub;
+    const userId = req.tokenPayload.sub;
     const comparison = await comparisonsService.getComparisonGeneralInfo(
       userId,
     );

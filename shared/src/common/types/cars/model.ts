@@ -34,6 +34,7 @@ type ModelDetailsType = {
 
 type CarPreview = {
   id: string;
+  modelId?: string;
   modelName: string;
   pricesRanges: {
     price_start: number;

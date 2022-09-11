@@ -6,6 +6,7 @@ import type {
 const formatDtoForResponse = (
   data: ViewedCarPrismaDto,
 ): ViewedCarResponseDto => ({
+  modelId: data.id,
   brand: data.brand.name,
   model: data.name,
   complectation: data.complectations[0] ? data.complectations[0].name : '',

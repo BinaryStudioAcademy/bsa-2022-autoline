@@ -57,6 +57,7 @@ const getViewedCarsList = async ({
             id: model_id,
           },
           select: {
+            id: true,
             name: true,
             year_start: true,
             year_end: true,

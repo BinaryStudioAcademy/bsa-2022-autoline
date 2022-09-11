@@ -20,6 +20,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
     type,
     car: {
       id: carId,
+      modelId,
       modelName: carName,
       pricesRanges,
       brand: { name: brandName, logoUrl: brandLogoUrl },
@@ -28,7 +29,6 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
       description,
     },
   } = props;
-
   const { likedCars, handleLikeClick } = useContext(WishlistContext);
 
   const isLiked = likedCars?.includes(carId);
@@ -56,7 +56,12 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
   };
 
   const handleCardClick = (): void => {
-    navigate({ pathname: AppRoute.DETAILS, search: `?model=${carId}` });
+    type !== 'model'
+      ? navigate({
+          pathname: AppRoute.DETAILS,
+          search: `?model=${modelId}&complectation=${carId}`,
+        })
+      : navigate({ pathname: AppRoute.DETAILS, search: `?model=${carId}` });
   };
 
   let name = `${brandName} ${carName}`;

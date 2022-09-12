@@ -38,12 +38,11 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
 
   const modelName = `${model?.brandName} ${model?.modelName}`;
   const [modelPrice, setModelPrice] = useState<string>();
-  const [modelOptions, setModelOptions] = useState<{ name: string }[]>();
+  const [modelOptions, setModelOptions] = useState<string[]>();
   const [modelEngine, setModelEngine] = useState<string>();
   const [modelEnginePower, setModelEnginePower] = useState<string>();
   const [modelFuelType, setModelFuelType] = useState<string>();
   const [modelTransmission, setModelTransmission] = useState<string>();
-
   const { likedCars, handleLikeClick } = useContext(WishlistContext);
   const isLiked = likedCars?.includes(model_id);
 
@@ -62,13 +61,10 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
   }, [model]);
 
   useEffect(() => {
-    const options = [
-      ...new Set(
-        complectations
-          .map((car: ComplectationDetailsType) => car.options)
-          .flat(),
-      ),
-    ];
+    const options = complectations
+      .map((car: ComplectationDetailsType) => car.options)
+      .flat();
+    const optionsNames = [...new Set(options.map((option) => option.name))];
     const engines = [
       ...new Set(
         complectations
@@ -96,7 +92,7 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
       ),
     ].join(' / ');
 
-    setModelOptions(options);
+    setModelOptions(optionsNames);
     setModelEngine(engines);
     setModelEnginePower(enginePowers);
     setModelFuelType(fuelTypes);
@@ -171,9 +167,9 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
             </span> */}
           </div>
           <div className={clsx(styles.options, 'styledScrollbar')}>
-            {modelOptions?.map((option) => (
+            {modelOptions?.map((optionName) => (
               <button className={styles.pillButton} key={uuid4()}>
-                {option.name}
+                {optionName}
               </button>
             ))}
           </div>

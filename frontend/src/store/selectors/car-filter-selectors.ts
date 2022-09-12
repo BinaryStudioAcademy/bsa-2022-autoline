@@ -15,7 +15,9 @@ const selectFiltersQueryArr = createSelector(
     objectToQueryArr({
       ...rangeFiltersToObject(filters.rangeFilters),
       ...filters.checkLists,
-      brandId: filters.brandDetails.map((item) => item.brandId),
+      brandId: filters.brandDetails
+        .filter((item) => !item.modelIds.length)
+        .map((item) => item.brandId),
       modelId: filters.brandDetails.flatMap((item) => item.modelIds),
     }),
 );

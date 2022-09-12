@@ -15,12 +15,14 @@ import { CompleteSetTableCollapsed } from '@components/complete-set-table/comple
 import { WishlistContext } from '@contexts/wishlist-context';
 import { formatPrice } from '@helpers/helpers';
 import { objectToQueryArr } from '@helpers/object-to-query';
+import { convertPrice } from '@helpers/utils/convert-price';
 import { Grid } from '@mui/material';
 import { uuid4 } from '@sentry/utils';
 import {
   useGetComplectationsQuery,
   useGetModelDetailsQuery,
 } from '@store/queries/cars';
+import { useGetRateQuery } from '@store/queries/details-panel';
 import { clsx } from 'clsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -46,6 +48,8 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
 
   const { likedCars, handleLikeClick } = useContext(WishlistContext);
   const isLiked = likedCars?.includes(model_id);
+
+  const { data: rate } = useGetRateQuery();
 
   const likeClick = (event?: React.MouseEvent): void => {
     event?.stopPropagation();
@@ -163,10 +167,12 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
           </div>
           <div className={styles.priceBlock}>
             <h4 className={styles.primaryPrice}>{modelPrice}</h4>
-            {/* TODO: USD-UAH convertation
+
             <span className={styles.secondaryPrice}>
-              UAH 1 554 000 - 1 945 450
-            </span> */}
+              {`UAH ${convertPrice(rate as string, model?.priceStart as number)}
+          - ${convertPrice(rate as string, model?.priceEnd as number)}
+          `}
+            </span>
           </div>
           <div className={clsx(styles.options, 'styledScrollbar')}>
             {modelOptions?.map((option) => (

@@ -46,10 +46,10 @@ export const updateUserApi = api.injectEndpoints({
       providesTags: ['User'],
     }),
     deleteOauth: builder.mutation<void, { provider: string }>({
-      query: (params) => ({
+      query: (body) => ({
         url: `${API.USER}/oauth`,
         method: 'PATCH',
-        params,
+        body,
       }),
       invalidatesTags: ['User'],
     }),

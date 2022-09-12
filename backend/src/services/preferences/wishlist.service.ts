@@ -156,6 +156,7 @@ const getWishlistByUserId = async (
           },
           model: {
             select: {
+              id: true,
               name: true,
               year_start: true,
               year_end: true,
@@ -180,6 +181,7 @@ const getWishlistByUserId = async (
 
       const data = {
         id: wishlist.complectation?.id,
+        modelId: wishlist.complectation?.model.id,
         createdAt: wishlist.created_at,
         wishlistId: wishlist.id,
         complectationName: wishlist.complectation?.name,

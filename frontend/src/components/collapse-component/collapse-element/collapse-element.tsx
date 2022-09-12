@@ -7,10 +7,15 @@ import styles from './styles.module.scss';
 interface CollapseProps {
   label: string;
   children?: ReactNode;
+  isOpen?: boolean;
 }
 
-const CollapseElement: React.FC<CollapseProps> = ({ children, label }) => {
-  const [selected, setSelected] = useState<boolean>(false);
+const CollapseElement: React.FC<CollapseProps> = ({
+  children,
+  label,
+  isOpen = false,
+}) => {
+  const [selected, setSelected] = useState<boolean>(isOpen);
 
   const toggle = (): void => {
     setSelected(!selected);

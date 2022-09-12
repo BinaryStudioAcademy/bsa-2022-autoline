@@ -5,6 +5,7 @@
   top: 50%;
   left: 50%;
   width: $global-md;
+  max-height: 95%;
   padding: 28px 32px 52px;
   overflow: auto;
   background: var(--white);
@@ -17,14 +18,17 @@
     bottom: 2rem;
     left: 2rem;
     width: auto;
+    height: auto;
     transform: none;
   }
 
   @media (max-width: $global-sm) {
     top: 0;
     right: 0;
+    bottom: 0;
     left: 0;
     height: 100%;
+    max-height: 100%;
 
     .selectsWrapper {
       grid-template-columns: 1fr;
@@ -39,11 +43,6 @@
         justify-content: center;
         align-items: center;
         width: 100%;
-
-        .avatar {
-          width: 7rem;
-          height: 7rem;
-        }
       }
     }
   }
@@ -58,12 +57,10 @@
   .mainTitle {
     margin: 0 0 10px;
     font-weight: 800;
-    font-size: 18px;
   }
 
   .title {
     font-weight: 700;
-    font-size: 16px;
   }
 }
 
@@ -86,8 +83,8 @@
     cursor: pointer;
 
     img {
-      width: 13px;
-      margin-right: 6px;
+      width: 0.8rem;
+      margin: auto 6px;
     }
   }
 
@@ -98,8 +95,30 @@
 }
 
 .avatar {
-  width: 100px;
-  height: 100px;
+  position: relative;
+  width: 7rem;
+  height: 7rem;
+
+  &::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #4646467f;
+    background-image: url("@assets/images/edit-profile/cross.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25%;
+    visibility: hidden;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  &:hover::after {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 .profile {
@@ -114,6 +133,11 @@
 
 .cancel {
   border: none;
+}
+
+button {
+  font-weight: var(--font-weight-bold);
+  font-size: 1rem;
 }
 
 .fieldset {

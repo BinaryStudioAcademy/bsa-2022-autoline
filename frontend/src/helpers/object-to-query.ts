@@ -1,4 +1,4 @@
-export const objectToQueryString = (filters: {
+export const objectToQueryArr = (filters: {
   [p: string]: string | string[];
 }): string[][] => {
   const notEmpties = Object.fromEntries(

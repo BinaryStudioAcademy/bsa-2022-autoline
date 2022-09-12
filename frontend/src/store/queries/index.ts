@@ -78,6 +78,7 @@ export const api = createApi({
     'ViewedCars',
     'DetailsPanel',
     'Comparisons',
+    'RecentSearchCars',
   ],
   endpoints: () => ({}),
 });

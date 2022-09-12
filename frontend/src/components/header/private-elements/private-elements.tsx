@@ -23,7 +23,7 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
   userMenu,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
+  const [isAvatarImageLoaded, setAvatarImageLoaded] = React.useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
@@ -46,9 +46,15 @@ export const PrivateElements: React.FC<PrivateComponentProps> = ({
         <Avatar
           className={styles.avatar}
           src={avatar || DefaultAvatar}
+          onLoad={(): void => setAvatarImageLoaded(true)}
           alt="avatar"
-          sx={{ width: 35, height: 35 }}
+          sx={{
+            width: '3rem',
+            height: '3rem',
+            visibility: isAvatarImageLoaded ? 'visible' : 'hidden',
+          }}
         />
+
         {open ? (
           <ArrowDropUpIcon color="primary" />
         ) : (

@@ -1,14 +1,22 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { AppRoute } from '@common/enums/enums';
 import { ViewedCarData } from '@common/types/types';
 
 import styles from './styles.module.scss';
 
 const ShortCarCard: FC<ViewedCarData> = ({ carData }) => {
-  const { brand, model, complectation, year, photo_urls, price } = carData;
+  const navigate = useNavigate();
+  const { brand, model, complectation, year, photo_urls, price, modelId } =
+    carData;
   const carName = `${brand} ${model} ${complectation} ${year}`;
+
+  const handleCardClick = (): void => {
+    navigate({ pathname: AppRoute.DETAILS, search: `?model=${modelId}` });
+  };
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={handleCardClick}>
       <div className={styles.carPicture}>
         <img src={photo_urls[0]} alt="car" />
       </div>

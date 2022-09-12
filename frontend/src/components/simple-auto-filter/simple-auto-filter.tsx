@@ -17,7 +17,6 @@ import { Spinner } from '@components/common/spinner/spinner';
 import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
 import { rangeFiltersToObject } from '@helpers/car-filters/range-filters-to-object';
 import { getValueById } from '@helpers/get-value-by-id';
-import { objectToQueryString } from '@helpers/object-to-query';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import { Button, Zoom } from '@mui/material';
 import {
@@ -25,6 +24,7 @@ import {
   setCheckListValue,
   setRangeValue,
 } from '@store/car-filter/slice';
+import { setModels } from '@store/car-models/slice';
 import { setCars } from '@store/found-car/slice';
 import { API } from '@store/queries/api-routes';
 import {
@@ -33,6 +33,8 @@ import {
   useGetUsedOptionsQuery,
   useLazyGetFilteredCarsQuery,
 } from '@store/queries/cars';
+import { useCreateRecentSearchCarsMutation } from '@store/queries/recent-serach-cars';
+import { selectFiltersQueryArr } from '@store/selectors/car-filter-selectors';
 
 import styles from './styles.module.scss';
 
@@ -51,6 +53,10 @@ const SimpleAutoFilter: FC = () => {
     skip: !brandId,
   });
 
+  useEffect(() => {
+    models && dispatch(setModels(models));
+  }, [models]);
+
   const [queryParams, setQueryParams] = useState<string[][]>();
 
   const { data: options, isLoading: isOptionsLoading } =
@@ -58,21 +64,18 @@ const SimpleAutoFilter: FC = () => {
 
   const [search, filteredCars] = useLazyGetFilteredCarsQuery();
 
+  const [addRecentSearchCar] = useCreateRecentSearchCarsMutation();
+
   useEffect(() => {
     if (filteredCars.data) {
       dispatch(setCars(filteredCars.data));
     }
   }, [filteredCars]);
 
+  const filtersArr = useAppSelector(selectFiltersQueryArr);
+
   useEffect(() => {
-    setQueryParams(
-      objectToQueryString({
-        ...rangeFiltersToObject(rangeFilters),
-        ...checkLists,
-        brandId: brandDetails.map((item) => item.brandId),
-        modelId: brandDetails.flatMap((item) => item.modelIds),
-      }),
-    );
+    setQueryParams(filtersArr);
   }, [rangeFilters, checkLists, brandDetails]);
 
   const years = useMemo(() => yearsRange(30), []);
@@ -97,7 +100,10 @@ const SimpleAutoFilter: FC = () => {
   );
 
   const doSearch = async (): Promise<void> => {
-    await search(queryParams);
+    const { data: cars } = await search(queryParams);
+    if (cars) {
+      addRecentSearchCar(cars[0]?.model_id);
+    }
     navigate(API.SEARCH);
   };
 

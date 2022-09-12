@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ComplectationDetailsType } from '@autoline/shared/common/types/types';
 import { CompleteSetPropsType } from '@common/types/types';
@@ -8,7 +8,7 @@ import { CompleteSetTable } from './complete-set-table';
 import styles from './styles.module.scss';
 
 const CompleteSetTableCollapsed: React.FC<CompleteSetPropsType> = (props) => {
-  const { className, data } = props;
+  const { className, data, onClick } = props;
 
   const initialRows = 5;
   const [carsDisplayed, setCarsDisplayed] = useState<
@@ -24,7 +24,8 @@ const CompleteSetTableCollapsed: React.FC<CompleteSetPropsType> = (props) => {
   }, [data]);
 
   const [open, setOpen] = useState(false);
-  const handleClick = (): void => {
+  const handleClick = (event: React.MouseEvent): void => {
+    event.stopPropagation();
     open
       ? setCarsDisplayed(data?.slice(0, initialRows))
       : setCarsDisplayed(data);
@@ -35,7 +36,11 @@ const CompleteSetTableCollapsed: React.FC<CompleteSetPropsType> = (props) => {
     <>
       {rowsHidden > 0 ? (
         <>
-          <CompleteSetTable data={carsDisplayed} className={className} />
+          <CompleteSetTable
+            data={carsDisplayed}
+            className={className}
+            onClick={onClick}
+          />
           <button className={styles.collapseButton} onClick={handleClick}>
             {open ? (
               <ExpandLess />
@@ -48,7 +53,11 @@ const CompleteSetTableCollapsed: React.FC<CompleteSetPropsType> = (props) => {
           </button>
         </>
       ) : (
-        <CompleteSetTable data={carsDisplayed} className={className} />
+        <CompleteSetTable
+          data={carsDisplayed}
+          className={className}
+          onClick={onClick}
+        />
       )}
     </>
   );

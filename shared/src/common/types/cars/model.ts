@@ -29,10 +29,12 @@ type ModelDetailsType = {
   brandName: string;
   priceStart: number;
   priceEnd: number;
+  complectationsId: string[];
 };
 
 type CarPreview = {
   id: string;
+  modelId?: string;
   modelName: string;
   pricesRanges: {
     price_start: number;

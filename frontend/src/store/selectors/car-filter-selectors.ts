@@ -1,10 +1,24 @@
 import { AutoRiaOption, BrandType } from '@autoline/shared/common/types/types';
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
+import { CarFiltersType } from '@common/types/cars/filters.type';
+import { rangeFiltersToObject } from '@helpers/car-filters/range-filters-to-object';
+import { objectToQueryArr } from '@helpers/object-to-query';
 import { createSelector } from '@reduxjs/toolkit';
 import { carsApi } from '@store/queries/cars';
 
 const selectOptions = carsApi.endpoints.getUsedOptions.select();
+
+const selectFiltersQueryArr = createSelector(
+  [(state): CarFiltersType => state.carFilter],
+  (filters) =>
+    objectToQueryArr({
+      ...rangeFiltersToObject(filters.rangeFilters),
+      ...filters.checkLists,
+      brandId: filters.brandDetails.map((item) => item.brandId),
+      modelId: filters.brandDetails.flatMap((item) => item.modelIds),
+    }),
+);
 
 const selectNormalizedBrands = createSelector(
   [carsApi.endpoints.getBrands.select()],
@@ -89,4 +103,5 @@ export {
   selectNormalizedBrands,
   selectAppliedBrands,
   selectNotAppliedBrands,
+  selectFiltersQueryArr,
 };

@@ -7,15 +7,18 @@ interface ModalProps {
   children?: React.ReactNode;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  clearNotification: () => void;
   icon?: React.ReactElement;
   undo?: () => void;
 }
 
 const Notification: FC<ModalProps> = (props) => {
-  const { children, isOpen, setIsOpen, icon, undo } = props;
+  const { children, isOpen, setIsOpen, icon, undo, clearNotification } = props;
 
-  const closeNotification = (): void => setIsOpen(!isOpen);
-
+  const closeNotification = (): void => {
+    clearNotification();
+    setIsOpen(!isOpen);
+  };
   useEffect(() => {
     if (isOpen) {
       const timer = setTimeout(closeNotification, 6000);
@@ -29,7 +32,7 @@ const Notification: FC<ModalProps> = (props) => {
   return (
     <div className={styles.container} hidden={!isOpen}>
       <div className={styles.content}>
-        <button className={styles.close} onClick={closeNotification}>
+        <button className={styles.close} onClick={clearNotification}>
           ×
         </button>
         <div className={styles.icon}>

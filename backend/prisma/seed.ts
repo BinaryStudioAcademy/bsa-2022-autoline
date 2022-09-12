@@ -204,10 +204,12 @@ const indicateImportantOptions = async (): Promise<void | Prisma.Option[]> => {
   const importantOptions = [...optionsTypes].filter(
     (it) => it.important === 'true',
   );
-  const importantOptionsIds = await Promise.all(
+  const importantOptionsFromDb = await Promise.all(
     importantOptions.map((opt) => getOption(opt.name)),
   );
-  importantOptionsIds.map((opt) => updateImportantOptions(opt?.id as string));
+  importantOptionsFromDb.map((opt) =>
+    updateImportantOptions(opt?.id as string),
+  );
 };
 
 const getOption = async (name: string): Promise<Prisma.Option | null> => {

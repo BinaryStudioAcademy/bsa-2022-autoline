@@ -4,10 +4,7 @@ export const objectToQueryString = (filters: {
   const notEmpties = Object.fromEntries(
     Object.entries(filters).filter(
       ([_, value]) =>
-        value.length >= 1 &&
-        value !== '' &&
-        Array.isArray(value) &&
-        value[0] !== '',
+        value.length >= 1 && !value && Array.isArray(value) && !value[0],
     ),
   );
 

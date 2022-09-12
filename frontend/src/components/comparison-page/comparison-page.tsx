@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollSync } from 'react-scroll-sync';
 
 import { complectationOptions } from '@common/enums/comparisons/options';
@@ -8,10 +8,29 @@ import { CompTopTableBar } from '@components/comp-top-table-bar/comp-top-table-b
 import { OptionsSubtable } from '@components/comparison-options-table/options-subtable';
 import { GeneralComparisonTable } from '@components/general-comparison-table/general-comparison-table';
 import { Header } from '@components/header/header';
+import { useGetComparisonGeneralInfoQuery } from '@store/queries/comparisons';
 
 import styles from './styles.module.scss';
 
 const ComparisonPage: React.FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isOnlyDifferenceShown, setIsOnlyDifferenceShown] = useState(true); // this will be used while implementing toggle button
+
+  const { data, isLoading } = useGetComparisonGeneralInfoQuery();
+
+  const showOptionsTables = (): (React.ReactElement | undefined)[] => {
+    if (isOnlyDifferenceShown) {
+      return complectationOptions.map((option) => {
+        if (data?.some((car) => car.options[option].length)) {
+          return <OptionsSubtable key={option} title={option} />;
+        }
+      });
+    }
+    return complectationOptions.map((option) => (
+      <OptionsSubtable key={option} title={option} />
+    ));
+  };
+
   return (
     <>
       <Header />
@@ -23,9 +42,7 @@ const ComparisonPage: React.FC = () => {
           <div className={styles.tablesWrapper}>
             <CompTopTableBar />
             <GeneralComparisonTable />
-            {complectationOptions.map((option) => (
-              <OptionsSubtable key={option} title={option} />
-            ))}
+            {isLoading || showOptionsTables()}
           </div>
         </ScrollSync>
       </PageContainer>

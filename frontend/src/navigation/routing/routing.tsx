@@ -52,12 +52,8 @@ const Routing: FC = () => {
             element={<RedirectAfterSign />}
           />
         </Route>
-        <Route element={<ProtectedRoute isAllowed={!!authData} />}>
-          <Route path={AppRoute.FORGOT_PASSWORD} element={<ForgotPassword />} />
-        </Route>
-        <Route element={<ProtectedRoute isAllowed={!!authData} />}>
-          <Route path={AppRoute.RESET_PASSWORD} element={<ResetPassword />} />
-        </Route>
+        <Route path={AppRoute.FORGOT_PASSWORD} element={<ForgotPassword />} />
+        <Route path={AppRoute.RESET_PASSWORD} element={<ResetPassword />} />
         <Route path={AppRoute.ROOT} element={<LandingPage />} />
         <Route
           element={

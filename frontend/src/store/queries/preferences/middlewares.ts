@@ -1,7 +1,7 @@
 import { AppRoute } from '@common/enums/enums';
 import { RootState } from '@common/types/types';
 import { createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
-import { comparison } from '@store/queries/comparisons';
+import { rejectedAddToComparison } from '@store/queries/comparisons';
 import { like } from '@store/queries/preferences/wishlist';
 import { AppDispatch } from '@store/store';
 
@@ -15,7 +15,7 @@ export const startAppListening =
   checkTokenMiddleware.startListening as AppStartListening;
 
 startAppListening({
-  matcher: isAnyOf(like, comparison),
+  matcher: isAnyOf(like, rejectedAddToComparison),
   effect: (action, listenerApi) => {
     const token = listenerApi.getState().auth.token;
     if (!token) {

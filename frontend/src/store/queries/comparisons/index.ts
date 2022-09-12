@@ -88,5 +88,5 @@ export const {
   useUpdatePositionsMutation,
 } = comparisonsApi;
 
-export const comparison =
+export const rejectedAddToComparison =
   comparisonsApi.endpoints.addCarToComparison.matchRejected;

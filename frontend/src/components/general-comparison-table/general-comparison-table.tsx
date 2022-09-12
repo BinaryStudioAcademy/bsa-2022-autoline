@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { ScrollSyncPane } from 'react-scroll-sync';
 
 import { CollapseElement } from '@components/collapse-component/collapse-element/collapse-element';
@@ -11,7 +11,11 @@ import { clsx } from 'clsx';
 import styles from './styles.module.scss';
 
 const GeneralComparisonTable: React.FC = () => {
-  const { data: generalInfo, isLoading } = useGetComparisonGeneralInfoQuery();
+  const {
+    data: generalInfo,
+    isLoading,
+    refetch,
+  } = useGetComparisonGeneralInfoQuery();
 
   const options: Set<string> = useMemo((): Set<string> => {
     const options: Set<string> = new Set();
@@ -26,6 +30,13 @@ const GeneralComparisonTable: React.FC = () => {
   const [generalTable, setGeneralTableRef] = useState<HTMLDivElement | null>(
     null,
   );
+
+  const broadcast = new BroadcastChannel('compare');
+  useEffect(() => {
+    broadcast.onmessage = (): void => {
+      refetch();
+    };
+  });
 
   useLayoutEffect(() => {
     if (!generalTable) return;

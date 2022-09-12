@@ -14,7 +14,8 @@ const SliderNavButton: FC<Props> = ({ direction }) => {
   const classButton =
     direction === 'prev' ? styles.prevButton : styles.nextButton;
 
-  const clickHandler = (): void => {
+  const clickHandler = (event: React.MouseEvent): void => {
+    event.stopPropagation();
     if (direction === 'prev') {
       swiper.slidePrev();
     }

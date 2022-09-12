@@ -54,14 +54,15 @@
 .MuiAutocomplete-root {
   .MuiFormControl-root {
     label {
-      top: -3px;
-      left: 5px;
+      top: -0.3rem;
       color: var(--gray300);
-      font-size: 14px;
+      font-size: 1rem;
+      transform: translate(14px, 16px) scale(1);
     }
   }
 
   .MuiInputBase-root.MuiOutlinedInput-root {
+    height: auto;
     padding: 12px 15px 10px;
     font-size: 1.3rem;
 

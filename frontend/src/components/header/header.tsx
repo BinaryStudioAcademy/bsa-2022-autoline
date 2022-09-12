@@ -18,7 +18,7 @@ import {
 import { logOut } from '@store/auth/slice';
 import { useGetActiveComparisonStatusQuery } from '@store/queries/comparisons';
 import { useGetHistoryOfViwedCarsQuery } from '@store/queries/history-viewed-cars';
-import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
+import { useGetWishlistEntriesQuery } from '@store/queries/preferences/wishlist';
 import { useGetUserQuery } from '@store/queries/user/update-user';
 
 import { DrawerComponent } from './drawer/drawer';
@@ -29,8 +29,7 @@ export const Header = (): React.ReactElement => {
   const [value, setValue] = useState(0);
   const theme = useTheme();
   const isMatchSm = useMediaQuery(theme.breakpoints.down('sm'));
-  const { data: wishlist = { models: [], complectations: [] } } =
-    useGetWishlistsQuery();
+  const { data: wishlist } = useGetWishlistEntriesQuery();
   const { data: comparisons } = useGetActiveComparisonStatusQuery();
   const { data: viewed } = useGetHistoryOfViwedCarsQuery({});
   const [wishlistCount, setWishlistCount] = useState(0);
@@ -41,7 +40,7 @@ export const Header = (): React.ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   useEffect(() => {
-    setWishlistCount(wishlist.models.length + wishlist.complectations.length);
+    if (wishlist) setWishlistCount(wishlist.length);
   }, [wishlist]);
 
   useEffect(() => {

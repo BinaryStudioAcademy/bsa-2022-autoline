@@ -26,7 +26,18 @@ import { PrivateElements } from './private-elements/private-elements';
 import styles from './styles.module.scss';
 
 export const Header = (): React.ReactElement => {
-  const [value, setValue] = useState(0);
+  let tabNumber;
+  switch (window.location.pathname) {
+    case AppRoute.SEARCH:
+      tabNumber = 0;
+      break;
+    case AppRoute.ABOUT:
+      tabNumber = 1;
+      break;
+    default:
+      tabNumber = null;
+  }
+  const [value, setValue] = useState(tabNumber);
   const theme = useTheme();
   const isMatchSm = useMediaQuery(theme.breakpoints.down('sm'));
   const { data: wishlist = { models: [], complectations: [] } } =

@@ -27,7 +27,7 @@
 }
 
 .tableColumn {
-  width: 250px;
+  width: 20rem;
 
   &:not(:last-child) {
     border-right: 1px solid var(--gray300);
@@ -36,26 +36,24 @@
 
 .generalInfo {
   display: grid;
-  grid-auto-columns: 250px;
+  grid-auto-columns: 20rem;
   grid-auto-flow: column;
-  width: calc(100% - 250px);
+  width: calc(100% - 20rem);
   overflow-x: scroll;
 
   .tableCell {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
 @media (max-width: $global-sm) {
   .tableTitles {
-    width: 110px;
+    width: 10rem;
   }
 
   .generalInfo {
-    width: calc(100% - 110px);
-  }
-
-  .tableCell {
-    height: 6rem;
+    width: calc(100% - 10rem);
   }
 }

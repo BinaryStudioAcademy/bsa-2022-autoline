@@ -1,0 +1,9 @@
+.tablesWrapper {
+  width: fit-content;
+  min-width: 40%;
+  max-width: 100%;
+  margin: auto;
+  padding: var(--mui-padding-md);
+  background-color: var(--white);
+  border-radius: var(--border-radius-container);
+}

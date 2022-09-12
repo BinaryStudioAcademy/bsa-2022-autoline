@@ -1,15 +1,14 @@
 type SetViewedCarPayload = {
-  modelId: string;
   complectationId: string;
 };
 
 type SetViewedCarRequestDto = {
   userId: string;
-  modelId: string;
   complectationId: string;
 };
 
 interface ViewedCarPrismaDto {
+  id: string;
   name: string;
   year_start: number;
   year_end: number | null;
@@ -19,15 +18,16 @@ interface ViewedCarPrismaDto {
   };
   complectations: {
     name: string;
-  }[];
-  prices_ranges: {
-    price_start: number;
-    price_end: number;
+    prices_ranges: {
+      price_start: number;
+      price_end: number;
+    }[];
   }[];
 }
 
 interface ViewedCarResponseDto {
   id?: string;
+  modelId: string;
   brand: string;
   model: string;
   complectation: string;

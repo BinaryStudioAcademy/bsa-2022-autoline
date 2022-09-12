@@ -126,9 +126,40 @@ const getComparisonGeneralInfo = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.body.tokenPayload.sub;
+    const userId = req.tokenPayload.sub;
     const comparison = await comparisonsService.getComparisonGeneralInfo(
       userId,
+    );
+    res.status(httpStatus.OK).json(comparison);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getActiveComparison = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const comparison = await comparisonsService.getActiveComparison(
+      req.tokenPayload.sub,
+    );
+    res.status(httpStatus.OK).json(comparison);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updatePositions = async (
+  req: TypedRequestBody<{ positions: string[] }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const comparison = await comparisonsService.updatePositions(
+      req.tokenPayload.sub,
+      req.body.positions,
     );
     res.status(httpStatus.OK).json(comparison);
   } catch (error) {
@@ -145,4 +176,6 @@ export {
   getActiveComparisonStatus,
   getComparisonOptions,
   getComparisonGeneralInfo,
+  getActiveComparison,
+  updatePositions,
 };

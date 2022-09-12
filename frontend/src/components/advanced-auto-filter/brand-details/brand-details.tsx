@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 
 import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
@@ -8,9 +8,10 @@ import { MultiselectInput } from '@components/common/multiselect-input/multisele
 import { SelectField } from '@components/common/select-field/select-field';
 import { Spinner } from '@components/common/spinner/spinner';
 import { getValueById } from '@helpers/get-value-by-id';
-import { useAppSelector } from '@hooks/store/store.hooks';
+import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { Box, IconButton } from '@mui/material';
+import { setModels } from '@store/car-models/slice';
 import {
   useGetBrandsQuery,
   useGetModelsOfBrandQuery,
@@ -34,6 +35,8 @@ const BrandDetails: FC<Props> = ({
   onBrandDetailsChange,
   onBrandDetailsRemove,
 }) => {
+  const dispatch = useAppDispatch();
+
   const { length: brandDetailsLength } = useAppSelector(
     (state) => state.carFilter.brandDetails,
   );
@@ -42,6 +45,10 @@ const BrandDetails: FC<Props> = ({
   const { data: models } = useGetModelsOfBrandQuery(brandId, {
     skip: !brandId,
   });
+
+  useEffect(() => {
+    models && dispatch(setModels(models));
+  }, [models]);
 
   const notAppliedBrands = useAppSelector(selectNotAppliedBrands);
 
@@ -78,7 +85,7 @@ const BrandDetails: FC<Props> = ({
             id: item.id,
           } as AutocompleteValueType),
       ),
-    [brands],
+    [brands, notAppliedBrands],
   );
 
   const modelsOptions = useMemo(

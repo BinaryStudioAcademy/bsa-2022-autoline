@@ -39,11 +39,10 @@ const addCarToViewed = async (
 ): Promise<void> => {
   try {
     const userId = req.tokenPayload.sub;
-    const { modelId, complectationId } = req.query;
+    const { complectationId } = req.query;
 
     const viewedCar = {
       userId,
-      modelId,
       complectationId,
     };
 

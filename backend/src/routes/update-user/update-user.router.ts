@@ -34,5 +34,10 @@ updateUserRouter.patch(
   middlewares.userAuthMiddleware,
   userUpdateController.deleteOauthConnections,
 );
+updateUserRouter.delete(
+  `${PATH}/photo`,
+  middlewares.userAuthMiddleware,
+  userUpdateController.deleteUserPhoto,
+);
 
 export { updateUserRouter };

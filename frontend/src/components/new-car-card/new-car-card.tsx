@@ -8,17 +8,19 @@ import { HeartIcon } from '@components/common/icons/icons';
 import { WishlistContext } from '@contexts/wishlist-context';
 import { formatPrice } from '@helpers/helpers';
 import { useAppSelector } from '@hooks/hooks';
+import { selectAuthToken } from '@store/selectors';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
 const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
-  const authToken = useAppSelector((state) => state.auth.token);
+  const authToken = useAppSelector(selectAuthToken);
   const navigate = useNavigate();
   const {
     type,
     car: {
       id: carId,
+      modelId,
       modelName: carName,
       pricesRanges,
       brand: { name: brandName, logoUrl: brandLogoUrl },
@@ -27,8 +29,8 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
       description,
     },
   } = props;
-
   const { likedCars, handleLikeClick } = useContext(WishlistContext);
+
   const isLiked = likedCars?.includes(carId);
 
   const minPrices = pricesRanges.map(
@@ -53,6 +55,15 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
     handleLikeClick(data);
   };
 
+  const handleCardClick = (): void => {
+    type !== 'model'
+      ? navigate({
+          pathname: AppRoute.DETAILS,
+          search: `?model=${modelId}&complectation=${carId}`,
+        })
+      : navigate({ pathname: AppRoute.DETAILS, search: `?model=${carId}` });
+  };
+
   let name = `${brandName} ${carName}`;
 
   if (complectationName) {
@@ -60,7 +71,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} onClick={handleCardClick}>
       <div className={styles.carTitle}>
         <img className={styles.carLogo} src={brandLogoUrl} alt={brandName} />
         <span className={styles.carName}>{name}</span>

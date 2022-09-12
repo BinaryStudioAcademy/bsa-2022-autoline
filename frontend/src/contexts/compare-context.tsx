@@ -1,6 +1,7 @@
 import React, { useEffect, createContext, ReactNode, useState } from 'react';
 
 import { CompareToast } from '@components/compare-toast/compare-toast';
+import { useInterval } from '@hooks/hooks';
 import {
   useGetActiveComparisonStatusQuery,
   useAddCarToComparisonMutation,
@@ -17,11 +18,19 @@ const CompareContext = createContext<CompareContextType>({
   handleCompareClick: () => undefined,
 });
 
+interface CompareNotification {
+  complectationId: string;
+  carName: string;
+  timestamp: number;
+}
+
 const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [carData, setCarData] = useState('');
+  const [notifications, setNotifications] = useState<CompareNotification[]>(
+    [] as CompareNotification[],
+  );
+
   const { data: comparedCars, refetch } = useGetActiveComparisonStatusQuery();
 
   const [addCarToComparison] = useAddCarToComparisonMutation();
@@ -33,7 +42,6 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
     addCarToComparison({ complectationId })
       .unwrap()
       .then(() => {
-        setIsOpen(true);
         broadcast.postMessage('compare');
       });
   };
@@ -46,12 +54,57 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const handleCompareClick = (complectationId: string, name: string): void => {
     const isCompared = comparedCars?.includes(complectationId);
-    setCarData(name);
 
     isCompared
       ? handleDeleteFromCompare(complectationId)
       : handleAddToCompare(complectationId);
+
+    if (!isCompared) {
+      const existing = notifications.find(
+        (n) => n.complectationId === complectationId,
+      );
+      const nextNotifications = existing
+        ? notifications.map((n) =>
+            n.complectationId === complectationId
+              ? { ...existing, complectationId }
+              : n,
+          )
+        : notifications.concat({
+            complectationId,
+            carName: name,
+            timestamp: new Date().getTime(),
+          });
+      setNotifications(nextNotifications);
+    }
   };
+
+  const clearNotification = (complectationId: string | string[]): void => {
+    if (!complectationId) {
+      setNotifications([]);
+    } else {
+      const ids = Array.isArray(complectationId)
+        ? complectationId
+        : [complectationId];
+      const nextNotifications = notifications.filter(
+        ({ complectationId }) => !ids.includes(complectationId),
+      );
+      setNotifications(nextNotifications);
+    }
+  };
+
+  const handleExpireNotifications = (): void => {
+    if (notifications.length) {
+      const expiredIds = notifications.reduce((acc, n) => {
+        const currentTime = new Date().getTime();
+        const isExpired = n.timestamp <= currentTime - 6000;
+        return isExpired ? acc.concat(n.complectationId) : acc;
+      }, [] as string[]);
+      if (expiredIds.length) {
+        clearNotification(expiredIds);
+      }
+    }
+  };
+  useInterval(handleExpireNotifications, 1000);
 
   useEffect(() => {
     broadcast.onmessage = (): void => {
@@ -61,7 +114,24 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <CompareContext.Provider value={{ comparedCars, handleCompareClick }}>
-      <CompareToast carName={carData} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <div
+        style={{
+          position: 'fixed',
+          display: 'flex',
+          flexDirection: 'column-reverse',
+          top: '2rem',
+          right: '2rem',
+          zIndex: '10000',
+        }}
+      >
+        {notifications.map((n) => (
+          <CompareToast
+            key={n.complectationId}
+            carName={n.carName}
+            clearNotification={(): void => clearNotification(n.complectationId)}
+          />
+        ))}
+      </div>
       {children}
     </CompareContext.Provider>
   );

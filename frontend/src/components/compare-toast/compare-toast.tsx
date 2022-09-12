@@ -1,4 +1,4 @@
-import { FC, Dispatch, useEffect } from 'react';
+import { FC } from 'react';
 
 import fillCompare from '@assets/images/icon_balance.svg';
 
@@ -6,29 +6,15 @@ import styles from './styles.module.scss';
 
 interface ModalProps {
   carName: string;
-  isOpen: boolean;
-  setIsOpen: Dispatch<boolean>;
+  clearNotification: () => void;
 }
 
-const CompareToast: FC<ModalProps> = ({ carName, isOpen, setIsOpen }) => {
-  const closeToast = (): void => {
-    setIsOpen(!isOpen);
-  };
-
-  useEffect(() => {
-    if (isOpen) {
-      const timer = setTimeout(closeToast, 6000);
-
-      return () => {
-        clearTimeout(timer);
-      };
-    }
-  }, [isOpen]);
-
+const CompareToast: FC<ModalProps> = ({ carName, clearNotification }) => {
   return (
-    <div className={styles.container} hidden={!isOpen}>
+    <div className={styles.container}>
+      <div className={styles.timer}></div>
       <div className={styles.content}>
-        <button className={styles.close} onClick={closeToast}>
+        <button className={styles.close} onClick={clearNotification}>
           ×
         </button>
         <div className={styles.icon}>

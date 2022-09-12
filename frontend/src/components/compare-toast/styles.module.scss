@@ -2,11 +2,9 @@
 @import "@assets/css/animations";
 
 .container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 10000;
-  animation: hide-notification 1s ease 5s;
+  position: relative;
+  margin-bottom: 1rem;
+  animation: hide-notification 2s ease 5s;
 }
 
 .content {
@@ -15,8 +13,17 @@
   max-width: 400px;
   padding: 25px 30px 30px;
   background-color: var(--white);
-  border-top: 5px solid var(--blue100);
-  border-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.timer {
+  position: absolute;
+  z-index: 100001;
+  width: 100%;
+  height: 5px;
+  background-color: var(--blue100);
+  animation: notification-timer ease 7s;
 }
 
 .close {

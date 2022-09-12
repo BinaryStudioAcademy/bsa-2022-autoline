@@ -15,6 +15,7 @@ type WishlistInput = {
   modelId?: string;
   complectationId?: string;
   createdAt?: string;
+  carName?: string;
 };
 
 export {

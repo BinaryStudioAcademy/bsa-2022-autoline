@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import Prisma from '@prisma/client';
 
 import { carsData } from '../api-autoria/cars/cars-data';
 import {
@@ -196,7 +197,38 @@ async function main(): Promise<void> {
       }
     }
   }
+  indicateImportantOptions();
 }
+
+const indicateImportantOptions = async (): Promise<void | Prisma.Option[]> => {
+  const importantOptions = [...optionsTypes].filter(
+    (it) => it.important === 'true',
+  );
+  const importantOptionsIds = await Promise.all(
+    importantOptions.map((opt) => getOption(opt.name)),
+  );
+  importantOptionsIds.map((opt) => updateImportantOptions(opt?.id as string));
+};
+
+const getOption = async (name: string): Promise<Prisma.Option | null> => {
+  const option = await prisma.option.findFirst({
+    where: {
+      name,
+    },
+  });
+  return option;
+};
+
+const updateImportantOptions = async (id: string): Promise<void> => {
+  await prisma.complectationsOnOptions.updateMany({
+    where: {
+      option_id: id,
+    },
+    data: {
+      important: true,
+    },
+  });
+};
 
 main().catch((e): void => {
   // eslint-disable-next-line no-console

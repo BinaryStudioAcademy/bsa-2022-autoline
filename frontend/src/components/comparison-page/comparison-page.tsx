@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ScrollSync } from 'react-scroll-sync';
 
 import { complectationOptions } from '@common/enums/comparisons/options';
@@ -20,15 +20,24 @@ const ComparisonPage: React.FC = () => {
 
   const showOptionsTables = (): (React.ReactElement | undefined)[] => {
     if (isOnlyDifferenceShown) {
-      return complectationOptions.map((option) => {
-        if (data?.some((car) => car.options[option].length)) {
-          return <OptionsSubtable key={option} title={option} />;
-        }
-      });
+      return useMemo(
+        () =>
+          complectationOptions.map((option) => {
+            if (data?.some((car) => car.options[option].length)) {
+              return <OptionsSubtable key={option} title={option} />;
+            }
+          }),
+        [data],
+      );
     }
-    return complectationOptions.map((option) => (
-      <OptionsSubtable key={option} title={option} />
-    ));
+
+    return useMemo(
+      () =>
+        complectationOptions.map((option) => (
+          <OptionsSubtable key={option} title={option} />
+        )),
+      [data],
+    );
   };
 
   return (

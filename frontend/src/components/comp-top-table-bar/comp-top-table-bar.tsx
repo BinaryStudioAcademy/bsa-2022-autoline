@@ -34,12 +34,12 @@ export const CompTopTableBar = (): React.ReactElement => {
     handleClearTable();
   };
 
-  const broadcast = new BroadcastChannel('compare');
   useEffect(() => {
+    const broadcast = new BroadcastChannel('compare');
     broadcast.onmessage = (): void => {
       refetch();
     };
-  }, [broadcast, refetch]);
+  }, [refetch]);
 
   if (isLoading) return <Spinner />;
 

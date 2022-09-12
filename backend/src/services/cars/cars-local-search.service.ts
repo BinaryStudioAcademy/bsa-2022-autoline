@@ -5,19 +5,17 @@ const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
   const brandDetails = data.brandDetails;
 
   const brandFiltersWhere = brandDetails && {
-    OR: [
-      ...brandDetails.map(({ modelIds, brandId }) => ({
-        ...(modelIds &&
-          modelIds.length && {
-            id: {
-              in: modelIds,
-            },
-          }),
-        brand: {
-          id: brandId,
-        },
-      })),
-    ],
+    OR: brandDetails.map(({ modelIds, brandId }) => ({
+      ...(modelIds &&
+        modelIds.length && {
+          id: {
+            in: modelIds,
+          },
+        }),
+      brand: {
+        id: brandId,
+      },
+    })),
   };
 
   const models = await prisma.model.findMany({

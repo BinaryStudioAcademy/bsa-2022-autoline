@@ -23,6 +23,66 @@ const GeneralComparisonTable: React.FC = () => {
     return options;
   }, [generalInfo]);
 
+  const [compareFields, setCompareFields] = useState({
+    bodyType: true,
+    engine: true,
+    engineDisplacement: true,
+    enginePower: true,
+    colorName: true,
+    transmissionTypeName: true,
+    drivetrainName: true,
+    fuelTypeName: true,
+  });
+
+  enum Fileds {
+    bodyType = 'bodyType',
+    engine = 'engine',
+    engineDisplacement = 'engineDisplacement',
+    enginePower = 'enginePower',
+    colorName = 'colorName',
+    transmissionTypeName = 'transmissionTypeName',
+    drivetrainName = 'drivetrainName',
+    fuelTypeName = 'fuelTypeName',
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const appyOnlyDifference = (): void => {
+    // TODO: use it on toggle logic
+    setCompareFields({
+      bodyType: getFieldStatus(Fileds.bodyType),
+      engine: getFieldStatus(Fileds.engine),
+      engineDisplacement: getFieldStatus(Fileds.engineDisplacement),
+      enginePower: getFieldStatus(Fileds.enginePower),
+      colorName: getFieldStatus(Fileds.colorName),
+      transmissionTypeName: getFieldStatus(Fileds.transmissionTypeName),
+      drivetrainName: getFieldStatus(Fileds.drivetrainName),
+      fuelTypeName: getFieldStatus(Fileds.fuelTypeName),
+    });
+  };
+  // TODO: apply it for all fields
+
+  const getFieldStatus = (field: Fileds): boolean => {
+    return generalInfo?.every(
+      (item) => item[field] === generalInfo[0][field],
+    ) as boolean;
+  };
+
+  const carOmitOptions = useMemo(() => {
+    const carsOptions = new Set<string>();
+    options.forEach((optionType) => {
+      generalInfo?.forEach((item) => {
+        item.options[optionType]
+          .filter((option) => {
+            return generalInfo.every((item) =>
+              item.options[optionType].includes(option),
+            );
+          })
+          .map((option) => carsOptions.add(option));
+      });
+    });
+    return carsOptions;
+  }, [generalInfo, options]);
+
   const [generalTable, setGeneralTableRef] = useState<HTMLDivElement | null>(
     null,
   );
@@ -79,9 +139,11 @@ const GeneralComparisonTable: React.FC = () => {
           <div className={styles.tableCell} data-optiontitle="bodytype">
             Type
           </div>
-          <div className={styles.tableCell} data-optiontitle="motor">
-            Motor
-          </div>
+          {compareFields.engineDisplacement || (
+            <div className={styles.tableCell} data-optiontitle="motor">
+              Motor
+            </div>
+          )}
           <div className={styles.tableCell} data-optiontitle="enginepower">
             Engine Power
           </div>
@@ -113,9 +175,11 @@ const GeneralComparisonTable: React.FC = () => {
                   <div className={styles.tableCell} data-optionvalue="bodytype">
                     {info.bodyType}
                   </div>
-                  <div className={styles.tableCell} data-optionvalue="motor">
-                    {info.engineDisplacement} l.
-                  </div>
+                  {compareFields.engineDisplacement || (
+                    <div className={styles.tableCell} data-optionvalue="motor">
+                      {info.engineDisplacement} l.
+                    </div>
+                  )}
                   <div
                     className={styles.tableCell}
                     data-optionvalue="enginepower"
@@ -137,7 +201,9 @@ const GeneralComparisonTable: React.FC = () => {
                       data-optionvalue={type}
                       key={uuid4()}
                     >
-                      {info.options[type].join(', ')}
+                      {info.options[type]
+                        .filter((option) => !carOmitOptions.has(option))
+                        .join(', ')}
                     </div>
                   ))}
                   <div className={clsx(styles.tableCell, styles.colorCell)}>

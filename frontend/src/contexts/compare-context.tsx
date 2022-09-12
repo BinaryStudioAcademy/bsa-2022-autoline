@@ -24,12 +24,14 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
   const [carData, setCarData] = useState('');
   const { data: comparedCars } = useGetActiveComparisonStatusQuery();
 
-  const [addCarToComparison] = useAddCarToComparisonMutation();
+  const [addCarToComparison, isSuccess] = useAddCarToComparisonMutation();
   const [deleteCarFromComparison] = useDeleteCarFromComparisonMutation();
 
   const handleAddToCompare = async (complectationId: string): Promise<void> => {
-    setIsOpen(true);
     await addCarToComparison({ complectationId });
+    if (isSuccess) {
+      setIsOpen(true);
+    }
   };
   const handleDeleteFromCompare = async (
     complectationId: string,

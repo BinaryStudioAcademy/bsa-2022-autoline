@@ -87,3 +87,6 @@ export const {
   useGetComparisonCarsQuery,
   useUpdatePositionsMutation,
 } = comparisonsApi;
+
+export const comparison =
+  comparisonsApi.endpoints.addCarToComparison.matchRejected;

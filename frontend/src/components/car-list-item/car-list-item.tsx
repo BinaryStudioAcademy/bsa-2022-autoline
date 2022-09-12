@@ -111,14 +111,14 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
     });
   };
 
-  const handleCardClick = (): void => {
+  const handleCarModelClick = (): void => {
     navigate({ pathname: AppRoute.DETAILS, search: `?model=${model_id}` });
   };
 
   if (isComplectationsLoading || isModelLoading) return <Spinner />;
 
   return (
-    <div className={styles.listCard} onClick={handleCardClick}>
+    <div className={styles.listCard}>
       <Grid container spacing={2}>
         <Grid item sm={4}>
           <Swiper
@@ -156,7 +156,9 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
         </Grid>
         <Grid item sm={8}>
           <div className={styles.titleWrapper}>
-            <h4 className={styles.carTitle}>{modelName}</h4>
+            <h4 className={styles.carTitle} onClick={handleCarModelClick}>
+              {modelName}
+            </h4>
             <div className={styles.buttonsWrapper}>
               <LikeButtton onClick={likeClick} isLiked={isLiked} />
             </div>

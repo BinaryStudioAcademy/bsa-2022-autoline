@@ -47,11 +47,8 @@ const Routing: FC = () => {
             path={AppRoute.MAIL_FAILED_VALIDATION}
             element={<MailVerificationFailed />}
           />
-          <Route
-            path={AppRoute.SIGN_REDIRECT}
-            element={<RedirectAfterSign />}
-          />
         </Route>
+        <Route path={AppRoute.SIGN_REDIRECT} element={<RedirectAfterSign />} />
         <Route path={AppRoute.FORGOT_PASSWORD} element={<ForgotPassword />} />
         <Route path={AppRoute.RESET_PASSWORD} element={<ResetPassword />} />
         <Route path={AppRoute.ROOT} element={<LandingPage />} />

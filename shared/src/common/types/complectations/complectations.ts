@@ -41,9 +41,39 @@ type ModelReturnedData = {
   }[];
 };
 
+interface ComplectationShortInfoDto {
+  id: string;
+  name: string;
+  model: {
+    name: string;
+    photo_urls: string[] | [];
+    year_start: number;
+    year_end: number | null;
+    prices_ranges: {
+      price_start: number;
+      price_end: number;
+    }[];
+    brand: {
+      name: string;
+    };
+  };
+}
+
+interface ComlectationShortInfoResponse {
+  id: string;
+  name: string;
+  brand: string;
+  model: string;
+  photo_urls: string[] | [];
+  year: string;
+  price: string;
+}
+
 export {
   type ModelReturnedData,
   type ComplectationReturnedData,
   type OptionType,
   type ComplectationsInput,
+  type ComplectationShortInfoDto,
+  type ComlectationShortInfoResponse,
 };

@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState } from 'react';
+import React, { useEffect, createContext, ReactNode, useState } from 'react';
 
 import { CompareToast } from '@components/compare-toast/compare-toast';
 import {
@@ -22,19 +22,23 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [carData, setCarData] = useState('');
-  const { data: comparedCars } = useGetActiveComparisonStatusQuery();
+  const { data: comparedCars, refetch } = useGetActiveComparisonStatusQuery();
 
   const [addCarToComparison] = useAddCarToComparisonMutation();
   const [deleteCarFromComparison] = useDeleteCarFromComparisonMutation();
 
+  const broadcast = new BroadcastChannel('compare');
+
   const handleAddToCompare = async (complectationId: string): Promise<void> => {
     setIsOpen(true);
     await addCarToComparison({ complectationId });
+    broadcast.postMessage('compare');
   };
   const handleDeleteFromCompare = async (
     complectationId: string,
   ): Promise<void> => {
     await deleteCarFromComparison({ complectationId });
+    broadcast.postMessage('compare');
   };
 
   const handleCompareClick = (complectationId: string, name: string): void => {
@@ -45,6 +49,12 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
       ? handleDeleteFromCompare(complectationId)
       : handleAddToCompare(complectationId);
   };
+
+  useEffect(() => {
+    broadcast.onmessage = (): void => {
+      refetch();
+    };
+  });
 
   return (
     <CompareContext.Provider value={{ comparedCars, handleCompareClick }}>

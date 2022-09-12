@@ -3,8 +3,8 @@
 
 .container {
   position: fixed;
-  top: calc(var(--header-height) + 20px);
   right: 20px;
+  bottom: 20px;
   z-index: 10000;
   animation: hide-notification 1s ease 5s;
 }

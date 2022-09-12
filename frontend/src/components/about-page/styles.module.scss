@@ -1,0 +1,32 @@
+.aboutContent {
+  p {
+    line-height: 1.6;
+  }
+}
+
+.team {
+  justify-content: center;
+  padding: 70px 0;
+}
+
+.teamMember {
+  text-align: center;
+
+  img {
+    width: 180px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 100%;
+  }
+
+  .name {
+    margin-bottom: 5px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+
+  .position {
+    margin-top: 0;
+  }
+}

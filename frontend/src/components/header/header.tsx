@@ -6,7 +6,7 @@ import { AppRoute } from '@common/enums/app/app-route.enum';
 import { PageContainer } from '@components/common/page-container/page-container';
 import { EditProfile } from '@components/edit-profile/edit-profile';
 import { UnauthorisedElements } from '@components/header/unauthorised-elements/unauthorised-elements';
-import { useAppDispatch, useAppSelector } from '@hooks/hooks';
+import { useAppDispatch } from '@hooks/hooks';
 import {
   AppBar,
   Tab,
@@ -17,7 +17,8 @@ import {
 } from '@mui/material';
 import { logOut } from '@store/auth/slice';
 import { useGetActiveComparisonStatusQuery } from '@store/queries/comparisons';
-import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
+import { useGetHistoryOfViwedCarsQuery } from '@store/queries/history-viewed-cars';
+import { useGetWishlistEntriesQuery } from '@store/queries/preferences/wishlist';
 import { useGetUserQuery } from '@store/queries/user/update-user';
 
 import { DrawerComponent } from './drawer/drawer';
@@ -28,24 +29,29 @@ export const Header = (): React.ReactElement => {
   const [value, setValue] = useState(0);
   const theme = useTheme();
   const isMatchSm = useMediaQuery(theme.breakpoints.down('sm'));
-  const { data: wishlist = { models: [], complectations: [] } } =
-    useGetWishlistsQuery();
+  const { data: wishlist } = useGetWishlistEntriesQuery();
   const { data: comparisons } = useGetActiveComparisonStatusQuery();
+  const { data: viewed } = useGetHistoryOfViwedCarsQuery({});
   const [wishlistCount, setWishlistCount] = useState(0);
   const [comparisonCount, setComparisonCount] = useState(0);
+  const [viewedCount, setViewedCount] = useState(0);
   const [openSettings, setOpenSettings] = useState(false);
-  const userToken = useAppSelector((state) => state.auth.token);
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   useEffect(() => {
-    setWishlistCount(wishlist.models.length + wishlist.complectations.length);
+    if (wishlist) setWishlistCount(wishlist.length);
   }, [wishlist]);
 
   useEffect(() => {
     if (comparisons) setComparisonCount(comparisons.length);
   }, [comparisons]);
 
-  const { data: user } = useGetUserQuery();
+  useEffect(() => {
+    if (viewed) setViewedCount(viewed.count);
+  }, [viewed]);
+
+  const { data: authData } = useGetUserQuery();
 
   const reminders = {
     favorites: {
@@ -53,14 +59,14 @@ export const Header = (): React.ReactElement => {
       linkTo: AppRoute.PERSONAL,
       count: wishlistCount,
     },
-    notifications: {
-      label: 'Notifications',
-      linkTo: '#',
-      count: 7,
+    viewed: {
+      label: 'Viewed',
+      linkTo: AppRoute.PERSONAL,
+      count: viewedCount,
     },
     comparisons: {
       label: 'Comparisons',
-      linkTo: '#',
+      linkTo: AppRoute.COMPARISONS,
       count: comparisonCount,
     },
   };
@@ -72,7 +78,7 @@ export const Header = (): React.ReactElement => {
     },
     aboutUs: {
       label: 'About Us',
-      onClick: () => navigate('#'),
+      onClick: () => navigate(AppRoute.ABOUT),
     },
   };
 
@@ -113,8 +119,8 @@ export const Header = (): React.ReactElement => {
             </Link>
             {isMatchSm ? (
               <DrawerComponent
-                userMenu={userToken ? userMenu : undefined}
-                reminders={userToken ? reminders : undefined}
+                userMenu={authData ? userMenu : undefined}
+                reminders={authData ? reminders : undefined}
                 commonMenu={commonMenu}
               />
             ) : (
@@ -135,10 +141,10 @@ export const Header = (): React.ReactElement => {
                     onClick={commonMenu.aboutUs.onClick}
                   />
                 </Tabs>
-                {userToken && user ? (
+                {authData ? (
                   <PrivateElements
-                    avatar={user.photoUrl}
-                    role={user.role}
+                    avatar={authData.photoUrl}
+                    role={authData.role}
                     reminders={reminders}
                     setOpenSettings={setOpenSettings}
                     userMenu={userMenu}

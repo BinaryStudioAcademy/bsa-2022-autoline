@@ -19,7 +19,7 @@ const ViewedCars: FC = () => {
   const getMoreCars = async (): Promise<void> => {
     setParams((state) => ({
       ...state,
-      skip: String(+state.skip + +state.take),
+      skip: String(+state.skip),
       take: String(+state.take + 30),
     }));
   };

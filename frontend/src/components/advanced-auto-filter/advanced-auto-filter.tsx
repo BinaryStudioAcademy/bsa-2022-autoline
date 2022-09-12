@@ -32,7 +32,6 @@ import { Spinner } from '@components/common/spinner/spinner';
 import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
 import { rangeFiltersToObject } from '@helpers/car-filters/range-filters-to-object';
 import { getValueById } from '@helpers/get-value-by-id';
-import { objectToQueryString } from '@helpers/object-to-query';
 import { getElementHeightWithMargins } from '@helpers/utils/get-element-height-with-margins';
 import { getHeightByPosition } from '@helpers/utils/get-height-by-position';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
@@ -52,7 +51,9 @@ import {
   useGetUsedOptionsQuery,
   useLazyGetFilteredCarsQuery,
 } from '@store/queries/cars';
+import { useCreateRecentSearchCarsMutation } from '@store/queries/recent-serach-cars';
 import {
+  selectFiltersQueryArr,
   selectNormalizedOptionsInAutocompleteType,
   selectOptionsInAutocompleteType,
 } from '@store/selectors/car-filter-selectors';
@@ -73,8 +74,12 @@ const AdvancedAutoFilter: FC = () => {
 
   const [search, filteredCars] = useLazyGetFilteredCarsQuery();
 
-  const doSearch = (): void => {
-    search(queryParams);
+  const [addRecentSearchCar] = useCreateRecentSearchCarsMutation();
+  const doSearch = async (): Promise<void> => {
+    const { data } = await search(queryParams);
+    if (data) {
+      addRecentSearchCar(data[0]?.model_id);
+    }
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -107,15 +112,10 @@ const AdvancedAutoFilter: FC = () => {
     };
   }, [filterContainer]);
 
+  const filtersArr = useAppSelector(selectFiltersQueryArr);
+
   useEffect(() => {
-    setQueryParams(
-      objectToQueryString({
-        ...rangeFiltersToObject(rangeFilters),
-        ...checkLists,
-        brandId: brandDetails.map((item) => item.brandId),
-        modelId: brandDetails.flatMap((item) => item.modelIds),
-      }),
-    );
+    setQueryParams(filtersArr);
 
     if (
       isFiltersEmpty({

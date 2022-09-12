@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import {
   ComplectationDetailsType,
   WishlistInput,
 } from '@autoline/shared/common/types/types';
+import { AppRoute } from '@common/enums/enums';
 import { CarListItemProps } from '@common/types/types';
 import { SliderNavButton } from '@components/car-list-item/slider-nav-button/slider-nav-button';
 import { swiperParams } from '@components/car-list-item/swiper-params';
@@ -12,7 +14,7 @@ import { Spinner } from '@components/common/spinner/spinner';
 import { CompleteSetTableCollapsed } from '@components/complete-set-table/complete-set-table-collapsed';
 import { WishlistContext } from '@contexts/wishlist-context';
 import { formatPrice } from '@helpers/helpers';
-import { objectToQueryString } from '@helpers/object-to-query';
+import { objectToQueryArr } from '@helpers/object-to-query';
 import { Grid } from '@mui/material';
 import { uuid4 } from '@sentry/utils';
 import {
@@ -27,7 +29,7 @@ import styles from './styles.module.scss';
 const CarListItem: React.FC<CarListItemProps> = (props) => {
   const { model_id, complectations_id } = props;
 
-  const idParams = objectToQueryString({ 'id': complectations_id });
+  const idParams = objectToQueryArr({ 'id': complectations_id });
 
   const { data: complectations = [], isLoading: isComplectationsLoading } =
     useGetComplectationsQuery(idParams);
@@ -101,6 +103,18 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
     setModelTransmission(transmissions);
   }, [complectations]);
 
+  const navigate = useNavigate();
+  const handleCompleteSetClick = (id: string): void => {
+    navigate({
+      pathname: AppRoute.DETAILS,
+      search: `?model=${model_id}&complectation=${id}`,
+    });
+  };
+
+  const handleCarModelClick = (): void => {
+    navigate({ pathname: AppRoute.DETAILS, search: `?model=${model_id}` });
+  };
+
   if (isComplectationsLoading || isModelLoading) return <Spinner />;
 
   return (
@@ -142,7 +156,9 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
         </Grid>
         <Grid item sm={8}>
           <div className={styles.titleWrapper}>
-            <h4 className={styles.carTitle}>{modelName}</h4>
+            <h4 className={styles.carTitle} onClick={handleCarModelClick}>
+              {modelName}
+            </h4>
             <div className={styles.buttonsWrapper}>
               <LikeButtton onClick={likeClick} isLiked={isLiked} />
             </div>
@@ -166,6 +182,7 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
               <CompleteSetTableCollapsed
                 data={complectations}
                 className={clsx(styles.table, 'styledScrollbar')}
+                onClick={handleCompleteSetClick}
               />
             </div>
           )}

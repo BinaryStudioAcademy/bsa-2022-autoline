@@ -39,7 +39,7 @@ export const CompTopTableBar = (): React.ReactElement => {
     broadcast.onmessage = (): void => {
       refetch();
     };
-  });
+  }, [broadcast, refetch]);
 
   if (isLoading) return <Spinner />;
 

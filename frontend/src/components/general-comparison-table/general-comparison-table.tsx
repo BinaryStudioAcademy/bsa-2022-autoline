@@ -36,7 +36,7 @@ const GeneralComparisonTable: React.FC = () => {
     broadcast.onmessage = (): void => {
       refetch();
     };
-  });
+  }, [broadcast, refetch]);
 
   useLayoutEffect(() => {
     if (!generalTable) return;

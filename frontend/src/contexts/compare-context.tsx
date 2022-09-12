@@ -54,7 +54,7 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
     broadcast.onmessage = (): void => {
       refetch();
     };
-  });
+  }, [broadcast, refetch]);
 
   return (
     <CompareContext.Provider value={{ comparedCars, handleCompareClick }}>

@@ -2,22 +2,6 @@ import { CarsSearchParams, SearchResult } from '@autoline/shared';
 import { prisma } from '@data/prisma-client';
 
 const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
-  const brandDetails = data.brandDetails;
-
-  const brandFiltersWhere = brandDetails && {
-    OR: brandDetails.map(({ modelIds, brandId }) => ({
-      ...(modelIds &&
-        modelIds.length && {
-          id: {
-            in: modelIds,
-          },
-        }),
-      brand: {
-        id: brandId,
-      },
-    })),
-  };
-
   const models = await prisma.model.findMany({
     select: {
       id: true,
@@ -54,7 +38,20 @@ const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
       },
     },
     where: {
-      ...brandFiltersWhere,
+      OR: [
+        {
+          id: {
+            in: data.modelId,
+          },
+        },
+        {
+          brand: {
+            id: {
+              in: data.brandId,
+            },
+          },
+        },
+      ],
       body_type: {
         id: {
           in: data.bodyTypeId,

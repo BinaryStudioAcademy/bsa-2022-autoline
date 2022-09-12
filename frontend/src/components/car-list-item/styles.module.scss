@@ -24,6 +24,11 @@
   margin: 0;
   font-weight: 800;
   text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--blue100);
+  }
 }
 
 .pillButton {

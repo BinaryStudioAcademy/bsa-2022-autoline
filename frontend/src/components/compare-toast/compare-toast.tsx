@@ -6,17 +6,11 @@ import styles from './styles.module.scss';
 
 interface ModalProps {
   carName: string;
-  carDescription: string;
   isOpen: boolean;
   setIsOpen: Dispatch<boolean>;
 }
 
-const CompareToast: FC<ModalProps> = ({
-  carName,
-  carDescription,
-  isOpen,
-  setIsOpen,
-}) => {
+const CompareToast: FC<ModalProps> = ({ carName, isOpen, setIsOpen }) => {
   const closeToast = (): void => {
     setIsOpen(!isOpen);
   };
@@ -50,7 +44,6 @@ const CompareToast: FC<ModalProps> = ({
           <span>{'You added '}</span>
           <span className={styles.carName}>{carName}</span>
           <span>{' to the Comparison!'} </span>
-          <div className={styles.carDescription}> {carDescription} </div>
         </div>
       </div>
     </div>

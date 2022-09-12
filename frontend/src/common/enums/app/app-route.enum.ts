@@ -11,8 +11,10 @@ enum AppRoute {
   MAIL_SUCCESS_VALIDATION = '/verification-success',
   MAIL_FAILED_VALIDATION = '/verification-failed',
   PERSONAL = '/personal-page',
+  DETAILS = '/details',
   SEARCH = '/search',
-  ABOUT_US = '/about-us',
+  COMPARISONS = '/comparisons',
+  ABOUT = '/about',
 }
 
 export { AppRoute };

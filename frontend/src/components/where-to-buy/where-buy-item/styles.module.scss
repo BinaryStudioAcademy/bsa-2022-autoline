@@ -1,0 +1,244 @@
+@import "@assets/css/variables";
+
+.container {
+  display: flex;
+  flex-direction: row;
+  padding: 15px 25px;
+  background-color: var(--white);
+  border: solid 1px var(--white);
+  border-radius: 5px;
+
+  .logo {
+    display: flex;
+    align-items: center;
+    width: 93px;
+    margin-right: 15px;
+    padding: 0 3px 0 0;
+
+    img {
+      width: 90px;
+      margin: 0;
+    }
+  }
+
+  .description {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: auto;
+
+    .carName {
+      margin-bottom: 5px;
+      font-weight: 600;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+    }
+
+    .labelGroup {
+      display: flex;
+      margin-bottom: 5px;
+
+      & > div {
+        margin-right: 1rem;
+      }
+
+      & > div:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .label {
+      display: flex;
+      align-items: center;
+      height: 2.5rem;
+      padding: 5px 10px;
+      color: var(--white);
+      font-weight: 600;
+      font-size: 1rem;
+      font-family: var(--primary-font);
+      font-style: normal;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      background: var(--blue300);
+      border-radius: 4px;
+
+      & > img {
+        height: 1rem;
+        margin-right: 0.5rem;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .label.location {
+      text-transform: capitalize;
+    }
+
+    .trigger {
+      position: relative;
+      display: flex;
+      padding: 0;
+      font-size: 1.2rem;
+
+      .textDescription {
+        /* stylelint-disable-next-line value-no-vendor-prefix */
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        margin-bottom: 1.5rem;
+        padding: 0 10px;
+        overflow: hidden;
+      }
+
+      .textDescription.more {
+        display: inline-block;
+      }
+
+      div::before {
+        content: "\2022";
+        display: inline-block;
+        width: 10px;
+        margin-left: -10px;
+        color: var(--blue100);
+        font-weight: bold;
+      }
+    }
+  }
+
+  .panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+
+    .colorBox {
+      width: 20px;
+      height: 20px;
+      border-radius: 2px;
+      box-shadow: 0 0 4px 0 rgba(0 0 0 / 20%);
+    }
+
+    .rectangle {
+      width: 20px;
+      height: 20px;
+      background-color: var(--black);
+      border-radius: 2px;
+    }
+
+    .price {
+      margin: 0;
+      padding: 0;
+      color: var(--blue100);
+      font-weight: 900;
+      font-size: 1.8rem;
+      font-family: var(--primary-font);
+    }
+
+    .buyButton {
+      width: 90px;
+      height: 35px;
+      padding: 6px;
+      font-weight: 700;
+    }
+  }
+}
+
+.dividerDiv {
+  padding: 0 25px;
+}
+
+.divider {
+  margin-left: 25px;
+  color: var(--gray300);
+}
+
+.collapseButton {
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  display: flex;
+  align-items: center;
+  height: 2.2rem;
+  color: var(--blue100);
+  font-weight: 700;
+  font-size: 1rem;
+  font-family: var(--primary-font);
+  background-color: var(--white);
+  border: 1px solid var(--gray100);
+  border-radius: 5px;
+  cursor: pointer;
+  transform: translateY(50%);
+  transition: all 300ms;
+
+  &:hover {
+    border-color: var(--blue100);
+    transition: all 300ms;
+  }
+}
+
+@media (max-width: $global-md) {
+  .container {
+    .logo {
+      display: none;
+      width: 70px;
+    }
+
+    .labelGroup {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 5px;
+
+      & > div {
+        margin-right: 0.5rem;
+        margin-bottom: 5px;
+      }
+
+      & > div:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .panel {
+      flex-direction: column;
+      width: 100px;
+
+      .colorBox {
+        margin-bottom: 6px;
+      }
+
+      .price {
+        margin-bottom: 6px;
+      }
+    }
+  }
+}
+
+
+@media (max-width: $global-sm) {
+  .container {
+    .logoDiv {
+      display: none;
+    }
+
+    .panel {
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      width: 100px;
+
+      .rectangle {
+        display: none;
+      }
+
+      .price {
+        font-size: 1.5rem;
+      }
+
+      .buyButton {
+        margin: 0;
+      }
+    }
+  }
+}

@@ -11,8 +11,8 @@ import { SelectFieldForm } from '@components/edit-profile/select-field-form/sele
 import { formatComparisonShortData } from '@helpers/helpers';
 import { useAppForm } from '@hooks/hooks';
 import { Modal, Button, Box, MenuItem } from '@mui/material';
-import { useGetBrandsQuery } from '@store/queries/cars';
 import {
+  useGetBrandsQuery,
   useLazyGetModelsOfBrandQuery,
   useLazyGetComplectationsOfModelQuery,
 } from '@store/queries/cars';

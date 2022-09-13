@@ -33,7 +33,8 @@ interface ViewedCarResponseDto {
   complectation: string;
   year: string;
   photo_urls: string[] | [];
-  price: string;
+  priceStart: string;
+  priceEnd: string;
 }
 
 interface GetViewedCarsResponse {

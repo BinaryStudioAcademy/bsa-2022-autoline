@@ -3,6 +3,7 @@ import { ScrollSyncPane } from 'react-scroll-sync';
 
 import { CollapseElement } from '@components/collapse-component/collapse-element/collapse-element';
 import { Spinner } from '@components/common/spinner/spinner';
+import { findEmptyOptions } from '@helpers/helpers';
 import { getElementHeightWithMargins } from '@helpers/utils/get-element-height-with-margins';
 import { uuid4 } from '@sentry/utils';
 import { useGetComparisonGeneralInfoQuery } from '@store/queries/comparisons';
@@ -186,15 +187,18 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
               Wheel Drive
             </div>
           )}
-          {[...options].map((option) => (
-            <div
-              className={styles.tableCell}
-              data-optiontitle={option}
-              key={uuid4()}
-            >
-              {option}
-            </div>
-          ))}
+          {[...options].map((option) => {
+            if (findEmptyOptions(generalInfo)?.includes(option)) return;
+            return (
+              <div
+                className={styles.tableCell}
+                data-optiontitle={option}
+                key={uuid4()}
+              >
+                {option}
+              </div>
+            );
+          })}
           {compareFields.colorName || (
             <div className={styles.tableCell}>Color</div>
           )}
@@ -241,19 +245,23 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
                       {info.drivetrainName}
                     </div>
                   )}
-                  {Object.keys(info.options).map((type: string) => (
-                    <div
-                      className={styles.tableCell}
-                      data-optionvalue={type}
-                      key={uuid4()}
-                    >
-                      {info.options[type]
-                        .filter(
-                          (option) => !toggle || !carOmitOptions.has(option),
-                        )
-                        .join(', ')}
-                    </div>
-                  ))}
+                  {Object.keys(info.options).map(
+                    (type: string) =>
+                      !findEmptyOptions(generalInfo)?.includes(type) && (
+                        <div
+                          className={styles.tableCell}
+                          data-optionvalue={type}
+                          key={uuid4()}
+                        >
+                          {info.options[type]
+                            .filter(
+                              (option) =>
+                                !toggle || !carOmitOptions.has(option),
+                            )
+                            .join(', ')}
+                        </div>
+                      ),
+                  )}
                   {compareFields.colorName || (
                     <div className={clsx(styles.tableCell, styles.colorCell)}>
                       <div

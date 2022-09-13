@@ -5,8 +5,8 @@ const findEmptyOptions = (
 ): string[] | undefined => {
   const emptyOptions = generalInfo?.map((e) =>
     Object.entries(e.options)
-      .filter((option) => option[1].length == 0)
-      .map((option) => option[0]),
+      .filter(([_optionName, optioValue]) => optioValue.length == 0)
+      .map(([optionName, _optioValue]) => optionName),
   );
   const emptyOptionsForAll = emptyOptions?.reduce((accumulator, currentValue) =>
     accumulator.filter((x) => currentValue.indexOf(x) !== -1),

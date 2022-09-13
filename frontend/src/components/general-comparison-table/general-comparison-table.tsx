@@ -18,6 +18,8 @@ const GeneralComparisonTable: React.FC = () => {
     refetch,
   } = useGetComparisonGeneralInfoQuery();
 
+  const emptyOptions = findEmptyOptions(generalInfo);
+
   const options: Set<string> = useMemo((): Set<string> => {
     const options: Set<string> = new Set();
     generalInfo?.forEach((car) =>
@@ -104,7 +106,7 @@ const GeneralComparisonTable: React.FC = () => {
             Wheel Drive
           </div>
           {[...options].map((option) => {
-            if (findEmptyOptions(generalInfo)?.includes(option)) return;
+            if (emptyOptions?.includes(option)) return;
             return (
               <div
                 className={styles.tableCell}
@@ -148,7 +150,7 @@ const GeneralComparisonTable: React.FC = () => {
                   </div>
                   {Object.keys(info.options).map(
                     (type: string) =>
-                      !findEmptyOptions(generalInfo)?.includes(type) && (
+                      !emptyOptions?.includes(type) && (
                         <div
                           className={styles.tableCell}
                           data-optionvalue={type}

@@ -7,6 +7,7 @@ import { PageContainer } from '@components/common/page-container/page-container'
 import { CompleteSetTable } from '@components/complete-set-table/complete-set-table';
 import { DetailsCarPanel } from '@components/details-car-panel/details-car-panel';
 import { Header } from '@components/header/header';
+import { WhereToBuy } from '@components/where-to-buy/where-to-buy';
 import { objectToQueryArr } from '@helpers/object-to-query';
 import { CircularProgress } from '@mui/material';
 import {
@@ -88,7 +89,19 @@ export const DetailsPage: FC = () => {
             <CharacteristicsList complectationId={complectationId} />
           ) : (
             <div className={styles.notification}>
-              To view detailed information, please select the required set
+              To view detailed information, pplease select the complectation in
+              the list above
+            </div>
+          )}
+        </CollapseBlock>
+
+        <CollapseBlock caption="Where to buy" open={!!complectationId}>
+          {complectationId ? (
+            <WhereToBuy complectationId={complectationId} />
+          ) : (
+            <div className={styles.notification}>
+              To view detailed information, please select the complectation in
+              the list above
             </div>
           )}
         </CollapseBlock>

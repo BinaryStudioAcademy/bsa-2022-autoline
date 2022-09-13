@@ -4,7 +4,6 @@ type OptionType = {
 
 type ComplectationsInput = {
   complectationId: string;
-  userId: string;
   modelId: string;
 };
 

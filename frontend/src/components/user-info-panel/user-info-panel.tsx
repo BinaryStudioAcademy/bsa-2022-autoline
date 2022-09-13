@@ -18,6 +18,7 @@ const UserInfoPanel: FC = () => {
   const wishlistCount =
     (wishlistData?.complectations.length || 0) +
     (wishlistData?.models.length || 0);
+  const viewedCount = viewedData?.count > 10 ? '10+' : viewedData?.count;
   return (
     <ul className={styles.UserPanel}>
       <li className={styles.UserPanelItem}>
@@ -50,7 +51,7 @@ const UserInfoPanel: FC = () => {
           History of viewed cars
         </Link>
         <span className={styles.UserPanelBadgeInfo}>
-          {viewedIsLoading || viewedData?.count}
+          {viewedIsLoading || viewedCount}
         </span>
       </li>
     </ul>

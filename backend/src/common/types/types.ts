@@ -16,3 +16,7 @@ export type {
   CarsSearchAutoriaParams,
   CarDetailsResponse,
 } from './cars/autoria-request-params';
+export type {
+  AutoriaResponse,
+  WhereBuyRequestQuery,
+} from './where-to-buy/where-to-buy.params';

@@ -1,4 +1,4 @@
-import { useMemo, useState, Dispatch } from 'react';
+import { useEffect, useMemo, useState, Dispatch } from 'react';
 import { ScrollSyncPane } from 'react-scroll-sync';
 
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
@@ -21,7 +21,7 @@ interface CompTopTableBarProps {
 export const CompTopTableBar = ({
   setPopupState,
 }: CompTopTableBarProps): React.ReactElement => {
-  const { data, isLoading } = useGetComparisonCarsQuery();
+  const { data, isLoading, refetch } = useGetComparisonCarsQuery();
   const [clearTable] = useClearComparisonMutation();
   const [isCleared, setIsCleared] = useState(false);
 
@@ -39,6 +39,13 @@ export const CompTopTableBar = ({
     setIsCleared(true);
     handleClearTable();
   };
+
+  useEffect(() => {
+    const broadcast = new BroadcastChannel('compare');
+    broadcast.onmessage = (): void => {
+      refetch();
+    };
+  }, [refetch]);
 
   const handleAddToComparison = (): void => {
     setPopupState(true);

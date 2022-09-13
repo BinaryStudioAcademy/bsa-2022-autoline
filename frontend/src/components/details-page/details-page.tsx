@@ -51,7 +51,6 @@ export const DetailsPage: FC = () => {
     setSearchParams(params);
     addCarToViewed({
       complectationId: id,
-      modelId,
     });
   };
 

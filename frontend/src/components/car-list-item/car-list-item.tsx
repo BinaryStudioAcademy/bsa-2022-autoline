@@ -110,7 +110,6 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
   const handleCompleteSetClick = (id: string): void => {
     addCarToViewed({
       complectationId: id,
-      modelId: model_id,
     });
     navigate({
       pathname: AppRoute.DETAILS,

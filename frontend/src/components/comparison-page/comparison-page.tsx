@@ -1,11 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { ScrollSync } from 'react-scroll-sync';
 
-import { complectationOptions } from '@common/enums/comparisons/options';
 import { PageContainer } from '@components/common/page-container/page-container';
 import { Title } from '@components/common/title/title';
 import { CompTopTableBar } from '@components/comp-top-table-bar/comp-top-table-bar';
-import { OptionsSubtable } from '@components/comparison-options-table/options-subtable';
+import { AllOptions } from '@components/comparison-page/options-subcomponent/all-options';
+import { OnlyDifferentOptions } from '@components/comparison-page/options-subcomponent/only-different-options';
 import { GeneralComparisonTable } from '@components/general-comparison-table/general-comparison-table';
 import { Header } from '@components/header/header';
 import { useGetComparisonGeneralInfoQuery } from '@store/queries/comparisons';
@@ -18,26 +18,11 @@ const ComparisonPage: React.FC = () => {
 
   const { data, isLoading } = useGetComparisonGeneralInfoQuery();
 
-  const showOptionsTables = (): (React.ReactElement | undefined)[] => {
+  const showOptionsTables = (): JSX.Element => {
     if (isOnlyDifferenceShown) {
-      return useMemo(
-        () =>
-          complectationOptions.map((option) => {
-            if (data?.some((car) => car.options[option].length)) {
-              return <OptionsSubtable key={option} title={option} />;
-            }
-          }),
-        [data],
-      );
+      return <OnlyDifferentOptions data={data} />;
     }
-
-    return useMemo(
-      () =>
-        complectationOptions.map((option) => (
-          <OptionsSubtable key={option} title={option} />
-        )),
-      [data],
-    );
+    return <AllOptions />;
   };
 
   return (

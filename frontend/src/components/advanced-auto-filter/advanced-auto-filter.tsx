@@ -6,6 +6,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { AutoRiaOption } from '@autoline/shared/common/types/types';
 import {
@@ -63,6 +64,8 @@ import styles from './styles.module.scss';
 
 const AdvancedAutoFilter: FC = () => {
   const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
+  const brandId = searchParams.get('brand') || '';
 
   const { rangeFilters, checkLists, brandDetails } = useAppSelector(
     (state) => state.carFilter,
@@ -127,6 +130,22 @@ const AdvancedAutoFilter: FC = () => {
       search([], true);
     }
   }, [rangeFilters, checkLists, brandDetails]);
+
+  useEffect(() => {
+    if (!brandId) return;
+    dispatch(
+      setBrandDetailsValue({
+        id: brandDetails[0].id,
+        brandId,
+        modelIds: [],
+      }),
+    );
+    search([['brandId', brandId]]);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
 
   useEffect(() => {
     if (filteredCars.data) {

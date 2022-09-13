@@ -3,13 +3,14 @@ import {
   WishlistResponseDto,
   WishlistsResponseDto,
 } from '@autoline/shared/common/types/types';
+import { WishlistType } from '@common/types/wishlist/wishlist.type';
 
 import { API } from '../../api-routes';
 import { api } from '../../index';
 
 const wishlistApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getWishlists: build.query<WishlistsResponseDto, void>({
+    getWishlists: build.query<WishlistType, void>({
       query: () => API.WISHLIST,
       providesTags: ['WishlistCars'],
     }),

@@ -1,4 +1,4 @@
-import { CarPreview } from '@autoline/shared/common/types/types';
+import { CarItemType } from '@common/types/wishlist/wishlist.type';
 
 interface CarDataType {
   photo_url: string;
@@ -16,7 +16,7 @@ interface CarDataListPropsType {
 
 interface ExtendedCarCardPropsType {
   type: 'model' | 'complectation';
-  car: CarPreview;
+  car: CarItemType;
 }
 
 export type {

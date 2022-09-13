@@ -120,6 +120,7 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
 
   const handleCarModelClick = (): void => {
     navigate({ pathname: AppRoute.DETAILS, search: `?model=${model_id}` });
+    scrollTo(0, 0);
   };
 
   if (isComplectationsLoading || isModelLoading) return <Spinner />;

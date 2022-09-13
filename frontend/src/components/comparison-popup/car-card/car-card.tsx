@@ -1,23 +1,16 @@
 import { FC, Dispatch } from 'react';
 
 import trashIcon from '@assets/images/trash.svg';
+import { ComlectationShortInfoResponse } from '@autoline/shared';
+import { formatPrice } from '@helpers/helpers';
 
 import styles from './styles.module.scss';
 
 interface CarCardProps {
-  setItemToRemove: Dispatch<(state: string[]) => string[]>;
-  data: {
-    id: string;
-    brandName: string;
-    complectationName: string;
-    modelId: string;
-    modelName: string;
-    photos: string[] | [];
-    position: number;
-    priceEnd: number;
-    priceStart: number;
-    wishlistId: string | undefined;
-  };
+  setItemToRemove: Dispatch<
+    (state: ComlectationShortInfoResponse[]) => ComlectationShortInfoResponse[]
+  >;
+  data: ComlectationShortInfoResponse;
 }
 
 const CarCard: FC<CarCardProps> = ({ data, setItemToRemove }) => {
@@ -33,7 +26,7 @@ const CarCard: FC<CarCardProps> = ({ data, setItemToRemove }) => {
   const title = `${brandName} ${modelName} ${complectationName}`;
 
   const handleRemove = (): void => {
-    setItemToRemove((state: string[]): string[] => state.concat(id));
+    setItemToRemove((state) => [...state].filter((item) => item.id !== id));
   };
 
   return (
@@ -41,7 +34,9 @@ const CarCard: FC<CarCardProps> = ({ data, setItemToRemove }) => {
       <img className={styles.cardImg} src={photos[0]} alt="car image" />
       <div className={styles.cardContent}>
         <p className={styles.cardTitle}>{title}</p>
-        <p className={styles.cardPrice}>{`$ ${priceStart} - ${priceEnd}`}</p>
+        <p className={styles.cardPrice}>
+          {`${formatPrice(priceStart)} - ${formatPrice(priceEnd)}`}
+        </p>
       </div>
       <span onClick={handleRemove} className={styles.cardRemove}>
         <img src={trashIcon} alt="delete icon" />

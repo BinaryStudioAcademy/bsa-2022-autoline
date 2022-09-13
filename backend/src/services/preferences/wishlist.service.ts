@@ -10,7 +10,7 @@ import type { WishlistInput } from '@common/types/types';
 const setWishlist = async (
   input: WishlistInput,
 ): Promise<WishlistResponseDto> => {
-  const { userId, modelId, complectationId } = input;
+  const { userId, modelId, complectationId, createdAt } = input;
 
   const wishlist = await prisma.user_Wishlist.findFirst({
     where: {
@@ -29,6 +29,7 @@ const setWishlist = async (
       user_id: userId,
       model_id: modelId,
       complectation_id: complectationId,
+      created_at: createdAt,
     },
     select: {
       id: true,

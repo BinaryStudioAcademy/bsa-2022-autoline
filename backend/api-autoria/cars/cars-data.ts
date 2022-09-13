@@ -356,9 +356,9 @@ export const carsData = [
   },
   {
     'country_id': 276,
-    'eng': 'VolksWagen',
+    'eng': 'Volkswagen',
     'marka_id': 84,
-    'name': 'VolksWagen',
+    'name': 'Volkswagen',
     'logo_url':
       'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/cars0809/Volkswagen-Logo-2012.jpg',
     'models': [

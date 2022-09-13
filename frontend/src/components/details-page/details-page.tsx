@@ -89,7 +89,7 @@ export const DetailsPage: FC = () => {
             <CharacteristicsList complectationId={complectationId} />
           ) : (
             <div className={styles.notification}>
-              To view detailed information, pplease select the complectation in
+              To view detailed information, please select the complectation in
               the list above
             </div>
           )}

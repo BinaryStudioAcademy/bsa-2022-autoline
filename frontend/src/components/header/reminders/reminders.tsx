@@ -60,7 +60,7 @@ export const Reminders: React.FC<RemindersProps> = ({
         <HashLink smooth to={`${viewed.linkTo}#viewed`}>
           <ListItemButton>
             <Badge
-              badgeContent={viewed.count}
+              badgeContent={viewed.count > 10 ? '10+' : viewed.count}
               color="primary"
               invisible={viewed.count < 1}
             >

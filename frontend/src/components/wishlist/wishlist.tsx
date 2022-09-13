@@ -7,6 +7,12 @@ import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 const Wishlist: React.FC = () => {
   const { data, isLoading } = useGetWishlistsQuery();
 
+  const sortedWishlist =
+    data?.models &&
+    [...data.models].sort(
+      (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
+    );
+
   if (isLoading) return null;
   return (
     <>
@@ -14,7 +20,7 @@ const Wishlist: React.FC = () => {
         LIKED MODELS
       </Title>
       <Grid container spacing={2}>
-        {data?.models?.map((model: CarPreview) => {
+        {sortedWishlist?.map((model: CarPreview) => {
           return (
             <Grid item xs={12} md={4} key={model.id}>
               <NewCarCard car={model} type="model" />

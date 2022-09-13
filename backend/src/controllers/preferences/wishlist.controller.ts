@@ -13,12 +13,13 @@ const setWishlist = async (
 ): Promise<void> => {
   try {
     const userId = req.tokenPayload.sub;
-    const { modelId, complectationId } = req.query;
+    const { modelId, complectationId, createdAt } = req.query;
 
     const wishlist: WishlistInput = {
       userId,
       modelId,
       complectationId,
+      createdAt,
     };
 
     const wishlistResponseDto = await wishlistService.setWishlist(wishlist);

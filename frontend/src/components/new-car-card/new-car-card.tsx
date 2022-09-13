@@ -27,6 +27,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
       complectationName,
       photoUrls,
       description,
+      createdAt,
     },
   } = props;
   const { likedCars, handleLikeClick } = useContext(WishlistContext);
@@ -45,7 +46,9 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
   const likeClick = (event?: React.MouseEvent): void => {
     event?.stopPropagation();
     const data: WishlistInput =
-      type === 'model' ? { modelId: carId } : { complectationId: carId };
+      type === 'model'
+        ? { modelId: carId, createdAt }
+        : { complectationId: carId, createdAt };
 
     if (!authToken) {
       navigate(AppRoute.SIGN_IN);

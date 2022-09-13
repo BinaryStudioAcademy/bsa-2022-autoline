@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import Logo from '@assets/images/logo.svg';
 import { AppRoute } from '@common/enums/app/app-route.enum';
@@ -7,26 +7,19 @@ import { PageContainer } from '@components/common/page-container/page-container'
 import { EditProfile } from '@components/edit-profile/edit-profile';
 import { UnauthorisedElements } from '@components/header/unauthorised-elements/unauthorised-elements';
 import { useAppDispatch } from '@hooks/hooks';
-import {
-  AppBar,
-  Tab,
-  Tabs,
-  Toolbar,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { AppBar, Toolbar, useMediaQuery, useTheme } from '@mui/material';
 import { logOut } from '@store/auth/slice';
 import { useGetActiveComparisonStatusQuery } from '@store/queries/comparisons';
 import { useGetHistoryOfViwedCarsQuery } from '@store/queries/history-viewed-cars';
 import { useGetWishlistEntriesQuery } from '@store/queries/preferences/wishlist';
 import { useGetUserQuery } from '@store/queries/user/update-user';
+import { clsx } from 'clsx';
 
 import { DrawerComponent } from './drawer/drawer';
 import { PrivateElements } from './private-elements/private-elements';
 import styles from './styles.module.scss';
 
 export const Header = (): React.ReactElement => {
-  const [value, setValue] = useState(0);
   const theme = useTheme();
   const isMatchSm = useMediaQuery(theme.breakpoints.down('sm'));
   const { data: wishlist } = useGetWishlistEntriesQuery();
@@ -125,22 +118,26 @@ export const Header = (): React.ReactElement => {
               />
             ) : (
               <>
-                <Tabs
-                  onChange={(e, value): void => setValue(value)}
-                  value={value}
-                  className={styles.navigation}
+                <NavLink
+                  to={AppRoute.SEARCH}
+                  className={({ isActive }): string => {
+                    return clsx(styles.navLink, {
+                      [styles.itemActive]: isActive,
+                    });
+                  }}
                 >
-                  <Tab
-                    label={commonMenu.search.label}
-                    className={styles.navLink}
-                    onClick={commonMenu.search.onClick}
-                  />
-                  <Tab
-                    label={commonMenu.aboutUs.label}
-                    className={styles.navLink}
-                    onClick={commonMenu.aboutUs.onClick}
-                  />
-                </Tabs>
+                  {commonMenu.search.label}
+                </NavLink>
+                <NavLink
+                  to={AppRoute.ABOUT}
+                  className={({ isActive }): string => {
+                    return clsx(styles.navLink, {
+                      [styles.itemActive]: isActive,
+                    });
+                  }}
+                >
+                  {commonMenu.aboutUs.label}
+                </NavLink>
                 {authData ? (
                   <PrivateElements
                     avatar={authData.photoUrl}

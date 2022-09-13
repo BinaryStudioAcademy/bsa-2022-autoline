@@ -13,6 +13,7 @@ type WishlistInput = {
   userId: string;
   modelId?: string;
   complectationId?: string;
+  createdAt?: string;
 };
 
 export type { UserCreateInput, UserResetPassword, WishlistInput };

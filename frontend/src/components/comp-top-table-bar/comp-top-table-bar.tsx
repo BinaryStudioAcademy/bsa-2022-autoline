@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ScrollSyncPane } from 'react-scroll-sync';
 
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
@@ -15,7 +15,7 @@ import { NoActiveComparison } from './components/no-active-comparison';
 import styles from './components/styles.module.scss';
 
 export const CompTopTableBar = (): React.ReactElement => {
-  const { data, isLoading } = useGetComparisonCarsQuery();
+  const { data, isLoading, refetch } = useGetComparisonCarsQuery();
   const [clearTable] = useClearComparisonMutation();
   const [isCleared, setIsCleared] = useState(false);
 
@@ -33,6 +33,13 @@ export const CompTopTableBar = (): React.ReactElement => {
     setIsCleared(true);
     handleClearTable();
   };
+
+  useEffect(() => {
+    const broadcast = new BroadcastChannel('compare');
+    broadcast.onmessage = (): void => {
+      refetch();
+    };
+  }, [refetch]);
 
   if (isLoading) return <Spinner />;
 

@@ -38,17 +38,23 @@ const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
       },
     },
     where: {
-      id: {
-        in: data.modelId,
-      },
+      OR: [
+        {
+          id: {
+            in: data.modelId,
+          },
+        },
+        {
+          brand: {
+            id: {
+              in: data.brandId,
+            },
+          },
+        },
+      ],
       body_type: {
         id: {
           in: data.bodyTypeId,
-        },
-      },
-      brand: {
-        id: {
-          in: data.brandId,
         },
       },
       year_start: {

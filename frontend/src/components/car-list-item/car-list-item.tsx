@@ -15,12 +15,14 @@ import { CompleteSetTableCollapsed } from '@components/complete-set-table/comple
 import { WishlistContext } from '@contexts/wishlist-context';
 import { formatPrice } from '@helpers/helpers';
 import { objectToQueryArr } from '@helpers/object-to-query';
+import { convertPrice } from '@helpers/utils/convert-price';
 import { Grid } from '@mui/material';
 import { uuid4 } from '@sentry/utils';
 import {
   useGetComplectationsQuery,
   useGetModelDetailsQuery,
 } from '@store/queries/cars';
+import { useGetRateQuery } from '@store/queries/details-panel';
 import { clsx } from 'clsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -38,14 +40,15 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
 
   const modelName = `${model?.brandName} ${model?.modelName}`;
   const [modelPrice, setModelPrice] = useState<string>();
-  const [modelOptions, setModelOptions] = useState<{ name: string }[]>();
+  const [modelOptions, setModelOptions] = useState<string[]>();
   const [modelEngine, setModelEngine] = useState<string>();
   const [modelEnginePower, setModelEnginePower] = useState<string>();
   const [modelFuelType, setModelFuelType] = useState<string>();
   const [modelTransmission, setModelTransmission] = useState<string>();
-
   const { likedCars, handleLikeClick } = useContext(WishlistContext);
   const isLiked = likedCars?.includes(model_id);
+
+  const { data: rate } = useGetRateQuery();
 
   const likeClick = (event?: React.MouseEvent): void => {
     event?.stopPropagation();
@@ -62,13 +65,10 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
   }, [model]);
 
   useEffect(() => {
-    const options = [
-      ...new Set(
-        complectations
-          .map((car: ComplectationDetailsType) => car.options)
-          .flat(),
-      ),
-    ];
+    const options = complectations
+      .map((car: ComplectationDetailsType) => car.options)
+      .flat();
+    const optionsNames = [...new Set(options.map((option) => option.name))];
     const engines = [
       ...new Set(
         complectations
@@ -96,7 +96,7 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
       ),
     ].join(' / ');
 
-    setModelOptions(options);
+    setModelOptions(optionsNames);
     setModelEngine(engines);
     setModelEnginePower(enginePowers);
     setModelFuelType(fuelTypes);
@@ -111,14 +111,14 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
     });
   };
 
-  const handleCardClick = (): void => {
+  const handleCarModelClick = (): void => {
     navigate({ pathname: AppRoute.DETAILS, search: `?model=${model_id}` });
   };
 
   if (isComplectationsLoading || isModelLoading) return <Spinner />;
 
   return (
-    <div className={styles.listCard} onClick={handleCardClick}>
+    <div className={styles.listCard}>
       <Grid container spacing={2}>
         <Grid item sm={4}>
           <Swiper
@@ -156,22 +156,26 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
         </Grid>
         <Grid item sm={8}>
           <div className={styles.titleWrapper}>
-            <h4 className={styles.carTitle}>{modelName}</h4>
+            <h4 className={styles.carTitle} onClick={handleCarModelClick}>
+              {modelName}
+            </h4>
             <div className={styles.buttonsWrapper}>
               <LikeButtton onClick={likeClick} isLiked={isLiked} />
             </div>
           </div>
           <div className={styles.priceBlock}>
             <h4 className={styles.primaryPrice}>{modelPrice}</h4>
-            {/* TODO: USD-UAH convertation
+
             <span className={styles.secondaryPrice}>
-              UAH 1 554 000 - 1 945 450
-            </span> */}
+              {`UAH ${convertPrice(rate as string, model?.priceStart as number)}
+          - ${convertPrice(rate as string, model?.priceEnd as number)}
+          `}
+            </span>
           </div>
           <div className={clsx(styles.options, 'styledScrollbar')}>
-            {modelOptions?.map((option) => (
+            {modelOptions?.map((optionName) => (
               <button className={styles.pillButton} key={uuid4()}>
-                {option.name}
+                {optionName}
               </button>
             ))}
           </div>

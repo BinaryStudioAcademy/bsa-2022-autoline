@@ -264,7 +264,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                     name="birthYear"
                     required={false}
                     control={control}
-                    label="Birthday"
+                    label="Year of birth"
                     defaultValue="not_appliable"
                   />
                 </div>

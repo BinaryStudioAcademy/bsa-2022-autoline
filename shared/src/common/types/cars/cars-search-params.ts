@@ -1,7 +1,7 @@
 type CarsSearchParams = {
   bodyTypeId: string[];
   brandId: string[];
-  modelId: string[];
+  modelId?: string[];
   yearStart: string;
   yearEnd: string;
   priceStart: string;

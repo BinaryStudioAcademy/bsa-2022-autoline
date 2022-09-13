@@ -13,6 +13,7 @@ import {
   viewedCarsRouter,
   locationRouter,
   newCarsRouter,
+  whereBuyRouter,
   comparisonsRouter,
   recentSearchCarsRouter,
 } from '@routes/routes';
@@ -64,6 +65,7 @@ const routes = [
   viewedCarsRouter,
   locationRouter,
   comparisonsRouter,
+  whereBuyRouter,
   recentSearchCarsRouter,
 ];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));

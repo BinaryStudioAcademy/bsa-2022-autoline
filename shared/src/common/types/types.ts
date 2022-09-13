@@ -44,6 +44,8 @@ export type {
   ComplectationReturnedData,
   OptionType,
   ComplectationsInput,
+  ComplectationShortInfoDto,
+  ComlectationShortInfoResponse,
 } from './complectations/complectations';
 
 export type {

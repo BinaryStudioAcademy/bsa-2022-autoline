@@ -1,8 +1,6 @@
-import { createContext, ReactNode, useState } from 'react';
+import React, { createContext, ReactNode, useState } from 'react';
 
 import { WishlistInput } from '@autoline/shared/common/types/types';
-import { HeartIcon } from '@components/common/icons/icons';
-import { Notification } from '@components/common/notification/notification';
 import { useInterval } from '@hooks/hooks';
 import { uuid4 } from '@sentry/utils';
 import {
@@ -14,11 +12,17 @@ import {
 type WishlistContextType = {
   likedCars?: string[];
   handleLikeClick: (data: WishlistInput) => void;
+  notifications: WishListNotification[] | undefined;
+  clearNotification: (id: string | string[]) => void;
+  undoDelete: (data: WishlistInput) => void;
 };
 
 const WishlistContext = createContext<WishlistContextType>({
   likedCars: undefined,
   handleLikeClick: () => undefined,
+  notifications: undefined,
+  clearNotification: () => undefined,
+  undoDelete: () => undefined,
 });
 
 interface WishListNotification {
@@ -122,46 +126,20 @@ const WishlistContextProvider: React.FC<{ children: ReactNode }> = ({
   const value = {
     likedCars,
     handleLikeClick,
+    notifications,
+    clearNotification,
     undoDelete,
   };
 
   return (
     <WishlistContext.Provider value={value}>
-      <div
-        style={{
-          position: 'fixed',
-          display: 'flex',
-          flexDirection: 'column-reverse',
-          top: '2rem',
-          right: '2rem',
-          zIndex: '10000',
-        }}
-      >
-        {notifications.map((n) => {
-          return (
-            <Notification
-              key={n.modelId ?? n.complectationId}
-              clearNotification={(): void =>
-                clearNotification(n.modelId || n.complectationId || uuid4())
-              }
-              icon={<HeartIcon />}
-              undo={(): void =>
-                undoDelete({
-                  modelId: n.modelId,
-                  complectationId: n.complectationId,
-                  createdAt: n.createdAt,
-                  carName: n.carName,
-                })
-              }
-            >
-              You removed {n.carName ?? 'car'} from wishlist
-            </Notification>
-          );
-        })}
-      </div>
       {children}
     </WishlistContext.Provider>
   );
+};
+
+export const useWishlistNotifications = (): WishlistContextType => {
+  return React.useContext(WishlistContext);
 };
 
 export { WishlistContextProvider, WishlistContext };

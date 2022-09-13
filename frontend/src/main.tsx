@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 
 import { ENV } from '@common/enums/app/env.enum';
+import { Notifications } from '@components/notifications/notifications';
 import { CompareContextProvider } from '@contexts/compare-context';
 import { WishlistContextProvider } from '@contexts/wishlist-context';
 import { Routing } from '@navigation/routing/routing';
@@ -26,6 +27,7 @@ root.render(
       <WishlistContextProvider>
         <CompareContextProvider>
           <Routing />
+          <Notifications />
         </CompareContextProvider>
       </WishlistContextProvider>
     </Provider>

@@ -1,6 +1,5 @@
 import React, { useEffect, createContext, ReactNode, useState } from 'react';
 
-import { CompareToast } from '@components/compare-toast/compare-toast';
 import { useInterval } from '@hooks/hooks';
 import {
   useGetActiveComparisonStatusQuery,
@@ -11,11 +10,15 @@ import {
 type CompareContextType = {
   comparedCars: string[] | undefined;
   handleCompareClick: (complectationId: string, name: string) => void;
+  notifications: CompareNotification[] | undefined;
+  clearNotification: (complectationId: string | string[]) => void;
 };
 
 const CompareContext = createContext<CompareContextType>({
   comparedCars: undefined,
   handleCompareClick: () => undefined,
+  notifications: undefined,
+  clearNotification: () => undefined,
 });
 
 interface CompareNotification {
@@ -112,29 +115,20 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
     };
   }, [broadcast, refetch]);
 
+  const value = {
+    comparedCars,
+    handleCompareClick,
+    notifications,
+    clearNotification,
+  };
+
   return (
-    <CompareContext.Provider value={{ comparedCars, handleCompareClick }}>
-      <div
-        style={{
-          position: 'fixed',
-          display: 'flex',
-          flexDirection: 'column-reverse',
-          top: '2rem',
-          right: '2rem',
-          zIndex: '10000',
-        }}
-      >
-        {notifications.map((n) => (
-          <CompareToast
-            key={n.complectationId}
-            carName={n.carName}
-            clearNotification={(): void => clearNotification(n.complectationId)}
-          />
-        ))}
-      </div>
-      {children}
-    </CompareContext.Provider>
+    <CompareContext.Provider value={value}>{children}</CompareContext.Provider>
   );
+};
+
+export const useCompareNotifications = (): CompareContextType => {
+  return React.useContext(CompareContext);
 };
 
 export { CompareContextProvider, CompareContext };

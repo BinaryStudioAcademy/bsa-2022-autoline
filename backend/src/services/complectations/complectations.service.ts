@@ -262,8 +262,6 @@ const getComplectationShortInfoById = async ({
         select: {
           name: true,
           photo_urls: true,
-          year_start: true,
-          year_end: true,
           brand: {
             select: {
               name: true,

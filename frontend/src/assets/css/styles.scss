@@ -22,6 +22,7 @@ body {
   background-color: var(--gray100);
 }
 
+body,
 .styledScrollbar {
   &::-webkit-scrollbar-track {
     border-radius: 10px;

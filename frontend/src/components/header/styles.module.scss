@@ -35,5 +35,25 @@
 }
 
 .navLink {
+  display: flex;
+  align-content: center;
+  align-items: center;
   height: var(--header-height);
+  margin: 0 1.5rem;
+  padding: 0 1.5rem;
+  color: black;
+  font-size: 1.2rem;
+  font-family: var(--primary-font);
+  text-transform: none;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--blue100);
+  }
+
+  &.itemActive {
+    position: relative;
+    border-bottom: 2px solid var(--blue100);
+  }
 }
+

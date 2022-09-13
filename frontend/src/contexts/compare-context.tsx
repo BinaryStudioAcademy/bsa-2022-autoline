@@ -30,9 +30,12 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
   const broadcast = new BroadcastChannel('compare');
 
   const handleAddToCompare = async (complectationId: string): Promise<void> => {
-    setIsOpen(true);
-    await addCarToComparison({ complectationId });
-    broadcast.postMessage('compare');
+    addCarToComparison({ complectationId })
+      .unwrap()
+      .then(() => {
+        setIsOpen(true);
+        broadcast.postMessage('compare');
+      });
   };
   const handleDeleteFromCompare = async (
     complectationId: string,

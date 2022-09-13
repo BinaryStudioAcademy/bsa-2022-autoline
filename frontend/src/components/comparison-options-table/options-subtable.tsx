@@ -34,7 +34,7 @@ const OptionsSubtable: React.FC<{ title: string }> = ({ title }) => {
       isOptionExists ? HTMLSymbol.check : HTMLSymbol.times,
     );
     const color = isOptionExists ? Color.green : Color.red;
-    return <p style={{ color, margin: '0' }}>{symbol}</p>;
+    return <p style={{ color, margin: '0', fontSize: 20 }}>{symbol}</p>;
   };
 
   const [optionsTable, setOptionsTableRef] = useState<HTMLDivElement | null>(

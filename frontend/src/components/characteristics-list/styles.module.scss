@@ -19,13 +19,16 @@
   display: flex;
   flex-wrap: wrap;
   margin-top: 0.625rem;
+  margin-bottom: 1.5rem;
 }
 
 .pill {
   margin-top: 0.625rem;
   margin-right: 0.625rem;
-  padding: 0.25rem 0.563rem;
+  padding: 0.5rem 0.7rem;
   color: var(--white);
+  font-size: 1.1rem;
+  line-height: 1.1;
   background-color: var(--blue300);
   border-radius: var(--border-radius-pill);
 }
@@ -36,7 +39,7 @@
   margin-top: 1.25rem;
 
   .bodyColumn {
-    width: 25%;
+    flex: 1 1 10rem;
     margin-left: 2.5rem;
     padding-left: 2.5rem;
     border-left: 1px solid var(--gray200);

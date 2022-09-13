@@ -1,10 +1,13 @@
 import { prisma } from '@data/prisma-client';
+import { formatComplectationDtoResponse } from '@helpers/helpers';
 
 import type {
   ModelReturnedData,
   ComplectationReturnedData,
   OptionType,
   ComplectationsInput,
+  ComplectationShortInfoDto,
+  ComlectationShortInfoResponse,
 } from '@autoline/shared/common/types/types';
 
 const getComplectationsById = async (
@@ -243,4 +246,45 @@ const getComplectationsById = async (
   return result;
 };
 
-export { getComplectationsById };
+const getComplectationShortInfoById = async ({
+  complectationId,
+}: {
+  complectationId: string;
+}): Promise<ComlectationShortInfoResponse> => {
+  const data = await prisma.complectation.findFirst({
+    where: {
+      id: complectationId,
+    },
+    select: {
+      id: true,
+      name: true,
+      model: {
+        select: {
+          name: true,
+          photo_urls: true,
+          year_start: true,
+          year_end: true,
+          brand: {
+            select: {
+              name: true,
+            },
+          },
+          prices_ranges: {
+            select: {
+              price_start: true,
+              price_end: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const response = formatComplectationDtoResponse(
+    data as ComplectationShortInfoDto,
+  );
+
+  return response;
+};
+
+export { getComplectationsById, getComplectationShortInfoById };

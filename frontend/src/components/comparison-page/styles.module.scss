@@ -6,3 +6,23 @@
   background-color: var(--white);
   border-radius: var(--border-radius-container);
 }
+
+.button {
+  height: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding: 0.3rem;
+  color: var(--black);
+  border-color: var(--gray300);
+  border-radius: var(--border-radius-pill);
+
+  &:hover {
+    color: var(--white);
+    background-color: var(--blue100);
+  }
+}
+
+.active {
+  color: var(--white);
+  background-color: var(--blue100);
+}

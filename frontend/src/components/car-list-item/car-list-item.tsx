@@ -23,6 +23,7 @@ import {
   useGetModelDetailsQuery,
 } from '@store/queries/cars';
 import { useGetRateQuery } from '@store/queries/details-panel';
+import { useAddViewedCarMutation } from '@store/queries/history-viewed-cars';
 import { clsx } from 'clsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -37,6 +38,8 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
     useGetComplectationsQuery(idParams);
   const { data: model, isLoading: isModelLoading } =
     useGetModelDetailsQuery(model_id);
+
+  const [addCarToViewed] = useAddViewedCarMutation();
 
   const modelName = `${model?.brandName} ${model?.modelName}`;
   const [modelPrice, setModelPrice] = useState<string>();
@@ -105,6 +108,10 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
 
   const navigate = useNavigate();
   const handleCompleteSetClick = (id: string): void => {
+    addCarToViewed({
+      complectationId: id,
+      modelId: model_id,
+    });
     navigate({
       pathname: AppRoute.DETAILS,
       search: `?model=${model_id}&complectation=${id}`,

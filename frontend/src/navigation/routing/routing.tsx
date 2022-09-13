@@ -62,15 +62,11 @@ const Routing: FC = () => {
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.PERSONAL} element={<PersonalPage />} />
         </Route>
-        <Route element={<ProtectedRoute isAllowed={!!authData} />}>
-          <Route path={AppRoute.SEARCH} element={<SearchPage />} />
-        </Route>
+        <Route path={AppRoute.SEARCH} element={<SearchPage />} />
         <Route element={<ProtectedRoute isAllowed={!!authData} />}>
           <Route path={AppRoute.COMPARISONS} element={<ComparisonPage />} />
         </Route>
-        <Route element={<ProtectedRoute isAllowed={!!authData} />}>
-          <Route path={AppRoute.DETAILS} element={<DetailsPage />} />
-        </Route>
+        <Route path={AppRoute.DETAILS} element={<DetailsPage />} />
         <Route path={AppRoute.ABOUT} element={<AboutPage />} />
         <Route path={AppRoute.NOT_FOUND} element={<NotFoundPage />} />
       </Routes>

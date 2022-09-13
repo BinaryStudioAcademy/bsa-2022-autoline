@@ -14,7 +14,8 @@ const formatDtoForResponse = (
     ? `${data.year_start} - ${data.year_end}`
     : `${data.year_start}`,
   photo_urls: data.photo_urls,
-  price: `$ ${data.complectations[0].prices_ranges[0].price_start} - ${data.complectations[0].prices_ranges[0].price_end}`,
+  priceStart: `${data.complectations[0].prices_ranges[0].price_start}`,
+  priceEnd: `${data.complectations[0].prices_ranges[0].price_end}`,
 });
 
 export { formatDtoForResponse };

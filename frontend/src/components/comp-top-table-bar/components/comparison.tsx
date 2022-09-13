@@ -15,10 +15,12 @@ export const Comparison = ({
   cars: ComparisonInfo[] | undefined;
 }): React.ReactElement => {
   const [updatePositions] = useUpdatePositionsMutation();
+  const broadcast = new BroadcastChannel('compare');
 
   const onCarDelete = (complectationId: string): void => {
     const newPositions = positions?.filter((p) => p != complectationId);
     if (newPositions) updatePositions(newPositions);
+    broadcast.postMessage('compare');
   };
 
   if (cars?.length === 0) return <NoActiveComparison />;

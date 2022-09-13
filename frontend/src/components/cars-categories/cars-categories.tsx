@@ -1,10 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Brand } from '@common/types/cars/brand.type';
-import { mockBrands } from '@components/cars-categories/mock-brands';
 import { SliderNavButton } from '@components/cars-categories/slider-nav-button/slider-nav-button';
 import { swiperParams } from '@components/cars-categories/swiper-params';
+import { useGetBrandsQuery } from '@store/queries/cars';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -13,7 +12,7 @@ import 'swiper/css/mousewheel';
 import styles from './styles.module.scss';
 
 const CarsCategories: FC = () => {
-  const [brands] = useState<Brand[]>(mockBrands);
+  const { data: brands } = useGetBrandsQuery();
 
   return (
     <div className={styles.container}>
@@ -22,9 +21,9 @@ const CarsCategories: FC = () => {
           <SliderNavButton direction="prev" />
           <SliderNavButton direction="next" />
 
-          {brands.map((brand) => (
+          {brands?.map((brand) => (
             <SwiperSlide key={brand.id}>
-              <Link to="#" className={styles.navLink}>
+              <Link to={`/search?brand=${brand.id}`} className={styles.navLink}>
                 <img
                   className={styles.logo}
                   src={brand.logo_url}

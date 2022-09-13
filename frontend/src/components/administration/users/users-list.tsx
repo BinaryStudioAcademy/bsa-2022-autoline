@@ -111,7 +111,7 @@ const UsersList: FC<UsersListProps> = ({ users }) => {
                 </TableCell>
                 <TableCell>{user.phone}</TableCell>
                 <TableCell>{user.location}</TableCell>
-                <TableCell>{getPrettified(String(user.sex))}</TableCell>
+                <TableCell>{getPrettified(String(user.sex || ''))}</TableCell>
                 <TableCell>{getPrettified(String(user.role))}</TableCell>
                 <TableCell>
                   <Button

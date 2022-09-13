@@ -22,7 +22,11 @@ enum TableFields {
 }
 
 const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
-  const { data: generalInfo, isLoading } = useGetComparisonGeneralInfoQuery();
+  const {
+    data: generalInfo,
+    isLoading,
+    refetch,
+  } = useGetComparisonGeneralInfoQuery();
 
   const options: Set<string> = useMemo((): Set<string> => {
     const options: Set<string> = new Set();
@@ -100,6 +104,13 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
   const [generalTable, setGeneralTableRef] = useState<HTMLDivElement | null>(
     null,
   );
+
+  const broadcast = new BroadcastChannel('compare');
+  useEffect(() => {
+    broadcast.onmessage = (): void => {
+      refetch();
+    };
+  }, [broadcast, refetch]);
 
   useLayoutEffect(() => {
     if (!generalTable) return;

@@ -22,6 +22,7 @@ const WishlistContext = createContext<WishlistContextType>({
 interface WishListNotification {
   modelId?: string;
   complectationId?: string;
+  createdAt?: string;
   timestamp: number;
 }
 
@@ -71,6 +72,7 @@ const WishlistContextProvider: React.FC<{ children: ReactNode }> = ({
         : notifications.concat({
             modelId: data.modelId,
             complectationId: data.complectationId,
+            createdAt: data.createdAt,
             timestamp: new Date().getTime(),
           });
       setNotifications(nextNotifications);
@@ -136,6 +138,7 @@ const WishlistContextProvider: React.FC<{ children: ReactNode }> = ({
                 undoDelete({
                   modelId: n.modelId,
                   complectationId: n.complectationId,
+                  createdAt: n.createdAt,
                 })
               }
             >

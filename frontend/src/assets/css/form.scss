@@ -40,7 +40,6 @@
 }
 
 .MuiInputBase-root.MuiOutlinedInput-root {
-  height: 3.4rem;
   font-size: 1rem;
 }
 
@@ -54,20 +53,19 @@
 .MuiAutocomplete-root {
   .MuiFormControl-root {
     label {
-      top: -3px;
-      left: 5px;
+      left: 18px;
       color: var(--gray300);
-      font-size: 14px;
+      font-size: 1rem;
     }
   }
 
   .MuiInputBase-root.MuiOutlinedInput-root {
     padding: 12px 15px 10px;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
 
     input {
-      padding: 3px 5px 0;
-      font-size: 14px;
+      padding: 2px 0 0 3px;
+      font-size: 1.1rem;
     }
 
     .MuiAutocomplete-endAdornment {
@@ -76,16 +74,15 @@
     }
   }
 
-  .MuiInputLabel-root.MuiInputLabel-shrink,
-  .MuiInputLabel-root.MuiInputLabel-shrink.Mui-focused,
-  .MuiInputLabel-root.MuiInputLabel-shrink.MuiFormLabel-filled {
+  .MuiInputLabel-root.MuiInputLabel-shrink {
     font-size: 1rem;
-    transform: translate(15px, 7px) scale(0.75);
+    transform: translate(0, 4px) scale(0.75);
   }
 
   .MuiButtonBase-root.MuiChip-root {
-    height: 2.2rem;
-    font-size: 1.1rem;
+    height: 1.7rem;
+    margin: 6px 4px 0 0;
+    font-size: 1rem;
   }
 
   .MuiAutocomplete-popupIndicator {

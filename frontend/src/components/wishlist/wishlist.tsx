@@ -7,11 +7,18 @@ import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 const Wishlist: React.FC = () => {
   const { data, isLoading } = useGetWishlistsQuery();
 
-  const sortedWishlist =
-    data?.models &&
-    [...data.models].sort(
-      (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
-    );
+  const sortedWishlist = {
+    models:
+      data?.models &&
+      [...data.models].sort(
+        (a, b) => Date.parse(b.createdAt || '') - Date.parse(a.createdAt || ''),
+      ),
+    complectations:
+      data?.complectations &&
+      [...data.complectations].sort(
+        (a, b) => Date.parse(b.createdAt || '') - Date.parse(a.createdAt || ''),
+      ),
+  };
 
   if (isLoading) return null;
   return (
@@ -20,7 +27,7 @@ const Wishlist: React.FC = () => {
         LIKED MODELS
       </Title>
       <Grid container spacing={2}>
-        {sortedWishlist?.map((model: CarPreview) => {
+        {sortedWishlist?.models?.map((model: CarPreview) => {
           return (
             <Grid item xs={12} md={4} key={model.id}>
               <NewCarCard car={model} type="model" />
@@ -33,7 +40,7 @@ const Wishlist: React.FC = () => {
       </Grid>
       <Title element="h4">LIKED COMPLECTATIONS</Title>
       <Grid container spacing={2}>
-        {data?.complectations?.map((complectation: CarPreview) => {
+        {sortedWishlist?.complectations?.map((complectation: CarPreview) => {
           return (
             <Grid item xs={12} md={4} key={complectation.id}>
               <NewCarCard car={complectation} type="complectation" />

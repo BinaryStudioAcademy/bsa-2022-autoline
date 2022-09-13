@@ -65,7 +65,7 @@ import styles from './styles.module.scss';
 const AdvancedAutoFilter: FC = () => {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
-  const brandId = (searchParams.get('brand') as string) ?? '';
+  const brandId = searchParams.get('brand') || '';
 
   const { rangeFilters, checkLists, brandDetails } = useAppSelector(
     (state) => state.carFilter,
@@ -132,20 +132,19 @@ const AdvancedAutoFilter: FC = () => {
   }, [rangeFilters, checkLists, brandDetails]);
 
   useEffect(() => {
-    if (brandId !== '') {
-      dispatch(
-        setBrandDetailsValue({
-          id: brandDetails[0].id,
-          brandId,
-          modelIds: [],
-        }),
-      );
-      search([['brandId', brandId]]);
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    }
+    if (!brandId) return;
+    dispatch(
+      setBrandDetailsValue({
+        id: brandDetails[0].id,
+        brandId,
+        modelIds: [],
+      }),
+    );
+    search([['brandId', brandId]]);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }, []);
 
   useEffect(() => {

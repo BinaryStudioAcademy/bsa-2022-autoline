@@ -47,7 +47,6 @@ type CarPreview = {
   complectationName?: string;
   photoUrls: string[] | [];
   description: string;
-  createdAt: string;
 };
 
 export type { ModelType, ModelDetailsType, CarPreview };

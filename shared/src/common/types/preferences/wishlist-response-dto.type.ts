@@ -14,7 +14,6 @@ interface WishlistsResponseDto {
 type WishlistInput = {
   modelId?: string;
   complectationId?: string;
-  createdAt?: string;
 };
 
 export {

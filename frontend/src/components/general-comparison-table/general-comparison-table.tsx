@@ -3,6 +3,7 @@ import { ScrollSyncPane } from 'react-scroll-sync';
 
 import { CollapseElement } from '@components/collapse-component/collapse-element/collapse-element';
 import { Spinner } from '@components/common/spinner/spinner';
+import { findEmptyOptions } from '@helpers/helpers';
 import { getElementHeightWithMargins } from '@helpers/utils/get-element-height-with-margins';
 import { uuid4 } from '@sentry/utils';
 import { useGetComparisonGeneralInfoQuery } from '@store/queries/comparisons';
@@ -16,6 +17,8 @@ const GeneralComparisonTable: React.FC = () => {
     isLoading,
     refetch,
   } = useGetComparisonGeneralInfoQuery();
+
+  const emptyOptions = findEmptyOptions(generalInfo);
 
   const options: Set<string> = useMemo((): Set<string> => {
     const options: Set<string> = new Set();
@@ -102,15 +105,18 @@ const GeneralComparisonTable: React.FC = () => {
           <div className={styles.tableCell} data-optiontitle="wheeldrive">
             Wheel Drive
           </div>
-          {[...options].map((option) => (
-            <div
-              className={styles.tableCell}
-              data-optiontitle={option}
-              key={uuid4()}
-            >
-              {option}
-            </div>
-          ))}
+          {[...options].map((option) => {
+            if (emptyOptions?.includes(option)) return;
+            return (
+              <div
+                className={styles.tableCell}
+                data-optiontitle={option}
+                key={uuid4()}
+              >
+                {option}
+              </div>
+            );
+          })}
           <div className={styles.tableCell}>Color</div>
         </div>
         <ScrollSyncPane>
@@ -142,15 +148,18 @@ const GeneralComparisonTable: React.FC = () => {
                   >
                     {info.drivetrainName}
                   </div>
-                  {Object.keys(info.options).map((type: string) => (
-                    <div
-                      className={styles.tableCell}
-                      data-optionvalue={type}
-                      key={uuid4()}
-                    >
-                      {info.options[type].join(', ')}
-                    </div>
-                  ))}
+                  {Object.keys(info.options).map(
+                    (type: string) =>
+                      !emptyOptions?.includes(type) && (
+                        <div
+                          className={styles.tableCell}
+                          data-optionvalue={type}
+                          key={uuid4()}
+                        >
+                          {info.options[type].join(', ')}
+                        </div>
+                      ),
+                  )}
                   <div className={clsx(styles.tableCell, styles.colorCell)}>
                     <div
                       className={styles.colorBox}

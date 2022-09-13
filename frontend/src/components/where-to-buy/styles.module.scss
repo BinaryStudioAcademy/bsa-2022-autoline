@@ -1,20 +1,18 @@
 @import "@assets/css/variables";
 
 .container {
-  margin: 30px;
   padding: 25px 0;
   background-color: var(--white);
   border: solid 1px var(--white);
-  border-radius: 5px;
+  border-radius: var(--border-radius-container);
 }
 
 .noFoundContainer {
   display: flex;
-  margin: 30px;
   padding: 25px;
   background-color: var(--white);
   border: solid 1px var(--white);
-  border-radius: 5px;
+  border-radius: var(--border-radius-container);
 
   .mg0 {
     margin: 0;

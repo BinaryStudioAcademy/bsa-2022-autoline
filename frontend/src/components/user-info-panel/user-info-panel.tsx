@@ -18,7 +18,8 @@ const UserInfoPanel: FC = () => {
   const wishlistCount =
     (wishlistData?.complectations.length || 0) +
     (wishlistData?.models.length || 0);
-  const viewedCount = viewedData?.count > 10 ? '10+' : viewedData?.count;
+  const viewedCount =
+    viewedData && viewedData?.count > 10 ? '10+' : viewedData?.count;
   return (
     <ul className={styles.UserPanel}>
       <li className={styles.UserPanelItem}>

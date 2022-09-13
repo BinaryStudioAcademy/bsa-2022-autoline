@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { ScrollSyncPane } from 'react-scroll-sync';
 
 import { CollapseElement } from '@components/collapse-component/collapse-element/collapse-element';
@@ -10,7 +10,18 @@ import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
-const GeneralComparisonTable: React.FC = () => {
+enum TableFields {
+  bodyType = 'bodyType',
+  engine = 'engine',
+  engineDisplacement = 'engineDisplacement',
+  enginePower = 'enginePower',
+  colorName = 'colorName',
+  transmissionTypeName = 'transmissionTypeName',
+  drivetrainName = 'drivetrainName',
+  fuelTypeName = 'fuelTypeName',
+}
+
+const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
   const { data: generalInfo, isLoading } = useGetComparisonGeneralInfoQuery();
 
   const options: Set<string> = useMemo((): Set<string> => {
@@ -23,49 +34,52 @@ const GeneralComparisonTable: React.FC = () => {
     return options;
   }, [generalInfo]);
 
-  const [compareFields, setCompareFields] = useState({
-    bodyType: true,
-    engine: true,
-    engineDisplacement: true,
-    enginePower: true,
-    colorName: true,
-    transmissionTypeName: true,
-    drivetrainName: true,
-    fuelTypeName: true,
-  });
-
-  enum Fileds {
-    bodyType = 'bodyType',
-    engine = 'engine',
-    engineDisplacement = 'engineDisplacement',
-    enginePower = 'enginePower',
-    colorName = 'colorName',
-    transmissionTypeName = 'transmissionTypeName',
-    drivetrainName = 'drivetrainName',
-    fuelTypeName = 'fuelTypeName',
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const appyOnlyDifference = (): void => {
-    // TODO: use it on toggle logic
-    setCompareFields({
-      bodyType: getFieldStatus(Fileds.bodyType),
-      engine: getFieldStatus(Fileds.engine),
-      engineDisplacement: getFieldStatus(Fileds.engineDisplacement),
-      enginePower: getFieldStatus(Fileds.enginePower),
-      colorName: getFieldStatus(Fileds.colorName),
-      transmissionTypeName: getFieldStatus(Fileds.transmissionTypeName),
-      drivetrainName: getFieldStatus(Fileds.drivetrainName),
-      fuelTypeName: getFieldStatus(Fileds.fuelTypeName),
-    });
-  };
-  // TODO: apply it for all fields
-
-  const getFieldStatus = (field: Fileds): boolean => {
+  const getFieldStatus = (field: TableFields): boolean => {
     return generalInfo?.every(
       (item) => item[field] === generalInfo[0][field],
     ) as boolean;
   };
+
+  const differenceTableFields = useMemo(
+    () => ({
+      bodyType: getFieldStatus(TableFields.bodyType),
+      engine: getFieldStatus(TableFields.engine),
+      engineDisplacement: getFieldStatus(TableFields.engineDisplacement),
+      enginePower: getFieldStatus(TableFields.enginePower),
+      colorName: getFieldStatus(TableFields.colorName),
+      transmissionTypeName: getFieldStatus(TableFields.transmissionTypeName),
+      drivetrainName: getFieldStatus(TableFields.drivetrainName),
+      fuelTypeName: getFieldStatus(TableFields.fuelTypeName),
+    }),
+    [generalInfo],
+  );
+
+  const [compareFields, setCompareFields] = useState(differenceTableFields);
+
+  const appyOnlyDifference = (): void => {
+    setCompareFields(differenceTableFields);
+  };
+
+  const appyAll = (): void => {
+    setCompareFields({
+      bodyType: false,
+      engine: false,
+      engineDisplacement: false,
+      enginePower: false,
+      colorName: false,
+      transmissionTypeName: false,
+      drivetrainName: false,
+      fuelTypeName: false,
+    });
+  };
+
+  useEffect(() => {
+    if (toggle) {
+      appyOnlyDifference();
+    } else {
+      appyAll();
+    }
+  }, [toggle]);
 
   const carOmitOptions = useMemo(() => {
     const carsOptions = new Set<string>();
@@ -128,7 +142,7 @@ const GeneralComparisonTable: React.FC = () => {
       value.style.height = `${optionsHighestHeights.get(title)}px`;
       tableTitleElement.style.height = `${optionsHighestHeights.get(title)}px`;
     });
-  }, [generalTable, generalInfo]);
+  }, [generalTable, generalInfo, toggle]);
 
   if (isLoading) return <Spinner />;
 
@@ -136,23 +150,31 @@ const GeneralComparisonTable: React.FC = () => {
     <CollapseElement label="General information" isOpen={true}>
       <div className={styles.table} ref={setGeneralTableRef}>
         <div className={clsx(styles.tableTitles, styles.tableColumn)}>
-          <div className={styles.tableCell} data-optiontitle="bodytype">
-            Type
-          </div>
+          {compareFields.bodyType || (
+            <div className={styles.tableCell} data-optiontitle="bodytype">
+              Type
+            </div>
+          )}
           {compareFields.engineDisplacement || (
             <div className={styles.tableCell} data-optiontitle="motor">
               Motor
             </div>
           )}
-          <div className={styles.tableCell} data-optiontitle="enginepower">
-            Engine Power
-          </div>
-          <div className={styles.tableCell} data-optiontitle="engine">
-            Engine
-          </div>
-          <div className={styles.tableCell} data-optiontitle="wheeldrive">
-            Wheel Drive
-          </div>
+          {compareFields.enginePower || (
+            <div className={styles.tableCell} data-optiontitle="enginepower">
+              Engine Power
+            </div>
+          )}
+          {compareFields.engine || (
+            <div className={styles.tableCell} data-optiontitle="engine">
+              Engine
+            </div>
+          )}
+          {compareFields.drivetrainName || (
+            <div className={styles.tableCell} data-optiontitle="wheeldrive">
+              Wheel Drive
+            </div>
+          )}
           {[...options].map((option) => (
             <div
               className={styles.tableCell}
@@ -162,7 +184,9 @@ const GeneralComparisonTable: React.FC = () => {
               {option}
             </div>
           ))}
-          <div className={styles.tableCell}>Color</div>
+          {compareFields.colorName || (
+            <div className={styles.tableCell}>Color</div>
+          )}
         </div>
         <ScrollSyncPane>
           <div className={clsx('styledScrollbar', styles.generalInfo)}>
@@ -172,29 +196,40 @@ const GeneralComparisonTable: React.FC = () => {
                   className={clsx(styles.tableData, styles.tableColumn)}
                   key={info.id}
                 >
-                  <div className={styles.tableCell} data-optionvalue="bodytype">
-                    {info.bodyType}
-                  </div>
+                  {compareFields.bodyType || (
+                    <div
+                      className={styles.tableCell}
+                      data-optionvalue="bodytype"
+                    >
+                      {info.bodyType}
+                    </div>
+                  )}
                   {compareFields.engineDisplacement || (
                     <div className={styles.tableCell} data-optionvalue="motor">
                       {info.engineDisplacement} l.
                     </div>
                   )}
-                  <div
-                    className={styles.tableCell}
-                    data-optionvalue="enginepower"
-                  >
-                    {info.enginePower} h.p.
-                  </div>
-                  <div className={styles.tableCell} data-optionvalue="engine">
-                    {info.engine}
-                  </div>
-                  <div
-                    className={styles.tableCell}
-                    data-optionvalue="wheeldrive"
-                  >
-                    {info.drivetrainName}
-                  </div>
+                  {compareFields.enginePower || (
+                    <div
+                      className={styles.tableCell}
+                      data-optionvalue="enginepower"
+                    >
+                      {info.enginePower} h.p.
+                    </div>
+                  )}
+                  {compareFields.engine || (
+                    <div className={styles.tableCell} data-optionvalue="engine">
+                      {info.engine}
+                    </div>
+                  )}
+                  {compareFields.drivetrainName || (
+                    <div
+                      className={styles.tableCell}
+                      data-optionvalue="wheeldrive"
+                    >
+                      {info.drivetrainName}
+                    </div>
+                  )}
                   {Object.keys(info.options).map((type: string) => (
                     <div
                       className={styles.tableCell}
@@ -202,17 +237,21 @@ const GeneralComparisonTable: React.FC = () => {
                       key={uuid4()}
                     >
                       {info.options[type]
-                        .filter((option) => !carOmitOptions.has(option))
+                        .filter(
+                          (option) => !toggle || !carOmitOptions.has(option),
+                        )
                         .join(', ')}
                     </div>
                   ))}
-                  <div className={clsx(styles.tableCell, styles.colorCell)}>
-                    <div
-                      className={styles.colorBox}
-                      style={{ backgroundColor: info.colorName }}
-                    />
-                    <span>{info.colorName}</span>
-                  </div>
+                  {compareFields.colorName || (
+                    <div className={clsx(styles.tableCell, styles.colorCell)}>
+                      <div
+                        className={styles.colorBox}
+                        style={{ backgroundColor: info.colorName }}
+                      />
+                      <span>{info.colorName}</span>
+                    </div>
+                  )}
                 </div>
               );
             })}

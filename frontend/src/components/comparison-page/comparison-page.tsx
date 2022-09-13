@@ -42,7 +42,7 @@ const ComparisonPage: React.FC = () => {
               )}
               onClick={(): void => setIsOnlyDifferenceShown(true)}
             />
-            <GeneralComparisonTable />
+            <GeneralComparisonTable toggle={isOnlyDifferenceShown} />
             {complectationOptions.map((option) => (
               <OptionsSubtable key={option} title={option} />
             ))}

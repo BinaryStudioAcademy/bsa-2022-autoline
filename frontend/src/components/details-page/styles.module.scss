@@ -1,3 +1,5 @@
+@import "@assets/css/styles";
+
 .title {
   margin-top: 3.2rem;
 }
@@ -9,6 +11,15 @@
 
   & > div:first-child {
     margin-right: 1.875rem;
+
+    @media (max-width: $global-md) {
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: $global-md) {
+    flex-direction: column;
+    margin-bottom: 0;
   }
 }
 
@@ -21,10 +32,19 @@
 
 .carouselWrapper {
   width: 50%;
+
+  @media (max-width: $global-md) {
+    width: auto;
+  }
 }
 
 .detailsCarPanelWrapper {
   width: 50%;
+
+  @media (max-width: $global-md) {
+    width: auto;
+    margin-top: 2.5rem;
+  }
 }
 
 .completeSetWrapper {

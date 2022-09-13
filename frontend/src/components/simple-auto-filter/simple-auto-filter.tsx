@@ -20,6 +20,7 @@ import { getValueById } from '@helpers/get-value-by-id';
 import { useAppDispatch, useAppSelector } from '@hooks/store/store.hooks';
 import { Button, Zoom } from '@mui/material';
 import {
+  resetAllFilters,
   setBrandDetailsValue,
   setCheckListValue,
   setRangeValue,
@@ -52,6 +53,10 @@ const SimpleAutoFilter: FC = () => {
   const { data: models } = useGetModelsOfBrandQuery(brandId, {
     skip: !brandId,
   });
+
+  useEffect(() => {
+    dispatch(resetAllFilters());
+  }, []);
 
   useEffect(() => {
     models && dispatch(setModels(models));

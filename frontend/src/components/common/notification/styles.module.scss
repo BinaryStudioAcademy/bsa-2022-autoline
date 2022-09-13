@@ -2,8 +2,10 @@
 @import "@assets/css/animations";
 
 .container {
-  position: relative;
-  margin-bottom: 1rem;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 10000;
   animation: hide-notification 1s ease 5s;
 }
 

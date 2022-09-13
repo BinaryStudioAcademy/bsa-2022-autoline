@@ -22,7 +22,7 @@ const UserInfoPanel: FC = () => {
     <ul className={styles.UserPanel}>
       <li className={styles.UserPanelItem}>
         <img className={styles.UserPanelIcon} src={heartIcon} alt="liked it" />
-        <Link to="#liked" className={styles.UserPanelLink}>
+        <Link smooth to="#liked" className={styles.UserPanelLink}>
           Liked
         </Link>
         <span className={styles.UserPanelBadgeInfo}>
@@ -35,7 +35,7 @@ const UserInfoPanel: FC = () => {
           src={balanceIcon}
           alt="comparison"
         />
-        <Link to="#compared" className={styles.UserPanelLink}>
+        <Link smooth to="#compared" className={styles.UserPanelLink}>
           Compared
         </Link>
         <span className={styles.UserPanelBadgeInfo}>{comparedCount}</span>
@@ -46,7 +46,7 @@ const UserInfoPanel: FC = () => {
           src={eyeIcon}
           alt="history of viewed cars"
         />
-        <Link to="#viewed" className={styles.UserPanelLink}>
+        <Link smooth to="#viewed" className={styles.UserPanelLink}>
           History of viewed cars
         </Link>
         <span className={styles.UserPanelBadgeInfo}>

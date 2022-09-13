@@ -10,7 +10,7 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import { SelectFieldForm } from '@components/edit-profile/select-field-form/select-field-form';
 import { formatComparisonShortData } from '@helpers/helpers';
 import { useAppForm } from '@hooks/hooks';
-import { Modal, Button, Box, MenuItem } from '@mui/material';
+import { Modal, Box, MenuItem } from '@mui/material';
 import {
   useGetBrandsQuery,
   useLazyGetModelsOfBrandQuery,
@@ -124,7 +124,6 @@ const ComparisonPopup: FC<ComparisonPopupProps> = ({
     handleClose();
   };
 
-  const handleOpen = (): void => setPopupState(true);
   const handleClose = (): void => {
     setPopupState(false);
     setComparisonList(data || []);
@@ -132,7 +131,6 @@ const ComparisonPopup: FC<ComparisonPopupProps> = ({
   };
   return (
     <>
-      <Button onClick={handleOpen}>click</Button>
       <Modal
         open={isOpen}
         onClose={handleClose}

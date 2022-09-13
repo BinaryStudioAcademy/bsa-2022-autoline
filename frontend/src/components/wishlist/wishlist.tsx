@@ -11,16 +11,12 @@ const Wishlist: React.FC = () => {
     models:
       data?.models &&
       [...data.models].sort(
-        (a, b) =>
-          Date.parse(b.createdAt.toString()) -
-          Date.parse(a.createdAt.toString()),
+        (a, b) => Date.parse(b.createdAt || '') - Date.parse(a.createdAt || ''),
       ),
     complectations:
       data?.complectations &&
       [...data.complectations].sort(
-        (a, b) =>
-          Date.parse(b.createdAt.toString()) -
-          Date.parse(a.createdAt.toString()),
+        (a, b) => Date.parse(b.createdAt || '') - Date.parse(a.createdAt || ''),
       ),
   };
 

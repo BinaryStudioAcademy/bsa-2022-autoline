@@ -1,71 +1,140 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState, Dispatch } from 'react';
 
 import CrossIcon from '@assets/images/edit-profile/cross.svg';
+import {
+  ComplectationOfModelResponse,
+  ComlectationShortInfoResponse,
+} from '@autoline/shared';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { SelectFieldForm } from '@components/edit-profile/select-field-form/select-field-form';
+import { formatComparisonShortData } from '@helpers/helpers';
 import { useAppForm } from '@hooks/hooks';
 import { Modal, Button, Box, MenuItem } from '@mui/material';
+import { useGetBrandsQuery } from '@store/queries/cars';
 import {
-  useGetBrandsQuery,
-  useGetModelsOfBrandQuery,
-  useGetComplectationsOfModelQuery,
+  useLazyGetModelsOfBrandQuery,
+  useLazyGetComplectationsOfModelQuery,
 } from '@store/queries/cars';
 import {
-  useGetComparisonsPreviewCarsQuery,
+  useGetComparisonCarsQuery,
   useDeleteCarFromComparisonMutation,
+  useAddCarToComparisonMutation,
 } from '@store/queries/comparisons';
+import { useLazyGetComplectationByIdQuery } from '@store/queries/details-panel';
 import { clsx } from 'clsx';
 
 import { CarCard } from './car-card/car-card';
 import styles from './styles.module.scss';
 
 interface SelectingComplactationData {
-  type: string;
   brand: string;
   model: string;
   complectation: string;
 }
 
-const ComparisonPopup: FC = () => {
-  const [open, setOpen] = useState(false);
-  const [itemToRemove, setItemToRemove] = useState<string[]>([]);
-  const { data: brands } = useGetBrandsQuery();
+interface ComparisonPopupProps {
+  isOpen: boolean;
+  setPopupState: Dispatch<boolean>;
+}
 
-  const { control, handleSubmit, watch } =
+const ComparisonPopup: FC<ComparisonPopupProps> = ({
+  isOpen,
+  setPopupState,
+}: ComparisonPopupProps) => {
+  const { data, isLoading: comparisonIsLoading } = useGetComparisonCarsQuery();
+  const [comparisonList, setComparisonList] = useState<
+    ComlectationShortInfoResponse[]
+  >([]);
+  const [availableComplectation, setAvailableComplectation] = useState<
+    ComplectationOfModelResponse[]
+  >([]);
+  const { data: brands } = useGetBrandsQuery();
+  const { control, handleSubmit, watch, reset } =
     useAppForm<SelectingComplactationData>({
       defaultValues: {
-        type: '',
         brand: '',
         model: '',
         complectation: '',
       },
     });
-  const { data: models } = useGetModelsOfBrandQuery(watch('brand'));
-  const { data: complectations } = useGetComplectationsOfModelQuery(
-    watch('model'),
-  );
+  const [getModelsOfBrand, models] = useLazyGetModelsOfBrandQuery();
+  const [getComplectationsOfModel, complectations] =
+    useLazyGetComplectationsOfModelQuery();
+  const [getComplectationById, complectationInfo] =
+    useLazyGetComplectationByIdQuery();
 
-  const { data } = useGetComparisonsPreviewCarsQuery();
+  useEffect(() => {
+    comparisonIsLoading ||
+      setComparisonList(formatComparisonShortData(data || []));
+  }, [data]);
+
+  useEffect(() => {
+    watch('brand') && getModelsOfBrand(watch('brand'));
+  }, [watch('brand')]);
+
+  useEffect(() => {
+    watch('model') && getComplectationsOfModel(watch('model'));
+  }, [watch('model')]);
+
+  useEffect(() => {
+    if (watch('complectation')) {
+      getComplectationById(watch('complectation'));
+    }
+  }, [watch('complectation')]);
+
+  useEffect(() => {
+    if (!complectationInfo.isFetching) {
+      setComparisonList((state) =>
+        [...state].concat(complectationInfo.data || []),
+      );
+      reset && reset({ brand: '', model: '', complectation: '' });
+    }
+  }, [complectationInfo.isFetching]);
+
+  useEffect(() => {
+    if (complectations.data) {
+      const list = complectations.data?.filter(
+        (complectation) =>
+          !comparisonList.find((item) => item.id === complectation.id),
+      );
+      setAvailableComplectation(list);
+    }
+  }, [comparisonList, complectations]);
+
   const [deleteCarFromComparison] = useDeleteCarFromComparisonMutation();
+  const [addCarToComparison] = useAddCarToComparisonMutation();
 
   const onSubmit = (): void => {
-    itemToRemove.forEach((complectationId) => {
-      deleteCarFromComparison({ complectationId });
+    const carsToRemove = data?.filter(
+      (carInComparison) =>
+        !comparisonList.find((carInUi) => carInComparison.id === carInUi.id),
+    );
+    const carsToAdd = comparisonList.filter(
+      (carInUi) =>
+        !data?.find((carInComparison) => carInComparison.id === carInUi.id),
+    );
+    carsToRemove?.forEach(({ id }) => {
+      deleteCarFromComparison({ complectationId: id });
     });
+    carsToAdd?.forEach(({ id }) => {
+      addCarToComparison({ complectationId: id });
+    });
+
     handleClose();
   };
 
-  const handleOpen = (): void => setOpen(true);
+  const handleOpen = (): void => setPopupState(true);
   const handleClose = (): void => {
-    setOpen(false);
-    setItemToRemove([]);
+    setPopupState(false);
+    setComparisonList(data || []);
+    reset && reset({ brand: '', model: '', complectation: '' });
   };
   return (
     <>
       <Button onClick={handleOpen}>click</Button>
       <Modal
-        open={open}
+        open={isOpen}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -85,18 +154,11 @@ const ComparisonPopup: FC = () => {
                 Complectation in comparison
               </h3>
               <ul className={clsx(styles.comparisonList, 'styledScrollbar')}>
-                {data &&
-                  data.map((item) => {
-                    if (itemToRemove.includes(item.id)) return null;
-                    return (
-                      <li key={item.id}>
-                        <CarCard
-                          data={item}
-                          setItemToRemove={setItemToRemove}
-                        />
-                      </li>
-                    );
-                  })}
+                {comparisonList.map((item) => (
+                  <li key={item.id}>
+                    <CarCard data={item} setItemToRemove={setComparisonList} />
+                  </li>
+                ))}
               </ul>
             </div>
             <div className={styles.comparisonRight}>
@@ -114,7 +176,9 @@ const ComparisonPopup: FC = () => {
                     defaultValue="not_appliable"
                   >
                     {brands?.map((item) => (
-                      <MenuItem value={item.id}>{item.name}</MenuItem>
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.name}
+                      </MenuItem>
                     ))}
                   </SelectFieldForm>
                   <SelectFieldForm
@@ -126,8 +190,10 @@ const ComparisonPopup: FC = () => {
                     defaultValue="not_appliable"
                     disabled={!watch('brand')}
                   >
-                    {models?.map((item) => (
-                      <MenuItem value={item.id}>{item.name}</MenuItem>
+                    {models.data?.map((item) => (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.name}
+                      </MenuItem>
                     ))}
                   </SelectFieldForm>
                   <SelectFieldForm
@@ -137,10 +203,12 @@ const ComparisonPopup: FC = () => {
                     control={control}
                     label="Select a complectation"
                     defaultValue="not_appliable"
-                    disabled={!watch('model')}
+                    disabled={!watch('model') || !watch('brand')}
                   >
-                    {complectations?.map((item) => (
-                      <MenuItem value={item.id}>{item.name}</MenuItem>
+                    {availableComplectation.map((item) => (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.name}
+                      </MenuItem>
                     ))}
                   </SelectFieldForm>
                   <div className={styles.btnWrapper}>

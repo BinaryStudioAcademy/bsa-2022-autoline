@@ -36,7 +36,7 @@ interface ComparisonDetail {
   priceStart: number;
   priceEnd: number;
   modelName: string;
-  photos: unknown;
+  photos: string[] | [];
   year: string;
 }
 

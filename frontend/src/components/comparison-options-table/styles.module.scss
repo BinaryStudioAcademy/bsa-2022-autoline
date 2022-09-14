@@ -15,15 +15,13 @@
 }
 
 .tableCell {
+  height: 100%;
   min-height: 45px;
   margin: 0 1rem;
   padding: 1rem 0;
   line-height: 1.6;
   text-transform: capitalize;
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--gray300);
-  }
+  border-bottom: 1px solid var(--gray300);
 }
 
 .tableColumn {

@@ -1,9 +1,9 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React from 'react';
+import { EqualHeight, EqualHeightElement } from 'react-equal-height';
 import { ScrollSyncPane } from 'react-scroll-sync';
 
 import { CollapseElement } from '@components/collapse-component/collapse-element/collapse-element';
 import { Spinner } from '@components/common/spinner/spinner';
-import { getElementHeightWithMargins } from '@helpers/utils/get-element-height-with-margins';
 import { uuid4 } from '@sentry/utils';
 import {
   useGetComparisonGeneralInfoQuery,
@@ -37,66 +37,41 @@ const OptionsSubtable: React.FC<{ title: string }> = ({ title }) => {
     return <p style={{ color, margin: '0', fontSize: 20 }}>{symbol}</p>;
   };
 
-  const [optionsTable, setOptionsTableRef] = useState<HTMLDivElement | null>(
-    null,
-  );
-
-  useLayoutEffect(() => {
-    if (!optionsTable) return;
-    const optionTitle = optionsTable.querySelectorAll(
-      '[data-title]',
-    ) as NodeListOf<HTMLDivElement>;
-
-    optionTitle.forEach((option) => {
-      const title = option.getAttribute('data-title');
-      const tableElement = optionsTable.querySelectorAll(
-        `[data-value="${title}"]`,
-      ) as NodeListOf<HTMLDivElement>;
-
-      tableElement.forEach(
-        (element) =>
-          (element.style.height = `${
-            getElementHeightWithMargins(option) + 1
-          }px`),
-      );
-    });
-  }, [optionsTable, optionNames]);
-
   return (
     <CollapseElement label={title}>
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className={styles.table} ref={setOptionsTableRef}>
-          <div className={clsx(styles.tableTitles, styles.tableColumn)}>
-            {optionNames?.map((option) => (
-              <div
-                className={styles.tableCell}
-                key={uuid4()}
-                data-title={option}
-              >
-                {option}
-              </div>
-            ))}
-          </div>
-          <ScrollSyncPane>
-            <div className={clsx('styledScrollbar', styles.generalInfo)}>
-              {cars?.map((car) => (
-                <div className={styles.tableColumn} key={uuid4()}>
-                  {optionNames?.map((optionName) => (
-                    <div
-                      className={styles.tableCell}
-                      key={uuid4()}
-                      data-value={optionName}
-                    >
-                      {getOptionSymbol(car.options[title].includes(optionName))}
-                    </div>
-                  ))}
-                </div>
+        <EqualHeight>
+          <div className={clsx(styles.table, 'table')}>
+            <div className={clsx(styles.tableTitles, styles.tableColumn)}>
+              {optionNames?.map((option) => (
+                <EqualHeightElement name={option} key={uuid4()}>
+                  <div className={clsx(styles.tableCell, 'tableCell')}>
+                    {option}
+                  </div>
+                </EqualHeightElement>
               ))}
             </div>
-          </ScrollSyncPane>
-        </div>
+            <ScrollSyncPane>
+              <div className={clsx('styledScrollbar', styles.generalInfo)}>
+                {cars?.map((car) => (
+                  <div className={styles.tableColumn} key={uuid4()}>
+                    {optionNames?.map((optionName) => (
+                      <EqualHeightElement name={optionName} key={uuid4()}>
+                        <div className={clsx(styles.tableCell, 'tableCell')}>
+                          {getOptionSymbol(
+                            car.options[title].includes(optionName),
+                          )}
+                        </div>
+                      </EqualHeightElement>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </ScrollSyncPane>
+          </div>
+        </EqualHeight>
       )}
     </CollapseElement>
   );

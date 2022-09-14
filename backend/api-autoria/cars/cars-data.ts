@@ -7,7 +7,8 @@ export const carsData = [
     'marka_id': 47,
     'name': 'Mazda',
     'value': 47,
-    'logo_url': 'https://www.pngall.com/wp-content/uploads/2/Mazda-PNG-Pic.png',
+    'logo_url':
+      'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/Mazda-PNG-Pic.png',
     'models': [
       {
         'category_id': '1',
@@ -319,39 +320,6 @@ export const carsData = [
           },
         ],
       },
-      {
-        'eng': 'TT',
-        'marka_id': 6,
-        'model_id': 1837,
-        'name': 'TT',
-        'description':
-          'The Audi Q8 is luxurious, extravagant and stylish, and makes an admirable executive express for owners who aren’t too worried about its rather obvious packaging compromises. It takes up about as much room on the road as a Q7 SUV, but has only five seats and a much less useful boot. In spite of its more dynamic and contemporary styling, it doesn’t offer significantly more involvement or engagement for the driver either, and is less sharp on the road than the BMW X6, a key rival.',
-        'autoria_body_type_id': 6,
-        'year_start': 2004,
-        'year_end': null,
-        'price_start': 6400,
-        'price_end': 21300,
-        'photo_urls': [
-          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/cars0809/audi_tt01.jpg',
-          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/cars0809/audi_tt02.jpg',
-          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/cars0809/audi_tt03.jpg',
-        ],
-        'complectations': [
-          {
-            'name': '8N (FL)',
-            'engine': 'Turbocharged 2.0-liter four-cylinder',
-            'engine_displacement': 2.0,
-            'engine_power': 228,
-            'autoria_drivetrain_id': 2,
-            'autoria_fuel_type_id': 1,
-            'autoria_color_id': 13,
-            'autoria_transmission_type_id': 2,
-            'price_start': 6400,
-            'price_end': 21300,
-            'options': [527, 459, 581, 443, 441, 604, 611, 579, 303, 560, 589],
-          },
-        ],
-      },
     ],
   },
   {
@@ -360,7 +328,7 @@ export const carsData = [
     'marka_id': 84,
     'name': 'Volkswagen',
     'logo_url':
-      'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/cars0809/Volkswagen-Logo-2012.jpg',
+      'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/volkswagen.png',
     'models': [
       {
         'eng': 'Tiguan',
@@ -519,6 +487,38 @@ export const carsData = [
               217, 459, 621, 137, 441, 604, 572, 598, 192, 255, 437, 574, 579,
               605, 560, 539, 582, 555, 556, 486,
             ],
+          },
+        ],
+      },
+      {
+        'eng': 'TT',
+        'marka_id': 6,
+        'model_id': 1837,
+        'name': 'TT',
+        'description':
+          'The Audi Q8 is luxurious, extravagant and stylish, and makes an admirable executive express for owners who aren’t too worried about its rather obvious packaging compromises. It takes up about as much room on the road as a Q7 SUV, but has only five seats and a much less useful boot. In spite of its more dynamic and contemporary styling, it doesn’t offer significantly more involvement or engagement for the driver either, and is less sharp on the road than the BMW X6, a key rival.',
+        'autoria_body_type_id': 6,
+        'year_start': 2004,
+        'year_end': null,
+        'price_start': 6400,
+        'price_end': 21300,
+        'photo_urls': [
+          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/cars0809/audi_tt01.jpg',
+          'https://autoline-images.s3.eu-west-1.amazonaws.com/cars/cars0809/audi_tt03.jpg',
+        ],
+        'complectations': [
+          {
+            'name': '8N (FL)',
+            'engine': 'Turbocharged 2.0-liter four-cylinder',
+            'engine_displacement': 2.0,
+            'engine_power': 228,
+            'autoria_drivetrain_id': 2,
+            'autoria_fuel_type_id': 1,
+            'autoria_color_id': 13,
+            'autoria_transmission_type_id': 2,
+            'price_start': 6400,
+            'price_end': 21300,
+            'options': [527, 459, 581, 443, 441, 604, 611, 579, 303, 560, 589],
           },
         ],
       },

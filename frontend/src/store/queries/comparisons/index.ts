@@ -73,6 +73,11 @@ export const comparisonsApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Comparisons'],
     }),
+    getCarsCount: builder.query<number, string>({
+      query: (complectationId) => ({
+        url: `${API.COMPARISONS}/count/${complectationId}`,
+      }),
+    }),
   }),
 });
 
@@ -86,6 +91,7 @@ export const {
   useGetComparisonGeneralInfoQuery,
   useGetComparisonCarsQuery,
   useUpdatePositionsMutation,
+  useGetCarsCountQuery,
 } = comparisonsApi;
 
 export const rejectedAddToComparison =

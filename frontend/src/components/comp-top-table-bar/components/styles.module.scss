@@ -5,9 +5,14 @@ html {
 }
 
 .wrapper {
+  /* stylelint-disable-next-line value-no-vendor-prefix */
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
   display: flex;
   align-items: center;
-  padding: var(--mui-padding-md);
+  padding: 0 var(--mui-padding-md);
+  background-color: var(--white);
   border: 1px solid var(--gray300);
   border-radius: var(--border-radius-container);
 }
@@ -44,7 +49,7 @@ html {
 .compCarContainer {
   min-width: 20rem;
   max-width: 20rem;
-  margin: 20px 0;
+  margin: 2rem 0;
 }
 
 .trashCanBtn {
@@ -110,8 +115,51 @@ html {
   }
 }
 
+.compCar {
+  position: relative;
+
+  .positionsBtns {
+    position: absolute;
+    left: calc(50% - 2.5rem);
+    display: none;
+
+    .button {
+      position: center;
+      color: var(--gray300);
+      background-color: var(--white);
+      border: 0;
+
+      &:hover {
+        color: var(--blue100);
+      }
+
+      &:disabled,
+      &[disabled] {
+        color: var(--gray200);
+        cursor: auto;
+      }
+    }
+  }
+
+  &:hover {
+    .positionsBtns {
+      display: flex;
+    }
+  }
+}
+
+.link {
+  color: var(--blue300);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--blue100);
+  }
+}
+
 .compCarContainer {
   display: flex;
+  height: 80%;
   border-left: 0.075rem solid var(--gray300);
 
   .compCarContainerBtns {

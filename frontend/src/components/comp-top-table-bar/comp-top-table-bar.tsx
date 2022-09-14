@@ -21,13 +21,13 @@ interface CompTopTableBarProps {
 export const CompTopTableBar = ({
   setPopupState,
 }: CompTopTableBarProps): React.ReactElement => {
-  const { data, isLoading, refetch } = useGetComparisonCarsQuery();
+  const { data: initialData, isLoading, refetch } = useGetComparisonCarsQuery();
   const [clearTable] = useClearComparisonMutation();
   const [isCleared, setIsCleared] = useState(false);
 
   const carsIds = useMemo(() => {
-    return data?.map((car) => car.id);
-  }, [data]);
+    return initialData?.map((car) => car.id);
+  }, [initialData]);
 
   const handleClearTable = async (): Promise<void> => {
     await clearTable();
@@ -71,7 +71,7 @@ export const CompTopTableBar = ({
       <ScrollSyncPane>
         <div className={styles.slider}>
           {!isCleared ? (
-            <Comparison cars={data} positions={carsIds} />
+            <Comparison cars={initialData} positions={carsIds} />
           ) : (
             <NoActiveComparison />
           )}

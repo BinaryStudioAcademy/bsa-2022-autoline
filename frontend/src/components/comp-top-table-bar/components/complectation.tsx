@@ -27,7 +27,10 @@ export const Complectation = ({
 
   const likeClick = (event?: React.MouseEvent): void => {
     event?.stopPropagation();
-    const data: WishlistInput = { complectationId: car.id };
+    const data: WishlistInput = {
+      complectationId: car.id,
+      carName: `${car.brandName} ${car.modelName} ${car.complectationName}`,
+    };
     handleLikeClick(data);
   };
 

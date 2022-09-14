@@ -3,3 +3,9 @@
     opacity: 0;
   }
 }
+
+@keyframes notification-timer {
+  to {
+    width: 0;
+  }
+}

@@ -1,12 +1,12 @@
 import { FC } from 'react';
 
-import { ComparisonInfo } from '@autoline/shared';
+import { ComparisonDetail } from '@autoline/shared';
 import { formatPrice } from '@helpers/helpers';
 
 import styles from './styles.module.scss';
 
 interface ComparisonsCardProps {
-  data: ComparisonInfo;
+  data: ComparisonDetail;
 }
 
 const ComparisonCarCard: FC<ComparisonsCardProps> = ({ data }) => {
@@ -17,8 +17,10 @@ const ComparisonCarCard: FC<ComparisonsCardProps> = ({ data }) => {
     priceEnd,
     priceStart,
     photos,
+    year,
   } = data;
-  const carName = `${brandName} ${modelName} ${complectationName}`;
+
+  const carName = `${brandName} ${modelName} ${complectationName} ${year}`;
   const price = `${formatPrice(+priceStart)} - ${formatPrice(+priceEnd)}`;
   return (
     <div className={styles.card}>

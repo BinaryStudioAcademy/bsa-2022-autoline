@@ -12,7 +12,7 @@ import type { GetViewedCarsResponse } from '@autoline/shared';
 const ViewedCars: FC = () => {
   const [params, setParams] = useState({
     skip: '0',
-    take: '8',
+    take: '10',
   });
 
   const { data, isLoading } = useGetHistoryOfViwedCarsQuery(params);

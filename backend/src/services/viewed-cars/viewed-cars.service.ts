@@ -72,6 +72,7 @@ const getViewedCarsList = async ({
                 id: complectation_id,
               },
               select: {
+                id: true,
                 name: true,
                 prices_ranges: {
                   select: {

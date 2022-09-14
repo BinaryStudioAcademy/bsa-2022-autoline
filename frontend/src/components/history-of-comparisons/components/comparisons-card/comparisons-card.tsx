@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ComparisonDetail } from '@autoline/shared';
 import { AppRoute } from '@common/enums/enums';
 import { useChangeActiveComparisonMutation } from '@store/queries/history-of-comparisons';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 import { ComparisonCarCard } from './comparison-car-card';
 import styles from './styles.module.scss';

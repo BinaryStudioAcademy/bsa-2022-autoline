@@ -10,6 +10,7 @@ const formatDtoForResponse = (
   brand: data.brand.name,
   model: data.name,
   complectation: data.complectations[0] ? data.complectations[0].name : '',
+  complectationId: data.complectations[0] ? data.complectations[0].id : '',
   year: data.year_end
     ? `${data.year_start} - ${data.year_end}`
     : `${data.year_start}`,

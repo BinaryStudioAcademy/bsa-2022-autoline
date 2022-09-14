@@ -22,8 +22,8 @@ export const Notifications = (): React.ReactElement => {
       style={{
         position: 'fixed',
         display: 'flex',
-        flexDirection: 'column-reverse',
-        top: '2rem',
+        flexDirection: 'column',
+        bottom: '2rem',
         right: '2rem',
         zIndex: '10000',
       }}

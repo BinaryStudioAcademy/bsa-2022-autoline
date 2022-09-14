@@ -41,10 +41,28 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const broadcast = new BroadcastChannel('compare');
 
-  const handleAddToCompare = async (complectationId: string): Promise<void> => {
+  const handleAddToCompare = async (
+    complectationId: string,
+    name: string,
+  ): Promise<void> => {
     addCarToComparison({ complectationId })
       .unwrap()
       .then(() => {
+        const existing = notifications.find(
+          (n) => n.complectationId === complectationId,
+        );
+        const nextNotifications = existing
+          ? notifications.map((n) =>
+              n.complectationId === complectationId
+                ? { ...existing, complectationId }
+                : n,
+            )
+          : notifications.concat({
+              complectationId,
+              carName: name,
+              timestamp: new Date().getTime(),
+            });
+        setNotifications(nextNotifications);
         broadcast.postMessage('compare');
       });
   };
@@ -60,25 +78,7 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
 
     isCompared
       ? handleDeleteFromCompare(complectationId)
-      : handleAddToCompare(complectationId);
-
-    if (!isCompared) {
-      const existing = notifications.find(
-        (n) => n.complectationId === complectationId,
-      );
-      const nextNotifications = existing
-        ? notifications.map((n) =>
-            n.complectationId === complectationId
-              ? { ...existing, complectationId }
-              : n,
-          )
-        : notifications.concat({
-            complectationId,
-            carName: name,
-            timestamp: new Date().getTime(),
-          });
-      setNotifications(nextNotifications);
-    }
+      : handleAddToCompare(complectationId, name);
   };
 
   const clearNotification = (complectationId: string | string[]): void => {

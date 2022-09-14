@@ -1,11 +1,11 @@
-import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
+import { EqualHeight, EqualHeightElement } from 'react-equal-height';
 import { ScrollSyncPane } from 'react-scroll-sync';
 
 import { TableFields } from '@common/enums/comparisons/comparison-table-fields';
 import { CollapseElement } from '@components/collapse-component/collapse-element/collapse-element';
 import { Spinner } from '@components/common/spinner/spinner';
 import { findEmptyOptions } from '@helpers/helpers';
-import { getElementHeightWithMargins } from '@helpers/utils/get-element-height-with-margins';
 import { uuid4 } from '@sentry/utils';
 import { useGetComparisonGeneralInfoQuery } from '@store/queries/comparisons';
 import { clsx } from 'clsx';
@@ -73,10 +73,6 @@ const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
     carOmitOptions,
   );
 
-  const [generalTable, setGeneralTableRef] = useState<HTMLDivElement | null>(
-    null,
-  );
-
   useEffect(() => {
     const broadcast = new BroadcastChannel('compare');
     broadcast.onmessage = (): void => {
@@ -84,170 +80,145 @@ const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
     };
   }, [refetch]);
 
-  useLayoutEffect(() => {
-    if (!generalTable) return;
-
-    //Get all options table cells
-    const optionsValuesElements = generalTable.querySelectorAll(
-      '[data-optionvalue]',
-    ) as NodeListOf<HTMLDivElement>;
-    const optionsValues = [...optionsValuesElements];
-
-    //Create list of heights for all options
-    const optionsHighestHeights = new Map();
-
-    //Go through all options cells to find the larger height of cell
-    optionsValues.forEach((value: HTMLDivElement) => {
-      const borderHeight = 1;
-      //Get height and option title of current table cell
-      const height = getElementHeightWithMargins(value) + borderHeight;
-      const title = value.getAttribute('data-optionvalue');
-
-      //If current table cell has larger height then similar cell of other car, accept it as highest height
-      if (
-        height > optionsHighestHeights.get(title) ||
-        !optionsHighestHeights.has(title)
-      ) {
-        optionsHighestHeights.set(title, height);
-      }
-    });
-
-    //Go through all options cells to set heights of cells
-    optionsValues.forEach((value: HTMLDivElement) => {
-      const title = value.getAttribute('data-optionvalue');
-      //Get title cell of the option, e.g. `Security`
-      const tableTitleElement = generalTable.querySelector(
-        `[data-optiontitle=${title}]`,
-      ) as HTMLDivElement;
-
-      //Set the same height for similar options of cars and their titles
-      //e.g. `Security` cells for all cars have height 100px
-      value.style.height = `${optionsHighestHeights.get(title)}px`;
-      tableTitleElement.style.height = `${optionsHighestHeights.get(title)}px`;
-    });
-  }, [generalTable, generalInfo, isOnlyDiff]);
-
   if (isLoading) return <Spinner />;
 
   return (
     <CollapseElement label="General information" isOpen={true}>
-      <div className={styles.table} ref={setGeneralTableRef}>
-        <div className={clsx(styles.tableTitles, styles.tableColumn)}>
-          {(!isOnlyDiff || !isIdentical.bodyType) && (
-            <div className={styles.tableCell} data-optiontitle="bodytype">
-              Type
-            </div>
-          )}
-          {(!isOnlyDiff || !isIdentical.engineDisplacement) && (
-            <div className={styles.tableCell} data-optiontitle="motor">
-              Motor
-            </div>
-          )}
-          {(!isOnlyDiff || !isIdentical.enginePower) && (
-            <div className={styles.tableCell} data-optiontitle="enginepower">
-              Engine Power
-            </div>
-          )}
-          {(!isOnlyDiff || !isIdentical.engine) && (
-            <div className={styles.tableCell} data-optiontitle="engine">
-              Engine
-            </div>
-          )}
-          {(!isOnlyDiff || !isIdentical.drivetrainName) && (
-            <div className={styles.tableCell} data-optiontitle="wheeldrive">
-              Wheel Drive
-            </div>
-          )}
-          {[...options].map((option) => {
-            if (emptyOptions?.includes(option)) return;
-            return (
-              <div
-                className={styles.tableCell}
-                data-optiontitle={option}
-                key={uuid4()}
-              >
-                {option}
-              </div>
-            );
-          })}
-          {(!isOnlyDiff || !isIdentical.colorName) && (
-            <div className={styles.tableCell}>Color</div>
-          )}
-        </div>
-        <ScrollSyncPane>
-          <div className={clsx('styledScrollbar', styles.generalInfo)}>
-            {generalInfo?.map((info) => {
-              return (
-                <div
-                  className={clsx(styles.tableData, styles.tableColumn)}
-                  key={info.id}
-                >
-                  {(!isOnlyDiff || !isIdentical.bodyType) && (
-                    <div
-                      className={styles.tableCell}
-                      data-optionvalue="bodytype"
-                    >
-                      {info.bodyType}
-                    </div>
-                  )}
-                  {(!isOnlyDiff || !isIdentical.engineDisplacement) && (
-                    <div className={styles.tableCell} data-optionvalue="motor">
-                      {info.engineDisplacement} l.
-                    </div>
-                  )}
-                  {(!isOnlyDiff || !isIdentical.enginePower) && (
-                    <div
-                      className={styles.tableCell}
-                      data-optionvalue="enginepower"
-                    >
-                      {info.enginePower} h.p.
-                    </div>
-                  )}
-                  {(!isOnlyDiff || !isIdentical.engine) && (
-                    <div className={styles.tableCell} data-optionvalue="engine">
-                      {info.engine}
-                    </div>
-                  )}
-                  {(!isOnlyDiff || !isIdentical.drivetrainName) && (
-                    <div
-                      className={styles.tableCell}
-                      data-optionvalue="wheeldrive"
-                    >
-                      {info.drivetrainName}
-                    </div>
-                  )}
-                  {Object.keys(info.options).map(
-                    (type: string) =>
-                      !emptyOptions?.includes(type) && (
-                        <div
-                          className={styles.tableCell}
-                          data-optionvalue={type}
-                          key={uuid4()}
-                        >
-                          {info.options[type]
-                            .filter(
-                              (option) =>
-                                !isOnlyDiff || !carOmitOptions.has(option),
-                            )
-                            .join(', ')}
-                        </div>
-                      ),
-                  )}
-                  {(!isOnlyDiff || !isIdentical.colorName) && (
-                    <div className={clsx(styles.tableCell, styles.colorCell)}>
-                      <div
-                        className={styles.colorBox}
-                        style={{ backgroundColor: info.colorName }}
-                      />
-                      <span>{info.colorName}</span>
-                    </div>
-                  )}
+      <EqualHeight>
+        <div className={clsx(styles.table, 'table')}>
+          <div className={clsx(styles.tableTitles, styles.tableColumn)}>
+            {(!isOnlyDiff || !isIdentical.bodyType) && (
+              <EqualHeightElement name="bodytype">
+                <div className={clsx(styles.tableCell, 'tableCell')}>Type</div>
+              </EqualHeightElement>
+            )}
+            {(!isOnlyDiff || !isIdentical.engineDisplacement) && (
+              <EqualHeightElement name="motor">
+                <div className={clsx(styles.tableCell, 'tableCell')}>Motor</div>
+              </EqualHeightElement>
+            )}
+            {(!isOnlyDiff || !isIdentical.enginePower) && (
+              <EqualHeightElement name="enginepower">
+                <div className={clsx(styles.tableCell, 'tableCell')}>
+                  Engine Power
                 </div>
+              </EqualHeightElement>
+            )}
+            {(!isOnlyDiff || !isIdentical.engine) && (
+              <EqualHeightElement name="engine">
+                <div className={clsx(styles.tableCell, 'tableCell')}>
+                  Engine
+                </div>
+              </EqualHeightElement>
+            )}
+            {(!isOnlyDiff || !isIdentical.drivetrainName) && (
+              <EqualHeightElement name="wheeldrive">
+                <div className={clsx(styles.tableCell, 'tableCell')}>
+                  Wheel Drive
+                </div>
+              </EqualHeightElement>
+            )}
+            {[...options].map((option) => {
+              if (emptyOptions?.includes(option)) return;
+              return (
+                <EqualHeightElement name={option} key={uuid4()}>
+                  <div className={clsx(styles.tableCell, 'tableCell')}>
+                    {option}
+                  </div>
+                </EqualHeightElement>
               );
             })}
+            {(!isOnlyDiff || !isIdentical.colorName) && (
+              <EqualHeightElement name="color">
+                <div className={clsx(styles.tableCell, 'tableCell')}>Color</div>
+              </EqualHeightElement>
+            )}
           </div>
-        </ScrollSyncPane>
-      </div>
+          <ScrollSyncPane>
+            <div className={clsx('styledScrollbar', styles.generalInfo)}>
+              {generalInfo?.map((info) => {
+                return (
+                  <div
+                    className={clsx(styles.tableData, styles.tableColumn)}
+                    key={info.id}
+                  >
+                    {(!isOnlyDiff || !isIdentical.bodyType) && (
+                      <EqualHeightElement name="bodytype">
+                        <div className={clsx(styles.tableCell, 'tableCell')}>
+                          {info.bodyType}
+                        </div>
+                      </EqualHeightElement>
+                    )}
+                    {(!isOnlyDiff || !isIdentical.engineDisplacement) && (
+                      <EqualHeightElement name="motor">
+                        <div className={clsx(styles.tableCell, 'tableCell')}>
+                          {info.engineDisplacement} l.
+                        </div>
+                      </EqualHeightElement>
+                    )}
+                    {(!isOnlyDiff || !isIdentical.enginePower) && (
+                      <EqualHeightElement name="enginepower">
+                        <div className={clsx(styles.tableCell, 'tableCell')}>
+                          {info.enginePower} h.p.
+                        </div>
+                      </EqualHeightElement>
+                    )}
+                    {(!isOnlyDiff || !isIdentical.engine) && (
+                      <EqualHeightElement name="engine">
+                        <div className={clsx(styles.tableCell, 'tableCell')}>
+                          {info.engine}
+                        </div>
+                      </EqualHeightElement>
+                    )}
+                    {(!isOnlyDiff || !isIdentical.drivetrainName) && (
+                      <EqualHeightElement name="wheeldrive">
+                        <div className={clsx(styles.tableCell, 'tableCell')}>
+                          {info.drivetrainName}
+                        </div>
+                      </EqualHeightElement>
+                    )}
+                    {Object.keys(info.options).map(
+                      (type: string) =>
+                        !emptyOptions?.includes(type) && (
+                          <EqualHeightElement name={type} key={uuid4()}>
+                            <div
+                              className={clsx(styles.tableCell, 'tableCell')}
+                            >
+                              {info.options[type]
+                                .filter(
+                                  (option) =>
+                                    !isOnlyDiff || !carOmitOptions.has(option),
+                                )
+                                .join(', ')}
+                            </div>
+                          </EqualHeightElement>
+                        ),
+                    )}
+                    {(!isOnlyDiff || !isIdentical.colorName) && (
+                      <EqualHeightElement name="color">
+                        <div
+                          className={clsx(
+                            styles.tableCell,
+                            styles.colorCell,
+                            styles.lastCell,
+                            'tableCell',
+                          )}
+                        >
+                          <div
+                            className={styles.colorBox}
+                            style={{ backgroundColor: info.colorName }}
+                          />
+                          <span>{info.colorName}</span>
+                        </div>
+                      </EqualHeightElement>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </ScrollSyncPane>
+        </div>
+      </EqualHeight>
     </CollapseElement>
   );
 };

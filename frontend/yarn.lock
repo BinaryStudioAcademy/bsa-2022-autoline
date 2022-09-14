@@ -1919,6 +1919,11 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-equal-height@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-equal-height/-/react-equal-height-1.2.2.tgz#438b8170fa8b98f64f705f517e6c4d6889c9bd9b"
+  integrity sha512-iRL2Gcem5fwtsOzxMVwmCUiaaKyQ4Ba/jf4AIEGImIId8ub4Vop0kieg22yO0nt2HYW3+AfrJGIVid091lm2/A==
+
 react-hook-form@^7.34.2:
   version "7.34.2"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.34.2.tgz#9ac6d1a309a7c4aaa369d1269357a70e9e9bf4de"

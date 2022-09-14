@@ -79,3 +79,11 @@ export type {
   RecentSearchRequestDto,
   RecentSearchInput,
 } from './recent-search-cars/recent-searh-cars';
+
+export type {
+  GetAllComparisonsRequestDto,
+  AllComparisonsPrismaDto,
+  ComparisonDetail,
+  GetAllComparisonsResponse,
+  ChangeActiveComparisonRequestDto,
+} from './history-of-comparisons/history-of-comparisons';

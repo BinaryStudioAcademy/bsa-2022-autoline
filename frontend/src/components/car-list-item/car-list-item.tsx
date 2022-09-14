@@ -55,7 +55,7 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
 
   const likeClick = (event?: React.MouseEvent): void => {
     event?.stopPropagation();
-    const data: WishlistInput = { modelId: model_id };
+    const data: WishlistInput = { modelId: model_id, carName: modelName };
     handleLikeClick(data);
   };
 

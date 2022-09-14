@@ -26,8 +26,17 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
   const { likedCars, handleLikeClick } = useContext(WishlistContext);
   const { comparedCars, handleCompareClick } = useContext(CompareContext);
 
-  const likeClick = (complectationId: string): void => {
-    const data: WishlistInput = { complectationId };
+  const likeClick = ({
+    complectationId,
+    carName,
+  }: {
+    complectationId: string;
+    carName: string;
+  }): void => {
+    const data: WishlistInput = {
+      complectationId,
+      carName,
+    };
     handleLikeClick(data);
   };
 
@@ -110,7 +119,10 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
                   )}
                   onClick={(event: MouseEvent): void => {
                     event.stopPropagation();
-                    likeClick(car.id);
+                    likeClick({
+                      complectationId: car.id,
+                      carName: `${car.brand} ${car.model} ${car.name}`,
+                    });
                   }}
                 >
                   <HeartIcon />

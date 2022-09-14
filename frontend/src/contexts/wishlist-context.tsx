@@ -1,8 +1,8 @@
-import { createContext, ReactNode, useState } from 'react';
+import React, { createContext, ReactNode, useState } from 'react';
 
 import { WishlistInput } from '@autoline/shared/common/types/types';
-import { HeartIcon } from '@components/common/icons/icons';
-import { Notification } from '@components/common/notification/notification';
+import { useInterval } from '@hooks/hooks';
+import { uuid4 } from '@sentry/utils';
 import {
   useCreateWishlistMutation,
   useDeleteWishlistMutation,
@@ -12,17 +12,24 @@ import {
 type WishlistContextType = {
   likedCars?: string[];
   handleLikeClick: (data: WishlistInput) => void;
+  notifications: WishListNotification[] | undefined;
+  clearNotification: (id: string | string[]) => void;
+  undoDelete: (data: WishlistInput) => void;
 };
 
 const WishlistContext = createContext<WishlistContextType>({
   likedCars: undefined,
   handleLikeClick: () => undefined,
+  notifications: undefined,
+  clearNotification: () => undefined,
+  undoDelete: () => undefined,
 });
 
 interface WishListNotification {
   modelId?: string;
   complectationId?: string;
   createdAt?: string;
+  carName?: string;
   timestamp: number;
 }
 
@@ -33,7 +40,6 @@ const WishlistContextProvider: React.FC<{ children: ReactNode }> = ({
     [] as WishListNotification[],
   );
 
-  const [isMessageOpen, setIsMessageOpen] = useState<boolean>(false);
   const [deletedCar, setDeletedCar] = useState<WishlistInput>();
   const { data: likedCars } = useGetWishlistEntriesQuery();
 
@@ -46,7 +52,6 @@ const WishlistContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const handleDeleteWishlist = async (data: WishlistInput): Promise<void> => {
     await deleteWishlist(data);
-    setIsMessageOpen(true);
     setDeletedCar(data);
   };
 
@@ -73,6 +78,7 @@ const WishlistContextProvider: React.FC<{ children: ReactNode }> = ({
             modelId: data.modelId,
             complectationId: data.complectationId,
             createdAt: data.createdAt,
+            carName: data.carName,
             timestamp: new Date().getTime(),
           });
       setNotifications(nextNotifications);
@@ -80,7 +86,7 @@ const WishlistContextProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const handleUndoDelete = (data: WishlistInput): void => {
-    clearNotification(data);
+    clearNotification(data.modelId ?? data.complectationId ?? uuid4());
     handleCreateWishlist(data);
   };
 
@@ -88,68 +94,52 @@ const WishlistContextProvider: React.FC<{ children: ReactNode }> = ({
     deletedCar && handleUndoDelete(data);
   };
 
-  const clearNotification = (data: WishlistInput): void => {
-    if (!data.modelId && !data.complectationId) {
+  const clearNotification = (id: string | string[]): void => {
+    if (!id) {
       setNotifications([]);
     } else {
-      const ids = Array.isArray(data.modelId ?? data.complectationId)
-        ? data.modelId ?? data.complectationId
-        : [data.modelId ?? data.complectationId];
+      const ids = Array.isArray(id) ? id : [id];
       const nextNotifications = notifications.filter(
         ({ modelId, complectationId }) =>
-          !ids?.includes(modelId ?? complectationId ?? ''),
+          !ids?.includes(modelId || complectationId || uuid4()),
       );
       setNotifications(nextNotifications);
     }
   };
 
+  const handleExpireNotifications = (): void => {
+    if (notifications.length) {
+      const expiredIds = notifications.reduce((acc, n) => {
+        const currentTime = new Date().getTime();
+        const isExpired = n.timestamp <= currentTime - 6000;
+        return isExpired
+          ? acc.concat(n.modelId ?? n.complectationId ?? uuid4())
+          : acc;
+      }, [] as string[]);
+      if (expiredIds.length) {
+        clearNotification(expiredIds);
+      }
+    }
+  };
+  useInterval(handleExpireNotifications, 1000);
+
   const value = {
     likedCars,
     handleLikeClick,
+    notifications,
+    clearNotification,
     undoDelete,
   };
 
   return (
     <WishlistContext.Provider value={value}>
-      <div
-        style={{
-          position: 'fixed',
-          display: 'flex',
-          flexDirection: 'column-reverse',
-          top: '20px',
-          right: '20px',
-          zIndex: '10000',
-        }}
-      >
-        {notifications.map((n) => {
-          return (
-            <Notification
-              key={n.modelId ?? n.complectationId}
-              isOpen={isMessageOpen}
-              setIsOpen={setIsMessageOpen}
-              clearNotification={(): void =>
-                clearNotification({
-                  modelId: n.modelId,
-                  complectationId: n.complectationId,
-                })
-              }
-              icon={<HeartIcon />}
-              undo={(): void =>
-                undoDelete({
-                  modelId: n.modelId,
-                  complectationId: n.complectationId,
-                  createdAt: n.createdAt,
-                })
-              }
-            >
-              You removed car from wishlist
-            </Notification>
-          );
-        })}
-      </div>
       {children}
     </WishlistContext.Provider>
   );
+};
+
+export const useWishlistNotifications = (): WishlistContextType => {
+  return React.useContext(WishlistContext);
 };
 
 export { WishlistContextProvider, WishlistContext };

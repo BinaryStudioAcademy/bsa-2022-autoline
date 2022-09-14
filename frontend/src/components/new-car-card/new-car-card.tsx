@@ -47,8 +47,16 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
     event?.stopPropagation();
     const data: WishlistInput =
       type === 'model'
-        ? { modelId: carId, createdAt: createdAt || '' }
-        : { complectationId: carId, createdAt: createdAt || '' };
+        ? {
+            modelId: carId,
+            carName: `${props.car.brand.name} ${props.car.modelName}`,
+            createdAt: createdAt || '',
+          }
+        : {
+            complectationId: carId,
+            carName: `${props.car.brand.name} ${props.car.modelName} ${props.car.complectationName}`,
+            createdAt: createdAt || '',
+          };
 
     if (!authToken) {
       navigate(AppRoute.SIGN_IN);

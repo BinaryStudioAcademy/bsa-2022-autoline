@@ -36,29 +36,28 @@ const TopCarCard: FC<TopCarProps> = ({ car }) => {
       <img src={photoUrls[0]} className={styles.carPicture} alt="car picture" />
       <div className={styles.footer}>
         <div className={styles.labelGroup}>
-          <div>
-            <div className={styles.label}>
-              <img src={speedometr} alt="speedometr" />
-              {`${speed} km`}
-            </div>
-            <div className={styles.label}>
-              <img src={transmission} alt="transmission" />
-              {transmiss}
-            </div>
+          <div className={styles.label}>
+            <img src={speedometr} alt="speedometr" />
+            {`${speed} km`}
           </div>
-          <div>
-            <div className={styles.label}>
-              <img src={mapPin} alt="location" />
-              {location}
-            </div>
-            <div className={styles.label}>
-              <img src={fuel} alt="fuel" />
-              {fuelType}
-            </div>
+          <div className={styles.label}>
+            <img src={mapPin} alt="location" />
+            {location}
+          </div>
+          <div className={styles.label}>
+            <img src={transmission} alt="transmission" />
+            {transmiss}
+          </div>
+          <div className={styles.label}>
+            <img src={fuel} alt="fuel" />
+            {fuelType}
           </div>
         </div>
-        <hr className={styles.separator} />
-        <div className={styles.price}>{`$ ${totalPrice}`}</div>
+
+        <div className={styles.price}>
+          <hr className={styles.separator} />
+          <span className={styles.priceText}>{`$ ${totalPrice}`}</span>
+        </div>
       </div>
     </div>
   );

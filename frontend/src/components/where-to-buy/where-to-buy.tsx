@@ -20,8 +20,9 @@ const WhereToBuy: React.FC<WhereToBuyProps> = ({ complectationId }) => {
   const [isSorted, setIsSorted] = useState(false);
   const { ads } = useAppSelector((state) => state.whereBuy);
 
-  const page =
-    ads.find((ad) => ad.complectationId === complectationId)?.page | 0;
+  const page = Number(
+    ads.find((ad) => ad.complectationId === complectationId)?.page,
+  );
 
   const countpage = 20;
   useGetWhereBuyQuery({

@@ -7,6 +7,7 @@ import { Title } from '@components/common/title/title';
 import { CompTopTableBar } from '@components/comp-top-table-bar/comp-top-table-bar';
 import { AllOptions } from '@components/comparison-page/options-subcomponent/all-options';
 import { OnlyDifferentOptions } from '@components/comparison-page/options-subcomponent/only-different-options';
+import { ComparisonPopup } from '@components/comparison-popup/comparison-popup';
 import { GeneralComparisonTable } from '@components/general-comparison-table/general-comparison-table';
 import { Header } from '@components/header/header';
 import { useGetComparisonGeneralInfoQuery } from '@store/queries/comparisons';
@@ -26,6 +27,7 @@ const ComparisonPage: React.FC = () => {
     return <AllOptions />;
   };
 
+  const [popupIsOpen, setPopupIsOpen] = useState<boolean>(false);
   return (
     <>
       <Header />
@@ -35,7 +37,7 @@ const ComparisonPage: React.FC = () => {
         </Title>
         <ScrollSync>
           <div className={styles.tablesWrapper}>
-            <CompTopTableBar />
+            <CompTopTableBar setPopupState={setPopupIsOpen} />
             <ButtonOutline
               text="All Parameters"
               className={clsx(
@@ -57,6 +59,7 @@ const ComparisonPage: React.FC = () => {
           </div>
         </ScrollSync>
       </PageContainer>
+      <ComparisonPopup isOpen={popupIsOpen} setPopupState={setPopupIsOpen} />
     </>
   );
 };

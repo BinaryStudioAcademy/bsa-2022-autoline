@@ -293,6 +293,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   defaultValue="not_appliable"
                 >
                   {options &&
+                    options.regions &&
                     options.regions.map(({ id, name }) => (
                       <MenuItem key={id} value={name.split(' ').join('')}>
                         {name}

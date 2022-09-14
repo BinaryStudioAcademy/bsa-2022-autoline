@@ -2,7 +2,6 @@ import {
   getComplectations,
   getComlectationShortInfoById,
 } from '@controllers/complectations/complectations.controller';
-import { userAuthMiddleware } from '@middlewares/middlewares';
 import { Router } from 'express';
 
 enum Complectation {
@@ -12,16 +11,8 @@ enum Complectation {
 
 const complectationsRouter = Router();
 
-complectationsRouter.get(
-  `${Complectation.ALL}`,
-  userAuthMiddleware,
-  getComplectations,
-);
+complectationsRouter.get(`${Complectation.ALL}`, getComplectations);
 
-complectationsRouter.get(
-  `${Complectation.BYID}`,
-  userAuthMiddleware,
-  getComlectationShortInfoById,
-);
+complectationsRouter.get(`${Complectation.BYID}`, getComlectationShortInfoById);
 
 export { complectationsRouter };

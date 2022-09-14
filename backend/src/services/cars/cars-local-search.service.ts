@@ -47,7 +47,7 @@ const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
         {
           brand: {
             id: {
-              in: data.brandId,
+              in: data.brandId ? data.brandId : data.modelId ? [] : undefined,
             },
           },
         },

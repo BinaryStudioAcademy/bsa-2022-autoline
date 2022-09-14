@@ -13,7 +13,7 @@ import type {
 const getComplectationsById = async (
   input: ComplectationsInput,
 ): Promise<ModelReturnedData | ComplectationReturnedData> => {
-  const { userId, modelId, complectationId } = input;
+  const { modelId, complectationId } = input;
   const data = await prisma.complectation.findUnique({
     where: {
       id: complectationId,
@@ -28,14 +28,6 @@ const getComplectationsById = async (
               name: true,
             },
           },
-        },
-      },
-      users_wishlists: {
-        where: {
-          user_id: userId,
-        },
-        select: {
-          id: true,
         },
       },
       prices_ranges: {
@@ -104,7 +96,6 @@ const getComplectationsById = async (
     fuelTypes: [data?.fuel_type.name],
     transmissionTypes: [data?.transmission_type.name],
     options: { ...options, ...optionsList },
-    wishlist: data?.users_wishlists,
     maxPrice:
       complectationMaxPrices !== undefined
         ? Math.max(...complectationMaxPrices)
@@ -120,14 +111,6 @@ const getComplectationsById = async (
       id: modelId,
     },
     select: {
-      users_wishlists: {
-        where: {
-          user_id: userId,
-        },
-        select: {
-          id: true,
-        },
-      },
       prices_ranges: {
         select: {
           price_start: true,
@@ -238,7 +221,6 @@ const getComplectationsById = async (
     fuelTypes: [...fuelTypes],
     transmissionTypes: [...transmissionTypes],
     options: options,
-    wishlist: model?.users_wishlists,
     maxPrice: modelMaxPrices !== undefined ? Math.max(...modelMaxPrices) : 0,
     minPrice: modelMinPrices !== undefined ? Math.min(...modelMinPrices) : 0,
   } as ModelReturnedData;
@@ -262,8 +244,6 @@ const getComplectationShortInfoById = async ({
         select: {
           name: true,
           photo_urls: true,
-          year_start: true,
-          year_end: true,
           brand: {
             select: {
               name: true,

@@ -24,6 +24,7 @@ export const SelectFieldForm = (
         styles.fieldWrapper,
         props.errors && styles.selectFieldError,
       )}
+      disabled={props.disabled}
     >
       <InputLabel className={styles.label}>{props.label}</InputLabel>
       <Select

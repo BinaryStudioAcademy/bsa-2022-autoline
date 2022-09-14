@@ -7,7 +7,6 @@ import type { NextFunction, Response } from 'express';
 
 type ComplectationsInput = {
   complectationId: string;
-  userId: string;
   modelId: string;
 };
 
@@ -17,10 +16,8 @@ const getComplectations = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const userId = req.tokenPayload.sub;
     const { complectationId, modelId } = req.query;
     const input: ComplectationsInput = {
-      userId,
       modelId,
       complectationId,
     };

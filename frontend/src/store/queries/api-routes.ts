@@ -7,4 +7,5 @@ export const API = {
   VIEWED_CARS: '/viewed',
   COMPARISONS: '/comparisons',
   RECENT_SEARCH: 'recent-search',
+  HISTORY_COMPARISONS: '/history/comparisons',
 };

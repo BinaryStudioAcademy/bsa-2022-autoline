@@ -16,4 +16,9 @@ type ComplectationDetailsType = {
   options: { name: string }[];
 };
 
-export type { ComplectationDetailsType };
+type ComplectationOfModelResponse = {
+  id: string;
+  name: string;
+};
+
+export type { ComplectationDetailsType, ComplectationOfModelResponse };

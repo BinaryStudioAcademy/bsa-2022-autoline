@@ -59,6 +59,7 @@ export type {
   ComplectationDetailsType,
   CarPreview,
   ComparisonGeneralInform,
+  ComplectationOfModelResponse,
 } from './cars/cars';
 
 export type {

@@ -4,6 +4,7 @@ import {
   ModelDetailsType,
   ModelType,
   OptionsType,
+  ComplectationOfModelResponse,
 } from '@autoline/shared/common/types/types';
 import { FilterReturnType } from '@common/types/advanced-auto-filter/advanced-auto-filter';
 import { API } from '@store/queries/api-routes';
@@ -17,6 +18,12 @@ export const carsApi = api.injectEndpoints({
     }),
     getModelsOfBrand: builder.query<ModelType[], string>({
       query: (brandId) => `${API.CARS}/brand/${brandId}/models`,
+    }),
+    getComplectationsOfModel: builder.query<
+      ComplectationOfModelResponse[],
+      string
+    >({
+      query: (modelId) => `${API.CARS}/model/${modelId}/complectations`,
     }),
     getUsedOptions: builder.query<OptionsType, void>({
       query: () => `${API.CARS}/options`,
@@ -46,4 +53,6 @@ export const {
   useLazyGetFilteredCarsQuery,
   useGetModelDetailsQuery,
   useGetComplectationsQuery,
+  useLazyGetModelsOfBrandQuery,
+  useLazyGetComplectationsOfModelQuery,
 } = carsApi;

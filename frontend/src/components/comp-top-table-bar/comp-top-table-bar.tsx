@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, Dispatch } from 'react';
 import { ScrollSyncPane } from 'react-scroll-sync';
 
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
@@ -14,7 +14,13 @@ import { Comparison } from './components/comparison';
 import { NoActiveComparison } from './components/no-active-comparison';
 import styles from './components/styles.module.scss';
 
-export const CompTopTableBar = (): React.ReactElement => {
+interface CompTopTableBarProps {
+  setPopupState: Dispatch<boolean>;
+}
+
+export const CompTopTableBar = ({
+  setPopupState,
+}: CompTopTableBarProps): React.ReactElement => {
   const { data, isLoading, refetch } = useGetComparisonCarsQuery();
   const [clearTable] = useClearComparisonMutation();
   const [isCleared, setIsCleared] = useState(false);
@@ -41,12 +47,17 @@ export const CompTopTableBar = (): React.ReactElement => {
     };
   }, [refetch]);
 
+  const handleAddToComparison = (): void => {
+    setPopupState(true);
+  };
+
   if (isLoading) return <Spinner />;
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.btnContainer}>
         <ButtonOutline
+          onClick={handleAddToComparison}
           text="+Add to Comparison"
           className={styles.btnOutline}
         />

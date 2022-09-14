@@ -1,4 +1,8 @@
-import { ModelDetailsType, ComplectationDetailsType } from '@autoline/shared';
+import {
+  ModelDetailsType,
+  ComplectationDetailsType,
+  ComplectationOfModelResponse,
+} from '@autoline/shared';
 import { prisma } from '@data/prisma-client';
 import {
   Body_Type,
@@ -207,7 +211,7 @@ const getComplectationsDetails = async (
 
 const getComplectationsOfModel = async (
   modelId: string,
-): Promise<Partial<Model>[]> => {
+): Promise<ComplectationOfModelResponse[]> => {
   return await prisma.complectation.findMany({
     where: { model_id: modelId },
     select: {

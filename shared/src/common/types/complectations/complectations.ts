@@ -47,8 +47,6 @@ interface ComplectationShortInfoDto {
   model: {
     name: string;
     photo_urls: string[] | [];
-    year_start: number;
-    year_end: number | null;
     prices_ranges: {
       price_start: number;
       price_end: number;
@@ -61,12 +59,12 @@ interface ComplectationShortInfoDto {
 
 interface ComlectationShortInfoResponse {
   id: string;
-  name: string;
-  brand: string;
-  model: string;
-  photo_urls: string[] | [];
-  year: string;
-  price: string;
+  complectationName: string;
+  brandName: string;
+  modelName: string;
+  photos: string[] | [];
+  priceStart: number;
+  priceEnd: number;
 }
 
 export {

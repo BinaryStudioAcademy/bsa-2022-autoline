@@ -38,7 +38,7 @@ const UserInfoPanel: FC = () => {
           alt="comparison"
         />
         <Link smooth to="#compared" className={styles.UserPanelLink}>
-          Compared
+          History of comparisons
         </Link>
         <span className={styles.UserPanelBadgeInfo}>{comparedCount}</span>
       </li>

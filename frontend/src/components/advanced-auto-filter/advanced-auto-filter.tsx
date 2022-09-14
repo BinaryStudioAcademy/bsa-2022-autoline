@@ -81,7 +81,9 @@ const AdvancedAutoFilter: FC = () => {
   const doSearch = async (): Promise<void> => {
     const { data } = await search(queryParams);
     if (data) {
-      addRecentSearchCar(data[0]?.model_id);
+      data.forEach((car) => {
+        addRecentSearchCar(car?.model_id);
+      });
     }
     window.scrollTo({
       top: 0,
@@ -133,6 +135,7 @@ const AdvancedAutoFilter: FC = () => {
 
   useEffect(() => {
     if (!brandId) return;
+
     dispatch(
       setBrandDetailsValue({
         id: brandDetails[0].id,
@@ -140,6 +143,7 @@ const AdvancedAutoFilter: FC = () => {
         modelIds: [],
       }),
     );
+
     search([['brandId', brandId]]);
     window.scrollTo({
       top: 0,

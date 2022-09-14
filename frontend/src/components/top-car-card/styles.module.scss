@@ -11,7 +11,12 @@
 .carInfo,
 .price {
   display: flex;
+  justify-content: end;
   align-items: center;
+
+  .priceText {
+    white-space: nowrap;
+  }
 }
 
 .header {
@@ -39,30 +44,23 @@
 }
 
 .footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
   margin-top: 1rem;
 }
 
 .labelGroup {
   display: flex;
-
-  & > div {
-    margin-right: 0.6rem;
-  }
-
-  & > div:last-child {
-    margin-right: 0;
-  }
+  flex-wrap: wrap;
 }
 
 .label {
   display: flex;
   align-items: center;
   height: 1.5rem;
-  margin-bottom: 0.6rem;
-  padding: 5px;
+  margin-top: 0.6rem;
+  margin-right: 0.6rem;
+  padding: 0.5rem 0.7rem;
   color: var(--white);
   font-weight: 400;
   font-size: 0.8rem;
@@ -75,15 +73,11 @@
 
   & > img {
     height: 0.8rem;
-    margin: 0 0.3rem;
+    margin-right: 0.3rem;
   }
 
   &:last-child {
     margin-bottom: 0;
-  }
-
-  &:hover {
-    cursor: pointer;
   }
 }
 

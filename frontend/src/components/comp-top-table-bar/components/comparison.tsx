@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ComparisonInfo } from '@autoline/shared';
 import { useUpdatePositionsMutation } from '@store/queries/comparisons';
@@ -23,12 +23,71 @@ export const Comparison = ({
     broadcast.postMessage('compare');
   };
 
-  if (cars?.length === 0) return <NoActiveComparison />;
+  const [data, updateData] = useState({ cars, carsIds: positions });
+
+  const handleMoveCard = (complectationId: string, direction: string): void => {
+    if (!positions) return;
+    const index = positions.indexOf(complectationId);
+    positions.splice(index, 1);
+
+    switch (direction) {
+      case 'left':
+        positions.splice(index - 1, 0, complectationId);
+        break;
+      case 'right':
+        positions.splice(index + 1, 0, complectationId);
+        break;
+    }
+
+    const sortedCars = cars?.slice().sort(function (a, b) {
+      return positions.indexOf(a.id) - positions.indexOf(b.id);
+    });
+
+    const newState = {
+      cars: sortedCars,
+      carsIds: positions,
+    };
+
+    updatePositions(newState.carsIds);
+    updateData(newState);
+    return;
+  };
+
+  if (!data.cars) return <NoActiveComparison />;
 
   return (
     <div className={styles.comparisonContainer}>
-      {cars?.map((car) => {
-        return <Complectation key={car.id} car={car} onDelete={onCarDelete} />;
+      {data.cars.map((car, index) => {
+        if (!index) {
+          return (
+            <Complectation
+              key={car.id}
+              car={car}
+              onDelete={onCarDelete}
+              onMove={handleMoveCard}
+              firstCar={true}
+            />
+          );
+        }
+        if (data.cars && index === data.cars.length - 1) {
+          return (
+            <Complectation
+              key={car.id}
+              car={car}
+              onDelete={onCarDelete}
+              onMove={handleMoveCard}
+              lastCar={true}
+            />
+          );
+        }
+        return (
+          <Complectation
+            key={car.id}
+            car={car}
+            onDelete={onCarDelete}
+            onMove={handleMoveCard}
+          />
+        );
       })}
     </div>
   );

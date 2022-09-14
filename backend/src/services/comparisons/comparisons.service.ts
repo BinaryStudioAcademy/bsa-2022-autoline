@@ -403,8 +403,8 @@ const updatePositions = async (
     throw new Error('There is no active comparison');
   }
   await Promise.all(
-    positions.map((complectationId, index) => {
-      prisma.comparisons_Complectations.update({
+    positions.map(async (complectationId, index) => {
+      await prisma.comparisons_Complectations.update({
         where: {
           comparison_id_complectation_id: {
             comparison_id: activeComparison.id,

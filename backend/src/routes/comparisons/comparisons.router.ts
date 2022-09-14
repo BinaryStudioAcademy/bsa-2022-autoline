@@ -57,5 +57,10 @@ comparisonsRouter.patch(
   userAuthMiddleware,
   comparisonsController.updatePositions,
 );
+comparisonsRouter.get(
+  `${PATH}/count/:complectationId`,
+  userAuthMiddleware,
+  comparisonsController.getAdvertsCount,
+);
 
 export { comparisonsRouter };

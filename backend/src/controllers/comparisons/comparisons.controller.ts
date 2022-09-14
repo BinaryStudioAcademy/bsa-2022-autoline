@@ -3,7 +3,9 @@ import {
   TypedRequestBody,
   TypedRequestParams,
 } from '@common/types/controller/controller';
+import { getCarsAutoRia } from '@helpers/helpers';
 import { ComparisonType, Type } from '@prisma/client';
+import { carsSearchAutoria } from '@services/cars/cars-search.service';
 import * as comparisonsService from '@services/comparisons/comparisons.service';
 import { Request, NextFunction, Response } from 'express';
 import httpStatus from 'http-status-codes';
@@ -167,6 +169,24 @@ const updatePositions = async (
   }
 };
 
+const getAdvertsCount = async (
+  req: TypedRequestParams<{ complectationId: string }>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const querysForRequest = await carsSearchAutoria({
+      complectationId: req.params.complectationId,
+      page: '0',
+      countpage: 10,
+    });
+    const carsInfo = await getCarsAutoRia(querysForRequest);
+    res.json(carsInfo.result.search_result.count);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   addCarToComparison,
   changeComparisonType,
@@ -178,4 +198,5 @@ export {
   getComparisonGeneralInfo,
   getActiveComparison,
   updatePositions,
+  getAdvertsCount,
 };

@@ -1,12 +1,12 @@
 const complectationOptions = [
-  'design',
-  'sound',
   'security',
-  'multimedia',
-  'comfort',
   'optics',
-  'auxiliary',
+  'multimedia',
   'upholstery',
+  'sound',
+  'design',
+  'comfort',
+  'auxiliary',
 ];
 
 export { complectationOptions };

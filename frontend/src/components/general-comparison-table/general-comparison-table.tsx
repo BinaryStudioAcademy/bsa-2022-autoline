@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { ScrollSyncPane } from 'react-scroll-sync';
 
+import { TableFields } from '@common/enums/comparisons/comparison-table-fields';
 import { CollapseElement } from '@components/collapse-component/collapse-element/collapse-element';
 import { Spinner } from '@components/common/spinner/spinner';
 import { findEmptyOptions } from '@helpers/helpers';
@@ -11,14 +12,14 @@ import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
-const GeneralComparisonTable: React.FC = () => {
+const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
+  isOnlyDiff,
+}) => {
   const {
     data: generalInfo,
     isLoading,
     refetch,
   } = useGetComparisonGeneralInfoQuery();
-
-  const emptyOptions = findEmptyOptions(generalInfo);
 
   const options: Set<string> = useMemo((): Set<string> => {
     const options: Set<string> = new Set();
@@ -30,16 +31,58 @@ const GeneralComparisonTable: React.FC = () => {
     return options;
   }, [generalInfo]);
 
+  const getFieldStatus = (field: TableFields): boolean => {
+    return generalInfo?.every(
+      (item) => item[field] === generalInfo[0][field],
+    ) as boolean;
+  };
+
+  const isIdentical = useMemo(
+    () => ({
+      bodyType: getFieldStatus(TableFields.bodyType),
+      engine: getFieldStatus(TableFields.engine),
+      engineDisplacement: getFieldStatus(TableFields.engineDisplacement),
+      enginePower: getFieldStatus(TableFields.enginePower),
+      colorName: getFieldStatus(TableFields.colorName),
+      transmissionTypeName: getFieldStatus(TableFields.transmissionTypeName),
+      drivetrainName: getFieldStatus(TableFields.drivetrainName),
+      fuelTypeName: getFieldStatus(TableFields.fuelTypeName),
+    }),
+    [generalInfo],
+  );
+
+  const carOmitOptions = useMemo(() => {
+    const carsOptions = new Set<string>();
+    options.forEach((optionType) => {
+      generalInfo?.forEach((item) => {
+        item.options[optionType]
+          .filter((option) => {
+            return generalInfo.every((item) =>
+              item.options[optionType].includes(option),
+            );
+          })
+          .map((option) => carsOptions.add(option));
+      });
+    });
+    return carsOptions;
+  }, [generalInfo, options]);
+
+  const emptyOptions = findEmptyOptions(
+    generalInfo,
+    isOnlyDiff,
+    carOmitOptions,
+  );
+
   const [generalTable, setGeneralTableRef] = useState<HTMLDivElement | null>(
     null,
   );
 
-  const broadcast = new BroadcastChannel('compare');
   useEffect(() => {
+    const broadcast = new BroadcastChannel('compare');
     broadcast.onmessage = (): void => {
       refetch();
     };
-  }, [broadcast, refetch]);
+  }, [refetch]);
 
   useLayoutEffect(() => {
     if (!generalTable) return;
@@ -82,7 +125,7 @@ const GeneralComparisonTable: React.FC = () => {
       value.style.height = `${optionsHighestHeights.get(title)}px`;
       tableTitleElement.style.height = `${optionsHighestHeights.get(title)}px`;
     });
-  }, [generalTable, generalInfo]);
+  }, [generalTable, generalInfo, isOnlyDiff]);
 
   if (isLoading) return <Spinner />;
 
@@ -90,21 +133,31 @@ const GeneralComparisonTable: React.FC = () => {
     <CollapseElement label="General information" isOpen={true}>
       <div className={styles.table} ref={setGeneralTableRef}>
         <div className={clsx(styles.tableTitles, styles.tableColumn)}>
-          <div className={styles.tableCell} data-optiontitle="bodytype">
-            Type
-          </div>
-          <div className={styles.tableCell} data-optiontitle="motor">
-            Motor
-          </div>
-          <div className={styles.tableCell} data-optiontitle="enginepower">
-            Engine Power
-          </div>
-          <div className={styles.tableCell} data-optiontitle="engine">
-            Engine
-          </div>
-          <div className={styles.tableCell} data-optiontitle="wheeldrive">
-            Wheel Drive
-          </div>
+          {(!isOnlyDiff || !isIdentical.bodyType) && (
+            <div className={styles.tableCell} data-optiontitle="bodytype">
+              Type
+            </div>
+          )}
+          {(!isOnlyDiff || !isIdentical.engineDisplacement) && (
+            <div className={styles.tableCell} data-optiontitle="motor">
+              Motor
+            </div>
+          )}
+          {(!isOnlyDiff || !isIdentical.enginePower) && (
+            <div className={styles.tableCell} data-optiontitle="enginepower">
+              Engine Power
+            </div>
+          )}
+          {(!isOnlyDiff || !isIdentical.engine) && (
+            <div className={styles.tableCell} data-optiontitle="engine">
+              Engine
+            </div>
+          )}
+          {(!isOnlyDiff || !isIdentical.drivetrainName) && (
+            <div className={styles.tableCell} data-optiontitle="wheeldrive">
+              Wheel Drive
+            </div>
+          )}
           {[...options].map((option) => {
             if (emptyOptions?.includes(option)) return;
             return (
@@ -117,7 +170,9 @@ const GeneralComparisonTable: React.FC = () => {
               </div>
             );
           })}
-          <div className={styles.tableCell}>Color</div>
+          {(!isOnlyDiff || !isIdentical.colorName) && (
+            <div className={styles.tableCell}>Color</div>
+          )}
         </div>
         <ScrollSyncPane>
           <div className={clsx('styledScrollbar', styles.generalInfo)}>
@@ -127,27 +182,40 @@ const GeneralComparisonTable: React.FC = () => {
                   className={clsx(styles.tableData, styles.tableColumn)}
                   key={info.id}
                 >
-                  <div className={styles.tableCell} data-optionvalue="bodytype">
-                    {info.bodyType}
-                  </div>
-                  <div className={styles.tableCell} data-optionvalue="motor">
-                    {info.engineDisplacement} l.
-                  </div>
-                  <div
-                    className={styles.tableCell}
-                    data-optionvalue="enginepower"
-                  >
-                    {info.enginePower} h.p.
-                  </div>
-                  <div className={styles.tableCell} data-optionvalue="engine">
-                    {info.engine}
-                  </div>
-                  <div
-                    className={styles.tableCell}
-                    data-optionvalue="wheeldrive"
-                  >
-                    {info.drivetrainName}
-                  </div>
+                  {(!isOnlyDiff || !isIdentical.bodyType) && (
+                    <div
+                      className={styles.tableCell}
+                      data-optionvalue="bodytype"
+                    >
+                      {info.bodyType}
+                    </div>
+                  )}
+                  {(!isOnlyDiff || !isIdentical.engineDisplacement) && (
+                    <div className={styles.tableCell} data-optionvalue="motor">
+                      {info.engineDisplacement} l.
+                    </div>
+                  )}
+                  {(!isOnlyDiff || !isIdentical.enginePower) && (
+                    <div
+                      className={styles.tableCell}
+                      data-optionvalue="enginepower"
+                    >
+                      {info.enginePower} h.p.
+                    </div>
+                  )}
+                  {(!isOnlyDiff || !isIdentical.engine) && (
+                    <div className={styles.tableCell} data-optionvalue="engine">
+                      {info.engine}
+                    </div>
+                  )}
+                  {(!isOnlyDiff || !isIdentical.drivetrainName) && (
+                    <div
+                      className={styles.tableCell}
+                      data-optionvalue="wheeldrive"
+                    >
+                      {info.drivetrainName}
+                    </div>
+                  )}
                   {Object.keys(info.options).map(
                     (type: string) =>
                       !emptyOptions?.includes(type) && (
@@ -156,17 +224,24 @@ const GeneralComparisonTable: React.FC = () => {
                           data-optionvalue={type}
                           key={uuid4()}
                         >
-                          {info.options[type].join(', ')}
+                          {info.options[type]
+                            .filter(
+                              (option) =>
+                                !isOnlyDiff || !carOmitOptions.has(option),
+                            )
+                            .join(', ')}
                         </div>
                       ),
                   )}
-                  <div className={clsx(styles.tableCell, styles.colorCell)}>
-                    <div
-                      className={styles.colorBox}
-                      style={{ backgroundColor: info.colorName }}
-                    />
-                    <span>{info.colorName}</span>
-                  </div>
+                  {(!isOnlyDiff || !isIdentical.colorName) && (
+                    <div className={clsx(styles.tableCell, styles.colorCell)}>
+                      <div
+                        className={styles.colorBox}
+                        style={{ backgroundColor: info.colorName }}
+                      />
+                      <span>{info.colorName}</span>
+                    </div>
+                  )}
                 </div>
               );
             })}

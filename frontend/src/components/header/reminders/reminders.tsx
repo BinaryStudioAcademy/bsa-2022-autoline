@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
-import eyeIcon from '@assets/images/eye.svg';
 import { theme } from '@common/theme/theme';
 import BalanceIcon from '@mui/icons-material/Balance';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Badge, List, ListItemButton, ThemeProvider } from '@mui/material';
 import { clsx } from 'clsx';
 
@@ -64,11 +64,7 @@ export const Reminders: React.FC<RemindersProps> = ({
               color="primary"
               invisible={viewed.count < 1}
             >
-              <img
-                className={styles.viewedIcon}
-                src={eyeIcon}
-                alt="history of viewed cars"
-              />
+              <VisibilityOutlinedIcon color="primary" sx={iconsSx} />
             </Badge>
           </ListItemButton>
         </HashLink>

@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 
 import { ButtonFill } from '@components/common/button-fill/button-fill';
+import { Spinner } from '@components/common/spinner/spinner';
 import { ViewedCarsGrid } from '@components/viewed-cars/components/viewed-cars-grid/viewed-cars-grid';
 import { useGetHistoryOfViwedCarsQuery } from '@store/queries/history-viewed-cars';
 
@@ -31,7 +32,9 @@ const ViewedCars: FC = () => {
       <h4 id="viewed" className={styles.ViewedСarsTitle}>
         history of viewed cars
       </h4>
-      {isLoading || data?.count === 0 ? null : (
+      {isLoading ? (
+        <Spinner />
+      ) : data?.count === 0 ? null : (
         <>
           <ViewedCarsGrid carDataList={data as GetViewedCarsResponse} />
           <ButtonFill

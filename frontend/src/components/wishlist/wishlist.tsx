@@ -1,4 +1,5 @@
 import { CarPreview } from '@autoline/shared/common/types/types';
+import { Spinner } from '@components/common/spinner/spinner';
 import { Title } from '@components/common/title/title';
 import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { Grid } from '@mui/material';
@@ -20,7 +21,7 @@ const Wishlist: React.FC = () => {
       ),
   };
 
-  if (isLoading) return null;
+  if (isLoading) return <Spinner />;
   return (
     <>
       <Title element="h4" id="liked">

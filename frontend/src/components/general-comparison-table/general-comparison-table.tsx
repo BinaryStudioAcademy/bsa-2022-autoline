@@ -35,7 +35,7 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
     ) as boolean;
   };
 
-  const compareFields = useMemo(
+  const isIdentical = useMemo(
     () => ({
       bodyType: getFieldStatus(TableFields.bodyType),
       engine: getFieldStatus(TableFields.engine),
@@ -127,27 +127,27 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
     <CollapseElement label="General information" isOpen={true}>
       <div className={styles.table} ref={setGeneralTableRef}>
         <div className={clsx(styles.tableTitles, styles.tableColumn)}>
-          {(toggle && compareFields.bodyType) || (
+          {(toggle && isIdentical.bodyType) || (
             <div className={styles.tableCell} data-optiontitle="bodytype">
               Type
             </div>
           )}
-          {(toggle && compareFields.engineDisplacement) || (
+          {(toggle && isIdentical.engineDisplacement) || (
             <div className={styles.tableCell} data-optiontitle="motor">
               Motor
             </div>
           )}
-          {(toggle && compareFields.enginePower) || (
+          {(toggle && isIdentical.enginePower) || (
             <div className={styles.tableCell} data-optiontitle="enginepower">
               Engine Power
             </div>
           )}
-          {(toggle && compareFields.engine) || (
+          {(toggle && isIdentical.engine) || (
             <div className={styles.tableCell} data-optiontitle="engine">
               Engine
             </div>
           )}
-          {(toggle && compareFields.drivetrainName) || (
+          {(toggle && isIdentical.drivetrainName) || (
             <div className={styles.tableCell} data-optiontitle="wheeldrive">
               Wheel Drive
             </div>
@@ -164,7 +164,7 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
               </div>
             );
           })}
-          {(toggle && compareFields.colorName) || (
+          {(toggle && isIdentical.colorName) || (
             <div className={styles.tableCell}>Color</div>
           )}
         </div>
@@ -176,7 +176,7 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
                   className={clsx(styles.tableData, styles.tableColumn)}
                   key={info.id}
                 >
-                  {(toggle && compareFields.bodyType) || (
+                  {(toggle && isIdentical.bodyType) || (
                     <div
                       className={styles.tableCell}
                       data-optionvalue="bodytype"
@@ -184,12 +184,12 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
                       {info.bodyType}
                     </div>
                   )}
-                  {(toggle && compareFields.engineDisplacement) || (
+                  {(toggle && isIdentical.engineDisplacement) || (
                     <div className={styles.tableCell} data-optionvalue="motor">
                       {info.engineDisplacement} l.
                     </div>
                   )}
-                  {(toggle && compareFields.enginePower) || (
+                  {(toggle && isIdentical.enginePower) || (
                     <div
                       className={styles.tableCell}
                       data-optionvalue="enginepower"
@@ -197,12 +197,12 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
                       {info.enginePower} h.p.
                     </div>
                   )}
-                  {(toggle && compareFields.engine) || (
+                  {(toggle && isIdentical.engine) || (
                     <div className={styles.tableCell} data-optionvalue="engine">
                       {info.engine}
                     </div>
                   )}
-                  {(toggle && compareFields.drivetrainName) || (
+                  {(toggle && isIdentical.drivetrainName) || (
                     <div
                       className={styles.tableCell}
                       data-optionvalue="wheeldrive"
@@ -227,7 +227,7 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
                         </div>
                       ),
                   )}
-                  {(toggle && compareFields.colorName) || (
+                  {(toggle && isIdentical.colorName) || (
                     <div className={clsx(styles.tableCell, styles.colorCell)}>
                       <div
                         className={styles.colorBox}

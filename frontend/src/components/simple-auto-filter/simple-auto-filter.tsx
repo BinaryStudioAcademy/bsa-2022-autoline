@@ -90,7 +90,9 @@ const SimpleAutoFilter: FC = () => {
   const doSearch = async (): Promise<void> => {
     const { data: cars } = await search(queryParams);
     if (cars) {
-      addRecentSearchCar(cars[0]?.model_id);
+      cars.forEach((car) => {
+        addRecentSearchCar(car?.model_id);
+      });
     }
     navigate(API.SEARCH);
   };

@@ -129,7 +129,9 @@ const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
               );
             })}
             {(!isOnlyDiff || !isIdentical.colorName) && (
-              <div className={clsx(styles.tableCell, 'tableCell')}>Color</div>
+              <EqualHeightElement name="color">
+                <div className={clsx(styles.tableCell, 'tableCell')}>Color</div>
+              </EqualHeightElement>
             )}
           </div>
           <ScrollSyncPane>

@@ -15,8 +15,10 @@ const findEmptyOptions = (
       )
       .map(([optionName, _optioValue]) => optionName),
   );
-  const emptyOptionsForAll = emptyOptions?.reduce((accumulator, currentValue) =>
-    accumulator.filter((x) => currentValue.indexOf(x) !== -1),
+  const emptyOptionsForAll = emptyOptions?.reduce(
+    (accumulator, currentValue) =>
+      accumulator.filter((x) => currentValue.indexOf(x) !== -1),
+    [],
   );
   return emptyOptionsForAll;
 };

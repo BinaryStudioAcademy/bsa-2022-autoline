@@ -12,7 +12,7 @@ const AboutPage: React.FC = () => {
     <>
       <Header />
       <PageContainer>
-        <Title element="h3">About</Title>
+        <Title element="h3">About Autoline</Title>
         <Grid container spacing={2} className={styles.aboutContent}>
           <Grid item xs={12}>
             <p>
@@ -35,6 +35,7 @@ const AboutPage: React.FC = () => {
             </p>
           </Grid>
         </Grid>
+        <Title element="h3">Our Team</Title>
         <Grid container spacing={4} className={styles.team}>
           {teamMembers.map((person) => (
             <Grid item xs={12} sm={4} md={2} key={uuid4()}>

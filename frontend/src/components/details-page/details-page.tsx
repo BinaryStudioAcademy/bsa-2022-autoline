@@ -23,7 +23,7 @@ export const DetailsPage: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const modelId = (searchParams.get('model') as string) ?? '';
   const complectationId = (searchParams.get('complectation') as string) ?? '';
-  const [addCar] = useAddViewedCarMutation();
+  const [addCarToViewed] = useAddViewedCarMutation();
 
   const { data: model, isLoading: isModelLoading } =
     useGetModelDetailsQuery(modelId);
@@ -49,7 +49,7 @@ export const DetailsPage: FC = () => {
       complectation: id,
     };
     setSearchParams(params);
-    addCar({
+    addCarToViewed({
       complectationId: id,
     });
   };

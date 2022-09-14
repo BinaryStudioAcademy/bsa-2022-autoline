@@ -12,7 +12,9 @@ import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
-const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
+const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
+  isOnlyDiff,
+}) => {
   const {
     data: generalInfo,
     isLoading,
@@ -65,7 +67,11 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
     return carsOptions;
   }, [generalInfo, options]);
 
-  const emptyOptions = findEmptyOptions(generalInfo, toggle, carOmitOptions);
+  const emptyOptions = findEmptyOptions(
+    generalInfo,
+    isOnlyDiff,
+    carOmitOptions,
+  );
 
   const [generalTable, setGeneralTableRef] = useState<HTMLDivElement | null>(
     null,
@@ -119,7 +125,7 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
       value.style.height = `${optionsHighestHeights.get(title)}px`;
       tableTitleElement.style.height = `${optionsHighestHeights.get(title)}px`;
     });
-  }, [generalTable, generalInfo, toggle]);
+  }, [generalTable, generalInfo, isOnlyDiff]);
 
   if (isLoading) return <Spinner />;
 
@@ -127,27 +133,27 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
     <CollapseElement label="General information" isOpen={true}>
       <div className={styles.table} ref={setGeneralTableRef}>
         <div className={clsx(styles.tableTitles, styles.tableColumn)}>
-          {(toggle && isIdentical.bodyType) || (
+          {(!isOnlyDiff || !isIdentical.bodyType) && (
             <div className={styles.tableCell} data-optiontitle="bodytype">
               Type
             </div>
           )}
-          {(toggle && isIdentical.engineDisplacement) || (
+          {(!isOnlyDiff || !isIdentical.engineDisplacement) && (
             <div className={styles.tableCell} data-optiontitle="motor">
               Motor
             </div>
           )}
-          {(toggle && isIdentical.enginePower) || (
+          {(!isOnlyDiff || !isIdentical.enginePower) && (
             <div className={styles.tableCell} data-optiontitle="enginepower">
               Engine Power
             </div>
           )}
-          {(toggle && isIdentical.engine) || (
+          {(!isOnlyDiff || !isIdentical.engine) && (
             <div className={styles.tableCell} data-optiontitle="engine">
               Engine
             </div>
           )}
-          {(toggle && isIdentical.drivetrainName) || (
+          {(!isOnlyDiff || !isIdentical.drivetrainName) && (
             <div className={styles.tableCell} data-optiontitle="wheeldrive">
               Wheel Drive
             </div>
@@ -164,7 +170,7 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
               </div>
             );
           })}
-          {(toggle && isIdentical.colorName) || (
+          {(!isOnlyDiff || !isIdentical.colorName) && (
             <div className={styles.tableCell}>Color</div>
           )}
         </div>
@@ -176,7 +182,7 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
                   className={clsx(styles.tableData, styles.tableColumn)}
                   key={info.id}
                 >
-                  {(toggle && isIdentical.bodyType) || (
+                  {(!isOnlyDiff || !isIdentical.bodyType) && (
                     <div
                       className={styles.tableCell}
                       data-optionvalue="bodytype"
@@ -184,12 +190,12 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
                       {info.bodyType}
                     </div>
                   )}
-                  {(toggle && isIdentical.engineDisplacement) || (
+                  {(!isOnlyDiff || !isIdentical.engineDisplacement) && (
                     <div className={styles.tableCell} data-optionvalue="motor">
                       {info.engineDisplacement} l.
                     </div>
                   )}
-                  {(toggle && isIdentical.enginePower) || (
+                  {(!isOnlyDiff || !isIdentical.enginePower) && (
                     <div
                       className={styles.tableCell}
                       data-optionvalue="enginepower"
@@ -197,12 +203,12 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
                       {info.enginePower} h.p.
                     </div>
                   )}
-                  {(toggle && isIdentical.engine) || (
+                  {(!isOnlyDiff || !isIdentical.engine) && (
                     <div className={styles.tableCell} data-optionvalue="engine">
                       {info.engine}
                     </div>
                   )}
-                  {(toggle && isIdentical.drivetrainName) || (
+                  {(!isOnlyDiff || !isIdentical.drivetrainName) && (
                     <div
                       className={styles.tableCell}
                       data-optionvalue="wheeldrive"
@@ -221,13 +227,13 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
                           {info.options[type]
                             .filter(
                               (option) =>
-                                !toggle || !carOmitOptions.has(option),
+                                !isOnlyDiff || !carOmitOptions.has(option),
                             )
                             .join(', ')}
                         </div>
                       ),
                   )}
-                  {(toggle && isIdentical.colorName) || (
+                  {(!isOnlyDiff || !isIdentical.colorName) && (
                     <div className={clsx(styles.tableCell, styles.colorCell)}>
                       <div
                         className={styles.colorBox}

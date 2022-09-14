@@ -52,7 +52,7 @@ const ComparisonPage: React.FC = () => {
               )}
               onClick={(): void => setIsOnlyDifferenceShown(true)}
             />
-            <GeneralComparisonTable toggle={isOnlyDifferenceShown} />
+            <GeneralComparisonTable isOnlyDiff={isOnlyDifferenceShown} />
             {isLoading || showOptionsTables()}
           </div>
         </ScrollSync>

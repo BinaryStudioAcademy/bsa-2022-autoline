@@ -2,15 +2,16 @@ import { ComparisonGeneralInform } from '@autoline/shared';
 
 const findEmptyOptions = (
   generalInfo: ComparisonGeneralInform[] | undefined,
-  toggle: boolean,
+  isOnlyDiff: boolean,
   carOmitOptions: Set<string>,
 ): string[] | undefined => {
   const emptyOptions = generalInfo?.map((e) =>
     Object.entries(e.options)
       .filter(
         ([_optionName, optioValue]) =>
-          optioValue.filter((option) => !toggle || !carOmitOptions.has(option))
-            .length == 0,
+          optioValue.filter(
+            (option) => !isOnlyDiff || !carOmitOptions.has(option),
+          ).length == 0,
       )
       .map(([optionName, _optioValue]) => optionName),
   );

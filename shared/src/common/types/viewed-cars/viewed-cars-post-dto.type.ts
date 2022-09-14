@@ -17,6 +17,7 @@ interface ViewedCarPrismaDto {
     name: string;
   };
   complectations: {
+    id: string;
     name: string;
     prices_ranges: {
       price_start: number;
@@ -31,6 +32,7 @@ interface ViewedCarResponseDto {
   brand: string;
   model: string;
   complectation: string;
+  complectationId: string;
   year: string;
   photo_urls: string[] | [];
   priceStart: string;

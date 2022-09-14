@@ -65,6 +65,8 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
     return carsOptions;
   }, [generalInfo, options]);
 
+  const emptyOptions = findEmptyOptions(generalInfo, toggle, carOmitOptions);
+
   const [generalTable, setGeneralTableRef] = useState<HTMLDivElement | null>(
     null,
   );
@@ -151,12 +153,7 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
             </div>
           )}
           {[...options].map((option) => {
-            if (
-              findEmptyOptions(generalInfo, toggle, carOmitOptions)?.includes(
-                option,
-              )
-            )
-              return;
+            if (emptyOptions?.includes(option)) return;
             return (
               <div
                 className={styles.tableCell}
@@ -215,11 +212,7 @@ const GeneralComparisonTable: React.FC<{ toggle: boolean }> = ({ toggle }) => {
                   )}
                   {Object.keys(info.options).map(
                     (type: string) =>
-                      !findEmptyOptions(
-                        generalInfo,
-                        toggle,
-                        carOmitOptions,
-                      )?.includes(type) && (
+                      !emptyOptions?.includes(type) && (
                         <div
                           className={styles.tableCell}
                           data-optionvalue={type}

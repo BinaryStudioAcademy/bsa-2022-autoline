@@ -8,11 +8,11 @@ const findEmptyOptions = (
   const emptyOptions = generalInfo?.map((e) =>
     Object.entries(e.options)
       .filter(
-        (option) =>
-          option[1].filter((option) => !toggle || !carOmitOptions.has(option))
+        ([_optionName, optioValue]) =>
+          optioValue.filter((option) => !toggle || !carOmitOptions.has(option))
             .length == 0,
       )
-      .map((option) => option[0]),
+      .map(([optionName, _optioValue]) => optionName),
   );
   const emptyOptionsForAll = emptyOptions?.reduce((accumulator, currentValue) =>
     accumulator.filter((x) => currentValue.indexOf(x) !== -1),

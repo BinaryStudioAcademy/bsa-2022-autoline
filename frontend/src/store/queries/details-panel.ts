@@ -2,6 +2,7 @@ import { ApiPath } from '@autoline/shared/common/enums/enums';
 import {
   ModelReturnedData,
   ComplectationReturnedData,
+  ComlectationShortInfoResponse,
 } from '@autoline/shared/common/types/types';
 import { DetailsCarPanelPropsType } from '@common/types/types';
 
@@ -29,8 +30,16 @@ export const detailsPanelApi = api.injectEndpoints({
         return { data: data[0].sale };
       },
     }),
+    getComplectationById: builder.query<ComlectationShortInfoResponse, string>({
+      query: (complectationId) => ({
+        url: `complectation/${complectationId}`,
+      }),
+    }),
   }),
 });
 
-export const { useGetComplectationsForPanelQuery, useGetRateQuery } =
-  detailsPanelApi;
+export const {
+  useGetComplectationsForPanelQuery,
+  useGetRateQuery,
+  useLazyGetComplectationByIdQuery,
+} = detailsPanelApi;

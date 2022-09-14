@@ -4,6 +4,7 @@ import {
   Control,
   FieldErrors,
   FieldValues,
+  UseFormWatch,
 } from 'react-hook-form';
 
 import { getFormValidationResolver } from '@helpers/helpers';
@@ -26,6 +27,7 @@ type UseAppFormResult<T extends FieldValues = FieldValues> = {
   setValue: UseFormSetValue<FieldValues>;
   clearErrors?: UseFormClearErrors<FieldErrors>;
   reset?: UseFormReset<FieldValues>;
+  watch: UseFormWatch<FieldValues>;
 };
 
 const useAppForm = <T extends FieldValues = FieldValues>({
@@ -39,6 +41,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
     setValue,
     clearErrors,
     reset,
+    watch,
   } = useForm<FieldValues>({
     defaultValues,
     resolver: validationSchema
@@ -53,6 +56,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
     setValue,
     clearErrors,
     reset,
+    watch,
   };
 };
 

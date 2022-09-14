@@ -17,7 +17,6 @@ enum RangeValueNames {
 }
 
 enum CheckListsNames {
-  REGION_ID = 'regionId',
   COLOR_ID = 'colorId',
   TRANSMISSION_TYPE_ID = 'transmissionTypeId',
   FUEL_TYPE_ID = 'fuelTypeId',

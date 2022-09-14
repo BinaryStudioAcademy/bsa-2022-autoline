@@ -8,6 +8,7 @@
 
 .logo {
   height: 2rem;
+  margin-right: 1.5rem;
 }
 
 .button {
@@ -39,7 +40,6 @@
   align-content: center;
   align-items: center;
   height: var(--header-height);
-  margin: 0 1.5rem;
   padding: 0 1.5rem;
   color: black;
   font-size: 1.2rem;
@@ -49,6 +49,7 @@
 
   &:hover {
     color: var(--blue100);
+    background: var(--white100);
   }
 
   &.itemActive {

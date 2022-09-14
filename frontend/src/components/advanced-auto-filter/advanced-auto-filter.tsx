@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { AutoRiaOption } from '@autoline/shared/common/types/types';
 import {
   CheckListsNames,
   RangeNames,
@@ -20,19 +19,16 @@ import {
   pricesRange,
   yearsRange,
 } from '@common/enums/car/ranges';
-import { AutocompleteValueType } from '@common/types/cars/autocomplete.type';
 import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { CheckboxListDataType } from '@common/types/cars/checkbox-list-data.type';
 import { RangeValueType } from '@common/types/cars/range-item.type';
 import { BrandDetails } from '@components/advanced-auto-filter/brand-details/brand-details';
-import { AutocompleteInput } from '@components/common/autocomplete-input/autocomplete-input';
 import { CheckboxList } from '@components/common/checkbox-list/checkbox-list';
 import { MultiselectInput } from '@components/common/multiselect-input/multiselect-input';
 import { RangeSelector } from '@components/common/range-selector/range-selector';
 import { Spinner } from '@components/common/spinner/spinner';
 import { isFiltersEmpty } from '@helpers/car-filters/is-filters-empty';
 import { rangeFiltersToObject } from '@helpers/car-filters/range-filters-to-object';
-import { getValueById } from '@helpers/get-value-by-id';
 import { getElementHeightWithMargins } from '@helpers/utils/get-element-height-with-margins';
 import { getHeightByPosition } from '@helpers/utils/get-height-by-position';
 import { useAppDispatch, useAppSelector } from '@hooks/hooks';
@@ -163,16 +159,6 @@ const AdvancedAutoFilter: FC = () => {
 
   const handleBrandDetailsRemove = (id: string): void => {
     dispatch(removeBrandDetails(id));
-  };
-
-  const handleRegionChange = (data: AutocompleteValueType): void => {
-    const value = [data?.id || ''];
-    dispatch(
-      setCheckListValue({
-        filterName: CheckListsNames.REGION_ID,
-        value,
-      }),
-    );
   };
 
   const handleCheckboxListChange = useCallback(
@@ -315,18 +301,6 @@ const AdvancedAutoFilter: FC = () => {
             onChange={handleRangeChange}
           />
         </div>
-        <h5 className={styles.blockTitle}>Region</h5>
-        {options && (
-          <AutocompleteInput
-            label="Regions"
-            onChange={handleRegionChange}
-            value={getValueById(options.regions, checkLists.regionId[0])}
-            options={options.regions.map((item: AutoRiaOption) => ({
-              label: item.name,
-              id: item.id,
-            }))}
-          />
-        )}
         <h5 className={styles.blockTitle}>Color</h5>
         {optionsInAutocompleteForm && memoizedCheckListValues && (
           <MultiselectInput

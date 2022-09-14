@@ -38,7 +38,6 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
   } = props.poster;
   const url = `${AutoRiaLinks.LINK_ADVERT}${linkToView}`;
   const formatedPrice = formatPrice(price);
-
   const handleBuy = (): void => {
     window.open(url, '_blank');
   };
@@ -92,7 +91,7 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
         </div>
         <div className={styles.panel}>
           <div className={styles.colorBox} style={{ backgroundColor: color }} />
-          <div className={styles.price}>{`$ ${formatedPrice}`}</div>
+          <div className={styles.price}>{`${formatedPrice}`}</div>
           <ButtonOutline
             className={styles.buyButton}
             text="Buy"

@@ -38,6 +38,7 @@ export type {
 export type {
   WhereBuyInterface,
   whereBuyQuery,
+  WhereBuyState,
 } from './where-to-buy/where-to-buy';
 
 export type { Comparison } from './comparisons/comparisons.type';

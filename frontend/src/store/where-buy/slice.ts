@@ -1,14 +1,8 @@
-import { WhereBuyInterface } from '@common/types/where-to-buy/where-to-buy';
+import { WhereBuyState } from '@common/types/where-to-buy/where-to-buy';
 import { createSlice } from '@reduxjs/toolkit';
 
-type WhereBuyState = {
-  adverts: WhereBuyInterface[];
-  complectationId: string;
-};
-
 const initialState: WhereBuyState = {
-  adverts: [],
-  complectationId: '',
+  ads: [],
 };
 
 const { reducer, actions } = createSlice({
@@ -16,17 +10,43 @@ const { reducer, actions } = createSlice({
   initialState,
   reducers: {
     setAdverts: (state, action) => {
-      const { adverts, complectationId } = action.payload;
-      if (state.complectationId === complectationId) {
-        state.adverts = [...state.adverts, ...adverts];
+      const { complectationId, adverts, page } = action.payload;
+      const activeComplectation = state.ads.find(
+        (advert) => advert.complectationId === complectationId,
+      );
+      if (activeComplectation) {
+        page
+          ? (activeComplectation.adverts = [
+              ...activeComplectation.adverts,
+              ...adverts,
+            ])
+          : (activeComplectation.adverts = [...adverts]);
       } else {
-        state.complectationId = complectationId;
-        state.adverts = [...adverts];
+        const newComplectation = { complectationId, adverts, page: 0 };
+        state.ads = [...state.ads, newComplectation];
+      }
+    },
+    setPage: (state, action) => {
+      const { complectationId, page } = action.payload;
+      const activeComplectation = state.ads.find(
+        (advert) => advert.complectationId === complectationId,
+      );
+      if (!activeComplectation) {
+        const newComplectation = {
+          complectationId,
+          adverts: [],
+          page: 0,
+        };
+        state.ads = [...state.ads, newComplectation];
+      } else if (page === 0) {
+        activeComplectation.page = page;
+      } else {
+        activeComplectation.page = activeComplectation.page + 1;
       }
     },
   },
   extraReducers: {},
 });
 
-export const { setAdverts } = actions;
+export const { setAdverts, setPage } = actions;
 export { reducer };

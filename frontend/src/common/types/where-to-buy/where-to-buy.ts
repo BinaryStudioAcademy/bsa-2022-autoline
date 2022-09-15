@@ -25,4 +25,14 @@ interface whereBuyQuery {
   countpage: number;
 }
 
-export { type WhereBuyInterface, type whereBuyQuery };
+interface advertsState {
+  complectationId: string;
+  adverts: WhereBuyInterface[];
+  page: number;
+}
+
+type WhereBuyState = {
+  ads: advertsState[];
+};
+
+export { type WhereBuyInterface, type whereBuyQuery, type WhereBuyState };

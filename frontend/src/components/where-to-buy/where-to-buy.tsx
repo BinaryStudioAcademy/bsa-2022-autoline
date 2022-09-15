@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { useAppSelector } from '@hooks/store/store.hooks';
 import SearchIcon from '@mui/icons-material/Search';
 import { useGetWhereBuyQuery } from '@store/queries/where-buy';
+import { setPage } from '@store/root-reducer';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
@@ -14,8 +16,14 @@ interface WhereToBuyProps {
 }
 
 const WhereToBuy: React.FC<WhereToBuyProps> = ({ complectationId }) => {
-  const [page, setPage] = useState(0);
+  const dispatch = useDispatch();
   const [isSorted, setIsSorted] = useState(false);
+  const { ads } = useAppSelector((state) => state.whereBuy);
+
+  const page = Number(
+    ads.find((ad) => ad.complectationId === complectationId)?.page,
+  );
+
   const countpage = 20;
   useGetWhereBuyQuery({
     page,
@@ -23,18 +31,21 @@ const WhereToBuy: React.FC<WhereToBuyProps> = ({ complectationId }) => {
     countpage,
   });
 
-  const { adverts } = useAppSelector((state) => state.whereBuy);
+  const adverts = ads.find(
+    (ad) => ad.complectationId === complectationId,
+  )?.adverts;
 
   const advertsList = useMemo(() => {
-    if (!isSorted) return adverts;
+    if (!adverts) return [];
+    if (!isSorted) return [...adverts];
     return [...adverts].sort((advertA, advertB) => advertA.USD - advertB.USD);
-  }, [adverts, isSorted]);
+  }, [adverts, isSorted, complectationId]);
 
   const seeMoreHandler = (): void => {
-    setPage(page + 1);
+    dispatch(setPage({ complectationId }));
   };
 
-  if (!adverts.length) {
+  if (!advertsList || !advertsList.length) {
     return (
       <div className={styles.noFoundContainer}>
         <SearchIcon className={clsx(styles.searchIcon, styles.icon)} />

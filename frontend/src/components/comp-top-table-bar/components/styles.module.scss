@@ -195,6 +195,15 @@ html {
   }
 }
 
+.carLink {
+  color: var(--black);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--blue100);
+  }
+}
+
 .noCarsError {
   padding-left: 2rem;
   color: var(--blue100);

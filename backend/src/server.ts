@@ -16,6 +16,7 @@ import {
   whereBuyRouter,
   comparisonsRouter,
   recentSearchCarsRouter,
+  historyOfComparisonsRouter,
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -67,6 +68,7 @@ const routes = [
   comparisonsRouter,
   whereBuyRouter,
   recentSearchCarsRouter,
+  historyOfComparisonsRouter,
 ];
 routes.forEach((route) => app.use(ENV.API.V1_PREFIX, route));
 

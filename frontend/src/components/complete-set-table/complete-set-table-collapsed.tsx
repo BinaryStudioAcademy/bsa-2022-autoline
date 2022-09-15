@@ -20,6 +20,8 @@ const CompleteSetTableCollapsed: React.FC<CompleteSetPropsType> = (props) => {
     setCarsDisplayed(data?.slice(0, initialRows));
     if (data && data.length > initialRows) {
       setRowsHidden(data.length - initialRows);
+    } else {
+      setRowsHidden(0);
     }
   }, [data]);
 

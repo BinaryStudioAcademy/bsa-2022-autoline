@@ -9,6 +9,7 @@ const historyOfComparisonsApi = api.injectEndpoints({
       query: () => ({
         url: `${API.HISTORY_COMPARISONS}`,
       }),
+      providesTags: ['Comparisons'],
     }),
     changeActiveComparison: build.mutation<void, { comarisonId: string }>({
       query: ({ comarisonId }) => ({

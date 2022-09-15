@@ -30,6 +30,7 @@ const ShortCarCard: FC<ViewedCarData> = ({ carData }) => {
       pathname: AppRoute.DETAILS,
       search: `?model=${modelId}&complectation=${complectationId}`,
     });
+    scrollTo(0, 0);
     addViewedCar({ complectationId });
   };
   return (

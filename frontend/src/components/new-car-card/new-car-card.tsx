@@ -73,6 +73,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
           search: `?model=${modelId}&complectation=${carId}`,
         })
       : navigate({ pathname: AppRoute.DETAILS, search: `?model=${carId}` });
+    scrollTo(0, 0);
   };
 
   let name = `${brandName} ${carName}`;

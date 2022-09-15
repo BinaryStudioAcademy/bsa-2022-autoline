@@ -4,13 +4,15 @@ import { HashLink as Link } from 'react-router-hash-link';
 import balanceIcon from '@assets/images/compare.svg';
 import eyeIcon from '@assets/images/eye.svg';
 import heartIcon from '@assets/images/heart.svg';
+import { useGetAllComparisonsQuery } from '@store/queries/history-of-comparisons';
 import { useGetHistoryOfViwedCarsQuery } from '@store/queries/history-viewed-cars';
 import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 
 import styles from './styles.module.scss';
 
 const UserInfoPanel: FC = () => {
-  const comparedCount = 0;
+  const { data: comparedData, isLoading: comparedIsLoading } =
+    useGetAllComparisonsQuery();
   const { data: wishlistData, isLoading: wishlistIsLoading } =
     useGetWishlistsQuery();
   const { data: viewedData, isLoading: viewedIsLoading } =
@@ -20,6 +22,7 @@ const UserInfoPanel: FC = () => {
     (wishlistData?.models.length || 0);
   const viewedCount =
     viewedData && viewedData?.count > 10 ? '10+' : viewedData?.count;
+  const comparedCount = comparedData?.count ? comparedData?.count : 0;
   return (
     <ul className={styles.UserPanel}>
       <li className={styles.UserPanelItem}>
@@ -38,9 +41,11 @@ const UserInfoPanel: FC = () => {
           alt="comparison"
         />
         <Link smooth to="#compared" className={styles.UserPanelLink}>
-          Compared
+          History of comparisons
         </Link>
-        <span className={styles.UserPanelBadgeInfo}>{comparedCount}</span>
+        <span className={styles.UserPanelBadgeInfo}>
+          {comparedIsLoading || comparedCount}
+        </span>
       </li>
       <li className={styles.UserPanelItem}>
         <img

@@ -73,7 +73,7 @@ export const DetailsPage: FC = () => {
         </div>
 
         {complectations && (
-          <CollapseBlock caption="Complete set" open={true} id="completeSet">
+          <CollapseBlock caption="Complectations" open={true} id="completeSet">
             <div className={styles.completeSetWrapper}>
               <CompleteSetTable
                 data={complectations}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { ComparisonInfo } from '@autoline/shared';
 import { useUpdatePositionsMutation } from '@store/queries/comparisons';
@@ -24,6 +24,10 @@ export const Comparison = ({
   };
 
   const [data, updateData] = useState({ cars, carsIds: positions });
+
+  useEffect(() => {
+    updateData({ cars, carsIds: positions });
+  }, [cars]);
 
   const handleMoveCard = (complectationId: string, direction: string): void => {
     if (!positions) return;

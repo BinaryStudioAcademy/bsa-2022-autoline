@@ -8,10 +8,11 @@ interface CollapseBlockProps {
   caption: string;
   children: ReactNode;
   open: boolean;
+  id?: string;
 }
 
 export const CollapseBlock: FC<CollapseBlockProps> = (props) => {
-  const { caption, children, open } = props;
+  const { caption, children, open, id } = props;
   const [collapseOpen, setCollapseOpen] = useState(open);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export const CollapseBlock: FC<CollapseBlockProps> = (props) => {
 
   return (
     <>
-      <div className={styles.captionRow} onClick={toggleCollapse}>
+      <div className={styles.captionRow} onClick={toggleCollapse} id={id}>
         <div className={styles.toggle}> {collapseOpen ? '–' : '+'} </div>
         <h4>{caption}</h4>
       </div>

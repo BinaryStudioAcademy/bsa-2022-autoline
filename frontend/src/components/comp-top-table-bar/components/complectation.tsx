@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 import { ComparisonInfo, WishlistInput } from '@autoline/shared';
 import { AppRoute } from '@common/enums/enums';
@@ -114,7 +115,13 @@ export const Complectation = ({
         <div className={styles.compCarContainerInfo}>
           <img src={car.photos[0]} className={styles.carImage} />
           <div className={styles.compCarContainerInfoText}>
-            {car.brandName} {car.modelName} {car.complectationName}
+            <HashLink
+              to={`${AppRoute.DETAILS}?model=${car.modelId}&complectation=${car.id}#completeSet`}
+              className={styles.carLink}
+              smooth
+            >
+              {car.brandName} {car.modelName} {car.complectationName}
+            </HashLink>
           </div>
           <div className={styles.compCarContainerInfoPrice}>
             $ {car.priceStart} - {car.priceEnd}

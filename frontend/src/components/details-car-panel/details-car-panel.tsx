@@ -49,8 +49,8 @@ const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
         <h4 className={styles.complectationHeader}>{complectationName}</h4>
       )}
       <div className={styles.header}>
-        <div className={styles.price}>{`${formatPrice(data?.minPrice)}
-          - ${formatPrice(data?.maxPrice)}
+        <div className={styles.price}>{`${formatPrice(data?.minPrice as number)}
+          - ${formatPrice(data?.maxPrice as number)}
           `}</div>
         <div className={styles.priceUah}>
           {`${convertPrice(rate as string, data?.minPrice as number)}

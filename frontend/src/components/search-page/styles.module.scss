@@ -21,3 +21,12 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: $global-md) {
+  .searchPage {
+    .searchResultsCol {
+      order: 2;
+      margin-top: 15px;
+    }
+  }
+}

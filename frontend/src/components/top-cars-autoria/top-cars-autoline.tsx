@@ -4,11 +4,11 @@ import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
-const TopCarsAutoria: React.FC<{ cardsContainerClassName?: string }> = ({
+const TopCarsAutoline: React.FC<{ cardsContainerClassName?: string }> = ({
   cardsContainerClassName,
 }) => (
   <div className={styles.topAutoriaContainer}>
-    <div className={styles.topAutoriaHeader}>Top Autoria</div>
+    <div className={styles.topAutoriaHeader}>Top Autoline</div>
     <div className={clsx(styles.topAutoriaCards, cardsContainerClassName)}>
       {topCars.map((car) => (
         <TopCarCard car={car} key={car.id} />
@@ -17,4 +17,4 @@ const TopCarsAutoria: React.FC<{ cardsContainerClassName?: string }> = ({
   </div>
 );
 
-export { TopCarsAutoria };
+export { TopCarsAutoline };

@@ -191,7 +191,7 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
             <h4 className={styles.primaryPrice}>{modelPrice}</h4>
 
             <span className={styles.secondaryPrice}>
-              {`UAH ${convertPrice(rate as string, model?.priceStart as number)}
+              {`${convertPrice(rate as string, model?.priceStart as number)}
           - ${convertPrice(rate as string, model?.priceEnd as number)}
           `}
             </span>

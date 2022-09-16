@@ -4,7 +4,6 @@ import { ComparisonInfo } from '@autoline/shared';
 import { useUpdatePositionsMutation } from '@store/queries/comparisons';
 
 import { Complectation } from './complectation';
-import { NoActiveComparison } from './no-active-comparison';
 import styles from './styles.module.scss';
 
 export const Comparison = ({
@@ -57,11 +56,9 @@ export const Comparison = ({
     return;
   };
 
-  if (!data.cars) return <NoActiveComparison />;
-
   return (
     <div className={styles.comparisonContainer}>
-      {data.cars.map((car, index) => {
+      {data.cars?.map((car, index) => {
         if (!index) {
           return (
             <Complectation

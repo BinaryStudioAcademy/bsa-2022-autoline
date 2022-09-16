@@ -95,7 +95,7 @@ export const DetailsPage: FC = () => {
           )}
         </CollapseBlock>
 
-        <CollapseBlock caption="Where to buy" open={!!complectationId}>
+        <CollapseBlock id="buy" caption="Where to buy" open={!!complectationId}>
           {complectationId ? (
             <WhereToBuy complectationId={complectationId} />
           ) : (

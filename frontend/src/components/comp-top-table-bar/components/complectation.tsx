@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
 import { ComparisonInfo, WishlistInput } from '@autoline/shared';
@@ -125,16 +125,25 @@ export const Complectation = ({
             </HashLink>
           </div>
           <div className={styles.compCarContainerInfoPrice}>
-            {formatPrice(car.priceStart)} - {formatPrice(car.priceEnd)}
+            <span className={!carsCount ? styles.inactive : undefined}>
+              {formatPrice(car.priceStart)} - {formatPrice(car.priceEnd)}
+            </span>
           </div>
           <div>
-            <Link
-              className={styles.link}
-              to={`${AppRoute.DETAILS}?model=${car.modelId}&complectation=${car.id}`}
-            >
-              Compare prices
-            </Link>{' '}
-            {carsCount}
+            {carsCount ? (
+              <>
+                <HashLink
+                  className={styles.link}
+                  smooth
+                  to={`${AppRoute.DETAILS}?model=${car.modelId}&complectation=${car.id}#buy`}
+                >
+                  Ads found:
+                </HashLink>{' '}
+                {carsCount}
+              </>
+            ) : (
+              'No ads found'
+            )}
           </div>
         </div>
       </div>

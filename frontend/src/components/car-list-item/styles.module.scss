@@ -1,3 +1,5 @@
+@import "@assets/css/variables";
+
 .listCard {
   margin: 0 0 2.2rem;
   padding: 1.25rem;
@@ -114,4 +116,31 @@
 
 .buttonsWrapper {
   margin-left: auto;
+}
+
+.showMobile {
+  display: none;
+}
+
+@media (max-width: $global-sm) {
+  .showMobile {
+    display: flex;
+  }
+
+  .hideMobile {
+    display: none;
+  }
+
+  .priceBlock {
+    flex-wrap: wrap;
+    padding-bottom: 15px;
+  }
+
+  .secondaryPrice {
+    line-height: 1.6;
+  }
+
+  .carInfo {
+    margin-top: 10px;
+  }
 }

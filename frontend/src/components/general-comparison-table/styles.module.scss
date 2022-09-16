@@ -18,6 +18,14 @@
   border-bottom: 1px solid var(--gray300);
 }
 
+.price {
+  margin: 0;
+  padding-left: 11px;
+  color: var(--blue300);
+  font-weight: 700;
+  background-color: var(--gray500);
+}
+
 .tableTitles {
   color: var(--gray400);
   font-weight: 600;

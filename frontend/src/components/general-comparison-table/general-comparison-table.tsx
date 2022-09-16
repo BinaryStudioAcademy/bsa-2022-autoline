@@ -5,9 +5,12 @@ import { ScrollSyncPane } from 'react-scroll-sync';
 import { TableFields } from '@common/enums/comparisons/comparison-table-fields';
 import { CollapseElement } from '@components/collapse-component/collapse-element/collapse-element';
 import { Spinner } from '@components/common/spinner/spinner';
-import { findEmptyOptions } from '@helpers/helpers';
+import { findEmptyOptions, getPrices } from '@helpers/helpers';
 import { uuid4 } from '@sentry/utils';
-import { useGetComparisonGeneralInfoQuery } from '@store/queries/comparisons';
+import {
+  useGetComparisonGeneralInfoQuery,
+  useGetComparisonCarsQuery,
+} from '@store/queries/comparisons';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
@@ -20,6 +23,11 @@ const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
     isLoading,
     refetch,
   } = useGetComparisonGeneralInfoQuery();
+  const {
+    data: pricesData,
+    isLoading: isLoadingPrices,
+    refetch: refetchPrices,
+  } = useGetComparisonCarsQuery();
 
   const options: Set<string> = useMemo((): Set<string> => {
     const options: Set<string> = new Set();
@@ -77,16 +85,34 @@ const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
     const broadcast = new BroadcastChannel('compare');
     broadcast.onmessage = (): void => {
       refetch();
+      refetchPrices();
     };
-  }, [refetch]);
-
-  if (isLoading) return <Spinner />;
+  }, [refetch, refetchPrices]);
+  if (isLoading && isLoadingPrices) return <Spinner />;
 
   return (
     <CollapseElement label="General information" isOpen={true}>
       <EqualHeight>
         <div className={clsx(styles.table, 'table')}>
           <div className={clsx(styles.tableTitles, styles.tableColumn)}>
+            {(!isOnlyDiff || !isIdentical.bodyType) && (
+              <EqualHeightElement name="minPrice">
+                <div
+                  className={clsx(styles.tableCell, styles.price, 'tableCell')}
+                >
+                  Minimum price
+                </div>
+              </EqualHeightElement>
+            )}
+            {(!isOnlyDiff || !isIdentical.bodyType) && (
+              <EqualHeightElement name="maxPrice">
+                <div
+                  className={clsx(styles.tableCell, styles.price, 'tableCell')}
+                >
+                  Maximum price
+                </div>
+              </EqualHeightElement>
+            )}
             {(!isOnlyDiff || !isIdentical.bodyType) && (
               <EqualHeightElement name="bodytype">
                 <div className={clsx(styles.tableCell, 'tableCell')}>Type</div>
@@ -142,6 +168,32 @@ const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
                     className={clsx(styles.tableData, styles.tableColumn)}
                     key={info.id}
                   >
+                    {(!isOnlyDiff || !isIdentical.bodyType) && (
+                      <EqualHeightElement name="minPrice">
+                        <div
+                          className={clsx(
+                            styles.tableCell,
+                            styles.price,
+                            'tableCell',
+                          )}
+                        >
+                          {getPrices(info.id, pricesData)?.minPrice}
+                        </div>
+                      </EqualHeightElement>
+                    )}
+                    {(!isOnlyDiff || !isIdentical.bodyType) && (
+                      <EqualHeightElement name="maxPrice">
+                        <div
+                          className={clsx(
+                            styles.tableCell,
+                            styles.price,
+                            'tableCell',
+                          )}
+                        >
+                          {getPrices(info.id, pricesData)?.maxPrice}
+                        </div>
+                      </EqualHeightElement>
+                    )}
                     {(!isOnlyDiff || !isIdentical.bodyType) && (
                       <EqualHeightElement name="bodytype">
                         <div className={clsx(styles.tableCell, 'tableCell')}>

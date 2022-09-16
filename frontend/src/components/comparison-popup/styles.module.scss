@@ -11,13 +11,16 @@
   border-top: 5px solid var(--blue100);
   transform: translate(-50%, -50%);
 
+  @media (max-width: $global-lg) {
+    width: 870px;
+  }
+
   @media (max-width: $global-md) {
-    top: 2rem;
-    right: 2rem;
-    bottom: 2rem;
-    left: 2rem;
-    width: auto;
-    transform: none;
+    width: 95%;
+  }
+
+  @media (max-width: $global-sm) {
+    padding: 15px;
   }
 
   .cross {
@@ -30,27 +33,61 @@
   .mainTitle {
     margin: 0 0 20px;
     font-weight: 800;
-    font-size: 18px;
+    font-size: 1.4rem;
     text-transform: uppercase;
+
+    @media (max-width: $global-sm) {
+      margin-right: 35px;
+      font-size: 1.2rem;
+    }
   }
 }
 
 .comparison {
   display: flex;
 
+  @media (max-width: $global-sm) {
+    flex-direction: column;
+  }
+
   &Title {
     margin: 0;
     font-weight: 700;
     font-size: 1.3rem;
+
+    @media (max-width: $global-md) {
+      font-size: 1.1rem;
+    }
   }
 
   &Left {
     flex: 2;
+
+    @media (max-width: $global-md) {
+      flex: 3;
+    }
+
+    @media (max-width: $global-sm) {
+      margin-bottom: 15px;
+    }
   }
 
   &Right {
     flex: 3;
     padding-left: 60px;
+
+    @media (max-width: $global-lg) {
+      padding-left: 20px;
+    }
+
+    @media (max-width: $global-md) {
+      flex: 2;
+      padding-left: 5px;
+    }
+
+    @media (max-width: $global-md) {
+      padding-left: 0;
+    }
   }
 
   &List {

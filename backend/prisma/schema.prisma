@@ -23,6 +23,7 @@ model User {
   viewed_cars         Users_Viewed_Cars[]
   user_comparisons    Comparison[]
   users_searches_cars Users_Searches_Cars[]
+  autoria_viewed_cars Users_Autoria_Viewed_Cars[]
 }
 
 model User_Security {
@@ -68,6 +69,16 @@ model Users_Searches_Cars {
   created_at          DateTime            @default(now())
 }
 
+model Users_Autoria_Viewed_Cars {
+  id              String   @id @default(uuid())
+  user            User     @relation(fields: [user_id], references: [id])
+  user_id         String
+  model           Model    @relation(fields: [model_id], references: [id])
+  model_id        String   @db.VarChar(300)
+  autoria_code    Int
+  created_at      DateTime @default(now())
+}
+
 model Body_Type {
   id           String @id @default(uuid())
   name         String @db.VarChar(300)
@@ -109,6 +120,7 @@ model Model {
   prices_ranges          Prices_Range[]
   users_wishlists        User_Wishlist[]
   users_searches_cars    Users_Searches_Cars[]
+  autoria_viewed_cars    Users_Autoria_Viewed_Cars[]
   created_at          DateTime            @default(now())
 }
 

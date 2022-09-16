@@ -11,6 +11,7 @@ import {
 } from '@components/common/icons/icons';
 import { TrashCanIcon } from '@components/common/icons/trash-can/trash-can';
 import { WishlistContext } from '@contexts/wishlist-context';
+import { formatPrice } from '@helpers/helpers';
 import { useAppSelector } from '@hooks/hooks';
 import {
   useDeleteCarFromComparisonMutation,
@@ -125,8 +126,7 @@ export const Complectation = ({
           </div>
           <div className={styles.compCarContainerInfoPrice}>
             <span className={!carsCount ? styles.inactive : undefined}>
-              {' '}
-              $ {car.priceStart} - {car.priceEnd}{' '}
+              {formatPrice(car.priceStart)} - {formatPrice(car.priceEnd)}
             </span>
           </div>
           <div>

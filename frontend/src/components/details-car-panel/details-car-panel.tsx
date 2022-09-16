@@ -7,6 +7,7 @@ import {
 import { DetailsCarPanelPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
 import { WishlistContext } from '@contexts/wishlist-context';
+import { formatPrice } from '@helpers/helpers';
 import { convertPrice } from '@helpers/utils/convert-price';
 import {
   useGetComplectationsForPanelQuery,
@@ -48,11 +49,11 @@ const DetailsCarPanel: FC<DetailsCarPanelPropsType> = ({
         <h4 className={styles.complectationHeader}>{complectationName}</h4>
       )}
       <div className={styles.header}>
-        <div className={styles.price}>{`$ ${data?.minPrice}
-          - ${data?.maxPrice}
+        <div className={styles.price}>{`${formatPrice(data?.minPrice)}
+          - ${formatPrice(data?.maxPrice)}
           `}</div>
         <div className={styles.priceUah}>
-          {`UAH ${convertPrice(rate as string, data?.minPrice as number)}
+          {`${convertPrice(rate as string, data?.minPrice as number)}
           - ${convertPrice(rate as string, data?.maxPrice as number)}
           `}
         </div>

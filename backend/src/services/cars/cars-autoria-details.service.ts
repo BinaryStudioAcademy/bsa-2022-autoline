@@ -107,4 +107,4 @@ const carsUpdateAutoriaDetails = async (): Promise<string[]> => {
   return updatedAutoriaDetails.filter((code) => code !== '');
 };
 
-export { carsUpdateAutoriaDetails };
+export { carsUpdateAutoriaDetailsByCode, carsUpdateAutoriaDetails };

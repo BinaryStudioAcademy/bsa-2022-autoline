@@ -69,7 +69,7 @@ export const CompTopTableBar = ({
         </div>
       </div>
       <ScrollSyncPane>
-        <div className={styles.slider}>
+        <div className={clsx('styledScrollbar', styles.slider)}>
           {!isCleared ? (
             <Comparison cars={initialData} positions={carsIds} />
           ) : (

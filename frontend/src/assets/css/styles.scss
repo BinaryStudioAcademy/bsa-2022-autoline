@@ -3,6 +3,7 @@
 
 @import "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,700&display=swap";
 @import "./variables";
+@import "./toastify-variables";
 @import "./form";
 @import "./typography";
 @import "./mixins";
@@ -45,5 +46,12 @@ body,
     .tableCell {
       border-bottom: none;
     }
+  }
+}
+
+.Toastify__toast-icon {
+  svg,
+  path {
+    fill: var(--blue100);
   }
 }

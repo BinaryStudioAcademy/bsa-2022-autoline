@@ -5,6 +5,7 @@ import mapPin from '@assets/images/map-pin.svg';
 import speedometr from '@assets/images/speedometr.svg';
 import transmission from '@assets/images/transmission.svg';
 import { TopCarsMockData } from '@common/types/types';
+import { formatPrice } from '@helpers/helpers';
 
 import styles from './styles.module.scss';
 
@@ -56,7 +57,9 @@ const TopCarCard: FC<TopCarProps> = ({ car }) => {
 
         <div className={styles.price}>
           <hr className={styles.separator} />
-          <span className={styles.priceText}>{`$ ${totalPrice}`}</span>
+          <span className={styles.priceText}>{`${formatPrice(
+            totalPrice,
+          )}`}</span>
         </div>
       </div>
     </div>

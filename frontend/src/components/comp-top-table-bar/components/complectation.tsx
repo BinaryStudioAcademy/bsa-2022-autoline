@@ -124,16 +124,25 @@ export const Complectation = ({
             </HashLink>
           </div>
           <div className={styles.compCarContainerInfoPrice}>
-            $ {car.priceStart} - {car.priceEnd}
+            <span className={!carsCount ? styles.inactive : undefined}>
+              {' '}
+              $ {car.priceStart} - {car.priceEnd}{' '}
+            </span>
           </div>
           <div>
-            <Link
-              className={styles.link}
-              to={`${AppRoute.DETAILS}?model=${car.modelId}&complectation=${car.id}`}
-            >
-              Compare prices
-            </Link>{' '}
-            {carsCount}
+            {carsCount ? (
+              <>
+                <Link
+                  className={styles.link}
+                  to={`${AppRoute.DETAILS}?model=${car.modelId}&complectation=${car.id}`}
+                >
+                  Ads found:
+                </Link>{' '}
+                {carsCount}
+              </>
+            ) : (
+              'No ads found'
+            )}
           </div>
         </div>
       </div>

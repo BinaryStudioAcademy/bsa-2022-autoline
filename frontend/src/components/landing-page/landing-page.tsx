@@ -9,7 +9,7 @@ import { PageContainer } from '@components/common/page-container/page-container'
 import { Header } from '@components/header/header';
 import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { SimpleAutoFilter } from '@components/simple-auto-filter/simple-auto-filter';
-import { TopCarsAutoria } from '@components/top-cars-autoria/top-cars-autoria';
+import { TopCarsAutoline } from '@components/top-cars-autoria/top-cars-autoline';
 import { useAppSelector } from '@hooks/hooks';
 import { useGetNewCarsQuery } from '@store/queries/new-cars';
 import { useGetRecentSearchCarsQuery } from '@store/queries/recent-serach-cars';
@@ -89,7 +89,7 @@ export const LandingPage = (): React.ReactElement => {
         </div>
         <div className={styles.fourthContainer}>
           <PageContainer>
-            <TopCarsAutoria />
+            <TopCarsAutoline />
           </PageContainer>
         </div>
       </div>

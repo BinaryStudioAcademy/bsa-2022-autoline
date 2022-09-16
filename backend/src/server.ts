@@ -20,6 +20,7 @@ import {
 } from '@routes/routes';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
+import { carsUpdateAutoriaDetails } from '@services/cars/cars-autoria-details.service';
 import { carsUpdatePricesFromAutoria } from '@services/cars/cars-update.service';
 import cors from 'cors';
 import express from 'express';
@@ -97,3 +98,19 @@ const task = cron.schedule('*/30 * * * *', async () => {
   );
 });
 task.start();
+
+cron
+  .schedule('*/30 * * * *', async () => {
+    Sentry.captureMessage(
+      'Cron task started: "Cars. Updating top cars details from AutoRia"',
+      'info',
+    );
+    const autoriaDetails = await carsUpdateAutoriaDetails();
+    Sentry.captureMessage(
+      `Cron task finished: "Cars. Updating top cars details from AutoRia". Updated cars ids: ${autoriaDetails.join(
+        ', ',
+      )}`,
+      'info',
+    );
+  })
+  .start();

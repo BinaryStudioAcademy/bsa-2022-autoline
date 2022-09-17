@@ -127,7 +127,24 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
   return (
     <div className={styles.listCard}>
       <Grid container spacing={2}>
-        <Grid item sm={4}>
+        <Grid item sm={4} xs={12}>
+          <div className={clsx(styles.titleWrapper, styles.showMobile)}>
+            <h4 className={styles.carTitle} onClick={handleCarModelClick}>
+              {modelName}
+            </h4>
+            <div className={styles.buttonsWrapper}>
+              <LikeButtton onClick={likeClick} isLiked={isLiked} />
+            </div>
+          </div>
+          <div className={clsx(styles.priceBlock, styles.showMobile)}>
+            <h4 className={styles.primaryPrice}>{modelPrice}</h4>
+
+            <span className={styles.secondaryPrice}>
+              {`UAH ${convertPrice(rate as string, model?.priceStart as number)}
+          - ${convertPrice(rate as string, model?.priceEnd as number)}
+          `}
+            </span>
+          </div>
           <Swiper
             className={styles.swiperWrapper}
             {...swiperParams}
@@ -161,8 +178,8 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
             </div>
           </div>
         </Grid>
-        <Grid item sm={8}>
-          <div className={styles.titleWrapper}>
+        <Grid item sm={8} xs={12}>
+          <div className={clsx(styles.titleWrapper, styles.hideMobile)}>
             <h4 className={styles.carTitle} onClick={handleCarModelClick}>
               {modelName}
             </h4>
@@ -170,22 +187,24 @@ const CarListItem: React.FC<CarListItemProps> = (props) => {
               <LikeButtton onClick={likeClick} isLiked={isLiked} />
             </div>
           </div>
-          <div className={styles.priceBlock}>
+          <div className={clsx(styles.priceBlock, styles.hideMobile)}>
             <h4 className={styles.primaryPrice}>{modelPrice}</h4>
 
             <span className={styles.secondaryPrice}>
-              {`UAH ${convertPrice(rate as string, model?.priceStart as number)}
+              {`${convertPrice(rate as string, model?.priceStart as number)}
           - ${convertPrice(rate as string, model?.priceEnd as number)}
           `}
             </span>
           </div>
-          <div className={clsx(styles.options, 'styledScrollbar')}>
-            {modelOptions?.map((optionName) => (
-              <button className={styles.pillButton} key={uuid4()}>
-                {optionName}
-              </button>
-            ))}
-          </div>
+          {modelOptions && modelOptions?.length > 0 && (
+            <div className={clsx(styles.options, 'styledScrollbar')}>
+              {modelOptions?.map((optionName) => (
+                <button className={styles.pillButton} key={uuid4()}>
+                  {optionName}
+                </button>
+              ))}
+            </div>
+          )}
           {complectations && (
             <div className={styles.tableWrapper}>
               <CompleteSetTableCollapsed

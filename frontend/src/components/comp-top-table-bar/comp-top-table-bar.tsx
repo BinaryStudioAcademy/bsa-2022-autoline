@@ -1,4 +1,4 @@
-import { useEffect, useState, Dispatch } from 'react';
+import { useEffect, Dispatch } from 'react';
 import { ScrollSyncPane } from 'react-scroll-sync';
 
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
@@ -23,7 +23,6 @@ export const CompTopTableBar = ({
 }: CompTopTableBarProps): React.ReactElement => {
   const { data: initialData, isLoading, refetch } = useGetComparisonCarsQuery();
   const [clearTable] = useClearComparisonMutation();
-  const [isCleared, setIsCleared] = useState(false);
 
   const handleClearTable = async (): Promise<void> => {
     await clearTable();
@@ -32,7 +31,6 @@ export const CompTopTableBar = ({
   const handleClearBtnClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
 
-    setIsCleared(true);
     handleClearTable();
   };
 
@@ -65,8 +63,8 @@ export const CompTopTableBar = ({
         </div>
       </div>
       <ScrollSyncPane>
-        <div className={styles.slider}>
-          {!isCleared ? (
+        <div className={clsx('styledScrollbar', styles.slider)}>
+          {initialData?.length ? (
             <Comparison cars={initialData} />
           ) : (
             <NoActiveComparison />

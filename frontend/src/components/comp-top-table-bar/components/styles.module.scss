@@ -21,18 +21,10 @@ html {
   display: flex;
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-.slider::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
 .slider {
   display: flex;
   width: 100%;
   overflow-x: scroll;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
 }
 
 .btnContainer {
@@ -221,4 +213,8 @@ html {
     max-width: 9rem;
     padding: 0;
   }
+}
+
+.inactive {
+  color: var(--gray400);
 }

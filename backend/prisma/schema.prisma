@@ -23,6 +23,7 @@ model User {
   viewed_cars         Users_Viewed_Cars[]
   user_comparisons    Comparison[]
   users_searches_cars Users_Searches_Cars[]
+  autoria_viewed_cars Users_Autoria_Viewed_Cars[]
 }
 
 model User_Security {
@@ -68,6 +69,34 @@ model Users_Searches_Cars {
   created_at          DateTime            @default(now())
 }
 
+model Users_Autoria_Viewed_Cars {
+  id              String   @id @default(uuid())
+  user            User     @relation(fields: [user_id], references: [id])
+  user_id         String
+  model           Model    @relation(fields: [model_id], references: [id])
+  model_id        String   @db.VarChar(300)
+  autoria_code    Int
+  created_at      DateTime @default(now())
+}
+
+model Autoria_Cars_Details {
+  id                   String             @id @default(uuid())
+  model                Model              @relation(fields: [model_id], references: [id])
+  model_id             String             @db.VarChar(300)
+  autoria_code         Int                @unique @db.Int
+  race                 Int
+  city                 City?              @relation(fields: [city_id], references: [id])
+  city_id              String?            @db.VarChar(300)
+  transmission_type    Transmission_Type? @relation(fields: [transmission_type_id], references: [id])
+  transmission_type_id String?            @db.VarChar(300)
+  fuel_type            Fuel_Type?         @relation(fields: [fuel_type_id], references: [id])
+  fuel_type_id         String?            @db.VarChar(300)
+  price                Int
+  autoria_url          String?            @db.VarChar(300)
+  photo_url            String?            @db.VarChar(300)
+  created_at           DateTime           @default(now())
+}
+
 model Body_Type {
   id           String @id @default(uuid())
   name         String @db.VarChar(300)
@@ -109,6 +138,8 @@ model Model {
   prices_ranges          Prices_Range[]
   users_wishlists        User_Wishlist[]
   users_searches_cars    Users_Searches_Cars[]
+  autoria_viewed_cars    Users_Autoria_Viewed_Cars[]
+  autoria_cars_details   Autoria_Cars_Details[]
   created_at          DateTime            @default(now())
 }
 
@@ -122,8 +153,9 @@ model Drivetrain {
 model Fuel_Type {
   id             String @id @default(uuid())
   name           String @db.VarChar(300)
-  autoria_code   Int
+  autoria_code   Int @unique @db.Int
   complectations Complectation[]
+  autoria_cars_details Autoria_Cars_Details[]
 }
 
 model Color {
@@ -136,8 +168,9 @@ model Color {
 model Transmission_Type {
   id             String @id @default(uuid())
   name           String @db.VarChar(300)
-  autoria_code   Int
+  autoria_code   Int @unique @db.Int
   complectations Complectation[]
+  autoria_cars_details Autoria_Cars_Details[]
 }
 
 model Option {
@@ -193,11 +226,12 @@ model Prices_Range {
 }
 
 model City {
-  id           String @id @default(uuid())
-  name         String @db.VarChar(300)
-  autoria_code Int
-  region_id    String
-  region       Region @relation(fields: [region_id], references: [id])
+  id                   String @id @default(uuid())
+  name                 String @db.VarChar(300)
+  autoria_code         Int @unique @db.Int
+  region_id            String
+  region               Region @relation(fields: [region_id], references: [id])
+  autoria_cars_details Autoria_Cars_Details[]
 }
 
 model Region {

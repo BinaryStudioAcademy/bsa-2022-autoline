@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
 import { ComparisonInfo, WishlistInput } from '@autoline/shared';
@@ -11,6 +11,7 @@ import {
 } from '@components/common/icons/icons';
 import { TrashCanIcon } from '@components/common/icons/trash-can/trash-can';
 import { WishlistContext } from '@contexts/wishlist-context';
+import { formatPrice } from '@helpers/helpers';
 import { useAppSelector } from '@hooks/hooks';
 import { useGetCarsCountQuery } from '@store/queries/comparisons';
 import { clsx } from 'clsx';
@@ -119,16 +120,25 @@ export const Complectation = ({
             </HashLink>
           </div>
           <div className={styles.compCarContainerInfoPrice}>
-            $ {car.priceStart} - {car.priceEnd}
+            <span className={!carsCount ? styles.inactive : undefined}>
+              {formatPrice(car.priceStart)} - {formatPrice(car.priceEnd)}
+            </span>
           </div>
           <div>
-            <Link
-              className={styles.link}
-              to={`${AppRoute.DETAILS}?model=${car.modelId}&complectation=${car.id}`}
-            >
-              Compare prices
-            </Link>{' '}
-            {carsCount}
+            {carsCount ? (
+              <>
+                <HashLink
+                  className={styles.link}
+                  smooth
+                  to={`${AppRoute.DETAILS}?model=${car.modelId}&complectation=${car.id}#buy`}
+                >
+                  Ads found:
+                </HashLink>{' '}
+                {carsCount}
+              </>
+            ) : (
+              'No ads found'
+            )}
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { PageContainer } from '@components/common/page-container/page-container'
 import { Spinner } from '@components/common/spinner/spinner';
 import { Title } from '@components/common/title/title';
 import { Header } from '@components/header/header';
-import { TopCarsAutoria } from '@components/top-cars-autoria/top-cars-autoria';
+import { TopCarsAutoline } from '@components/top-cars-autoria/top-cars-autoline';
 import { useAppSelector } from '@hooks/hooks';
 import SearchIcon from '@mui/icons-material/Search';
 import { Grid } from '@mui/material';
@@ -27,12 +27,12 @@ const SearchPage: React.FC = () => {
   return (
     <>
       <Header />
-      <PageContainer>
+      <PageContainer className={styles.searchPage}>
         <Title id="searchTitle" element="h3">
           Search
         </Title>
         <Grid container spacing={2} className={styles.searchPageContent}>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={8} className={styles.searchResultsCol}>
             <AppliedFiltersBar />
             {isLoading && <Spinner />}
             {cars.length === 0 && !isLoading && (
@@ -43,7 +43,7 @@ const SearchPage: React.FC = () => {
                   />
                   <h3 className={styles.noCarsTitle}>No cars found</h3>
                 </div>
-                <TopCarsAutoria
+                <TopCarsAutoline
                   cardsContainerClassName={styles.topSearchCars}
                 />
               </>
@@ -51,7 +51,7 @@ const SearchPage: React.FC = () => {
             {!isLoading &&
               cars.map((car) => <CarListItem {...car} key={car.model_id} />)}
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={4} className={styles.filtersCol}>
             <AdvancedAutoFilter />
           </Grid>
         </Grid>

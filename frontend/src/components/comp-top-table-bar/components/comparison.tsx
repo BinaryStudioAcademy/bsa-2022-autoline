@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 
 import { ComparisonInfo } from '@autoline/shared';
+import { CompareContext } from '@contexts/compare-context';
 import { useUpdatePositionsMutation } from '@store/queries/comparisons';
 
 import { Complectation } from './complectation';
@@ -8,17 +9,27 @@ import { NoActiveComparison } from './no-active-comparison';
 import styles from './styles.module.scss';
 
 export const Comparison = ({
-  positions,
   cars,
 }: {
-  positions: string[] | undefined;
   cars: ComparisonInfo[] | undefined;
 }): React.ReactElement => {
   const [updatePositions] = useUpdatePositionsMutation();
   const broadcast = new BroadcastChannel('compare');
 
-  const onCarDelete = (complectationId: string): void => {
-    const newPositions = positions?.filter((p) => p != complectationId);
+  const positions = useMemo(() => {
+    return cars?.map((car) => car.id);
+  }, [cars]);
+
+  const { handleDeleteFromCompare } = useContext(CompareContext);
+
+  const onCarDelete = async (car: ComparisonInfo): Promise<void> => {
+    handleDeleteFromCompare(
+      car.id,
+      `${car.brandName} ${car.modelName} ${car.complectationName}`,
+      car.position,
+    );
+
+    const newPositions = positions?.filter((p) => p != car.id);
     if (newPositions) updatePositions(newPositions);
     broadcast.postMessage('compare');
   };

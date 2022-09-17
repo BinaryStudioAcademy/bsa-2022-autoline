@@ -25,9 +25,11 @@ export interface ComparisonInfo {
 }
 const addCarToComparison = async ({
   complectationId,
+  lastPosition,
   userId,
 }: {
   complectationId: string;
+  lastPosition?: number;
   userId: string;
 }): Promise<Comparison> => {
   const activeComparison = await prisma.comparison.findFirst({
@@ -66,6 +68,28 @@ const addCarToComparison = async ({
         position: carsInComparisonAmount + 1,
       },
     });
+
+    if (lastPosition) {
+      const carsList = await prisma.comparisons_Complectations.findMany({
+        where: {
+          comparison_id: comparison.id,
+          complectation_id: {
+            not: complectationId,
+          },
+        },
+        orderBy: {
+          position: 'asc',
+        },
+        select: {
+          complectation_id: true,
+        },
+      });
+
+      const newArray = carsList.map((i) => i.complectation_id);
+      newArray.splice(lastPosition - 1, 0, complectationId);
+
+      await updatePositions(userId, newArray);
+    }
 
     return comparison;
   }

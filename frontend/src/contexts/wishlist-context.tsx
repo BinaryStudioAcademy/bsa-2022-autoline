@@ -40,14 +40,16 @@ const WishlistContextProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const handleCreateWishlist = async (data: WishlistInput): Promise<void> => {
-    await createWishlist(data);
-
-    toast.info(
-      <Notification children={`You added ${data.carName} to wishlist`} />,
-      {
-        icon: <HeartIcon />,
-      },
-    );
+    createWishlist(data)
+      .unwrap()
+      .then(() =>
+        toast.info(
+          <Notification children={`You added ${data.carName} to wishlist`} />,
+          {
+            icon: <HeartIcon />,
+          },
+        ),
+      );
   };
 
   const handleDeleteWishlist = async (data: WishlistInput): Promise<void> => {

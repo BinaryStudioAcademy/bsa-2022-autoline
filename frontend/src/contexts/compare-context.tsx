@@ -12,11 +12,17 @@ import {
 type CompareContextType = {
   comparedCars: string[] | undefined;
   handleCompareClick: (complectationId: string, name: string) => void;
+  handleDeleteFromCompare: (
+    complectationId: string,
+    complectationName: string,
+    lastPosition?: number,
+  ) => void;
 };
 
 const CompareContext = createContext<CompareContextType>({
   comparedCars: undefined,
   handleCompareClick: () => undefined,
+  handleDeleteFromCompare: () => undefined,
 });
 
 const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
@@ -29,30 +35,41 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const broadcast = new BroadcastChannel('compare');
 
-  const handleUndoDelete = async (complectationId: string): Promise<void> => {
-    await addCarToComparison({ complectationId });
+  const handleUndoDelete = async (
+    complectationId: string,
+    lastPosition?: number,
+  ): Promise<void> => {
+    await addCarToComparison({ complectationId, lastPosition });
   };
 
   const handleAddToCompare = async (
     complectationId: string,
     name: string,
   ): Promise<void> => {
-    addCarToComparison({ complectationId });
-
-    toast.info(<Notification children={`You added ${name} to comparison`} />, {
-      icon: <BalanceIcon sx={{ fontSize: 20 }} />,
-    });
+    addCarToComparison({ complectationId })
+      .unwrap()
+      .then(() =>
+        toast.info(
+          <Notification children={`You added ${name} to comparison`} />,
+          {
+            icon: <BalanceIcon sx={{ fontSize: 20 }} />,
+          },
+        ),
+      );
   };
   const handleDeleteFromCompare = async (
     complectationId: string,
-    name: string,
+    complectationName: string,
+    lastPosition?: number,
   ): Promise<void> => {
     await deleteCarFromComparison({ complectationId });
 
     toast.info(
       <Notification
-        children={`You removed ${name} from comparison`}
-        undo={async (): Promise<void> => handleUndoDelete(complectationId)}
+        children={`You removed ${complectationName} from comparison`}
+        undo={async (): Promise<void> =>
+          handleUndoDelete(complectationId, lastPosition)
+        }
       />,
       {
         icon: <BalanceIcon sx={{ fontSize: 20 }} />,
@@ -79,15 +96,12 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
   const value = {
     comparedCars,
     handleCompareClick,
+    handleDeleteFromCompare,
   };
 
   return (
     <CompareContext.Provider value={value}>{children}</CompareContext.Provider>
   );
-};
-
-export const useCompareNotifications = (): CompareContextType => {
-  return React.useContext(CompareContext);
 };
 
 export { CompareContextProvider, CompareContext };

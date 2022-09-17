@@ -7,6 +7,7 @@ import { api } from '..';
 
 interface ComparisonsRequest {
   complectationId: string;
+  lastPosition?: number;
 }
 
 export const comparisonsApi = api.injectEndpoints({

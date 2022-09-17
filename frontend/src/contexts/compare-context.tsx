@@ -46,15 +46,18 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
     complectationId: string,
     name: string,
   ): Promise<void> => {
+    const message = (
+      <>
+        You Added <span>{name}</span> from Comparison!
+      </>
+    );
+
     addCarToComparison({ complectationId })
       .unwrap()
       .then(() =>
-        toast.info(
-          <Notification children={`You added ${name} to comparison`} />,
-          {
-            icon: <BalanceIcon sx={{ fontSize: 20 }} />,
-          },
-        ),
+        toast.info(<Notification message={message} />, {
+          icon: <BalanceIcon sx={{ fontSize: 20 }} />,
+        }),
       );
   };
   const handleDeleteFromCompare = async (
@@ -64,9 +67,15 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
   ): Promise<void> => {
     await deleteCarFromComparison({ complectationId });
 
+    const message = (
+      <>
+        You Removed <span>{complectationName}</span> from Comparison!
+      </>
+    );
+
     toast.info(
       <Notification
-        children={`You removed ${complectationName} from comparison`}
+        message={message}
         undo={async (): Promise<void> =>
           handleUndoDelete(complectationId, lastPosition)
         }

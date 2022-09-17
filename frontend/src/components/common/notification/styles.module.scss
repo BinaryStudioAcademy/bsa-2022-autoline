@@ -1,16 +1,22 @@
 @import "@assets/css/variables";
 
 .undoButton {
+  margin-top: 10px;
   padding: 5px 15px;
 }
 
 .message {
   align-self: center;
+  color: var(--black);
   font-weight: 700;
   font-size: 16px;
 }
 
 .messageText {
-  margin-top: 0;
-  margin-bottom: 10px;
+  margin: 0;
+
+  span {
+    color: var(--blue100);
+    text-transform: uppercase;
+  }
 }

@@ -49,7 +49,14 @@ body,
   }
 }
 
+.Toastify__toast-body {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
 .Toastify__toast-icon {
+  align-self: start;
+
   svg,
   path {
     fill: var(--blue100);

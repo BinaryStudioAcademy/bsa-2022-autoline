@@ -48,7 +48,7 @@ const CompareContextProvider: React.FC<{ children: ReactNode }> = ({
   ): Promise<void> => {
     const message = (
       <>
-        You Added <span>{name}</span> from Comparison!
+        You Added <span>{name}</span> to Comparison!
       </>
     );
 

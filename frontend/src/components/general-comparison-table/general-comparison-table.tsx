@@ -95,24 +95,20 @@ const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
       <EqualHeight>
         <div className={clsx(styles.table, 'table')}>
           <div className={clsx(styles.tableTitles, styles.tableColumn)}>
-            {(!isOnlyDiff || !isIdentical.bodyType) && (
-              <EqualHeightElement name="minPrice">
-                <div
-                  className={clsx(styles.tableCell, styles.price, 'tableCell')}
-                >
-                  Minimum price
-                </div>
-              </EqualHeightElement>
-            )}
-            {(!isOnlyDiff || !isIdentical.bodyType) && (
-              <EqualHeightElement name="maxPrice">
-                <div
-                  className={clsx(styles.tableCell, styles.price, 'tableCell')}
-                >
-                  Maximum price
-                </div>
-              </EqualHeightElement>
-            )}
+            <EqualHeightElement name="minPrice">
+              <div
+                className={clsx(styles.tableCell, styles.price, 'tableCell')}
+              >
+                Minimum price
+              </div>
+            </EqualHeightElement>
+            <EqualHeightElement name="maxPrice">
+              <div
+                className={clsx(styles.tableCell, styles.price, 'tableCell')}
+              >
+                Maximum price
+              </div>
+            </EqualHeightElement>
             {(!isOnlyDiff || !isIdentical.bodyType) && (
               <EqualHeightElement name="bodytype">
                 <div className={clsx(styles.tableCell, 'tableCell')}>Type</div>
@@ -168,32 +164,28 @@ const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
                     className={clsx(styles.tableData, styles.tableColumn)}
                     key={info.id}
                   >
-                    {(!isOnlyDiff || !isIdentical.bodyType) && (
-                      <EqualHeightElement name="minPrice">
-                        <div
-                          className={clsx(
-                            styles.tableCell,
-                            styles.price,
-                            'tableCell',
-                          )}
-                        >
-                          {getPrices(info.id, pricesData)?.minPrice}
-                        </div>
-                      </EqualHeightElement>
-                    )}
-                    {(!isOnlyDiff || !isIdentical.bodyType) && (
-                      <EqualHeightElement name="maxPrice">
-                        <div
-                          className={clsx(
-                            styles.tableCell,
-                            styles.price,
-                            'tableCell',
-                          )}
-                        >
-                          {getPrices(info.id, pricesData)?.maxPrice}
-                        </div>
-                      </EqualHeightElement>
-                    )}
+                    <EqualHeightElement name="minPrice">
+                      <div
+                        className={clsx(
+                          styles.tableCell,
+                          styles.price,
+                          'tableCell',
+                        )}
+                      >
+                        {getPrices(info.id, pricesData)?.minPrice}
+                      </div>
+                    </EqualHeightElement>
+                    <EqualHeightElement name="maxPrice">
+                      <div
+                        className={clsx(
+                          styles.tableCell,
+                          styles.price,
+                          'tableCell',
+                        )}
+                      >
+                        {getPrices(info.id, pricesData)?.maxPrice}
+                      </div>
+                    </EqualHeightElement>
                     {(!isOnlyDiff || !isIdentical.bodyType) && (
                       <EqualHeightElement name="bodytype">
                         <div className={clsx(styles.tableCell, 'tableCell')}>

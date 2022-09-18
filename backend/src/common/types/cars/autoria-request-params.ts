@@ -19,6 +19,18 @@ interface CarsSearchAutoriaParams {
 
 interface CarDetailsResponse {
   USD: number;
+  autoData: {
+    raceInt: number;
+    fuelId: string;
+    gearBoxId: string;
+  };
+  stateData: {
+    stateId: string;
+  };
+  photoData: {
+    seoLinkF: string;
+  };
+  linkToView: string;
 }
 
 export type {

@@ -29,7 +29,7 @@ const setWishlist = async (
       user_id: userId,
       model_id: modelId,
       complectation_id: complectationId,
-      created_at: createdAt,
+      created_at: createdAt || undefined,
     },
     select: {
       id: true,

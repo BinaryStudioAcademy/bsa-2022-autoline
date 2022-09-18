@@ -13,6 +13,7 @@ import httpStatus from 'http-status-codes';
 const addCarToComparison = async (
   req: TypedRequestBody<{
     complectationId: string;
+    lastPosition?: number;
   }>,
   res: Response,
   next: NextFunction,
@@ -20,6 +21,7 @@ const addCarToComparison = async (
   try {
     const comparison = await comparisonsService.addCarToComparison({
       complectationId: req.body.complectationId,
+      lastPosition: req.body.lastPosition,
       userId: req.tokenPayload.sub,
     });
     res.status(httpStatus.CREATED).json(comparison);

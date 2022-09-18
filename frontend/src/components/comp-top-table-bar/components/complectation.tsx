@@ -13,10 +13,7 @@ import { TrashCanIcon } from '@components/common/icons/trash-can/trash-can';
 import { WishlistContext } from '@contexts/wishlist-context';
 import { formatPrice } from '@helpers/helpers';
 import { useAppSelector } from '@hooks/hooks';
-import {
-  useDeleteCarFromComparisonMutation,
-  useGetCarsCountQuery,
-} from '@store/queries/comparisons';
+import { useGetCarsCountQuery } from '@store/queries/comparisons';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
@@ -29,7 +26,7 @@ export const Complectation = ({
   lastCar,
 }: {
   car: ComparisonInfo;
-  onDelete: (complectationId: string) => void;
+  onDelete: (car: ComparisonInfo) => void;
   onMove: (complectationId: string, direction: string) => void;
   firstCar?: boolean;
   lastCar?: boolean;
@@ -50,12 +47,10 @@ export const Complectation = ({
     handleLikeClick(data);
   };
 
-  const [deleteCar] = useDeleteCarFromComparisonMutation();
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const handleDeleteCar = async (complectationId: string): Promise<void> => {
-    await deleteCar({ complectationId });
-    onDelete(complectationId);
+  const handleDeleteCar = async (): Promise<void> => {
+    onDelete(car);
   };
 
   const handleTrashClick = (event: React.MouseEvent): void => {
@@ -67,7 +62,7 @@ export const Complectation = ({
     }
 
     setIsDeleted(true);
-    handleDeleteCar(car.id);
+    handleDeleteCar();
   };
 
   if (isDeleted) return null;

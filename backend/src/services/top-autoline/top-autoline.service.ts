@@ -1,6 +1,7 @@
 import { prisma } from '@data/prisma-client';
 
 interface TopCar {
+  id: string;
   name: string;
   url: string;
   photoUrl: string;
@@ -35,6 +36,7 @@ const getTopAutolineCarsList = async (): Promise<TopCar[]> => {
           autoria_code: autoriaCode,
         },
         select: {
+          id: true,
           autoria_code: true,
           race: true,
           price: true,
@@ -75,6 +77,7 @@ const getTopAutolineCarsList = async (): Promise<TopCar[]> => {
 
   const formattedListOfCars = detailedListOfCars.map((car) => {
     return {
+      id: car?.id,
       name: car?.model.name,
       brand: {
         name: car?.model.brand.name,

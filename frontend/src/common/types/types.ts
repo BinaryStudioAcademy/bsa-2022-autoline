@@ -41,3 +41,4 @@ export type {
 } from './where-to-buy/where-to-buy';
 
 export type { Comparison } from './comparisons/comparisons.type';
+export type { reviewedCarsQuery } from './reviewed-cars/reviewed-cars';

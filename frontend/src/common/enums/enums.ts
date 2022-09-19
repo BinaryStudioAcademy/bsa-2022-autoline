@@ -7,3 +7,4 @@ export { CarSetOptions } from './car/options.enum';
 export { NewCarPath } from './api/new-cars-path';
 export { ComparisonTypeEnum } from './comparisons/comparison-type.enum';
 export { whereBuyPath } from './api/where-buy.path';
+export { reviewedCarsPath } from './api/top-autoline-path';

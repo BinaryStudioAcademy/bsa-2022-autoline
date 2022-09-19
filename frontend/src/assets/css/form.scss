@@ -3,8 +3,8 @@
 .MuiInputLabel-root.MuiInputLabel-shrink.Mui-focused,
 .MuiInputLabel-root.MuiInputLabel-shrink.MuiFormLabel-filled {
   color: var(--gray300);
-  font-size: 1rem;
-  transform: translate(0, 5px) scale(0.75);
+  font-size: 12px;
+  transform: translate(0, 4px) scale(0.75);
 }
 
 .MuiInputBase-root.MuiOutlinedInput-root.Mui-focused fieldset {
@@ -23,9 +23,9 @@
 .MuiInputBase-root {
   .MuiSelect-select {
     box-sizing: border-box;
-    height: 46px;
+    height: 40px;
     padding-top: 15px;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     padding-left: 0;
     font-size: 1rem;
     font-family: var(--primary-font);
@@ -45,27 +45,32 @@
 
 .MuiFormControl-root {
   .MuiFormLabel-root {
-    font-size: 1rem;
-    transform: translate(0, 1rem) scale(1);
+    top: 1px;
+    font-size: 12px;
+    transform: translate(0, 12px) scale(1);
   }
 }
 
 .MuiAutocomplete-root {
   .MuiFormControl-root {
     label {
+      top: 1px;
       left: 18px;
       color: var(--gray300);
-      font-size: 1rem;
+      font-size: 11px;
     }
   }
 
   .MuiInputBase-root.MuiOutlinedInput-root {
-    padding: 12px 15px 10px;
+    min-height: 40px;
+    padding: 12px 15px 5px;
     font-size: 1.1rem;
 
     input {
+      height: auto;
       padding: 2px 0 0 3px;
       font-size: 1.1rem;
+      line-height: normal;
     }
 
     .MuiAutocomplete-endAdornment {
@@ -75,7 +80,7 @@
   }
 
   .MuiInputLabel-root.MuiInputLabel-shrink {
-    font-size: 1rem;
+    font-size: 12px;
     transform: translate(0, 4px) scale(0.75);
   }
 

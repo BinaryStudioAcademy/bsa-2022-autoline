@@ -28,50 +28,46 @@ const getTopAutolineCarsList = async (): Promise<TopCar[]> => {
     },
   });
 
-  const detailedListOfCars = await Promise.all(
-    autoriaCodes.map(async ({ autoria_code: autoriaCode }) => {
-      const viewedСarsList = await prisma.autoria_Cars_Details.findFirst({
-        where: {
-          autoria_code: autoriaCode,
-        },
+  const detailedListOfCars = await prisma.autoria_Cars_Details.findMany({
+    where: {
+      autoria_code: {
+        in: autoriaCodes.map((item) => item.autoria_code),
+      },
+    },
+    select: {
+      autoria_code: true,
+      race: true,
+      price: true,
+      photo_url: true,
+      autoria_url: true,
+      model: {
         select: {
-          autoria_code: true,
-          race: true,
-          price: true,
-          photo_url: true,
-          autoria_url: true,
-          model: {
+          name: true,
+          brand: {
             select: {
               name: true,
-              brand: {
-                select: {
-                  name: true,
-                  logo_url: true,
-                },
-              },
-            },
-          },
-          city: {
-            select: {
-              name: true,
-            },
-          },
-          transmission_type: {
-            select: {
-              name: true,
-            },
-          },
-          fuel_type: {
-            select: {
-              name: true,
+              logo_url: true,
             },
           },
         },
-      });
-
-      return viewedСarsList;
-    }),
-  );
+      },
+      city: {
+        select: {
+          name: true,
+        },
+      },
+      transmission_type: {
+        select: {
+          name: true,
+        },
+      },
+      fuel_type: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
 
   const formattedListOfCars = detailedListOfCars.map((car) => {
     return {

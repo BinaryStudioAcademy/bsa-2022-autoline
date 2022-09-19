@@ -87,3 +87,5 @@ export type {
   GetAllComparisonsResponse,
   ChangeActiveComparisonRequestDto,
 } from './history-of-comparisons/history-of-comparisons';
+
+export type { TopCar } from './top-autoline/top-autoline';

@@ -4,42 +4,47 @@ import fuel from '@assets/images/fuel.svg';
 import mapPin from '@assets/images/map-pin.svg';
 import speedometr from '@assets/images/speedometr.svg';
 import transmission from '@assets/images/transmission.svg';
-import { TopCarsMockData } from '@common/types/types';
+import { TopCar } from '@autoline/shared';
 import { formatPrice } from '@helpers/helpers';
 
 import styles from './styles.module.scss';
 
 interface TopCarProps {
-  car: TopCarsMockData;
+  car: TopCar;
 }
 
 const TopCarCard: FC<TopCarProps> = ({ car }) => {
   const {
-    speedometr: speed,
+    race,
     transmission: transmiss,
     location,
-    fuel: fuelType,
+    fuelType,
     price: totalPrice,
     name,
     brand,
-    photoUrls,
+    photoUrl,
+    url,
   } = car;
   const fullName = `${brand.name} ${name}`;
 
+  const handleClick = (): void => {
+    window.open(url, '_blank');
+  };
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={handleClick}>
       <div className={styles.header}>
         <div className={styles.carInfo}>
           <img className={styles.carLogo} src={brand.logoUrl} alt="car logo" />
           <span className={styles.carName}>{fullName}</span>
         </div>
       </div>
-      <img src={photoUrls[0]} className={styles.carPicture} alt="car picture" />
+      <img src={photoUrl} className={styles.carPicture} alt="car picture" />
       <div className={styles.footer}>
         <div className={styles.labelGroup}>
           <div className={styles.label}>
             <img src={speedometr} alt="speedometr" />
-            {`${speed} km`}
+            {`${race} 000 km`}
           </div>
           <div className={styles.label}>
             <img src={mapPin} alt="location" />

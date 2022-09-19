@@ -8,4 +8,5 @@ export const API = {
   COMPARISONS: '/comparisons',
   RECENT_SEARCH: 'recent-search',
   HISTORY_COMPARISONS: '/history/comparisons',
+  TOP_AUTOLINE: '/top-autoline',
 };

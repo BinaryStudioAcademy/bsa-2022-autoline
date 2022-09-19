@@ -1,5 +1,6 @@
 import { PageContainer } from '@components/common/page-container/page-container';
 import { Title } from '@components/common/title/title';
+import { Footer } from '@components/footer/footer';
 import { Header } from '@components/header/header';
 import { HistoryOfComparisons } from '@components/history-of-comparisons/history-of-comparisons';
 import { UserInfoPanel } from '@components/user-info-panel/user-info-panel';
@@ -22,6 +23,7 @@ const PersonalPage = (): JSX.Element => {
           </Grid>
         </Grid>
       </PageContainer>
+      <Footer />
     </>
   );
 };

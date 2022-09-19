@@ -1,0 +1,36 @@
+@import "@assets/css/styles";
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #ffffff;
+
+  a {
+    margin: 10px;
+    color: black;
+    font-size: 1.2rem;
+
+    &:hover {
+      color: var(--blue100);
+    }
+
+    text-decoration: none;
+  }
+
+  div {
+    margin: 10px;
+  }
+}
+
+.copyright {
+  align-items: center;
+}
+
+.logo {
+  height: 2rem;
+}

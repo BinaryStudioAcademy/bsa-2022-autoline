@@ -9,12 +9,14 @@ import { ButtonOutline } from '@components/common/button-outline/button-outline'
 import { formatPrice } from '@helpers/helpers';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import Divider from '@mui/material/Divider';
+import { useReviewedCarMutation } from '@store/queries/reviewed-cars';
 import { clsx } from 'clsx';
 
 import styles from './styles.module.scss';
 
 interface WhereBuyItemProps {
   poster: WhereBuyInterface;
+  modelId: string;
 }
 
 const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
@@ -22,23 +24,28 @@ const WhereBuyItem: React.FC<WhereBuyItemProps> = (props) => {
   const [height, setHeight] = useState(0);
   const elementRef = useRef<HTMLDivElement>(null);
   const maxHeight = 48;
-
   useEffect(() => {
     const { current: appElement } = elementRef;
     setHeight(appElement?.clientHeight as number);
   }, []);
-
+  const [reviewCar] = useReviewedCarMutation();
   const {
     USD: price,
-    autoData: { description, year, raceInt: race },
+    autoData: { description, year, raceInt: race, autoId: autoriaCode },
     linkToView,
     title,
     color: { hex: color },
     stateData: { regionNameEng: location },
   } = props.poster;
+  const modelId = props.modelId;
   const url = `${AutoRiaLinks.LINK_ADVERT}${linkToView}`;
   const formatedPrice = formatPrice(price);
+
   const handleBuy = (): void => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      reviewCar({ modelId, autoriaCode });
+    }
     window.open(url, '_blank');
   };
 

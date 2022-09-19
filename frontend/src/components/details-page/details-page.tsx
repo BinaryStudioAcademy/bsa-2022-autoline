@@ -97,7 +97,7 @@ export const DetailsPage: FC = () => {
 
         <CollapseBlock id="buy" caption="Where to buy" open={!!complectationId}>
           {complectationId ? (
-            <WhereToBuy complectationId={complectationId} />
+            <WhereToBuy complectationId={complectationId} modelId={modelId} />
           ) : (
             <div className={styles.notification}>
               To view detailed information, please select the complectation in

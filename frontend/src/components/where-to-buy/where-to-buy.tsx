@@ -13,9 +13,13 @@ import { WhereBuyItem } from './where-buy-item/where-buy-item';
 
 interface WhereToBuyProps {
   complectationId: string;
+  modelId: string;
 }
 
-const WhereToBuy: React.FC<WhereToBuyProps> = ({ complectationId }) => {
+const WhereToBuy: React.FC<WhereToBuyProps> = ({
+  complectationId,
+  modelId,
+}) => {
   const dispatch = useDispatch();
   const [isSorted, setIsSorted] = useState(false);
   const { ads } = useAppSelector((state) => state.whereBuy);
@@ -70,7 +74,11 @@ const WhereToBuy: React.FC<WhereToBuyProps> = ({ complectationId }) => {
       </div>
       {advertsList &&
         advertsList.map((poster) => (
-          <WhereBuyItem key={poster.autoData.autoId} poster={poster} />
+          <WhereBuyItem
+            key={poster.autoData.autoId}
+            poster={poster}
+            modelId={modelId}
+          />
         ))}
       <div className={styles.seeAll}>
         <button className={styles.moreButton} onClick={seeMoreHandler}>

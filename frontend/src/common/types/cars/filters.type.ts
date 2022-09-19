@@ -2,6 +2,7 @@ import { BrandDetailsType } from '@common/types/cars/brand-details.type';
 import { RangeFiltersType } from '@common/types/cars/range-filters.type';
 
 type CheckListsType = {
+  regionId: string[];
   bodyTypeId: string[];
   colorId: string[];
   transmissionTypeId: string[];

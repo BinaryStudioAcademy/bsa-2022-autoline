@@ -1,19 +1,5 @@
+import { TopCar } from '@autoline/shared';
 import { prisma } from '@data/prisma-client';
-
-interface TopCar {
-  name: string;
-  url: string;
-  photoUrl: string;
-  brand: {
-    name: string;
-    logoUrl: string;
-  };
-  price: number;
-  race: number;
-  transmission: string;
-  location: string;
-  fuelType: string;
-}
 
 const getTopAutolineCarsList = async (): Promise<TopCar[]> => {
   const autoriaCodes = await prisma.users_Autoria_Viewed_Cars.groupBy({
@@ -35,6 +21,7 @@ const getTopAutolineCarsList = async (): Promise<TopCar[]> => {
       },
     },
     select: {
+      id: true,
       autoria_code: true,
       race: true,
       price: true,
@@ -71,6 +58,7 @@ const getTopAutolineCarsList = async (): Promise<TopCar[]> => {
 
   const formattedListOfCars = detailedListOfCars.map((car) => {
     return {
+      id: car.id,
       name: car?.model.name,
       brand: {
         name: car?.model.brand.name,

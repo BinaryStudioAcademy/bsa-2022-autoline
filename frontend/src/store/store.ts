@@ -1,3 +1,4 @@
+import { ENV } from '@common/enums/app/env.enum';
 import { configureStore } from '@reduxjs/toolkit';
 import { authMiddleware } from '@store/auth/middlewares';
 import { api } from '@store/queries';
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: rootReducer,
+  devTools: ENV.DEV,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .prepend(authMiddleware.middleware, checkTokenMiddleware.middleware)

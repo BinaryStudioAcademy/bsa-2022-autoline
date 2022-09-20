@@ -75,7 +75,7 @@ const CompleteSetTable: React.FC<CompleteSetPropsType> = (props) => {
               {CarSetOptions.Motor}
             </TableCell>
             <TableCell className={styles.tableTitle}>
-              {CarSetOptions.WheelDrive}
+              {CarSetOptions.TransmissionType}
             </TableCell>
             <TableCell className={styles.tableTitle}>
               {CarSetOptions.Engine}

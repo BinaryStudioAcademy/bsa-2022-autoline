@@ -43,7 +43,7 @@ model User_Security {
 model User_Wishlist {
   id               String        @id @default(uuid())
   user_id          String
-  user             User    @relation(fields: [user_id], references: [id])
+  user             User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   model_id         String?
   model            Model?         @relation(fields: [model_id], references: [id])
   complectation_id String?
@@ -53,7 +53,7 @@ model User_Wishlist {
 
 model Users_Viewed_Cars {
   id                  String              @id @default(uuid())
-  user                User                @relation(fields: [user_id], references: [id])
+  user                User                @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id             String
   complectation       Complectation       @relation(fields: [complectation_id], references: [id])
   complectation_id    String              @db.VarChar(300)
@@ -62,7 +62,7 @@ model Users_Viewed_Cars {
 
 model Users_Searches_Cars {
   id                  String              @id @default(uuid())
-  user                User                @relation(fields: [user_id], references: [id])
+  user                User                @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id             String
   model               Model               @relation(fields: [model_id], references: [id])
   model_id            String              @db.VarChar(300)
@@ -71,7 +71,7 @@ model Users_Searches_Cars {
 
 model Users_Autoria_Viewed_Cars {
   id              String   @id @default(uuid())
-  user            User     @relation(fields: [user_id], references: [id])
+  user            User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id         String
   model           Model    @relation(fields: [model_id], references: [id])
   model_id        String   @db.VarChar(300)
@@ -248,7 +248,7 @@ model Comparison {
   created_at                  DateTime                      @default(now())
   updated_at                  DateTime
   user_id                     String
-  user                        User                          @relation(fields: [user_id], references: [id])
+  user                        User                          @relation(fields: [user_id], references: [id], onDelete: Cascade)
   comparisons_complectations  Comparisons_Complectations[]
 }
 
@@ -257,7 +257,7 @@ model Comparisons_Complectations {
   comparison_id     String
   complectation_id  String
   position          Int
-  comparison        Comparison       @relation(fields: [comparison_id], references: [id])
+  comparison        Comparison       @relation(fields: [comparison_id], references: [id], onDelete: Cascade)
   complectation     Complectation    @relation(fields: [complectation_id], references: [id])
 
   @@unique([comparison_id, complectation_id])

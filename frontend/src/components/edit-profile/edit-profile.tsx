@@ -306,6 +306,7 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
                   name="password"
                   type="password"
                   required={false}
+                  autoComplete="new-password"
                   errors={errors}
                   control={control}
                   inputLabel="Current Password"

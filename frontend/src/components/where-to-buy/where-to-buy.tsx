@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { useAppSelector } from '@hooks/store/store.hooks';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
 import { useGetWhereBuyQuery } from '@store/queries/where-buy';
 import { setPage } from '@store/root-reducer';
@@ -13,9 +14,13 @@ import { WhereBuyItem } from './where-buy-item/where-buy-item';
 
 interface WhereToBuyProps {
   complectationId: string;
+  modelId: string;
 }
 
-const WhereToBuy: React.FC<WhereToBuyProps> = ({ complectationId }) => {
+const WhereToBuy: React.FC<WhereToBuyProps> = ({
+  complectationId,
+  modelId,
+}) => {
   const dispatch = useDispatch();
   const [isSorted, setIsSorted] = useState(false);
   const [showSeeMore, setShowSeeMore] = useState(true);
@@ -70,18 +75,28 @@ const WhereToBuy: React.FC<WhereToBuyProps> = ({ complectationId }) => {
       <div className={styles.title}>
         <div className={styles.carName}>{name}</div>
         <div className={styles.priceDiv}>
-          <ButtonOutline
+          <button
             className={styles.priceButton}
-            text="By Price"
             onClick={(): void => {
               setIsSorted(!isSorted);
             }}
-          />
+          >
+            By Price{' '}
+            {isSorted ? (
+              <ExpandMoreIcon color="primary" />
+            ) : (
+              <ExpandLessIcon color="primary" />
+            )}
+          </button>
         </div>
       </div>
       {advertsList &&
         advertsList.map((poster) => (
-          <WhereBuyItem key={poster.autoData.autoId} poster={poster} />
+          <WhereBuyItem
+            key={poster.autoData.autoId}
+            poster={poster}
+            modelId={modelId}
+          />
         ))}
       {showSeeMore ? (
         <div className={styles.seeAll}>

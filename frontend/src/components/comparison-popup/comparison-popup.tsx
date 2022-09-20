@@ -4,6 +4,7 @@ import CrossIcon from '@assets/images/edit-profile/cross.svg';
 import {
   ComplectationOfModelResponse,
   ComlectationShortInfoResponse,
+  CarPreview,
 } from '@autoline/shared';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
@@ -22,10 +23,12 @@ import {
   useAddCarToComparisonMutation,
 } from '@store/queries/comparisons';
 import { useLazyGetComplectationByIdQuery } from '@store/queries/details-panel';
+import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 import { clsx } from 'clsx';
 
 import { CarCard } from './car-card/car-card';
 import styles from './styles.module.scss';
+import { WishlistCard } from './wishlist-card/wishlist-card';
 
 interface SelectingComplactationData {
   brand: string;
@@ -49,6 +52,10 @@ const ComparisonPopup: FC<ComparisonPopupProps> = ({
   const [availableComplectation, setAvailableComplectation] = useState<
     ComplectationOfModelResponse[]
   >([]);
+  const [availableWhishlist, setAvailableWhishlist] = useState<CarPreview[]>(
+    [],
+  );
+  const [isWishlistActive, setIsWishlistActive] = useState(false);
   const { data: brands } = useGetBrandsQuery();
   const { control, handleSubmit, watch, reset } =
     useAppForm<SelectingComplactationData>({
@@ -63,6 +70,7 @@ const ComparisonPopup: FC<ComparisonPopupProps> = ({
     useLazyGetComplectationsOfModelQuery();
   const [getComplectationById, complectationInfo] =
     useLazyGetComplectationByIdQuery();
+  const { data: wishlist } = useGetWishlistsQuery();
 
   useEffect(() => {
     comparisonIsLoading ||
@@ -91,6 +99,16 @@ const ComparisonPopup: FC<ComparisonPopupProps> = ({
       reset && reset({ brand: '', model: '', complectation: '' });
     }
   }, [complectationInfo.isFetching]);
+
+  useEffect(() => {
+    if (wishlist?.complectations) {
+      const list = wishlist?.complectations.filter(
+        (complectation) =>
+          !comparisonList.find((item) => item.id === complectation.id),
+      );
+      setAvailableWhishlist(list);
+    }
+  }, [wishlist, comparisonList]);
 
   useEffect(() => {
     if (complectations.data) {
@@ -160,55 +178,87 @@ const ComparisonPopup: FC<ComparisonPopupProps> = ({
               </ul>
             </div>
             <div className={styles.comparisonRight}>
-              <h3 className={styles.comparisonTitle}>
-                Select a complectation from the drop-down list
-              </h3>
+              <div className="comparisonRightHeader">
+                <h3 className={styles.comparisonTitle}>
+                  Select a complectation from:
+                </h3>
+                <ButtonOutline
+                  text="all models"
+                  className={clsx(
+                    styles.button,
+                    !isWishlistActive && styles.active,
+                  )}
+                  onClick={(): void => setIsWishlistActive(false)}
+                />
+                <ButtonOutline
+                  text="whishlist"
+                  className={clsx(
+                    styles.button,
+                    isWishlistActive && styles.active,
+                  )}
+                  onClick={(): void => setIsWishlistActive(true)}
+                />
+              </div>
               <div className={styles.comparisonForm}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <SelectFieldForm
-                    id="brand"
-                    name="brand"
-                    required={false}
-                    control={control}
-                    label="Select a brand"
-                    defaultValue="not_appliable"
-                  >
-                    {brands?.map((item) => (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.name}
-                      </MenuItem>
-                    ))}
-                  </SelectFieldForm>
-                  <SelectFieldForm
-                    id="model"
-                    name="model"
-                    required={false}
-                    control={control}
-                    label="Select a model"
-                    defaultValue="not_appliable"
-                    disabled={!watch('brand')}
-                  >
-                    {models.data?.map((item) => (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.name}
-                      </MenuItem>
-                    ))}
-                  </SelectFieldForm>
-                  <SelectFieldForm
-                    id="complectation"
-                    name="complectation"
-                    required={false}
-                    control={control}
-                    label="Select a complectation"
-                    defaultValue="not_appliable"
-                    disabled={!watch('model') || !watch('brand')}
-                  >
-                    {availableComplectation.map((item) => (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.name}
-                      </MenuItem>
-                    ))}
-                  </SelectFieldForm>
+                  <div className={isWishlistActive ? '' : styles.displayNone}>
+                    <ul className={clsx(styles.wishlist, 'styledScrollbar')}>
+                      {availableWhishlist.map((item) => (
+                        <li key={item.id}>
+                          <WishlistCard
+                            carData={item}
+                            addItem={setComparisonList}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className={isWishlistActive ? styles.displayNone : ''}>
+                    <SelectFieldForm
+                      id="brand"
+                      name="brand"
+                      required={false}
+                      control={control}
+                      label="Select a brand"
+                      defaultValue="not_appliable"
+                    >
+                      {brands?.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      ))}
+                    </SelectFieldForm>
+                    <SelectFieldForm
+                      id="model"
+                      name="model"
+                      required={false}
+                      control={control}
+                      label="Select a model"
+                      defaultValue="not_appliable"
+                      disabled={!watch('brand')}
+                    >
+                      {models.data?.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      ))}
+                    </SelectFieldForm>
+                    <SelectFieldForm
+                      id="complectation"
+                      name="complectation"
+                      required={false}
+                      control={control}
+                      label="Select a complectation"
+                      defaultValue="not_appliable"
+                      disabled={!watch('model') || !watch('brand')}
+                    >
+                      {availableComplectation.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      ))}
+                    </SelectFieldForm>
+                  </div>
                   <div className={styles.btnWrapper}>
                     <ButtonOutline
                       text="Cancel"

@@ -29,7 +29,7 @@ export const SelectYearRange: React.FC<RangeYearProps> = ({
 }) => {
   const years = Array(end - start + 1)
     .fill(0)
-    .map((_, idx) => start + idx);
+    .map((_, idx) => end - idx);
 
   return (
     <SelectFieldForm

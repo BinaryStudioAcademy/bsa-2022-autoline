@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 165px;
+  min-height: 200px;
+  padding: 15px;
+  background-color: var(--white);
+  border: 1px solid var(--gray200);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: ease 0.3s;
+
+  &:hover {
+    border-color: var(--blue100);
+  }
+}
+
+.carPicture {
+  width: 135px;
+  height: 85px;
+  margin-bottom: 10px;
+
+  & img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+}
+
+.carName {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.price {
+  margin: 0;
+  color: var(--blue100);
+  font-size: 1rem;
+}

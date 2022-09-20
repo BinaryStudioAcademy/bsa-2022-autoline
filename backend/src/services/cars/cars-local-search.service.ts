@@ -34,6 +34,16 @@ const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
             gte: data.enginePowerStart ? +data.enginePowerStart : undefined,
             lte: data.enginePowerEnd ? +data.enginePowerEnd : undefined,
           },
+          prices_ranges: {
+            some: {
+              price_start: {
+                lte: data.priceEnd ? +data.priceEnd : undefined,
+              },
+              price_end: {
+                gte: data.priceStart ? +data.priceStart : undefined,
+              },
+            },
+          },
         },
       },
     },
@@ -61,16 +71,6 @@ const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
         gte: data.yearStart ? +data.yearStart : undefined,
       },
       year_end: getYearEndCondition(data.yearEnd),
-      prices_ranges: {
-        some: {
-          price_start: {
-            gte: data.priceStart ? +data.priceStart : undefined,
-          },
-          price_end: {
-            lte: data.priceEnd ? +data.priceEnd : undefined,
-          },
-        },
-      },
       complectations: {
         some: {
           color_id: {
@@ -96,6 +96,16 @@ const carsSearch = async (data: CarsSearchParams): Promise<SearchResult[]> => {
           engine_power: {
             gte: data.enginePowerStart ? +data.enginePowerStart : undefined,
             lte: data.enginePowerEnd ? +data.enginePowerEnd : undefined,
+          },
+          prices_ranges: {
+            some: {
+              price_start: {
+                lte: data.priceEnd ? +data.priceEnd : undefined,
+              },
+              price_end: {
+                gte: data.priceStart ? +data.priceStart : undefined,
+              },
+            },
           },
         },
       },

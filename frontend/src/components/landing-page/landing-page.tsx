@@ -6,6 +6,7 @@ import { CarsCategories } from '@components/cars-categories/cars-categories';
 import { ButtonFill } from '@components/common/button-fill/button-fill';
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
 import { PageContainer } from '@components/common/page-container/page-container';
+import { Footer } from '@components/footer/footer';
 import { Header } from '@components/header/header';
 import { NewCarCard } from '@components/new-car-card/new-car-card';
 import { SimpleAutoFilter } from '@components/simple-auto-filter/simple-auto-filter';
@@ -93,6 +94,7 @@ export const LandingPage = (): React.ReactElement => {
           </PageContainer>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

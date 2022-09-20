@@ -33,7 +33,8 @@ const ComparisonPage: React.FC = () => {
       <Header />
       <PageContainer>
         <Title id="comparisonTitle" element="h3">
-          Comparison
+          Comparing <span className={styles.count}>{data?.length}</span>{' '}
+          complectations
         </Title>
         <ScrollSync>
           <div className={styles.tablesWrapper}>

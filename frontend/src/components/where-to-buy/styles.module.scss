@@ -42,11 +42,24 @@
 }
 
 .priceButton {
-  width: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  margin-right: 115px;
   padding: 6px;
   color: var(--black);
-  border-color: var(--gray300);
+  font-family: var(--primary-font);
+  background-color: transparent;
+  border: 1px solid var(--gray300);
   border-radius: 4px;
+  cursor: pointer;
+  transition: all 300ms;
+
+  &:hover {
+    border-color: var(--blue100);
+    transition: all 300ms;
+  }
 }
 
 .seeAll {
@@ -73,5 +86,9 @@
     display: flex;
     justify-content: center;
     width: 100px;
+  }
+
+  .priceButton {
+    margin-right: 0;
   }
 }

@@ -1,13 +1,15 @@
-import React, { useContext } from 'react';
+import React, { MouseEvent, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WishlistInput } from '@autoline/shared/common/types/types';
 import { AppRoute } from '@common/enums/enums';
 import { ExtendedCarCardPropsType } from '@common/types/types';
 import { HeartIcon } from '@components/common/icons/icons';
+import { CompareContext } from '@contexts/compare-context';
 import { WishlistContext } from '@contexts/wishlist-context';
 import { formatPrice } from '@helpers/helpers';
 import { useAppSelector } from '@hooks/hooks';
+import BalanceIcon from '@mui/icons-material/Balance';
 import { selectAuthToken } from '@store/selectors';
 import { clsx } from 'clsx';
 
@@ -31,6 +33,7 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
     },
   } = props;
   const { likedCars, handleLikeClick } = useContext(WishlistContext);
+  const { comparedCars, handleCompareClick } = useContext(CompareContext);
 
   const isLiked = likedCars?.includes(carId);
 
@@ -66,6 +69,11 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
     handleLikeClick(data);
   };
 
+  const compareClick = (event?: MouseEvent): void => {
+    event?.stopPropagation();
+    handleCompareClick(carId, `${brandName} ${carName} ${complectationName}`);
+  };
+
   const handleCardClick = (): void => {
     type !== 'model'
       ? navigate({
@@ -99,6 +107,19 @@ const NewCarCard: React.FC<ExtendedCarCardPropsType> = (props) => {
         >
           <HeartIcon />
         </button>
+        {type === 'complectation' && (
+          <button
+            className={clsx(
+              styles.button,
+              styles.iconButton,
+              styles.compareButton,
+              comparedCars?.includes(carId) && styles.isCompared,
+            )}
+            onClick={compareClick}
+          >
+            <BalanceIcon color="primary" sx={{ fontSize: 18 }} />
+          </button>
+        )}
       </div>
       <img src={photoUrls[0]} alt="car image" className={styles.carImage} />
       <div className={styles.cardFooter}>

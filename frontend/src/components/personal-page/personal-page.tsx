@@ -9,7 +9,9 @@ import { UserInfoPanel } from '@components/user-info-panel/user-info-panel';
 import { ViewedCars } from '@components/viewed-cars/viewed-cars';
 import { Wishlist } from '@components/wishlist/wishlist';
 import { Grid } from '@mui/material';
+import { useGetAllComparisonsQuery } from '@store/queries/history-of-comparisons';
 import { useGetHistoryOfViwedCarsQuery } from '@store/queries/history-viewed-cars';
+import { useGetWishlistsQuery } from '@store/queries/preferences/wishlist';
 
 const PersonalPage = (): JSX.Element => {
   const [params] = useState({
@@ -17,9 +19,12 @@ const PersonalPage = (): JSX.Element => {
     take: '10',
   });
 
-  const { isLoading } = useGetHistoryOfViwedCarsQuery(params);
+  const { isLoading: viewedCarsIsLoading } =
+    useGetHistoryOfViwedCarsQuery(params);
+  const { isLoading: wishlistIsLoading } = useGetWishlistsQuery();
+  const { isLoading: comparisonsIsLoading } = useGetAllComparisonsQuery();
 
-  if (isLoading) {
+  if (viewedCarsIsLoading || wishlistIsLoading || comparisonsIsLoading) {
     return <Spinner />;
   }
 

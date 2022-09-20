@@ -1,6 +1,13 @@
 import ErrorIcon from '@assets/images/error.svg';
 import { SelectFieldPropsType } from '@common/types/types';
-import { FormControl, InputLabel, FormHelperText } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
+import {
+  FormControl,
+  InputLabel,
+  FormHelperText,
+  IconButton,
+  SelectChangeEvent,
+} from '@mui/material';
 import Select from '@mui/material/Select';
 import { clsx } from 'clsx';
 
@@ -10,6 +17,15 @@ import styles from './styles.module.scss';
 export const SelectField = (
   props: SelectFieldPropsType,
 ): React.ReactElement => {
+  const handleClearClick = (): void => {
+    if (!props?.onChange) return;
+    props.onChange({
+      target: {
+        value: '',
+      },
+    } as SelectChangeEvent);
+  };
+
   return (
     <FormControl
       variant="standard"
@@ -32,6 +48,14 @@ export const SelectField = (
       >
         {props.children}
       </Select>
+      {props.clearable && (
+        <IconButton
+          sx={{ position: 'absolute', padding: '3px' }}
+          className={styles.clearButton}
+        >
+          <ClearIcon onClick={handleClearClick} />
+        </IconButton>
+      )}
       {props.errors && (
         <FormHelperText className={styles.error}>
           <img className={styles.errorIcon} src={ErrorIcon} alt="Error" />

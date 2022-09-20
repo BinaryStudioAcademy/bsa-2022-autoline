@@ -32,6 +32,28 @@
       vertical-align: middle;
     }
   }
+
+  .clearButton {
+    top: 10px;
+    right: 28px;
+    visibility: hidden;
+    cursor: pointer;
+
+    svg {
+      color: var(--gray300);
+      font-size: 14px;
+    }
+  }
+
+  &:hover {
+    .clearButton {
+      visibility: visible;
+    }
+
+    fieldset {
+      border-color: black;
+    }
+  }
 }
 
 .select {

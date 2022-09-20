@@ -63,6 +63,7 @@ const RangeSelector: FC<Props> = (props) => {
         value={String(props.selectedMin) || ''}
         onChange={handleMinChange}
         required={false}
+        clearable
       >
         {props.list.map((item, index) => (
           <MenuItem key={index} value={item}>
@@ -76,6 +77,7 @@ const RangeSelector: FC<Props> = (props) => {
         value={String(props.selectedMax) || ''}
         onChange={handleMaxChange}
         required={false}
+        clearable
       >
         {props.list.map((item, index) => (
           <MenuItem key={index} value={item}>

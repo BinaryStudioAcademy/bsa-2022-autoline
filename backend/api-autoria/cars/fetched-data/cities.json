@@ -1,7 +1,7 @@
 [
   {
     "data": [
-      { "name": "Kiev", "value": 10 },
+      { "name": "Kyiv", "value": 10 },
       { "name": "Baryshivka", "value": 209 },
       { "name": "Bila Tserkva", "value": 210 },
       { "name": "Bohuslav", "value": 211 },
@@ -28,13 +28,13 @@
       { "name": "Tetiiv", "value": 233 },
       { "name": "Fastiv", "value": 234 },
       { "name": "Yahotyn", "value": 235 },
-      { "name": "rzishev", "value": 626 }
+      { "name": "Rzishev", "value": 626 }
     ],
     "regionId": 10
   },
   {
     "data": [
-      { "name": "Vinnitsa", "value": 1 },
+      { "name": "Vinnytsia", "value": 1 },
       { "name": "Zmerinka", "value": 27 },
       { "name": "Koziatin", "value": 30 },
       { "name": "Krizopol", "value": 31 },
@@ -90,7 +90,7 @@
   },
   {
     "data": [
-      { "name": "Dnipropetrovsk", "value": 11 },
+      { "name": "Dnipro", "value": 11 },
       { "name": "Apostolove", "value": 68 },
       { "name": "Vasylkivka", "value": 69 },
       { "name": "Verkhnodniprovsk", "value": 70 },
@@ -124,7 +124,7 @@
   },
   {
     "data": [
-      { "name": "Amvrosiivka", "value": 99 },
+      { "name": "Amrosiivka", "value": 99 },
       { "name": "Artemivsk", "value": 100 },
       { "name": "Velyka Novosilka", "value": 101 },
       { "name": "Volnovakha", "value": 102 },
@@ -161,7 +161,7 @@
   },
   {
     "data": [
-      { "name": "Zhitomir", "value": 2 },
+      { "name": "Zhytomyr", "value": 2 },
       { "name": "Andrushivka", "value": 131 },
       { "name": "Baranivka", "value": 132 },
       { "name": "Berdychiv", "value": 133 },
@@ -189,7 +189,7 @@
   },
   {
     "data": [
-      { "name": "Uzhgorod", "value": 22 },
+      { "name": "Uzhhorod", "value": 22 },
       { "name": "Berehove", "value": 155 },
       { "name": "Velykyi Bereznyi", "value": 156 },
       { "name": "Vynohradiv", "value": 157 },
@@ -208,7 +208,7 @@
   },
   {
     "data": [
-      { "name": "Zaporozhye", "value": 14 },
+      { "name": "Zaporizhzhia", "value": 14 },
       { "name": "Melitopol", "value": 28 },
       { "name": "Berdiansk", "value": 170 },
       { "name": "Vasylivka", "value": 171 },
@@ -234,7 +234,7 @@
   },
   {
     "data": [
-      { "name": "Ivano-Frankovsk", "value": 15 },
+      { "name": "Ivano-Frankivsk", "value": 15 },
       { "name": "Bohorodchany", "value": 192 },
       { "name": "Bolekhiv", "value": 193 },
       { "name": "Verkhovyna", "value": 194 },
@@ -257,7 +257,7 @@
   },
   {
     "data": [
-      { "name": "Kirovograd", "value": 16 },
+      { "name": "Kirovohrad", "value": 16 },
       { "name": "Bobrynets", "value": 236 },
       { "name": "Vilshanka", "value": 237 },
       { "name": "Haivoron", "value": 238 },
@@ -316,7 +316,7 @@
   },
   {
     "data": [
-      { "name": "Lvov", "value": 5 },
+      { "name": "Lviv", "value": 5 },
       { "name": "Boryslav", "value": 287 },
       { "name": "Brody", "value": 288 },
       { "name": "Busk", "value": 289 },
@@ -348,7 +348,7 @@
   },
   {
     "data": [
-      { "name": "Nikolaev", "value": 19 },
+      { "name": "Mykolayiv", "value": 19 },
       { "name": "Arbuzynka", "value": 311 },
       { "name": "Bashtanka", "value": 312 },
       { "name": "Berezanka", "value": 313 },
@@ -374,7 +374,7 @@
   },
   {
     "data": [
-      { "name": "Odessa", "value": 12 },
+      { "name": "Odesa", "value": 12 },
       { "name": "Ananiv", "value": 332 },
       { "name": "Artsyz", "value": 333 },
       { "name": "Balta", "value": 334 },
@@ -439,7 +439,7 @@
   },
   {
     "data": [
-      { "name": "Rovno", "value": 9 },
+      { "name": "Rivne", "value": 9 },
       { "name": "Berezne", "value": 388 },
       { "name": "Volodymyrets", "value": 389 },
       { "name": "Hoscha", "value": 390 },
@@ -565,7 +565,7 @@
   },
   {
     "data": [
-      { "name": "Khmelnitski", "value": 4 },
+      { "name": "Khmelnytskyi", "value": 4 },
       { "name": "Bilohiria", "value": 491 },
       { "name": "Vinkivtsi", "value": 492 },
       { "name": "Volochysk", "value": 493 },
@@ -591,7 +591,7 @@
   },
   {
     "data": [
-      { "name": "Cherkassy", "value": 24 },
+      { "name": "Cherkasy", "value": 24 },
       { "name": "Horodysche", "value": 513 },
       { "name": "Drabiv", "value": 514 },
       { "name": "Zhashkiv", "value": 515 },
@@ -616,7 +616,7 @@
   },
   {
     "data": [
-      { "name": "Chernigov", "value": 6 },
+      { "name": "Chernihiv", "value": 6 },
       { "name": "Bakhmach", "value": 546 },
       { "name": "Bobrovytsia", "value": 547 },
       { "name": "Borzna", "value": 548 },
@@ -644,7 +644,7 @@
   },
   {
     "data": [
-      { "name": "Chernovtsy", "value": 25 },
+      { "name": "Chernivtsi", "value": 25 },
       { "name": "Vyzhnytsia", "value": 534 },
       { "name": "Hertsa", "value": 535 },
       { "name": "Hlyboka", "value": 536 },

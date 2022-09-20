@@ -5,6 +5,7 @@ import {
 } from '@autoline/shared';
 import { prisma } from '@data/prisma-client';
 import {
+  Region,
   Body_Type,
   Brand,
   Color,
@@ -15,6 +16,7 @@ import {
 } from '@prisma/client';
 
 type UsedOptionsType = {
+  regions: Region[];
   bodyTypes: Body_Type[];
   colors: Color[];
   drivetrains: Drivetrain[];
@@ -43,6 +45,10 @@ const getModels = async (brandId: string): Promise<Partial<Model>[]> => {
 };
 
 const getUsedOptions = async (): Promise<UsedOptionsType> => {
+  const regions = await prisma.region.findMany({
+    orderBy: { autoria_code: 'asc' },
+  });
+
   const bodyTypes = await prisma.body_Type.findMany({
     orderBy: { autoria_code: 'asc' },
   });
@@ -64,6 +70,7 @@ const getUsedOptions = async (): Promise<UsedOptionsType> => {
   });
 
   return {
+    regions,
     bodyTypes,
     colors,
     drivetrains,

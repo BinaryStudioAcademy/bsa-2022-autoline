@@ -22,6 +22,7 @@ const initialState: CarFiltersType = {
     },
   },
   checkLists: {
+    regionId: [],
     bodyTypeId: [],
     colorId: [],
     transmissionTypeId: [],

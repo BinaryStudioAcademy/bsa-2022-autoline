@@ -55,12 +55,14 @@ export const CompTopTableBar = ({
           text="+Add to Comparison"
           className={styles.btnOutline}
         />
-        <div className={styles.clearBtn} onClick={handleClearBtnClick}>
-          <button className={clsx(styles.button, styles.iconButton)}>
-            <TrashCanIcon />
-          </button>
-          <div className={styles.clearBtnText}>Clear the Table</div>
-        </div>
+        {!initialData?.length || (
+          <div className={styles.clearBtn} onClick={handleClearBtnClick}>
+            <button className={clsx(styles.button, styles.iconButton)}>
+              <TrashCanIcon />
+            </button>
+            <div className={styles.clearBtnText}>Clear the Table</div>
+          </div>
+        )}
       </div>
       <ScrollSyncPane>
         <div className={clsx('styledScrollbar', styles.slider)}>

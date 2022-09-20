@@ -62,7 +62,6 @@ const InputField: FC<InputFieldPropsType> = ({
         className={styles.input}
         error={errors?.[name] ? true : false}
         autoComplete={autoComplete}
-        // inputComponent={type === 'tel' ? PhoneMask : undefined}
         endAdornment={
           type === 'password' ? (
             <InputAdornment position="end">

@@ -7,6 +7,12 @@ const getTopAutolineCarsList = async (): Promise<TopCar[]> => {
     _count: {
       autoria_code: true,
     },
+    orderBy: {
+      _count: {
+        autoria_code: 'desc',
+      },
+    },
+    take: 8,
   });
 
   const orderData = new Map<number, number>();

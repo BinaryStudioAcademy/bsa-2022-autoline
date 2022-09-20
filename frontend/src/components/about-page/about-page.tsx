@@ -1,5 +1,6 @@
 import { PageContainer } from '@components/common/page-container/page-container';
 import { Title } from '@components/common/title/title';
+import { Footer } from '@components/footer/footer';
 import { Header } from '@components/header/header';
 import { Grid } from '@mui/material';
 import { uuid4 } from '@sentry/utils';
@@ -50,6 +51,7 @@ const AboutPage: React.FC = () => {
           ))}
         </Grid>
       </PageContainer>
+      <Footer />
     </>
   );
 };

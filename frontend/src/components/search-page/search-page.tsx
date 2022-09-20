@@ -4,6 +4,7 @@ import { CarListItem } from '@components/car-list-item/car-list-item';
 import { PageContainer } from '@components/common/page-container/page-container';
 import { Spinner } from '@components/common/spinner/spinner';
 import { Title } from '@components/common/title/title';
+import { Footer } from '@components/footer/footer';
 import { Header } from '@components/header/header';
 import { TopCarsAutoline } from '@components/top-cars-autoria/top-cars-autoline';
 import { useAppSelector } from '@hooks/hooks';
@@ -56,6 +57,7 @@ const SearchPage: React.FC = () => {
           </Grid>
         </Grid>
       </PageContainer>
+      <Footer />
     </>
   );
 };

@@ -10,7 +10,7 @@ const { reducer, actions } = createSlice({
   initialState,
   reducers: {
     setAdverts: (state, action) => {
-      const { complectationId, adverts, page } = action.payload;
+      const { complectationId, adverts, page, count } = action.payload;
       const activeComplectation = state.ads.find(
         (advert) => advert.complectationId === complectationId,
       );
@@ -22,7 +22,7 @@ const { reducer, actions } = createSlice({
             ])
           : (activeComplectation.adverts = [...adverts]);
       } else {
-        const newComplectation = { complectationId, adverts, page: 0 };
+        const newComplectation = { complectationId, adverts, page: 0, count };
         state.ads = [...state.ads, newComplectation];
       }
     },
@@ -36,6 +36,7 @@ const { reducer, actions } = createSlice({
           complectationId,
           adverts: [],
           page: 0,
+          count: 0,
         };
         state.ads = [...state.ads, newComplectation];
       } else if (page === 0) {

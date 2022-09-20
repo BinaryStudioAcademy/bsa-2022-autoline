@@ -36,7 +36,7 @@ export type {
   ViewedCarData,
 } from './history-of-viewed-cars/history-of-viewed-cars';
 export type {
-  WhereBuyInterface,
+  WhereBuyResponse,
   whereBuyQuery,
   WhereBuyState,
 } from './where-to-buy/where-to-buy';

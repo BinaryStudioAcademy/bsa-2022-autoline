@@ -1,6 +1,6 @@
 import { whereBuyPath } from '@common/enums/enums';
 import {
-  WhereBuyInterface,
+  WhereBuyResponse,
   whereBuyQuery,
 } from '@common/types/where-to-buy/where-to-buy';
 import { setAdverts } from '@store/root-reducer';
@@ -9,7 +9,7 @@ import { api } from './index';
 
 const whereBuyApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getWhereBuy: build.query<WhereBuyInterface[], whereBuyQuery>({
+    getWhereBuy: build.query<WhereBuyResponse, whereBuyQuery>({
       query: ({ page, complectationId, countpage }) => ({
         url: `${whereBuyPath.WHERE_BUY}`,
         method: 'GET',
@@ -23,8 +23,10 @@ const whereBuyApi = api.injectEndpoints({
         { complectationId, page },
         { dispatch, queryFulfilled },
       ) {
-        const { data: adverts } = await queryFulfilled;
-        dispatch(setAdverts({ adverts, complectationId, page }));
+        const { data } = await queryFulfilled;
+        const adverts = data.advertsInfo;
+        const count = data.count;
+        dispatch(setAdverts({ adverts, complectationId, page, count }));
       },
     }),
   }),

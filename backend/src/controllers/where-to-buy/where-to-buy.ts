@@ -27,7 +27,8 @@ const whereToBuy = async (
     const advertsInfo = await Promise.all(
       advertsIds.map((car) => getCarDetailsAutoRia(car)),
     );
-    res.json(advertsInfo);
+    const count = allAdverts.result.search_result.count;
+    res.json({ advertsInfo, count });
   } catch (error) {
     next(error);
   }

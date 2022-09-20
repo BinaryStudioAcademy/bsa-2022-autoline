@@ -24,6 +24,7 @@ const InputField: FC<InputFieldPropsType> = ({
   inputLabel,
   value,
   onChange,
+  autoComplete,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -60,7 +61,7 @@ const InputField: FC<InputFieldPropsType> = ({
         type={type === 'password' && showPassword ? 'text' : type}
         className={styles.input}
         error={errors?.[name] ? true : false}
-        // inputComponent={type === 'tel' ? PhoneMask : undefined}
+        autoComplete={autoComplete}
         endAdornment={
           type === 'password' ? (
             <InputAdornment position="end">

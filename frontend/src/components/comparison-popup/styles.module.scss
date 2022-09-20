@@ -51,7 +51,8 @@
   }
 
   &Title {
-    margin: 0;
+    display: inline-block;
+    margin: 0 20px 0 0;
     font-weight: 700;
     font-size: 1.3rem;
 
@@ -103,6 +104,7 @@
   }
 
   &Form {
+    min-height: 300px;
     padding-top: 15px;
   }
 }
@@ -119,4 +121,37 @@
 
 .displayNone {
   display: none;
+}
+
+.button {
+  padding: 5px 10px;
+  color: var(--black);
+  border-color: var(--gray300);
+  border-radius: var(--border-radius-pill);
+
+  &:hover {
+    color: var(--white);
+    background-color: var(--blue100);
+  }
+}
+
+.active {
+  color: var(--white);
+  background-color: var(--blue100);
+}
+
+.wishlist {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  height: 200px;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  list-style: none;
+}
+
+form > div:nth-child(2) {
+  height: 200px;
 }

@@ -41,4 +41,9 @@ type WhereBuyState = {
   ads: advertsState[];
 };
 
-export { type WhereBuyResponse, type whereBuyQuery, type WhereBuyState };
+export {
+  type WhereBuyResponse,
+  type whereBuyQuery,
+  type WhereBuyState,
+  type WhereBuyInterface,
+};

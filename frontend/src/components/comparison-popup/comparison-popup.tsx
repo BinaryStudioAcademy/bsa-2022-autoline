@@ -135,9 +135,7 @@ const ComparisonPopup: FC<ComparisonPopupProps> = ({
     carsToRemove?.forEach(({ id }) => {
       deleteCarFromComparison({ complectationId: id });
     });
-    carsToAdd?.forEach(({ id }) => {
-      addCarToComparison({ complectationId: id });
-    });
+    addCarToComparison({ complectationId: carsToAdd.map((i) => i.id) });
 
     handleClose();
   };

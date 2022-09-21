@@ -30,7 +30,7 @@ const WishlistCard: FC<WishlistCardProps> = ({ carData, addItem }) => {
       priceStart,
       priceEnd,
     };
-    addItem((state) => [...state].concat(data));
+    addItem((state) => [data, ...state]);
   };
 
   return (

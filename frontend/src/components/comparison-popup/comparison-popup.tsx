@@ -258,11 +258,15 @@ const ComparisonPopup: FC<ComparisonPopupProps> = ({
                       defaultValue="not_appliable"
                       disabled={!watch('model') || !watch('brand')}
                     >
-                      {availableComplectation.map((item) => (
-                        <MenuItem key={item.id} value={item.id}>
-                          {item.name}
-                        </MenuItem>
-                      ))}
+                      {availableComplectation.length ? (
+                        availableComplectation.map((item) => (
+                          <MenuItem key={item.id} value={item.id}>
+                            {item.name}
+                          </MenuItem>
+                        ))
+                      ) : (
+                        <li className={styles.noOptions}>No options</li>
+                      )}
                     </SelectFieldForm>
                   </div>
                   <div className={styles.btnWrapper}>

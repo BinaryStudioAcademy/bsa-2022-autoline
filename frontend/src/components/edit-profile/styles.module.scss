@@ -129,10 +129,15 @@
   display: flex;
   justify-content: flex-end;
   margin: 20px 0;
+  column-gap: 20px;
 }
 
 .cancel {
-  border: none;
+  border: 1px solid transparent;
+
+  &:hover {
+    border: 1px solid var(--blue300);
+  }
 }
 
 button {

@@ -39,22 +39,26 @@ const ComparisonPage: React.FC = () => {
         <ScrollSync>
           <div className={styles.tablesWrapper}>
             <CompTopTableBar setPopupState={setPopupIsOpen} />
-            <ButtonOutline
-              text="All Parameters"
-              className={clsx(
-                styles.button,
-                !isOnlyDifferenceShown && styles.active,
-              )}
-              onClick={(): void => setIsOnlyDifferenceShown(false)}
-            />
-            <ButtonOutline
-              text="Only Differences"
-              className={clsx(
-                styles.button,
-                isOnlyDifferenceShown && styles.active,
-              )}
-              onClick={(): void => setIsOnlyDifferenceShown(true)}
-            />
+            {data?.length ? (
+              <ButtonOutline
+                text="All Parameters"
+                className={clsx(
+                  styles.button,
+                  !isOnlyDifferenceShown && styles.active,
+                )}
+                onClick={(): void => setIsOnlyDifferenceShown(false)}
+              />
+            ) : null}
+            {data?.length && data?.length !== 1 ? (
+              <ButtonOutline
+                text="Only Differences"
+                className={clsx(
+                  styles.button,
+                  isOnlyDifferenceShown && styles.active,
+                )}
+                onClick={(): void => setIsOnlyDifferenceShown(true)}
+              />
+            ) : null}
             <GeneralComparisonTable isOnlyDiff={isOnlyDifferenceShown} />
             {isLoading || showOptionsTables()}
           </div>

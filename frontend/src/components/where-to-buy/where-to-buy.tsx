@@ -29,7 +29,7 @@ const WhereToBuy: React.FC<WhereToBuyProps> = ({
     (ad) => ad.complectationId === complectationId,
   )?.page;
   const page = savedPage ? savedPage : 0;
-  const countpage = 20;
+  const countpage = 10;
 
   useGetWhereBuyQuery({
     page,

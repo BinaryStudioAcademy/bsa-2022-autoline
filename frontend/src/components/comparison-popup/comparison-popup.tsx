@@ -252,6 +252,9 @@ const ComparisonPopup: FC<ComparisonPopupProps> = ({
                       defaultValue="not_appliable"
                       disabled={!watch('model') || !watch('brand')}
                     >
+                      {availableComplectation.length === 0 && (
+                        <li className={styles.noOptions}>No options</li>
+                      )}
                       {availableComplectation.map((item) => (
                         <MenuItem key={item.id} value={item.id}>
                           {item.name}

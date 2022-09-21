@@ -191,7 +191,7 @@ const ComparisonPopup: FC<ComparisonPopupProps> = ({
                   onClick={(): void => setIsWishlistActive(false)}
                 />
                 <ButtonOutline
-                  text="whishlist"
+                  text="wishlist"
                   className={clsx(
                     styles.button,
                     isWishlistActive && styles.active,
@@ -202,16 +202,22 @@ const ComparisonPopup: FC<ComparisonPopupProps> = ({
               <div className={styles.comparisonForm}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className={isWishlistActive ? '' : styles.displayNone}>
-                    <ul className={clsx(styles.wishlist, 'styledScrollbar')}>
-                      {availableWhishlist.map((item) => (
-                        <li key={item.id}>
-                          <WishlistCard
-                            carData={item}
-                            addItem={setComparisonList}
-                          />
-                        </li>
-                      ))}
-                    </ul>
+                    {availableWhishlist.length === 0 ? (
+                      <p className={styles.wishlistText}>
+                        You have already added all cars from your wishlist
+                      </p>
+                    ) : (
+                      <ul className={clsx(styles.wishlist, 'styledScrollbar')}>
+                        {availableWhishlist.map((item) => (
+                          <li key={item.id}>
+                            <WishlistCard
+                              carData={item}
+                              addItem={setComparisonList}
+                            />
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                   <div className={isWishlistActive ? styles.displayNone : ''}>
                     <SelectFieldForm

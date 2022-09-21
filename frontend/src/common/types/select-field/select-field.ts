@@ -8,6 +8,7 @@ export type SelectFieldPropsType = {
   disabled?: boolean;
   className?: string;
   required: boolean;
+  clearable?: boolean;
   errors?: string;
   onChange?: (event: SelectChangeEvent) => void;
   onClose?: (event: SelectChangeEvent) => void;

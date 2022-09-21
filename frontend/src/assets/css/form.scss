@@ -76,6 +76,10 @@
     .MuiAutocomplete-endAdornment {
       top: 24%;
       color: var(--gray300);
+
+      svg {
+        font-size: 14px;
+      }
     }
   }
 

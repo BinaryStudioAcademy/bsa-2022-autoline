@@ -69,8 +69,8 @@ const addCarToComparison = async ({
       },
     });
 
-    if (lastPosition) {
-      const carsList = await prisma.comparisons_Complectations.findMany({
+    const complectationsInComparison =
+      await prisma.comparisons_Complectations.findMany({
         where: {
           comparison_id: comparison.id,
           complectation_id: {
@@ -85,11 +85,14 @@ const addCarToComparison = async ({
         },
       });
 
-      const newArray = carsList.map((i) => i.complectation_id);
-      newArray.splice(lastPosition - 1, 0, complectationId);
+    const complectationsIds = complectationsInComparison.map(
+      (i) => i.complectation_id,
+    );
 
-      await updatePositions(userId, newArray);
-    }
+    const position = lastPosition ? lastPosition - 1 : 0;
+
+    complectationsIds.splice(position, 0, complectationId);
+    await updatePositions(userId, complectationsIds);
 
     return comparison;
   }

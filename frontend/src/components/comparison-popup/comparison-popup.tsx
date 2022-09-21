@@ -94,7 +94,7 @@ const ComparisonPopup: FC<ComparisonPopupProps> = ({
   useEffect(() => {
     if (!complectationInfo.isFetching) {
       setComparisonList((state) =>
-        [...state].concat(complectationInfo.data || []),
+        complectationInfo.data ? [complectationInfo.data, ...state] : [],
       );
       reset && reset({ brand: '', model: '', complectation: '' });
     }

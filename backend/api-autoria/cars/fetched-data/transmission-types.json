@@ -1,5 +1,5 @@
 [
-  { "name": "Mechanical", "value": 1 },
+  { "name": "Manual", "value": 1 },
   { "name": "Automatic", "value": 2 },
   { "name": "Tiptronic", "value": 3 },
   { "name": "Robot", "value": 4 },

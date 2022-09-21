@@ -5,7 +5,7 @@
   top: 50%;
   left: 50%;
   width: 1000px;
-  padding: 28px 32px 52px;
+  padding: 28px 32px;
   overflow: auto;
   background: var(--white);
   border-top: 5px solid var(--blue100);
@@ -121,7 +121,7 @@
 .btnWrapper {
   display: flex;
   justify-content: flex-end;
-  margin: 20px 0;
+  margin: 40px 0 0;
 }
 
 .cancel {
@@ -191,8 +191,4 @@ form > div:nth-child(2) {
   @media (max-width: 768px) {
     height: 150px;
   }
-}
-
-.noOptions {
-  padding-left: 5px;
 }

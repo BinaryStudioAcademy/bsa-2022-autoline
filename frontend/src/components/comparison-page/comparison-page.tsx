@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollSync } from 'react-scroll-sync';
 
 import { ButtonOutline } from '@components/common/button-outline/button-outline';
@@ -26,6 +26,12 @@ const ComparisonPage: React.FC = () => {
     }
     return <AllOptions />;
   };
+
+  useEffect(() => {
+    if (data?.length === 1) {
+      setIsOnlyDifferenceShown(false);
+    }
+  }, [data]);
 
   const [popupIsOpen, setPopupIsOpen] = useState<boolean>(false);
   return (
@@ -59,8 +65,10 @@ const ComparisonPage: React.FC = () => {
                 onClick={(): void => setIsOnlyDifferenceShown(true)}
               />
             ) : null}
-            <GeneralComparisonTable isOnlyDiff={isOnlyDifferenceShown} />
-            {isLoading || showOptionsTables()}
+            {data?.length ? (
+              <GeneralComparisonTable isOnlyDiff={isOnlyDifferenceShown} />
+            ) : null}
+            {data?.length !== 0 && (isLoading || showOptionsTables())}
           </div>
         </ScrollSync>
       </PageContainer>

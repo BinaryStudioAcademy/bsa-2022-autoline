@@ -133,10 +133,10 @@
 }
 
 .cancel {
-  border: 1px solid transparent;
+  border: 1px solid var(--blue100);
 
   &:hover {
-    border: 1px solid var(--blue300);
+    border-color: var(--blue300);
   }
 }
 

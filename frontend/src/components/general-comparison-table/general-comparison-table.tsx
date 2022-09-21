@@ -88,52 +88,67 @@ const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
       refetchPrices();
     };
   }, [refetch, refetchPrices]);
+
+  const isAllIdentical = useMemo((): boolean => {
+    const res = Object.values(isIdentical).find((it) => it === false);
+    if (res === undefined) return true;
+    return false;
+  }, [isIdentical]);
+  const isJustOneCar = generalInfo?.length === 1;
+
   if (isLoading && isLoadingPrices) return <Spinner />;
+  if (isAllIdentical && isOnlyDiff && !isJustOneCar) return null;
 
   return (
     <CollapseElement label="General information" isOpen={true}>
       <EqualHeight>
         <div className={clsx(styles.table, 'table')}>
           <div className={clsx(styles.tableTitles, styles.tableColumn)}>
-            <EqualHeightElement name="minPrice">
-              <div
-                className={clsx(styles.tableCell, styles.price, 'tableCell')}
-              >
-                Minimum price
-              </div>
-            </EqualHeightElement>
-            <EqualHeightElement name="maxPrice">
-              <div
-                className={clsx(styles.tableCell, styles.price, 'tableCell')}
-              >
-                Maximum price
-              </div>
-            </EqualHeightElement>
-            {(!isOnlyDiff || !isIdentical.bodyType) && (
+            {(!isOnlyDiff || pricesData?.length !== 0) && (
+              <EqualHeightElement name="minPrice">
+                <div
+                  className={clsx(styles.tableCell, styles.price, 'tableCell')}
+                >
+                  Minimum price
+                </div>
+              </EqualHeightElement>
+            )}
+            {(!isOnlyDiff || pricesData?.length !== 0) && (
+              <EqualHeightElement name="maxPrice">
+                <div
+                  className={clsx(styles.tableCell, styles.price, 'tableCell')}
+                >
+                  Maximum price
+                </div>
+              </EqualHeightElement>
+            )}
+            {(!isOnlyDiff || !isIdentical.bodyType || isJustOneCar) && (
               <EqualHeightElement name="bodytype">
                 <div className={clsx(styles.tableCell, 'tableCell')}>Type</div>
               </EqualHeightElement>
             )}
-            {(!isOnlyDiff || !isIdentical.engineDisplacement) && (
+            {(!isOnlyDiff ||
+              !isIdentical.engineDisplacement ||
+              isJustOneCar) && (
               <EqualHeightElement name="motor">
                 <div className={clsx(styles.tableCell, 'tableCell')}>Motor</div>
               </EqualHeightElement>
             )}
-            {(!isOnlyDiff || !isIdentical.enginePower) && (
+            {(!isOnlyDiff || !isIdentical.enginePower || isJustOneCar) && (
               <EqualHeightElement name="enginepower">
                 <div className={clsx(styles.tableCell, 'tableCell')}>
                   Engine Power
                 </div>
               </EqualHeightElement>
             )}
-            {(!isOnlyDiff || !isIdentical.engine) && (
+            {(!isOnlyDiff || !isIdentical.engine || isJustOneCar) && (
               <EqualHeightElement name="engine">
                 <div className={clsx(styles.tableCell, 'tableCell')}>
                   Engine
                 </div>
               </EqualHeightElement>
             )}
-            {(!isOnlyDiff || !isIdentical.drivetrainName) && (
+            {(!isOnlyDiff || !isIdentical.drivetrainName || isJustOneCar) && (
               <EqualHeightElement name="wheeldrive">
                 <div className={clsx(styles.tableCell, 'tableCell')}>
                   Wheel Drive
@@ -150,7 +165,7 @@ const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
                 </EqualHeightElement>
               );
             })}
-            {(!isOnlyDiff || !isIdentical.colorName) && (
+            {(!isOnlyDiff || !isIdentical.colorName || isJustOneCar) && (
               <EqualHeightElement name="color">
                 <div className={clsx(styles.tableCell, 'tableCell')}>Color</div>
               </EqualHeightElement>
@@ -186,35 +201,41 @@ const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
                         {getPrices(info.id, pricesData)?.maxPrice}
                       </div>
                     </EqualHeightElement>
-                    {(!isOnlyDiff || !isIdentical.bodyType) && (
+                    {(!isOnlyDiff || !isIdentical.bodyType || isJustOneCar) && (
                       <EqualHeightElement name="bodytype">
                         <div className={clsx(styles.tableCell, 'tableCell')}>
                           {info.bodyType}
                         </div>
                       </EqualHeightElement>
                     )}
-                    {(!isOnlyDiff || !isIdentical.engineDisplacement) && (
+                    {(!isOnlyDiff ||
+                      !isIdentical.engineDisplacement ||
+                      isJustOneCar) && (
                       <EqualHeightElement name="motor">
                         <div className={clsx(styles.tableCell, 'tableCell')}>
                           {info.engineDisplacement} l.
                         </div>
                       </EqualHeightElement>
                     )}
-                    {(!isOnlyDiff || !isIdentical.enginePower) && (
+                    {(!isOnlyDiff ||
+                      !isIdentical.enginePower ||
+                      isJustOneCar) && (
                       <EqualHeightElement name="enginepower">
                         <div className={clsx(styles.tableCell, 'tableCell')}>
                           {info.enginePower} h.p.
                         </div>
                       </EqualHeightElement>
                     )}
-                    {(!isOnlyDiff || !isIdentical.engine) && (
+                    {(!isOnlyDiff || !isIdentical.engine || isJustOneCar) && (
                       <EqualHeightElement name="engine">
                         <div className={clsx(styles.tableCell, 'tableCell')}>
                           {info.engine}
                         </div>
                       </EqualHeightElement>
                     )}
-                    {(!isOnlyDiff || !isIdentical.drivetrainName) && (
+                    {(!isOnlyDiff ||
+                      !isIdentical.drivetrainName ||
+                      isJustOneCar) && (
                       <EqualHeightElement name="wheeldrive">
                         <div className={clsx(styles.tableCell, 'tableCell')}>
                           {info.drivetrainName}
@@ -238,7 +259,9 @@ const GeneralComparisonTable: React.FC<{ isOnlyDiff: boolean }> = ({
                           </EqualHeightElement>
                         ),
                     )}
-                    {(!isOnlyDiff || !isIdentical.colorName) && (
+                    {(!isOnlyDiff ||
+                      !isIdentical.colorName ||
+                      isJustOneCar) && (
                       <EqualHeightElement name="color">
                         <div
                           className={clsx(

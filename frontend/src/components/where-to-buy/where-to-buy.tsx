@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useAppSelector } from '@hooks/store/store.hooks';
@@ -23,22 +23,33 @@ const WhereToBuy: React.FC<WhereToBuyProps> = ({
 }) => {
   const dispatch = useDispatch();
   const [isSorted, setIsSorted] = useState(false);
+  const [showSeeMore, setShowSeeMore] = useState(true);
   const { ads } = useAppSelector((state) => state.whereBuy);
+  const savedPage = ads.find(
+    (ad) => ad.complectationId === complectationId,
+  )?.page;
+  const page = savedPage ? savedPage : 0;
+  const countpage = 10;
 
-  const page = Number(
-    ads.find((ad) => ad.complectationId === complectationId)?.page,
-  );
-
-  const countpage = 20;
   useGetWhereBuyQuery({
     page,
     complectationId,
     countpage,
   });
-
   const adverts = ads.find(
     (ad) => ad.complectationId === complectationId,
   )?.adverts;
+  const totalAdsCount = ads.find(
+    (ad) => ad.complectationId === complectationId,
+  )?.count;
+  useEffect(() => {
+    const countShowedAdverts = adverts?.length ? adverts?.length : 0;
+    if (totalAdsCount && totalAdsCount === countShowedAdverts) {
+      setShowSeeMore(false);
+    } else {
+      setShowSeeMore(true);
+    }
+  }, [totalAdsCount, adverts]);
 
   const advertsList = useMemo(() => {
     if (!adverts) return [];
@@ -87,11 +98,13 @@ const WhereToBuy: React.FC<WhereToBuyProps> = ({
             modelId={modelId}
           />
         ))}
-      <div className={styles.seeAll}>
-        <button className={styles.moreButton} onClick={seeMoreHandler}>
-          See more
-        </button>
-      </div>
+      {showSeeMore ? (
+        <div className={styles.seeAll}>
+          <button className={styles.moreButton} onClick={seeMoreHandler}>
+            See more
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 };

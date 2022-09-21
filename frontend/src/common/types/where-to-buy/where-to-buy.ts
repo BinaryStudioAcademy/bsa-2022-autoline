@@ -19,6 +19,11 @@ interface WhereBuyInterface {
   };
 }
 
+interface WhereBuyResponse {
+  advertsInfo: WhereBuyInterface[];
+  count: number;
+}
+
 interface whereBuyQuery {
   complectationId: string;
   page: number;
@@ -29,10 +34,16 @@ interface advertsState {
   complectationId: string;
   adverts: WhereBuyInterface[];
   page: number;
+  count: number;
 }
 
 type WhereBuyState = {
   ads: advertsState[];
 };
 
-export { type WhereBuyInterface, type whereBuyQuery, type WhereBuyState };
+export {
+  type WhereBuyResponse,
+  type whereBuyQuery,
+  type WhereBuyState,
+  type WhereBuyInterface,
+};

@@ -202,7 +202,7 @@ const ComparisonPopup: FC<ComparisonPopupProps> = ({
                   <div className={isWishlistActive ? '' : styles.displayNone}>
                     {availableWhishlist.length === 0 ? (
                       <p className={styles.wishlistText}>
-                        You have already added all cars from your wishlist
+                        No complectations available
                       </p>
                     ) : (
                       <ul className={clsx(styles.wishlist, 'styledScrollbar')}>

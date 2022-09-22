@@ -47,6 +47,7 @@ const getCarDetailsFromAutoria = async (
   Promise.all(ids.map((id) => getCarDetailsAutoRia(id)));
 
 const updateComplectationPricesFromAutoria = async (
+  modelId: string,
   complectationId: string,
   complectationName: string,
 ): Promise<string> => {
@@ -68,6 +69,44 @@ const updateComplectationPricesFromAutoria = async (
     },
   });
 
+  const priceModelData = await prisma.prices_Range.aggregate({
+    where: {
+      complectation: {
+        model_id: modelId,
+      },
+    },
+    _min: {
+      price_start: true,
+    },
+    _max: {
+      price_end: true,
+    },
+  });
+  const minPriceModel = priceModelData._min.price_start;
+  const maxPriceModel = priceModelData._max.price_end;
+
+  if (minPriceModel) {
+    await prisma.prices_Range.updateMany({
+      where: {
+        model_id: modelId,
+      },
+      data: {
+        price_start: minPriceModel,
+      },
+    });
+  }
+
+  if (maxPriceModel) {
+    await prisma.prices_Range.updateMany({
+      where: {
+        model_id: modelId,
+      },
+      data: {
+        price_end: maxPriceModel,
+      },
+    });
+  }
+
   return complectationName;
 };
 
@@ -78,6 +117,7 @@ const carsUpdatePricesFromAutoria = async (): Promise<string[]> => {
       name: true,
       model: {
         select: {
+          id: true,
           name: true,
           brand: true,
         },
@@ -88,6 +128,7 @@ const carsUpdatePricesFromAutoria = async (): Promise<string[]> => {
   const updatedComplectations = await Promise.all(
     complectations.map((complectation) =>
       updateComplectationPricesFromAutoria(
+        complectation.model.id,
         complectation.id,
         `${complectation.model.brand.name} ${complectation.model.name} ${complectation.name}`,
       ),

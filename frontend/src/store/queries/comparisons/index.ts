@@ -6,7 +6,7 @@ import { API } from '@store/queries/api-routes';
 import { api } from '..';
 
 interface ComparisonsRequest {
-  complectationId: string;
+  complectationId: string | string[];
   lastPosition?: number;
 }
 

@@ -12,16 +12,21 @@ import httpStatus from 'http-status-codes';
 
 const addCarToComparison = async (
   req: TypedRequestBody<{
-    complectationId: string;
+    complectationId: string | string[];
     lastPosition?: number;
   }>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const comparison = await comparisonsService.addCarToComparison({
-      complectationId: req.body.complectationId,
-      lastPosition: req.body.lastPosition,
+    const { complectationId, lastPosition } = req.body;
+
+    const complectationIds =
+      typeof complectationId === 'string' ? [complectationId] : complectationId;
+
+    const comparison = await comparisonsService.addCarsToComparison({
+      complectationIds,
+      lastPosition,
       userId: req.tokenPayload.sub,
     });
     res.status(httpStatus.CREATED).json(comparison);

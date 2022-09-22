@@ -23,58 +23,40 @@ export interface ComparisonInfo {
   modelName: string;
   photos: Prisma.JsonValue;
 }
-const addCarToComparison = async ({
-  complectationId,
+
+const addCarsToComparison = async ({
+  complectationIds,
   lastPosition,
   userId,
 }: {
-  complectationId: string;
+  complectationIds: string[];
   lastPosition?: number;
   userId: string;
 }): Promise<Comparison> => {
-  const activeComparison = await prisma.comparison.findFirst({
-    where: {
-      active: true,
-      user_id: userId,
-    },
-  });
-
-  if (activeComparison) {
-    const presenceCheck = await prisma.comparisons_Complectations.findFirst({
-      where: {
-        complectation_id: complectationId,
-        comparison_id: activeComparison.id,
-      },
-    });
-
-    if (presenceCheck) {
-      throw new Error('Car is already in your active comparison');
-    }
-
-    const comparison = await prisma.comparison.update({
-      where: { id: activeComparison.id },
-      data: { updated_at: new Date() },
-    });
-
+  const addComplectations = async (
+    comparison: Comparison,
+  ): Promise<Comparison> => {
     const carsInComparisonAmount =
       await prisma.comparisons_Complectations.count({
         where: { comparison_id: comparison.id },
       });
 
-    await prisma.comparisons_Complectations.create({
-      data: {
-        comparison_id: comparison.id,
-        complectation_id: complectationId,
-        position: carsInComparisonAmount + 1,
-      },
-    });
+    for (const id of complectationIds) {
+      await prisma.comparisons_Complectations.create({
+        data: {
+          comparison_id: comparison.id,
+          complectation_id: id,
+          position: carsInComparisonAmount + 1,
+        },
+      });
+    }
 
     const complectationsInComparison =
       await prisma.comparisons_Complectations.findMany({
         where: {
           comparison_id: comparison.id,
           complectation_id: {
-            not: complectationId,
+            not: { in: complectationIds },
           },
         },
         orderBy: {
@@ -91,8 +73,37 @@ const addCarToComparison = async ({
 
     const position = lastPosition ? lastPosition - 1 : 0;
 
-    complectationsIds.splice(position, 0, complectationId);
+    complectationsIds.splice(position, 0, ...complectationIds);
     await updatePositions(userId, complectationsIds);
+
+    return comparison;
+  };
+
+  const activeComparison = await prisma.comparison.findFirst({
+    where: {
+      active: true,
+      user_id: userId,
+    },
+  });
+
+  if (activeComparison) {
+    const presenceCheck = await prisma.comparisons_Complectations.findFirst({
+      where: {
+        complectation_id: { in: complectationIds },
+        comparison_id: activeComparison.id,
+      },
+    });
+
+    if (presenceCheck) {
+      throw new Error('Car is already in your active comparison');
+    }
+
+    const comparison = await prisma.comparison.update({
+      where: { id: activeComparison.id },
+      data: { updated_at: new Date() },
+    });
+
+    await addComplectations(comparison);
 
     return comparison;
   }
@@ -106,13 +117,8 @@ const addCarToComparison = async ({
     },
   });
 
-  await prisma.comparisons_Complectations.create({
-    data: {
-      comparison_id: comparison.id,
-      complectation_id: complectationId,
-      position: 1,
-    },
-  });
+  await addComplectations(comparison);
+
   return comparison;
 };
 
@@ -445,7 +451,7 @@ const updatePositions = async (
 };
 
 export {
-  addCarToComparison,
+  addCarsToComparison,
   changeComparisonType,
   clearComparison,
   deleteCarFromComparison,
